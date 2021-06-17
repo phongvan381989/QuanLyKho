@@ -64,6 +64,12 @@
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AnhSanPham.xaml.cs">
+      <DependentUpon>AnhSanPham.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ThongTinChiTiet.xaml.cs">
+      <DependentUpon>ThongTinChiTiet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControlNhapKho.xaml.cs">
       <DependentUpon>UserControlNhapKho.xaml</DependentUpon>
     </Compile>
@@ -80,6 +86,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AnhSanPham.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ThongTinChiTiet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

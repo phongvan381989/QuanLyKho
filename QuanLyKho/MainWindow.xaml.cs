@@ -42,7 +42,7 @@ namespace QuanLyKho
 
         private void Button_Click_NhapKho(object sender, RoutedEventArgs e)
         {
-            UserControlNhapKho uc = new UserControlNhapKho();
+            ThongTinChiTiet uc = new ThongTinChiTiet();
             MainStackPanelContent.Children.Add(uc);
             MyLogger.GetInstance().Info("Test log nhập kho");
         }

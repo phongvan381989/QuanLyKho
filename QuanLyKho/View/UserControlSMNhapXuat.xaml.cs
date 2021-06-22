@@ -16,13 +16,19 @@ using System.Windows.Shapes;
 namespace QuanLyKho.View
 {
     /// <summary>
-    /// Interaction logic for ThongTinChiTiet.xaml
+    /// Interaction logic for UserControlSMNhapXuat.xaml
     /// </summary>
-    public partial class ThongTinChiTiet : UserControl
+    public partial class UserControlSMNhapXuat : UserControl
     {
-        public ThongTinChiTiet()
+        public UserControlSMNhapXuat()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click_Luu(object sender, RoutedEventArgs e)
+        {
+            MainWindow mWindow =  (MainWindow)Application.Current.MainWindow;
+            //UserControlThongTinChiTiet thongTinChiTiet = mWindow.user
         }
     }
 }

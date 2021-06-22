@@ -27,24 +27,30 @@ namespace QuanLyKho
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            UserControl1 uC1 = new UserControl1();
-            MainStackPanelContent.Children.Add(uC1);
-            UserControl1 uC2 = new UserControl1();
-            MainStackPanelContent.Children.Add(uC2);
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    UserControl1 uC1 = new UserControl1();
+        //    MainStackPanelContent.Children.Add(uC1);
+        //    UserControl1 uC2 = new UserControl1();
+        //    MainStackPanelContent.Children.Add(uC2);
+        //}
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        //private void Button_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    MainStackPanelContent.Children.Clear();
+        //}
+
+        private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
             MainStackPanelContent.Children.Clear();
-        }
-
-        private void Button_Click_NhapKho(object sender, RoutedEventArgs e)
-        {
-            ThongTinChiTiet uc = new ThongTinChiTiet();
+            UserControlThongTinChiTiet uc = new UserControlThongTinChiTiet();
             MainStackPanelContent.Children.Add(uc);
-            MyLogger.GetInstance().Info("Test log nhập kho");
+            MyLogger.GetInstance().Debug("Click Nhập Xuất");
+
+            SubMenu.Children.Clear();
+            SubMenu.Children.Add(new UserControlSMNhapXuat());
+            //UserControlSMNhapXuat
+
         }
     }
 }

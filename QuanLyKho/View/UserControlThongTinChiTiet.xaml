@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="QuanLyKho.View.ThongTinChiTiet"
+﻿<UserControl x:Class="QuanLyKho.View.UserControlThongTinChiTiet"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,21 +10,34 @@
     <UserControl.Resources>
         <sys:Double x:Key="WidthTextBlock">150</sys:Double>
         <sys:Double x:Key="WidthTextBox">200</sys:Double>
-        <sys:Double x:Key="HeightWrapTextLine">50</sys:Double>
+        <sys:Double x:Key="HeightWrapTextLine">40</sys:Double>
     </UserControl.Resources>
     <Grid>
-        <WrapPanel Orientation="Vertical">
-            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
-                <TextBox Name="MaSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"/>
-            </WrapPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width = "Auto" />
+            <ColumnDefinition Width = "*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical">
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã ISBN</TextBlock>
                 <TextBox Name="MaISBN" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"/>
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
+                <TextBox Name="MaSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"/>
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
+                <TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>
+                <!--<local:UserControlTextBoxIntegerOnly Width="{StaticResource WidthTextBox}"/>-->
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tồn kho</TextBlock>
-                <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>
+                <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="False"/>
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tên</TextBlock>
@@ -59,6 +72,14 @@
                 <TextBlock Style="{StaticResource TextBlockStyle}"> cao</TextBlock>
                 <TextBox Name="KichThuocCao" Style="{StaticResource TextBoxStyleCode}" Width="30" IsEnabled="True"/>
             </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Thư mục media</TextBlock>
+                <TextBox Name="ThuMucMedia" Style="{StaticResource TextBoxStyleCode}" Width="150" IsEnabled="True"/>
+                <Button Name="MediaBrowse" Content="Browse" Width="50" Height="30" Click="MediaBrowse_Click"/>
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mô tả</TextBlock>
+            </WrapPanel>
             <WrapPanel>
                 <TextBox
                   Name="Mota"
@@ -73,6 +94,11 @@
   or when typed text reaches the edge of the text box, a new line is automatically inserted.
                 </TextBox>
             </WrapPanel>
-        </WrapPanel>
+        </StackPanel>
+        <DockPanel LastChildFill = "True" Grid.Row = "0" Grid.Column = "1">
+            <local:Media x:Name="DisplayMedia">
+                
+            </local:Media>
+        </DockPanel>
     </Grid>
 </UserControl>

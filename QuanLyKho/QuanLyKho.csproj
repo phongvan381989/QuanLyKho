@@ -74,11 +74,19 @@
     </ApplicationDefinition>
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
+    <Compile Include="Model\ModelThongTinChiTiet.cs" />
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ViewModelThongTinChiTiet.cs" />
     <Compile Include="View\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControlChonThoiGian.xaml.cs">
+      <DependentUpon>UserControlChonThoiGian.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControlSoDuong.xaml.cs">
+      <DependentUpon>UserControlSoDuong.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlThongTinChiTiet.xaml.cs">
       <DependentUpon>UserControlThongTinChiTiet.xaml</DependentUpon>
@@ -106,6 +114,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Media.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlChonThoiGian.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlSoDuong.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -153,9 +169,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

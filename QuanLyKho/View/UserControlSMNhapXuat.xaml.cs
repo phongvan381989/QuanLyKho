@@ -1,5 +1,8 @@
-﻿using System;
+﻿using QuanLyKho.Model;
+using QuanLyKho.ViewModel;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace QuanLyKho.View
 {
@@ -27,8 +31,9 @@ namespace QuanLyKho.View
 
         private void Button_Click_Luu(object sender, RoutedEventArgs e)
         {
-            MainWindow mWindow =  (MainWindow)Application.Current.MainWindow;
-            //UserControlThongTinChiTiet thongTinChiTiet = mWindow.user
+            ModelThongTinChiTiet viewModel = (ModelThongTinChiTiet)DataContext;
+            MessageBox.Show(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
         }
+
     }
 }

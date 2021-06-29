@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,8 +19,8 @@ namespace QuanLyKho
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            pathDataXMLThongTinChiTiet = ConfigurationManager.AppSettings["XMLThongTinChiTiet"];
             pathApp = System.AppDomain.CurrentDomain.BaseDirectory;
+            pathDataXMLThongTinChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLThongTinChiTiet"]);
         }
 
         public string GetPathApp()

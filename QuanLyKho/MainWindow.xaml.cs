@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuanLyKho.General;
 using QuanLyKho.View;
+using QuanLyKho.ViewModel;
 
 namespace QuanLyKho
 {
@@ -43,14 +44,16 @@ namespace QuanLyKho
         private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
             MainStackPanelContent.Children.Clear();
-            UserControlThongTinChiTiet uc = new UserControlThongTinChiTiet();
-            MainStackPanelContent.Children.Add(uc);
+            UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
+            MainStackPanelContent.Children.Add(ucThongTinChiTiet);
             MyLogger.GetInstance().Debug("Click Nhập Xuất");
+
+            ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
+            vmThongTinChiTiet.UpdateSanPhamHienThi();
+            /*ucThongTinChiTiet.*/DataContext = vmThongTinChiTiet.sanPhamHienThi;
 
             SubMenu.Children.Clear();
             SubMenu.Children.Add(new UserControlSMNhapXuat());
-            //UserControlSMNhapXuat
-
         }
     }
 }

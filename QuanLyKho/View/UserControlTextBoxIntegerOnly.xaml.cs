@@ -26,34 +26,72 @@ namespace QuanLyKho.View
             InitializeComponent();
         }
 
-        private void textBoxValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !TextBoxTextAllowed(e.Text);
-        }
+        //private void textBoxValue_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        //{
+        //    e.Handled = !TextBoxTextAllowed(e.Text);
+        //}
 
-        private Boolean TextBoxTextAllowed(String Text2)
-        {
-            // Check cho phép 1 ký tự dấu âm '-' ở đầu string
-            string Temp = Text2;
-            if (Temp.ElementAt(0) == '-')
-            {
-                Temp = Temp.Substring(1);
-            }
-            return Array.TrueForAll<Char>(Temp.ToCharArray(), delegate (Char c)
-            {
-                return Char.IsDigit(c) || Char.IsControl(c);
-            });
-        }
+        private string oldText;
+        //private Boolean TextBoxTextAllowed(String Text)
+        //{
+        //    try
+        //    {
+        //        int result = Int32.Parse(Text);
+        //    }
+        //    catch (FormatException)
+        //    {
+        //        return false;
+        //    }
 
-        private void textBoxValue_Pasting(object sender, DataObjectPastingEventArgs e)
+        //    return true;
+
+        //}
+
+        //private void textBoxValue_Pasting(object sender, DataObjectPastingEventArgs e)
+        //{
+        //    if (e.DataObject.GetDataPresent(typeof(String)))
+        //    {
+        //        String Text1 = (String)e.DataObject.GetData(typeof(String));
+        //        if (!TextBoxTextAllowed(Text1))
+        //        {
+        //            e.CancelCommand();
+        //            ((TextBox)sender).Text = oldText;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        e.CancelCommand();
+        //        ((TextBox)sender).Text = oldText;
+        //    }
+        //}
+
+        //private void TextBoxIntegerOnly_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    TextBox textbox = ((TextBox)sender);
+        //    if(!TextBoxTextAllowed(textbox.Text))
+        //    {
+        //        MessageBox.Show(string.Format(" {0} không đúng định dạng số nguyên.", textbox.Text));
+        //    }
+        //}
+
+        private void TextBoxIntegerOnly_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (e.DataObject.GetDataPresent(typeof(String)))
+            TextBox textbox = ((TextBox)sender);
+            if(string.IsNullOrEmpty(textbox.Text))
             {
-                String Text1 = (String)e.DataObject.GetData(typeof(String));
-                if (!TextBoxTextAllowed(Text1)) e.CancelCommand();
+                oldText = "";
+                return;
             }
-            else
-                e.CancelCommand();
+
+            try
+            {
+                int result = Int32.Parse(textbox.Text);
+                oldText = textbox.Text;
+            }
+            catch (FormatException)
+            {
+                textbox.Text = oldText;
+            }
         }
     }
 }

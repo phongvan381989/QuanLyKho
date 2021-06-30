@@ -25,45 +25,54 @@
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã ISBN</TextBlock>
                             <TextBox Name="MaISBN" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
-                                        Text="{Binding Path=maISBN, Mode=TwoWay}"/>
+                                     Text="{Binding Path=maISBN, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
-                            <TextBox Name="MaSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"/>
+                            <TextBox Name="MaSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
+                                     Text="{Binding Path=maSanPham, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
                             <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
-                            <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"/>
+                            <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
+                                                                 MyText ="aaa"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tồn kho</TextBlock>
-                            <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="False"/>
+                            <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="False"
+                                     Text="{Binding Path=tonKho, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tên</TextBlock>
-                            <TextBox Name="TenSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>
+                            <TextBox Name="TenSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                                     Text="{Binding Path=tenSanPham, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tác giả</TextBlock>
-                            <TextBox Name="TacGia" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>
+                            <TextBox Name="TacGia" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                                     Text="{Binding Path=tacGia, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Người dịch</TextBlock>
-                            <TextBox Name="NguoiDich" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>
+                            <TextBox Name="NguoiDich" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                                     Text="{Binding Path=nguoiDich, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
-                            <TextBox Name="NhaPhatHanh" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>
+                            <TextBox Name="NhaPhatHanh" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                                     Text="{Binding Path=nhaPhatHanh, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>
-                            <TextBox Name="NhaXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>
+                            <TextBox Name="NhaXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                                     Text="{Binding Path=nhaXuatBan, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Năm xuất bản</TextBlock>
                             <!--<TextBox Name="NamXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
-                <local:UserControlChonThoiGian x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"/>
+                <local:UserControlChonThoiGian x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"
+                                               />
             </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Kích Thước(cm)</TextBlock>
@@ -91,9 +100,10 @@
                                   VerticalScrollBarVisibility="Visible"
                                     Width="350"
                                     Height="300"
+                    Text="{Binding Path=moTaChiTietSanPham, Mode=TwoWay}"
                                 >
-                    This TextBox will allow the user to enter multiple lines of text.  When the RETURN key is pressed, 
-                  or when typed text reaches the edge of the text box, a new line is automatically inserted.
+                    <!--This TextBox will allow the user to enter multiple lines of text.  When the RETURN key is pressed, 
+                  or when typed text reaches the edge of the text box, a new line is automatically inserted.-->
                 </TextBox>
             </WrapPanel>
         </StackPanel>

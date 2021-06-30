@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.General;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -12,6 +13,10 @@ namespace QuanLyKho.Model
 {
     public class ModelThongTinChiTiet : INotifyPropertyChanged
     {
+        public ModelThongTinChiTiet()
+        {
+            pathXML = ((App)Application.Current).GetPathDataXMLThongTinChiTiet();
+        }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         private void RaisePropertyChanged(string property)
@@ -292,40 +297,81 @@ namespace QuanLyKho.Model
             }
         }
 
+        private string pathXML;
         private XDocument xDoc;
 
-        public void LoadData()
+        public void InitializeXDoc()
         {
-            if(!xDoc.lo)
+            if(xDoc == null)
             {
-
+                CheckAndCreateXML(pathXML);
+                xDoc = XDocument.Load(pathXML);
             }
+            SaveXDoc(pathXML);
         }
 
-        private void Button_Click_Luu(object sender, RoutedEventArgs e)
+        public void SaveXDoc(string path)
         {
-            //ModelThongTinChiTiet viewModel = (ModelThongTinChiTiet)DataContext;
-            //MessageBox.Show(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
+            xDoc.Save(path, SaveOptions.None);
+        }
 
-            CreateXML(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
+        /// <summary>
+        /// Thêm 1 sản phẩm vào xDoc và lưu ra file
+        /// </summary>
+        public bool AddAProduceToXDocAndSave()
+        {
+
+            try
+            {
+                XElement aProduce = new XElement("MaSanPham",
+                    new XElement("MaISBN", maISBN),
+                    new XElement("TonKho", tonKho),
+                    new XElement("TenSanPham", tenSanPham),
+                    new XElement("TacGia", tacGia),
+                    new XElement("NguoiDich", nguoiDich),
+                    new XElement("NhaPhatHanh", nhaPhatHanh),
+                    new XElement("NhaXuatBan", nhaXuatBan),
+                    new XElement("NamXuatBan", namXuatBan),
+                    new XElement("KichThuocDai", kichThuocDai),
+                    new XElement("KichThuocRong", kichThuocRong),
+                    new XElement("KichThuocCao", kichThuocCao),
+                    new XElement("ThuMucMedia", thuMucMedia),
+                    new XElement("MoTaChiTiet", moTaChiTietSanPham)
+                    );
+
+                aProduce.SetAttributeValue("Id", maSanPham);
+
+                xDoc.Root.Add(aProduce);
+                SaveXDoc(pathXML);
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("ERROR: " + e.ToString());
+                MyLogger.GetInstance().Error(e.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        public void Button_Click_Luu(object sender, RoutedEventArgs e)
+        {
+            InitializeXDoc();
+            AddAProduceToXDocAndSave();
         }
 
         /// <summary>
         /// Check file ThongTinChiTiet.xml tồn tại không? Không tồn tại tạo file mới
         /// </summary>
         /// <param name="path"></param>
-        private void CreateXML(string path)
+        private void CheckAndCreateXML(string path)
         {
             if (!File.Exists(path))
             {
                 XDocument xmlDocument = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
+                new XElement("ThongTinChiTiet"));
 
-                new XComment("LINQ To XML Demo"),
-
-                new XElement("ThongTinChiTiet", new XElement("SP1")));
-
-                xmlDocument.Save(path, SaveOptions.OmitDuplicateNamespaces);
+                xmlDocument.Save(path, SaveOptions.None);
             }
         }
     }

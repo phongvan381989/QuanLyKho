@@ -32,7 +32,8 @@ namespace QuanLyKho.View
         private void Button_Click_Luu(object sender, RoutedEventArgs e)
         {
             ModelThongTinChiTiet viewModel = (ModelThongTinChiTiet)DataContext;
-            MessageBox.Show(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
+            //MessageBox.Show(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
+            viewModel.Button_Click_Luu(sender, e);
         }
 
     }

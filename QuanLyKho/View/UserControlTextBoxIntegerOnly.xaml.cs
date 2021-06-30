@@ -32,6 +32,27 @@ namespace QuanLyKho.View
         //}
 
         private string oldText;
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(String), typeof(UserControlTextBoxIntegerOnly), null);
+
+        public String Title
+        {
+            get { return (String)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        ////public static readonly DependencyProperty MyTextProperty = DependencyProperty.Register("MyText", typeof(String), typeof(UserControlTextBoxIntegerOnly), null);
+        //public string MyText
+        //{
+        //    get
+        //    {
+        //        return textBoxIntegerOnly.Text;
+        //    }
+        //    set
+        //    {
+        //        textBoxIntegerOnly.Text = value;
+        //    }
+        //}
+
         //private Boolean TextBoxTextAllowed(String Text)
         //{
         //    try
@@ -73,6 +94,7 @@ namespace QuanLyKho.View
         //        MessageBox.Show(string.Format(" {0} không đúng định dạng số nguyên.", textbox.Text));
         //    }
         //}
+
 
         private void TextBoxIntegerOnly_TextChanged(object sender, TextChangedEventArgs e)
         {

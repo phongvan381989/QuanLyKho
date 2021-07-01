@@ -1,4 +1,8 @@
-\bin
-\v15
-\packages
-\obj
+bin
+v15
+packages
+obj
+*.baml
+QuanLyKho/obj/Debug/View/UserControlThongTinChiTiet.baml
+QuanLyKho/obj/Debug/View/UserControlThongTinChiTiet.g.cs
+QuanLyKho/obj/Debug/View/UserControlThongTinChiTiet.g.i.cs

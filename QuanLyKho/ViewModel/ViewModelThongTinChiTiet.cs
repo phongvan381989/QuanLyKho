@@ -20,6 +20,7 @@ namespace QuanLyKho.ViewModel
             if (sanPhamHienThi == null)
                 sanPhamHienThi = new ModelThongTinChiTiet();
             sanPhamHienThi.maISBN = "123456789";
+            sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
         }
     }
 }

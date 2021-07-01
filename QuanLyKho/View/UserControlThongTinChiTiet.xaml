@@ -36,7 +36,7 @@
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
                             <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                             <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
-                                                                 IntegerText="{Binding Text, Path = soLuongNhap, Mode=TwoWay}"
+                                                                 IntegerText="{Binding  Path = soLuongNhap, Mode=TwoWay}"
                                                                  />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
@@ -75,20 +75,24 @@
                 <local:UserControlChonThoiGian x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"
                                                />
             </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Kích Thước(cm)</TextBlock>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> dài</TextBlock>
-                <local:UserControlSoDuong  x:Name="KichThuocDai" Width="30"/>
+                <local:UserControlSoThucDuong  x:Name="KichThuocDai" Width="30"
+                                               SoThucDuongText="{Binding  Path = kichThuocDai, Mode=TwoWay}"/>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> rộng</TextBlock>
-                <local:UserControlSoDuong  x:Name="KichThuocRong" Width="30"/>
+                <local:UserControlSoThucDuong  x:Name="KichThuocRong" Width="30"
+                                               SoThucDuongText="{Binding  Path = kichThuocRong, Mode=TwoWay}"/>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> cao</TextBlock>
-                <local:UserControlSoDuong  x:Name="KichThuocCao" Width="30"/>
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Thư mục media</TextBlock>
-                            <TextBox Name="ThuMucMedia" Style="{StaticResource TextBoxStyleCode}" Width="150" IsEnabled="True"/>
-                            <Button Name="MediaBrowse" Content="Browse" Width="50" Height="30" Click="MediaBrowse_Click"/>
-                        </WrapPanel>
+                <local:UserControlSoThucDuong  x:Name="KichThuocCao" Width="30"
+                                               SoThucDuongText="{Binding  Path = kichThuocCao, Mode=TwoWay}"/>
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Thư mục media</TextBlock>
+                <TextBox Name="ThuMucMedia" Style="{StaticResource TextBoxStyleCode}" Width="150" IsEnabled="True"
+                         Text="{Binding Path=thuMucMedia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Name="MediaBrowse" Content="Browse" Width="50" Height="30" Click="MediaBrowse_Click"/>
+            </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mô tả</TextBlock>
             </WrapPanel>

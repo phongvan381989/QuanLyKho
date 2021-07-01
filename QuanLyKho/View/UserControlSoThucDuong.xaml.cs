@@ -20,39 +20,22 @@ namespace QuanLyKho.View
     /// <summary>
     /// Interaction logic for UserControlSoTuNhien.xaml
     /// </summary>
-    public partial class UserControlSoDuong : UserControl
+    public partial class UserControlSoThucDuong : UserControl
     {
-        public UserControlSoDuong()
+        public UserControlSoThucDuong()
         {
             InitializeComponent();
         }
 
         private string oldText;
-        //private static readonly Regex _regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
-        //private static bool IsTextAllowed(string text)
-        //{
-        //    return !_regex.IsMatch(text);
-        //}
-        //private void TextBoxSoDuong_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        //{
-        //    e.Handled = !IsTextAllowed(e.Text);
-        //}
 
-        //private void TextBoxSoDuong_Pasting(object sender, DataObjectPastingEventArgs e)
-        //{
-        //    if (e.DataObject.GetDataPresent(typeof(String)))
-        //    {
-        //        String text = (String)e.DataObject.GetData(typeof(String));
-        //        if (!IsTextAllowed(text))
-        //        {
-        //            e.CancelCommand();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        e.CancelCommand();
-        //    }
-        //}
+        public static readonly DependencyProperty SoThucDuongTextProperty = DependencyProperty.Register("SoThucDuongText", typeof(String), typeof(UserControlSoThucDuong), null);
+
+        public String SoThucDuongText
+        {
+            get { return (String)GetValue(SoThucDuongTextProperty); }
+            set { SetValue(SoThucDuongTextProperty, value); }
+        }
 
         private void TextBoxSoDuong_TextChanged(object sender, TextChangedEventArgs e)
         {

@@ -85,8 +85,8 @@
     <Compile Include="View\UserControlChonThoiGian.xaml.cs">
       <DependentUpon>UserControlChonThoiGian.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlSoDuong.xaml.cs">
-      <DependentUpon>UserControlSoDuong.xaml</DependentUpon>
+    <Compile Include="View\UserControlSoThucDuong.xaml.cs">
+      <DependentUpon>UserControlSoThucDuong.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlThongTinChiTiet.xaml.cs">
       <DependentUpon>UserControlThongTinChiTiet.xaml</DependentUpon>
@@ -121,7 +121,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlSoDuong.xaml">
+    <Page Include="View\UserControlSoThucDuong.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

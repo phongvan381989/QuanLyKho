@@ -343,6 +343,8 @@ namespace QuanLyKho.Model
 
                 xDoc.Root.Add(aProduce);
                 SaveXDoc(pathXML);
+                tonKho = iTonKho.ToString();
+                soLuongNhap = string.Empty;
             }
             catch(Exception e)
             {

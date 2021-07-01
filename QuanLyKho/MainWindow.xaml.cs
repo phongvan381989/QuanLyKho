@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuanLyKho.General;
 using QuanLyKho.View;
+using QuanLyKho.ViewModel;
 
 namespace QuanLyKho
 {
@@ -27,24 +28,32 @@ namespace QuanLyKho
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            UserControl1 uC1 = new UserControl1();
-            MainStackPanelContent.Children.Add(uC1);
-            UserControl1 uC2 = new UserControl1();
-            MainStackPanelContent.Children.Add(uC2);
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    UserControl1 uC1 = new UserControl1();
+        //    MainStackPanelContent.Children.Add(uC1);
+        //    UserControl1 uC2 = new UserControl1();
+        //    MainStackPanelContent.Children.Add(uC2);
+        //}
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        //private void Button_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    MainStackPanelContent.Children.Clear();
+        //}
+
+        private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
             MainStackPanelContent.Children.Clear();
-        }
+            UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
+            MainStackPanelContent.Children.Add(ucThongTinChiTiet);
+            MyLogger.GetInstance().Debug("Click Nhập Xuất");
 
-        private void Button_Click_NhapKho(object sender, RoutedEventArgs e)
-        {
-            UserControlNhapKho uc = new UserControlNhapKho();
-            MainStackPanelContent.Children.Add(uc);
-            MyLogger.GetInstance().Info("Test log nhập kho");
+            ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
+            vmThongTinChiTiet.UpdateSanPhamHienThi();
+            /*ucThongTinChiTiet.*/DataContext = vmThongTinChiTiet.sanPhamHienThi;
+
+            SubMenu.Children.Clear();
+            SubMenu.Children.Add(new UserControlSMNhapXuat());
         }
     }
 }

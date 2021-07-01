@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace QuanLyKho.View
 {
     /// <summary>
-    /// Interaction logic for UserControlNhapKho.xaml
+    /// Interaction logic for UserControlChonThoiGian.xaml
     /// </summary>
-    public partial class UserControlNhapKho : UserControl
+    public partial class UserControlChonThoiGian : UserControl
     {
-        public UserControlNhapKho()
+        public UserControlChonThoiGian()
         {
             InitializeComponent();
         }

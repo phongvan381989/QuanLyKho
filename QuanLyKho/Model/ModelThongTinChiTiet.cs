@@ -16,6 +16,7 @@ namespace QuanLyKho.Model
         public ModelThongTinChiTiet()
         {
             pathXML = ((App)Application.Current).GetPathDataXMLThongTinChiTiet();
+            InitializeXDoc();
         }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -305,9 +306,8 @@ namespace QuanLyKho.Model
             if(xDoc == null)
             {
                 CheckAndCreateXML(pathXML);
-                xDoc = XDocument.Load(pathXML);
             }
-            SaveXDoc(pathXML);
+            xDoc = XDocument.Load(pathXML);
         }
 
         public void SaveXDoc(string path)
@@ -320,12 +320,12 @@ namespace QuanLyKho.Model
         /// </summary>
         public bool AddAProduceToXDocAndSave()
         {
-
             try
             {
+                Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
                 XElement aProduce = new XElement("MaSanPham",
                     new XElement("MaISBN", maISBN),
-                    new XElement("TonKho", tonKho),
+                    new XElement("TonKho", iTonKho.ToString()),
                     new XElement("TenSanPham", tenSanPham),
                     new XElement("TacGia", tacGia),
                     new XElement("NguoiDich", nguoiDich),
@@ -355,7 +355,6 @@ namespace QuanLyKho.Model
 
         public void Button_Click_Luu(object sender, RoutedEventArgs e)
         {
-            InitializeXDoc();
             AddAProduceToXDocAndSave();
         }
 
@@ -367,6 +366,13 @@ namespace QuanLyKho.Model
         {
             if (!File.Exists(path))
             {
+                // Check thư mục data có tồn tại không. Nếu không tạo thư mục
+                string folderPath = Path.GetDirectoryName(path);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
                 XDocument xmlDocument = new XDocument(
                 new XDeclaration("1.0", "utf-8", "yes"),
                 new XElement("ThongTinChiTiet"));

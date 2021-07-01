@@ -36,7 +36,8 @@
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
                             <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                             <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
-                                                                 MyText ="aaa"/>
+                                                                 IntegerText="{Binding Text, Path = soLuongNhap, Mode=TwoWay}"
+                                                                 />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tồn kho</TextBlock>

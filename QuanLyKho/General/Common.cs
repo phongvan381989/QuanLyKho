@@ -49,5 +49,17 @@ namespace QuanLyKho.General
             }
             return true;
         }
+
+        public static Int32 ConvertStringToInt32(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+            {
+                return 0;
+            }
+            else
+            {
+                return Int32.Parse(str);
+            }
+        }
     }
 }

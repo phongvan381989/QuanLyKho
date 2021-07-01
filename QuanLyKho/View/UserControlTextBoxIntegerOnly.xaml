@@ -10,6 +10,7 @@
     <TextBox  Name="textBoxIntegerOnly" Style="{StaticResource TextBoxStyleCode}"
               TextChanged="TextBoxIntegerOnly_TextChanged"
               ToolTip="Nhập số nguyên"
-              Text="{Binding Title, ElementName=MyUserControlTextBoxIntegerOnly}"
+              Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+              Path=IntegerText, UpdateSourceTrigger=PropertyChanged}"
               />
 </UserControl>

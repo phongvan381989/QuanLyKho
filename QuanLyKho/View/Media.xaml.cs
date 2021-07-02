@@ -47,8 +47,11 @@ namespace QuanLyKho.View
         public void InitDisplay()
         {
             GetAllMediaFiles();
-            string path = System.IO.Path.Combine(mediaFolder, listMediaFiles.ElementAt(index));
-            DisplayAMedia(path);
+            if (index != -1)
+            {
+                string path = System.IO.Path.Combine(mediaFolder, listMediaFiles.ElementAt(index));
+                DisplayAMedia(path);
+            }
         }
 
         // Lấy tất cả file ảnh trong thư mục lưu vào list
@@ -67,7 +70,8 @@ namespace QuanLyKho.View
             listMediaFiles.AddRange(Directory.GetFiles(mediaFolder, "*.jpg").ToList());
             listMediaFiles.AddRange(Directory.GetFiles(mediaFolder, "*.jpeg").ToList());
             listMediaFiles.Sort();
-            index = 0;
+            if(listMediaFiles.Count() != 0)
+                index = 0;
         }
         private void DisplayAMedia(string path)
         {

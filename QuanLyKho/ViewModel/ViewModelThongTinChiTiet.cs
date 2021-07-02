@@ -22,5 +22,7 @@ namespace QuanLyKho.ViewModel
             sanPhamHienThi.maISBN = "123456789";
             sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
         }
+
+        //public void
     }
 }

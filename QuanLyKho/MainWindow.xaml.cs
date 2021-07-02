@@ -50,7 +50,7 @@ namespace QuanLyKho
 
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
             vmThongTinChiTiet.UpdateSanPhamHienThi();
-            /*ucThongTinChiTiet.*/DataContext = vmThongTinChiTiet.sanPhamHienThi;
+            DataContext = vmThongTinChiTiet.sanPhamHienThi;
 
             SubMenu.Children.Clear();
             SubMenu.Children.Add(new UserControlSMNhapXuat());

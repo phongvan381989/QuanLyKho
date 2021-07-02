@@ -26,7 +26,7 @@ namespace QuanLyKho.View
             InitializeComponent();
         }
 
-        private string oldText;
+        private string oldText = "";
         public static readonly DependencyProperty IntegerTextProperty = DependencyProperty.Register("IntegerText", typeof(String), typeof(UserControlTextBoxIntegerOnly), null);
 
         public String IntegerText
@@ -41,6 +41,11 @@ namespace QuanLyKho.View
             if(string.IsNullOrEmpty(textbox.Text))
             {
                 oldText = "";
+                return;
+            }
+            if(textbox.Text == "-")
+            {
+                oldText = "-";
                 return;
             }
 

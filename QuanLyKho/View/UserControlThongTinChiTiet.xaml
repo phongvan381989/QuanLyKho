@@ -12,6 +12,9 @@
         <sys:Double x:Key="WidthTextBox">200</sys:Double>
         <sys:Double x:Key="HeightWrapTextLine">40</sys:Double>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding commandSave}" Gesture="CTRL+S"/>
+    </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width = "Auto" />
@@ -61,8 +64,15 @@
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
-                            <TextBox Name="NhaPhatHanh" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
-                                     Text="{Binding Path=nhaPhatHanh, Mode=TwoWay}"/>
+                            <!--<TextBox Name="NhaPhatHanh" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                                     Text="{Binding Path=nhaPhatHanh, Mode=TwoWay}"/>-->
+                            <ComboBox
+                                  Width="{StaticResource WidthTextBox}"
+                                  IsEditable="True"
+                                  ItemsSource="{Binding listNhaPhatHanh , Mode=TwoWay}" 
+                                  SelectedItem="{Binding nhaPhatHanh, Mode=TwoWay}" 
+                                  IsSynchronizedWithCurrentItem="True" 
+                                  Text="Select Option" />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>

@@ -28,275 +28,35 @@ namespace QuanLyKho.Model
             }
         }
 
-        private string _maISBN;
-        public string maISBN
-        {
-            get
-            {
-                return _maISBN;
-            }
+        public string maISBN { get; set; }
 
-            set
-            {
-                if(_maISBN != value)
-                {
-                    _maISBN = value;
-                    RaisePropertyChanged("maISBN");
-                }
-            }
-        }
+        public string maSanPham { get; set; }
 
-        private string _maSanPham;
-        public string maSanPham
-        {
-            get
-            {
-                return _maSanPham;
-            }
+        public string soLuongNhap { get; set; }
 
-            set
-            {
-                if (_maSanPham != value)
-                {
-                    _maSanPham = value;
-                    RaisePropertyChanged("maSanPham");
-                }
-            }
-        }
+        public string tonKho { get; set; }
 
-        private string _soLuongNhap;
-        public string soLuongNhap
-        {
-            get
-            {
-                return _soLuongNhap;
-            }
+        public string tenSanPham { get; set; }
 
-            set
-            {
-                if (_soLuongNhap != value)
-                {
-                    _soLuongNhap = value;
-                    RaisePropertyChanged("soLuongNhap");
-                }
-            }
-        }
+        public string tacGia { get; set; }
 
-        private string _tonKho;
-        public string tonKho
-        {
-            get
-            {
-                return _tonKho;
-            }
+        public string nguoiDich { get; set; }
 
-            set
-            {
-                if (_tonKho != value)
-                {
-                    _tonKho = value;
-                    RaisePropertyChanged("tonKho");
-                }
-            }
-        }
+        public string nhaPhatHanh { get; set; }
 
-        private string _tenSanPham;
-        public string tenSanPham
-        {
-            get
-            {
-                return _tenSanPham;
-            }
+        public string nhaXuatBan { get; set; }
 
-            set
-            {
-                if (_tenSanPham != value)
-                {
-                    _tenSanPham = value;
-                    RaisePropertyChanged("tenSanPham");
-                }
-            }
-        }
+        public string namXuatBan { get; set; }
 
-        private string _tacGia;
-        public string tacGia
-        {
-            get
-            {
-                return _tacGia;
-            }
+        public string kichThuocDai { get; set; }
 
-            set
-            {
-                if (_tacGia != value)
-                {
-                    _tacGia = value;
-                    RaisePropertyChanged("tacGia");
-                }
-            }
-        }
+        public string kichThuocRong { get; set; }
 
-        private string _nguoiDich;
-        public string nguoiDich
-        {
-            get
-            {
-                return _nguoiDich;
-            }
+        public string kichThuocCao { get; set; }
 
-            set
-            {
-                if (_nguoiDich != value)
-                {
-                    _nguoiDich = value;
-                    RaisePropertyChanged("nguoiDich");
-                }
-            }
-        }
+        public string thuMucMedia { get; set; }
 
-        private string _nhaPhatHanh;
-        public string nhaPhatHanh
-        {
-            get
-            {
-                return _nhaPhatHanh;
-            }
-
-            set
-            {
-                if (_nhaPhatHanh != value)
-                {
-                    _nhaPhatHanh = value;
-                    RaisePropertyChanged("nhaPhatHanh");
-                }
-            }
-        }
-
-        private string _nhaXuatBan;
-        public string nhaXuatBan
-        {
-            get
-            {
-                return _nhaXuatBan;
-            }
-
-            set
-            {
-                if (_nhaXuatBan != value)
-                {
-                    _nhaXuatBan = value;
-                    RaisePropertyChanged("nhaXuatBan");
-                }
-            }
-        }
-
-        private string _namXuatBan;
-        public string namXuatBan
-        {
-            get
-            {
-                return _namXuatBan;
-            }
-
-            set
-            {
-                if (_namXuatBan != value)
-                {
-                    _namXuatBan = value;
-                    RaisePropertyChanged("namXuatBan");
-                }
-            }
-        }
-
-        private string _kichThuocDai;
-        public string kichThuocDai
-        {
-            get
-            {
-                return _kichThuocDai;
-            }
-
-            set
-            {
-                if (_kichThuocDai != value)
-                {
-                    _kichThuocDai = value;
-                    RaisePropertyChanged("kichThuocDai");
-                }
-            }
-        }
-
-        private string _kichThuocRong;
-        public string kichThuocRong
-        {
-            get
-            {
-                return _kichThuocRong;
-            }
-
-            set
-            {
-                if (_kichThuocRong != value)
-                {
-                    _kichThuocRong = value;
-                    RaisePropertyChanged("kichThuocRong");
-                }
-            }
-        }
-
-        private string _kichThuocCao;
-        public string kichThuocCao
-        {
-            get
-            {
-                return _kichThuocCao;
-            }
-
-            set
-            {
-                if (_kichThuocCao != value)
-                {
-                    _kichThuocCao = value;
-                    RaisePropertyChanged("kichThuocCao");
-                }
-            }
-        }
-
-        private string _thuMucMedia;
-        public string thuMucMedia
-        {
-            get
-            {
-                return _thuMucMedia;
-            }
-
-            set
-            {
-                if (_thuMucMedia != value)
-                {
-                    _thuMucMedia = value;
-                    RaisePropertyChanged("thuMucMedia");
-                }
-            }
-        }
-
-        private string _moTaChiTietSanPham;
-        public string moTaChiTietSanPham
-        {
-            get
-            {
-                return _moTaChiTietSanPham;
-            }
-
-            set
-            {
-                if (_moTaChiTietSanPham != value)
-                {
-                    _moTaChiTietSanPham = value;
-                    RaisePropertyChanged("moTaChiTietSanPham");
-                }
-            }
-        }
+        public string moTaChiTietSanPham { get; set; }
 
         private string pathXML;
         private XDocument xDoc;
@@ -318,7 +78,7 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Thêm 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
-        public bool AddAProduceToXDocAndSave()
+        public Boolean AddAProduceToXDocAndSave()
         {
             try
             {
@@ -355,9 +115,12 @@ namespace QuanLyKho.Model
             return true;
         }
 
-        public void Button_Click_Luu(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Lưu vào xaml file
+        /// </summary>
+        public Boolean Save()
         {
-            AddAProduceToXDocAndSave();
+            return AddAProduceToXDocAndSave();
         }
 
         /// <summary>

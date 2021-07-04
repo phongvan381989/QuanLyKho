@@ -4,7 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View"
+             xmlns:vm="clr-namespace:QuanLyKho.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200">
-    <Button Name="Luu" Content="Lưu" Style="{StaticResource ButtonStyle}" Click="Button_Click_Luu"/>
+    <!--<UserControl.Resources>
+        <vm:ViewModelThongTinChiTiet x:Key="vmThongTinChiTiet" />
+    </UserControl.Resources>
+    <Grid DataContext="{Binding Source={StaticResource vmThongTinChiTiet}}"> -->
+    <Grid>
+        <Button Name="Luu" Content="Lưu" Style="{StaticResource ButtonStyle}" Command="{Binding commandSave}"/>
+    </Grid>
 </UserControl>

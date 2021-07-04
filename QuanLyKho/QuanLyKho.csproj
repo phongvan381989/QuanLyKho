@@ -78,6 +78,8 @@
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\CommandThongTinChiTiet_Save.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelThongTinChiTiet.cs" />
     <Compile Include="View\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>

@@ -28,19 +28,6 @@ namespace QuanLyKho
             InitializeComponent();
         }
 
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    UserControl1 uC1 = new UserControl1();
-        //    MainStackPanelContent.Children.Add(uC1);
-        //    UserControl1 uC2 = new UserControl1();
-        //    MainStackPanelContent.Children.Add(uC2);
-        //}
-
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    MainStackPanelContent.Children.Clear();
-        //}
-
         private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
             MainStackPanelContent.Children.Clear();
@@ -48,12 +35,12 @@ namespace QuanLyKho
             MainStackPanelContent.Children.Add(ucThongTinChiTiet);
             MyLogger.GetInstance().Debug("Click Nhập Xuất");
 
-            ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
-            vmThongTinChiTiet.UpdateSanPhamHienThi();
-            DataContext = vmThongTinChiTiet.sanPhamHienThi;
-
             SubMenu.Children.Clear();
             SubMenu.Children.Add(new UserControlSMNhapXuat());
+
+            ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
+            vmThongTinChiTiet.UpdateSanPhamHienThi();
+            this.DataContext = vmThongTinChiTiet;
         }
     }
 }

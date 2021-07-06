@@ -21,12 +21,13 @@ namespace QuanLyKho.ViewModel
                 return _commandSave;
             }
         }
+
         private ModelThongTinChiTiet sanPhamHienThi;
 
         public ViewModelThongTinChiTiet()
         {
             sanPhamHienThi = new ModelThongTinChiTiet();
-            listNhaPhatHanh = new ObservableCollection<string>();
+            listNhaPhatHanh = new List<string>();
             _commandSave = new CommandThongTinChiTiet_Save(this);
         }
 
@@ -149,7 +150,7 @@ namespace QuanLyKho.ViewModel
             }
         }
 
-        public ObservableCollection<string> listNhaPhatHanh { get; set; }
+        public List<string> listNhaPhatHanh { get; set; }
 
         public string nhaPhatHanh
         {
@@ -163,6 +164,7 @@ namespace QuanLyKho.ViewModel
                 if (sanPhamHienThi.nhaPhatHanh != value)
                 {
                     sanPhamHienThi.nhaPhatHanh = value;
+                    listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhStartWithAText(value);
                     OnPropertyChanged("nhaPhatHanh");
                 }
             }
@@ -307,10 +309,7 @@ namespace QuanLyKho.ViewModel
             sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
             sanPhamHienThi.moTaChiTietSanPham = @"sách quá là hay.";
 
-            listNhaPhatHanh.Add("Giri");
-            listNhaPhatHanh.Add("Taku");
-            listNhaPhatHanh.Add("Saburo");
-            listNhaPhatHanh.Add("Nene");
+            listNhaPhatHanh = sanPhamHienThi.ListNhaPhatHanh();
         }
     }
 }

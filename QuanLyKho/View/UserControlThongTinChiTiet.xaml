@@ -63,16 +63,15 @@
                                      Text="{Binding Path=nguoiDich, Mode=TwoWay}"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
-                            <!--<TextBox Name="NhaPhatHanh" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
-                                     Text="{Binding Path=nhaPhatHanh, Mode=TwoWay}"/>-->
-                            <ComboBox
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
+                <ComboBox Style="{StaticResource ComboBoxSearchStyle}"
                                   Width="{StaticResource WidthTextBox}"
                                   IsEditable="True"
-                                  ItemsSource="{Binding listNhaPhatHanh , Mode=TwoWay}" 
-                                  SelectedItem="{Binding nhaPhatHanh, Mode=TwoWay}" 
-                                  IsSynchronizedWithCurrentItem="True" 
-                                  Text="Select Option" />
+                                  ItemsSource="{Binding listNhaPhatHanh , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                  SelectedItem="{Binding nhaPhatHanh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                  Text="{Binding nhaPhatHanh, Mode=TwoWay}"
+                                  IsSynchronizedWithCurrentItem="True"
+                                  IsTextSearchEnabled="False"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>

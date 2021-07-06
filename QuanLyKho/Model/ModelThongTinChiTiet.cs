@@ -1,6 +1,7 @@
 ﻿using QuanLyKho.General;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -144,6 +145,64 @@ namespace QuanLyKho.Model
 
                 xmlDocument.Save(path, SaveOptions.None);
             }
+        }
+
+        /// <summary>
+        /// Lấy được tất cả giá trị của 1 thành phần
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public List<string> ListGiaTriMotThanhPhan(string name)
+        {
+            List<string> list = new List<string>();
+            if (xDoc != null)
+            {
+                foreach (XElement element in xDoc.Descendants(name))
+                {
+                    if(!string.IsNullOrEmpty(element.Value))
+                        list.Add(element.Value);
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// Danh sách tất cả nhà phát hành
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListNhaPhatHanh()
+        {
+            return ListGiaTriMotThanhPhan("NhaPhatHanh");
+        }
+
+        /// <summary>
+        /// Danh sách giá trị một thành phần bắt đầu với 1 text
+        /// </summary>
+        /// <param name="name">Tên thành phần</param>
+        /// <param name="strStart">Text bắt đầu</param>
+        /// <returns></returns>
+        public List<string> ListGiaTriMotThanhPhanBatDauVoi1Text(string name, string strStart)
+        {
+            List<string> list = new List<string>();
+            if (xDoc != null)
+            {
+                foreach (XElement element in xDoc.Descendants(name))
+                {
+                    if (!string.IsNullOrEmpty(element.Value) && element.Value.StartsWith(strStart))
+                        list.Add(element.Value);
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// Tìm kiếm nhà phát hành có tên bắt đầu bằng 1 đoạn text
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public List<string> SearchNhaPhatHanhStartWithAText(string str)
+        {
+            return ListGiaTriMotThanhPhanBatDauVoi1Text("NhaPhatHanh", str);
         }
     }
 }

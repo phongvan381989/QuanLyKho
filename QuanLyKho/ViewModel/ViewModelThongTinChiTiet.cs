@@ -27,7 +27,8 @@ namespace QuanLyKho.ViewModel
         public ViewModelThongTinChiTiet()
         {
             sanPhamHienThi = new ModelThongTinChiTiet();
-            listNhaPhatHanh = new List<string>();
+            listNhaPhatHanh = new ObservableCollection<string>();
+            listNhaXuatBan = new ObservableCollection<string>();
             _commandSave = new CommandThongTinChiTiet_Save(this);
         }
 
@@ -150,7 +151,36 @@ namespace QuanLyKho.ViewModel
             }
         }
 
-        public List<string> listNhaPhatHanh { get; set; }
+        private Boolean pIsDropDownOpen_listNhaPhatHanh;
+
+        public Boolean isDropDownOpen_listNhaPhatHanh
+        {
+            get
+            {
+                return pIsDropDownOpen_listNhaPhatHanh;
+            }
+
+            set
+            {
+                pIsDropDownOpen_listNhaPhatHanh = value;
+                OnPropertyChanged("isDropDownOpen_listNhaPhatHanh");
+            }
+        }
+
+        private ObservableCollection<string> plistNhaPhatHanh;
+
+        public ObservableCollection<string> listNhaPhatHanh
+        {
+            get
+            {
+                return plistNhaPhatHanh;
+            }
+            set
+            {
+                plistNhaPhatHanh = value;
+                OnPropertyChanged("listNhaPhatHanh");
+            }
+        }
 
         public string nhaPhatHanh
         {
@@ -164,11 +194,32 @@ namespace QuanLyKho.ViewModel
                 if (sanPhamHienThi.nhaPhatHanh != value)
                 {
                     sanPhamHienThi.nhaPhatHanh = value;
-                    listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhStartWithAText(value);
                     OnPropertyChanged("nhaPhatHanh");
+                    listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhStartWithAText(value);
+                    if (listNhaXuatBan.Count != 0)
+                        isDropDownOpen_listNhaPhatHanh = true;
+                    else
+                        isDropDownOpen_listNhaPhatHanh = false;
                 }
             }
         }
+
+        private ObservableCollection<string> plistNhaXuatBan;
+
+        public ObservableCollection<string> listNhaXuatBan
+        {
+            get
+            {
+                return plistNhaXuatBan;
+            }
+            set
+            {
+                plistNhaXuatBan = value;
+                OnPropertyChanged("listNhaXuatBan");
+            }
+        }
+
+        
 
         public string nhaXuatBan
         {
@@ -183,6 +234,7 @@ namespace QuanLyKho.ViewModel
                 {
                     sanPhamHienThi.nhaXuatBan = value;
                     OnPropertyChanged("nhaXuatBan");
+                    listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanStartWithAText(value);
                 }
             }
         }
@@ -310,6 +362,7 @@ namespace QuanLyKho.ViewModel
             sanPhamHienThi.moTaChiTietSanPham = @"sách quá là hay.";
 
             listNhaPhatHanh = sanPhamHienThi.ListNhaPhatHanh();
+            listNhaXuatBan = sanPhamHienThi.ListNhaXuatBan();
         }
     }
 }

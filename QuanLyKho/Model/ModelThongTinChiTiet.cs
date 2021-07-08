@@ -152,9 +152,9 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public List<string> ListGiaTriMotThanhPhan(string name)
+        public ObservableCollection<string> ListGiaTriMotThanhPhan(string name)
         {
-            List<string> list = new List<string>();
+            ObservableCollection<string> list = new ObservableCollection<string>();
             if (xDoc != null)
             {
                 foreach (XElement element in xDoc.Descendants(name))
@@ -170,7 +170,7 @@ namespace QuanLyKho.Model
         /// Danh sách tất cả nhà phát hành
         /// </summary>
         /// <returns></returns>
-        public List<string> ListNhaPhatHanh()
+        public ObservableCollection<string> ListNhaPhatHanh()
         {
             return ListGiaTriMotThanhPhan("NhaPhatHanh");
         }
@@ -178,17 +178,20 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Danh sách giá trị một thành phần bắt đầu với 1 text
         /// </summary>
-        /// <param name="name">Tên thành phần</param>
-        /// <param name="strStart">Text bắt đầu</param>
+        /// <param name="name">Tên thành phần.</param>
+        /// <param name="strStart">Text bắt đầu.</param>
         /// <returns></returns>
-        public List<string> ListGiaTriMotThanhPhanBatDauVoi1Text(string name, string strStart)
+        public ObservableCollection<string> ListGiaTriMotThanhPhanBatDauVoi1Text(string name, string strStart)
         {
-            List<string> list = new List<string>();
+           if (string.IsNullOrEmpty(strStart))
+                return ListGiaTriMotThanhPhan(name);
+
+            ObservableCollection<string> list = new ObservableCollection<string>();
             if (xDoc != null)
             {
                 foreach (XElement element in xDoc.Descendants(name))
                 {
-                    if (!string.IsNullOrEmpty(element.Value) && element.Value.StartsWith(strStart))
+                    if (!string.IsNullOrEmpty(element.Value) && element.Value.StartsWith(strStart,StringComparison.OrdinalIgnoreCase))
                         list.Add(element.Value);
                 }
             }
@@ -200,9 +203,28 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public List<string> SearchNhaPhatHanhStartWithAText(string str)
+        public ObservableCollection<string> SearchNhaPhatHanhStartWithAText(string str)
         {
             return ListGiaTriMotThanhPhanBatDauVoi1Text("NhaPhatHanh", str);
+        }
+
+        /// <summary>
+        /// Tìm kiếm nhà xuất bản có tên bắt đầu bằng 1 đoạn text
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public ObservableCollection<string> SearchNhaXuatBanStartWithAText(string str)
+        {
+            return ListGiaTriMotThanhPhanBatDauVoi1Text("NhaXuatBan", str);
+        }
+
+        /// <summary>
+        /// Danh sách tất cả nhà xuất bản
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<string> ListNhaXuatBan()
+        {
+            return ListGiaTriMotThanhPhan("NhaXuatBan");
         }
     }
 }

@@ -196,7 +196,7 @@ namespace QuanLyKho.ViewModel
                     sanPhamHienThi.nhaPhatHanh = value;
                     OnPropertyChanged("nhaPhatHanh");
                     listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhStartWithAText(value);
-                    if (listNhaXuatBan.Count != 0)
+                    if (listNhaPhatHanh.Count != 0)
                         isDropDownOpen_listNhaPhatHanh = true;
                     else
                         isDropDownOpen_listNhaPhatHanh = false;

@@ -68,11 +68,11 @@
                                               Width="{StaticResource WidthTextBox}"
                                               IsEditable="True"
                                               ItemsSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              SelectedItem="{Binding nhaPhatHanh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                               Text="{Binding nhaPhatHanh, Mode=TwoWay}"
+                                              IsDropDownOpen="{Binding isDropDownOpen_listNhaPhatHanh, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                               IsSynchronizedWithCurrentItem="False"
                                               IsTextSearchEnabled="False"
-                                              IsDropDownOpen ="{Binding Path=isDropDownOpen_listNhaPhatHanh, Mode=OneWay}"/>
+                                              />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>

@@ -41,10 +41,5 @@ namespace QuanLyKho.View
                 DisplayMedia.InitDisplay();
             }
         }
-
-        private void ComboBox_NhaPhatHanh_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }

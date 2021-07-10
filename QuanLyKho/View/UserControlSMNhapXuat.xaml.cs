@@ -28,12 +28,5 @@ namespace QuanLyKho.View
         {
             InitializeComponent();
         }
-
-        private void Button_Click_Luu(object sender, RoutedEventArgs e)
-        {
-            ViewModelThongTinChiTiet viewModel = (ViewModelThongTinChiTiet)DataContext;
-            //viewModel.Button_Click_Luu(sender, e);
-        }
-
     }
 }

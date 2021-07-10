@@ -32,8 +32,11 @@
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
-                            <TextBox Name="MaSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
-                                     Text="{Binding Path=maSanPham, Mode=TwoWay}"/>
+                            <local:UserControlComboBoxSearch x:Name="maSanPham" Width="{StaticResource WidthTextBox}"
+                                                          ComboBoxSearchItemSource="{Binding listMaSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          ComboBoxSearchText="{Binding maSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listMaSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>

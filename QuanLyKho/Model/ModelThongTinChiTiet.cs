@@ -68,7 +68,6 @@ namespace QuanLyKho.Model
             {
                 CheckAndCreateXML(pathXML);
             }
-            xDoc = XDocument.Load(pathXML);
         }
 
         public void SaveXDoc(string path)
@@ -84,7 +83,8 @@ namespace QuanLyKho.Model
             try
             {
                 Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
-                XElement aProduce = new XElement("MaSanPham",
+                XElement aProduce = new XElement("SanPham",
+                    new XElement("MaSanPham", maSanPham),
                     new XElement("MaISBN", maISBN),
                     new XElement("TonKho", iTonKho.ToString()),
                     new XElement("TenSanPham", tenSanPham),
@@ -99,8 +99,6 @@ namespace QuanLyKho.Model
                     new XElement("ThuMucMedia", thuMucMedia),
                     new XElement("MoTaChiTiet", moTaChiTietSanPham)
                     );
-
-                aProduce.SetAttributeValue("Id", maSanPham);
 
                 xDoc.Root.Add(aProduce);
                 SaveXDoc(pathXML);
@@ -194,9 +192,20 @@ namespace QuanLyKho.Model
                 {
                     if (!string.IsNullOrEmpty(element.Value))
                     {
-                        if (parameterSearch == ParameterSearch.First && element.Value.StartsWith(str, StringComparison.OrdinalIgnoreCase))
+                        if (parameterSearch == ParameterSearch.First 
+                            && element.Value.StartsWith(str, StringComparison.OrdinalIgnoreCase))
                         {
-                        list.Add(element.Value);
+                            list.Add(element.Value);
+                        }
+                        else if(parameterSearch == ParameterSearch.Last
+                            && element.Value.EndsWith(str, StringComparison.OrdinalIgnoreCase))
+                        {
+                            list.Add(element.Value);
+                        }
+                        else if (parameterSearch == ParameterSearch.All
+                            && element.Value.IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
+                            list.Add(element.Value);
                         }
                     }
                 }
@@ -233,6 +242,17 @@ namespace QuanLyKho.Model
         public ObservableCollection<string> ListNhaXuatBan()
         {
             return ListGiaTriMotThanhPhan("NhaXuatBan");
+        }
+
+        /// <summary>
+        /// Tìm kiếm nhà phát hành có tên bắt đầu bằng 1 đoạn text
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> SearchMaSanPhamAText(string str, ParameterSearch parameterSearch)
+        {
+            return ListGiaTriMotThanhPhanVoiAText("MaSanPham", str, parameterSearch);
         }
     }
 }

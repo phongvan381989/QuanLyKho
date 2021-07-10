@@ -50,6 +50,37 @@ namespace QuanLyKho.ViewModel
             }
         }
 
+        #region Mã sản phẩm
+        private Boolean pIsDropDownOpen_listMaSanPham;
+
+        public Boolean isDropDownOpen_listMaSanPham
+        {
+            get
+            {
+                return pIsDropDownOpen_listMaSanPham;
+            }
+
+            set
+            {
+                pIsDropDownOpen_listMaSanPham = value;
+                OnPropertyChanged("isDropDownOpen_listMaSanPham");
+            }
+        }
+
+        private ObservableCollection<string> plistMaSanPham;
+
+        public ObservableCollection<string> listMaSanPham
+        {
+            get
+            {
+                return plistMaSanPham;
+            }
+            set
+            {
+                plistMaSanPham = value;
+                OnPropertyChanged("listMaSanPham");
+            }
+        }
         public string maSanPham
         {
             get
@@ -63,9 +94,15 @@ namespace QuanLyKho.ViewModel
                 {
                     sanPhamHienThi.maSanPham = value;
                     OnPropertyChanged("maSanPham");
+                    listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
+                    if (listMaSanPham.Count != 0)
+                        isDropDownOpen_listMaSanPham = true;
+                    else
+                        isDropDownOpen_listMaSanPham = false;
                 }
             }
         }
+        #endregion
 
         public string soLuongNhap
         {
@@ -151,6 +188,7 @@ namespace QuanLyKho.ViewModel
                 }
             }
         }
+
         #region Nhà phát hành
         private Boolean pIsDropDownOpen_listNhaPhatHanh;
 

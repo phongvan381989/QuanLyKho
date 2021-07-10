@@ -17,7 +17,7 @@ namespace QuanLyKho.View
 {
     /// <summary>
     /// Interaction logic for UserControlTextBoxIntegerOnly.xaml
-    /// Mục đích chỉ cho phép nhập số nguyên, nhưng chưa xử lý được vấn đề nhập nhiều dấu -
+    /// Mục đích chỉ cho phép nhập số nguyên
     /// </summary>
     public partial class UserControlTextBoxIntegerOnly : UserControl
     {

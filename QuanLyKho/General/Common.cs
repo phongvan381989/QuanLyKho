@@ -8,6 +8,13 @@ using System.Windows;
 
 namespace QuanLyKho.General
 {
+    public enum ParameterSearch
+    {
+        First,
+        Last,
+        All
+    }
+
     class Common
     {
         /// <summary>

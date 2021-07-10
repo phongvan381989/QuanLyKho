@@ -87,6 +87,9 @@
     <Compile Include="View\UserControlChonThoiGian.xaml.cs">
       <DependentUpon>UserControlChonThoiGian.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControlComboBoxSearch.xaml.cs">
+      <DependentUpon>UserControlComboBoxSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControlSoThucDuong.xaml.cs">
       <DependentUpon>UserControlSoThucDuong.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControlChonThoiGian.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlComboBoxSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

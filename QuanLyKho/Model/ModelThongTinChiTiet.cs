@@ -176,14 +176,15 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
-        /// Danh sách giá trị một thành phần bắt đầu với 1 text
+        /// Danh sách giá trị một thành phần với 1 text
         /// </summary>
         /// <param name="name">Tên thành phần.</param>
         /// <param name="strStart">Text bắt đầu.</param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
         /// <returns></returns>
-        public ObservableCollection<string> ListGiaTriMotThanhPhanBatDauVoi1Text(string name, string strStart)
+        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiAText(string name, string str, ParameterSearch parameterSearch)
         {
-           if (string.IsNullOrEmpty(strStart))
+           if (string.IsNullOrEmpty(str))
                 return ListGiaTriMotThanhPhan(name);
 
             ObservableCollection<string> list = new ObservableCollection<string>();
@@ -191,8 +192,13 @@ namespace QuanLyKho.Model
             {
                 foreach (XElement element in xDoc.Descendants(name))
                 {
-                    if (!string.IsNullOrEmpty(element.Value) && element.Value.StartsWith(strStart,StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrEmpty(element.Value))
+                    {
+                        if (parameterSearch == ParameterSearch.First && element.Value.StartsWith(str, StringComparison.OrdinalIgnoreCase))
+                        {
                         list.Add(element.Value);
+                        }
+                    }
                 }
             }
             return list;
@@ -202,20 +208,22 @@ namespace QuanLyKho.Model
         /// Tìm kiếm nhà phát hành có tên bắt đầu bằng 1 đoạn text
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
         /// <returns></returns>
-        public ObservableCollection<string> SearchNhaPhatHanhStartWithAText(string str)
+        public ObservableCollection<string> SearchNhaPhatHanhAText(string str, ParameterSearch parameterSearch)
         {
-            return ListGiaTriMotThanhPhanBatDauVoi1Text("NhaPhatHanh", str);
+            return ListGiaTriMotThanhPhanVoiAText("NhaPhatHanh", str, parameterSearch);
         }
 
         /// <summary>
         /// Tìm kiếm nhà xuất bản có tên bắt đầu bằng 1 đoạn text
         /// </summary>
         /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
         /// <returns></returns>
-        public ObservableCollection<string> SearchNhaXuatBanStartWithAText(string str)
+        public ObservableCollection<string> SearchNhaXuatBanAText(string str, ParameterSearch parameterSearch)
         {
-            return ListGiaTriMotThanhPhanBatDauVoi1Text("NhaXuatBan", str);
+            return ListGiaTriMotThanhPhanVoiAText("NhaXuatBan", str, parameterSearch);
         }
 
         /// <summary>

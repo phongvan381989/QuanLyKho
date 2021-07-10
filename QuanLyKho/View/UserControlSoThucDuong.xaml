@@ -9,9 +9,9 @@
     <Grid>
         <TextBox  Name="textBoxSoDuong" Style="{StaticResource TextBoxStyleCode}"
             TextChanged="TextBoxSoDuong_TextChanged"
-                  ToolTip="Nhập số dương"
-                  Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-                  Path=SoThucDuongText, UpdateSourceTrigger=PropertyChanged}">
+            ToolTip="Nhập số dương"
+            Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+            Path=SoThucDuongText, UpdateSourceTrigger=PropertyChanged}">
         </TextBox>
     </Grid>
 </UserControl>

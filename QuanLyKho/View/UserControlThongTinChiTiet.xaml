@@ -64,28 +64,19 @@
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
-                            <ComboBox Style="{StaticResource ComboBoxSearchStyle}"
-                                              Width="{StaticResource WidthTextBox}"
-                                              IsEditable="True"
-                                              ItemsSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              Text="{Binding nhaPhatHanh, Mode=TwoWay}"
-                                              IsDropDownOpen="{Binding isDropDownOpen_listNhaPhatHanh, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                              IsSynchronizedWithCurrentItem="False"
-                                              IsTextSearchEnabled="False"
+                            <local:UserControlComboBoxSearch x:Name="nhaPhatHanh" Width="{StaticResource WidthTextBox}"
+                                              ComboBoxSearchItemSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                              ComboBoxSearchText="{Binding nhaPhatHanh , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaPhatHanh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>
-                            <!--<TextBox Name="NhaXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
-                                     Text="{Binding Path=nhaXuatBan, Mode=TwoWay}"/>-->
-                            <ComboBox Style="{StaticResource ComboBoxSearchStyle}"
-                                              Width="{StaticResource WidthTextBox}"
-                                              IsEditable="True"
-                                              ItemsSource="{Binding listNhaXuatBan, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              SelectedItem="{Binding nhaXuatBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              Text="{Binding nhaXuatBan, Mode=TwoWay}"
-                                              IsSynchronizedWithCurrentItem="False"
-                                              IsTextSearchEnabled="False"/>
+                            <local:UserControlComboBoxSearch x:Name="nhaXuatBan" Width="{StaticResource WidthTextBox}"
+                                              ComboBoxSearchItemSource="{Binding listNhaXuatBan , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                              ComboBoxSearchText="{Binding nhaXuatBan , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaXuatBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Năm xuất bản</TextBlock>

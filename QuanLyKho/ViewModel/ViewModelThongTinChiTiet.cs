@@ -1,4 +1,5 @@
-﻿using QuanLyKho.Model;
+﻿using QuanLyKho.General;
+using QuanLyKho.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -150,7 +151,7 @@ namespace QuanLyKho.ViewModel
                 }
             }
         }
-
+        #region Nhà phát hành
         private Boolean pIsDropDownOpen_listNhaPhatHanh;
 
         public Boolean isDropDownOpen_listNhaPhatHanh
@@ -195,12 +196,31 @@ namespace QuanLyKho.ViewModel
                 {
                     sanPhamHienThi.nhaPhatHanh = value;
                     OnPropertyChanged("nhaPhatHanh");
-                    listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhStartWithAText(value);
+                    listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(value, ParameterSearch.First);
                     if (listNhaPhatHanh.Count != 0)
                         isDropDownOpen_listNhaPhatHanh = true;
                     else
                         isDropDownOpen_listNhaPhatHanh = false;
                 }
+            }
+        }
+        #endregion
+
+        #region Nhà Xuất Bản
+
+        private Boolean pIsDropDownOpen_listNhaXuatBan;
+
+        public Boolean isDropDownOpen_listNhaXuatBan
+        {
+            get
+            {
+                return pIsDropDownOpen_listNhaXuatBan;
+            }
+
+            set
+            {
+                pIsDropDownOpen_listNhaXuatBan = value;
+                OnPropertyChanged("isDropDownOpen_listNhaXuatBan");
             }
         }
 
@@ -234,10 +254,15 @@ namespace QuanLyKho.ViewModel
                 {
                     sanPhamHienThi.nhaXuatBan = value;
                     OnPropertyChanged("nhaXuatBan");
-                    listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanStartWithAText(value);
+                    listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(value, ParameterSearch.First);
+                    if (listNhaXuatBan.Count != 0)
+                        isDropDownOpen_listNhaXuatBan = true;
+                    else
+                        isDropDownOpen_listNhaXuatBan = false;
                 }
             }
         }
+        #endregion
 
         public string namXuatBan
         {

@@ -23,11 +23,19 @@ namespace QuanLyKho.ViewModel
             }
         }
 
-        private ModelThongTinChiTiet sanPhamHienThi;
+        public ModelThongTinChiTiet sanPhamHienThi { get; set; }
 
+        
         public ViewModelThongTinChiTiet()
         {
-            sanPhamHienThi = new ModelThongTinChiTiet();
+            try
+            {
+                sanPhamHienThi = new ModelThongTinChiTiet();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             listNhaPhatHanh = new ObservableCollection<string>();
             listNhaXuatBan = new ObservableCollection<string>();
             _commandSave = new CommandThongTinChiTiet_Save(this);
@@ -389,20 +397,36 @@ namespace QuanLyKho.ViewModel
 
         public void Save()
         {
-            if(sanPhamHienThi.Save())
+            Boolean bResult = true;
+            string strError = "";
+            try
+            {
+                bResult = false;
+                bResult = sanPhamHienThi.Save();
+            }
+            catch(FormatException ex)
+            {
+                bResult = false;
+                strError = ex.Message;
+            }
+            catch(OverflowException ex)
+            {
+                strError = ex.Message;
+            }
+
+            if(bResult)
             {
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Sản phẩm");
             }
             else
             {
-                MessageBox.Show("Lưu không thành công", "Sản phẩm");
+                MessageBox.Show("Lưu không thành công!" + strError, "Sản phẩm", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
         }
 
         public void UpdateSanPhamHienThi()
         {
-            if (sanPhamHienThi == null)
-                sanPhamHienThi = new ModelThongTinChiTiet();
             sanPhamHienThi.maSanPham = "123456789";
             sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
             sanPhamHienThi.moTaChiTietSanPham = @"sách quá là hay.";

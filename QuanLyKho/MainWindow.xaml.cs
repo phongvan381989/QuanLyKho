@@ -30,17 +30,21 @@ namespace QuanLyKho
 
         private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
-            MainStackPanelContent.Children.Clear();
-            UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
-            MainStackPanelContent.Children.Add(ucThongTinChiTiet);
-            MyLogger.GetInstance().Debug("Click Nhập Xuất");
-
-            SubMenu.Children.Clear();
-            SubMenu.Children.Add(new UserControlSMNhapXuat());
-
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
-            vmThongTinChiTiet.UpdateSanPhamHienThi();
-            this.DataContext = vmThongTinChiTiet;
+
+            // Phải đọc được file db
+            if (vmThongTinChiTiet.sanPhamHienThi != null)
+            {
+                vmThongTinChiTiet.UpdateSanPhamHienThi();
+                this.DataContext = vmThongTinChiTiet;
+
+                MainStackPanelContent.Children.Clear();
+                UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
+                MainStackPanelContent.Children.Add(ucThongTinChiTiet);
+
+                SubMenu.Children.Clear();
+                SubMenu.Children.Add(new UserControlSMNhapXuat());
+            }
         }
     }
 }

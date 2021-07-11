@@ -73,7 +73,18 @@ namespace QuanLyKho.General
             }
             else
             {
-                return Int32.Parse(str);
+                try
+                {
+                    return Int32.Parse(str);
+                }
+                catch(FormatException ex)
+                {
+                    throw new FormatException("Không thể chuyển đổi sang số do sai định dạng. " + ex.Message );
+                }
+                catch(OverflowException ex)
+                {
+                    throw new OverflowException("Giá trị số quá lớn. " + ex.Message);
+                }
             }
         }
 

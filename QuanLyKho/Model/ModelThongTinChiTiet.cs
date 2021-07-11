@@ -66,11 +66,14 @@ namespace QuanLyKho.Model
             {
                 CheckAndCreateXML(pathXML);
             }
-        }
-
-        public void SaveXDoc(string path)
-        {
-            xDoc.Save(path, SaveOptions.None);
+            try
+            {
+                xDoc = XDocument.Load(pathXML);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Không đọc được file ThongTinChiTiet.xml. " + e.Message);
+            }
         }
 
         /// <summary>
@@ -78,36 +81,27 @@ namespace QuanLyKho.Model
         /// </summary>
         public Boolean AddAProduceToXDocAndSave()
         {
-            try
-            {
-                Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
-                XElement aProduce = new XElement("SanPham",
-                    new XElement("MaSanPham", maSanPham),
-                    new XElement("TonKho", iTonKho.ToString()),
-                    new XElement("TenSanPham", tenSanPham),
-                    new XElement("TacGia", tacGia),
-                    new XElement("NguoiDich", nguoiDich),
-                    new XElement("NhaPhatHanh", nhaPhatHanh),
-                    new XElement("NhaXuatBan", nhaXuatBan),
-                    new XElement("NamXuatBan", namXuatBan),
-                    new XElement("KichThuocDai", kichThuocDai),
-                    new XElement("KichThuocRong", kichThuocRong),
-                    new XElement("KichThuocCao", kichThuocCao),
-                    new XElement("ThuMucMedia", thuMucMedia),
-                    new XElement("MoTaChiTiet", moTaChiTietSanPham)
-                    );
+            Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
+            XElement aProduce = new XElement("SanPham",
+                new XElement("MaSanPham", maSanPham),
+                new XElement("TonKho", iTonKho.ToString()),
+                new XElement("TenSanPham", tenSanPham),
+                new XElement("TacGia", tacGia),
+                new XElement("NguoiDich", nguoiDich),
+                new XElement("NhaPhatHanh", nhaPhatHanh),
+                new XElement("NhaXuatBan", nhaXuatBan),
+                new XElement("NamXuatBan", namXuatBan),
+                new XElement("KichThuocDai", kichThuocDai),
+                new XElement("KichThuocRong", kichThuocRong),
+                new XElement("KichThuocCao", kichThuocCao),
+                new XElement("ThuMucMedia", thuMucMedia),
+                new XElement("MoTaChiTiet", moTaChiTietSanPham)
+                );
 
-                xDoc.Root.Add(aProduce);
-                SaveXDoc(pathXML);
-                tonKho = iTonKho.ToString();
-                soLuongNhap = string.Empty;
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("ERROR: " + e.ToString());
-                MyLogger.GetInstance().Error(e.ToString());
-                return false;
-            }
+            xDoc.Root.Add(aProduce);
+            xDoc.Save(pathXML, SaveOptions.None);
+            tonKho = iTonKho.ToString();
+            soLuongNhap = string.Empty;
             return true;
         }
 

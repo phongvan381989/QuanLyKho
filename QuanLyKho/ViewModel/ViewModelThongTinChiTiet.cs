@@ -33,23 +33,6 @@ namespace QuanLyKho.ViewModel
             _commandSave = new CommandThongTinChiTiet_Save(this);
         }
 
-        public string maISBN
-        {
-            get
-            {
-                return sanPhamHienThi.maISBN;
-            }
-
-            set
-            {
-                if (sanPhamHienThi.maISBN != value)
-                {
-                    sanPhamHienThi.maISBN = value;
-                    OnPropertyChanged("maISBN");
-                }
-            }
-        }
-
         #region Mã sản phẩm
         private Boolean pIsDropDownOpen_listMaSanPham;
 
@@ -420,7 +403,7 @@ namespace QuanLyKho.ViewModel
         {
             if (sanPhamHienThi == null)
                 sanPhamHienThi = new ModelThongTinChiTiet();
-            sanPhamHienThi.maISBN = "123456789";
+            sanPhamHienThi.maSanPham = "123456789";
             sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
             sanPhamHienThi.moTaChiTietSanPham = @"sách quá là hay.";
 

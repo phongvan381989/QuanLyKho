@@ -26,11 +26,6 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical" Name="nhapDuLieu">
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã ISBN</TextBlock>
-                            <TextBox Name="MaISBN" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
-                                     Text="{Binding Path=maISBN, Mode=TwoWay}"/>
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
                             <local:UserControlComboBoxSearch x:Name="maSanPham" Width="{StaticResource WidthTextBox}"
                                                           ComboBoxSearchItemSource="{Binding listMaSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

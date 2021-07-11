@@ -29,8 +29,6 @@ namespace QuanLyKho.Model
             }
         }
 
-        public string maISBN { get; set; }
-
         public string maSanPham { get; set; }
 
         public string soLuongNhap { get; set; }
@@ -85,7 +83,6 @@ namespace QuanLyKho.Model
                 Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
                 XElement aProduce = new XElement("SanPham",
                     new XElement("MaSanPham", maSanPham),
-                    new XElement("MaISBN", maISBN),
                     new XElement("TonKho", iTonKho.ToString()),
                     new XElement("TenSanPham", tenSanPham),
                     new XElement("TacGia", tacGia),

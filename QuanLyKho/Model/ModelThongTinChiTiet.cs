@@ -18,6 +18,8 @@ namespace QuanLyKho.Model
         {
             pathXML = ((App)Application.Current).GetPathDataXMLThongTinChiTiet();
             InitializeXDoc();
+            InitializeBuffer();
+
         }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -28,6 +30,33 @@ namespace QuanLyKho.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+        #region list phục vụ truy xuất nhanh thành phần
+        private ObservableCollection<string> listNhaPhatHanh;
+        private ObservableCollection<string> listNhaXuatBan;
+        private ObservableCollection<string> listMaSanPham;
+        private void InitializeBuffer()
+        {
+            listMaSanPham = ListGiaTriMotThanhPhanFromXDoc("MaSanPham", false);
+            listNhaPhatHanh = ListGiaTriMotThanhPhanFromXDoc("NhaPhatHanh", false);
+            listNhaXuatBan = ListGiaTriMotThanhPhanFromXDoc("NhaXuatBan", false);
+        }
+
+        /// <summary>
+        /// Từ tên thành phần get list tương ứng
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private ObservableCollection<string> GetListFromName(string name)
+        {
+            if (name == "MaSanPham")
+                return listMaSanPham;
+            else if (name == "NhaPhatHanh")
+                return listNhaPhatHanh;
+            else if (name == "NhaXuatBan")
+                return listNhaXuatBan;
+            return null;
+        }
+        #endregion
 
         public string maSanPham { get; set; }
 
@@ -140,16 +169,35 @@ namespace QuanLyKho.Model
         /// Lấy được tất cả giá trị của 1 thành phần
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="isIncludeSame">False:Kết quả trả về gồm các giá trị khác nhau. True: cá giá trị có thể giống nhau</param>
         /// <returns></returns>
-        public ObservableCollection<string> ListGiaTriMotThanhPhan(string name)
+        public ObservableCollection<string> ListGiaTriMotThanhPhanFromXDoc(string name, Boolean isIncludeSame)
         {
             ObservableCollection<string> list = new ObservableCollection<string>();
             if (xDoc != null)
             {
                 foreach (XElement element in xDoc.Descendants(name))
                 {
-                    if(!string.IsNullOrEmpty(element.Value))
-                        list.Add(element.Value);
+                    if (!string.IsNullOrEmpty(element.Value))
+                    {
+                        if (isIncludeSame)
+                            list.Add(element.Value);
+                        else
+                        {
+                            Int32 count = list.Count();
+                            Boolean isExist = false;
+                            for (Int32 i = 0; i < count; i++)
+                            {
+                                if (list[i] == element.Value)
+                                {
+                                    isExist = true;
+                                    break;
+                                }
+                            }
+                            if (!isExist)
+                                list.Add(element.Value);
+                        }
+                    }
                 }
             }
             return list;
@@ -161,20 +209,21 @@ namespace QuanLyKho.Model
         /// <returns></returns>
         public ObservableCollection<string> ListNhaPhatHanh()
         {
-            return ListGiaTriMotThanhPhan("NhaPhatHanh");
+            return GetListFromName("NhaPhatHanh");
         }
 
         /// <summary>
-        /// Danh sách giá trị một thành phần với 1 text
+        /// Danh sách giá trị một thành phần với 1 text được tìm từ xDoc
         /// </summary>
         /// <param name="name">Tên thành phần.</param>
         /// <param name="strStart">Text bắt đầu.</param>
         /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <param name="isIncludeSame">False:Kết quả trả về gồm các giá trị khác nhau. True: cá giá trị có thể giống nhau</param>
         /// <returns></returns>
-        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiAText(string name, string str, ParameterSearch parameterSearch)
+        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiATextFromXDoc(string name, string str, ParameterSearch parameterSearch, Boolean isIncludeSame)
         {
            if (string.IsNullOrEmpty(str))
-                return ListGiaTriMotThanhPhan(name);
+                return ListGiaTriMotThanhPhanFromXDoc(name, isIncludeSame);
 
             ObservableCollection<string> list = new ObservableCollection<string>();
             if (xDoc != null)
@@ -183,20 +232,32 @@ namespace QuanLyKho.Model
                 {
                     if (!string.IsNullOrEmpty(element.Value))
                     {
-                        if (parameterSearch == ParameterSearch.First 
+                        if ((parameterSearch == ParameterSearch.First 
                             && element.Value.StartsWith(str, StringComparison.OrdinalIgnoreCase))
-                        {
-                            list.Add(element.Value);
-                        }
-                        else if(parameterSearch == ParameterSearch.Last
+
+                            ||(parameterSearch == ParameterSearch.Last
                             && element.Value.EndsWith(str, StringComparison.OrdinalIgnoreCase))
+
+                            ||(parameterSearch == ParameterSearch.All
+                            && element.Value.IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0))
                         {
-                            list.Add(element.Value);
-                        }
-                        else if (parameterSearch == ParameterSearch.All
-                            && element.Value.IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0)
-                        {
-                            list.Add(element.Value);
+                            if(isIncludeSame)
+                                list.Add(element.Value);
+                            else
+                            {
+                                Int32 count = list.Count();
+                                Boolean isExist = false;
+                                for (Int32 i = 0; i < count; i++)
+                                {
+                                    if (list[i] == element.Value)
+                                    {
+                                        isExist = true;
+                                        break;
+                                    }
+                                }
+                                if (!isExist)
+                                    list.Add(element.Value);
+                            }
                         }
                     }
                 }
@@ -205,6 +266,39 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
+        /// Danh sách giá trị một thành phần với 1 text được tìm từ list
+        /// </summary>
+        /// <param name="name">Tên thành phần.</param>
+        /// <param name="strStart">Text bắt đầu.</param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiATextFromList(string name, string str, ParameterSearch parameterSearch)
+        {
+            ObservableCollection<string> listOriginal = GetListFromName(name);
+            if (string.IsNullOrEmpty(str))
+            {
+                return listOriginal;
+            }
+
+            ObservableCollection<string> list = new ObservableCollection<string>();
+            Int32 count = listOriginal.Count();
+            for (Int32 i = 0; i < count; i++)
+            {
+                if ((parameterSearch == ParameterSearch.First
+                    && listOriginal[i].StartsWith(str, StringComparison.OrdinalIgnoreCase))
+
+                    || (parameterSearch == ParameterSearch.Last
+                    && listOriginal[i].EndsWith(str, StringComparison.OrdinalIgnoreCase))
+
+                    || (parameterSearch == ParameterSearch.All
+                    && listOriginal[i].IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    list.Add(listOriginal[i]);
+                }
+            }
+            return list;
+        }
+        /// <summary>
         /// Tìm kiếm nhà phát hành có tên bắt đầu bằng 1 đoạn text
         /// </summary>
         /// <param name="str"></param>
@@ -212,7 +306,7 @@ namespace QuanLyKho.Model
         /// <returns></returns>
         public ObservableCollection<string> SearchNhaPhatHanhAText(string str, ParameterSearch parameterSearch)
         {
-            return ListGiaTriMotThanhPhanVoiAText("NhaPhatHanh", str, parameterSearch);
+            return ListGiaTriMotThanhPhanVoiATextFromList("NhaPhatHanh", str, parameterSearch);
         }
 
         /// <summary>
@@ -223,7 +317,7 @@ namespace QuanLyKho.Model
         /// <returns></returns>
         public ObservableCollection<string> SearchNhaXuatBanAText(string str, ParameterSearch parameterSearch)
         {
-            return ListGiaTriMotThanhPhanVoiAText("NhaXuatBan", str, parameterSearch);
+            return ListGiaTriMotThanhPhanVoiATextFromList("NhaXuatBan", str, parameterSearch);
         }
 
         /// <summary>
@@ -232,7 +326,7 @@ namespace QuanLyKho.Model
         /// <returns></returns>
         public ObservableCollection<string> ListNhaXuatBan()
         {
-            return ListGiaTriMotThanhPhan("NhaXuatBan");
+            return GetListFromName("NhaXuatBan");
         }
 
         /// <summary>
@@ -243,7 +337,16 @@ namespace QuanLyKho.Model
         /// <returns></returns>
         public ObservableCollection<string> SearchMaSanPhamAText(string str, ParameterSearch parameterSearch)
         {
-            return ListGiaTriMotThanhPhanVoiAText("MaSanPham", str, parameterSearch);
+            return ListGiaTriMotThanhPhanVoiATextFromList("MaSanPham", str, parameterSearch);
+        }
+
+        /// <summary>
+        /// Danh sách tất cả mã sản phẩm
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<string> ListMaSanPham()
+        {
+            return GetListFromName("MaSanPham");
         }
     }
 }

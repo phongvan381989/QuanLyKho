@@ -36,8 +36,6 @@ namespace QuanLyKho.ViewModel
             {
                 MessageBox.Show(ex.Message);
             }
-            listNhaPhatHanh = new ObservableCollection<string>();
-            listNhaXuatBan = new ObservableCollection<string>();
             _commandSave = new CommandThongTinChiTiet_Save(this);
         }
 
@@ -427,10 +425,11 @@ namespace QuanLyKho.ViewModel
 
         public void UpdateSanPhamHienThi()
         {
-            sanPhamHienThi.maSanPham = "123456789";
-            sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
-            sanPhamHienThi.moTaChiTietSanPham = @"sách quá là hay.";
+            //sanPhamHienThi.maSanPham = "123456789";
+            //sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
+            //sanPhamHienThi.moTaChiTietSanPham = @"sách quá là hay.";
 
+            listMaSanPham = sanPhamHienThi.ListMaSanPham();
             listNhaPhatHanh = sanPhamHienThi.ListNhaPhatHanh();
             listNhaXuatBan = sanPhamHienThi.ListNhaXuatBan();
         }

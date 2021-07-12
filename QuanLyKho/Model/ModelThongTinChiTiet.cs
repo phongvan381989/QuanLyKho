@@ -135,12 +135,55 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
-        /// Lưu vào xaml file
+        /// Cập nhật 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
-        public Boolean Save()
+        /// <returns></returns>
+        public Boolean UpdateAProducToXDocAndSave()
         {
-            return AddAProduceToXDocAndSave();
+            Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
+            XElement aProduce = new XElement("SanPham",
+                new XElement("MaSanPham", maSanPham),
+                new XElement("TonKho", iTonKho.ToString()),
+                new XElement("TenSanPham", tenSanPham),
+                new XElement("TacGia", tacGia),
+                new XElement("NguoiDich", nguoiDich),
+                new XElement("NhaPhatHanh", nhaPhatHanh),
+                new XElement("NhaXuatBan", nhaXuatBan),
+                new XElement("NamXuatBan", namXuatBan),
+                new XElement("KichThuocDai", kichThuocDai),
+                new XElement("KichThuocRong", kichThuocRong),
+                new XElement("KichThuocCao", kichThuocCao),
+                new XElement("ThuMucMedia", thuMucMedia),
+                new XElement("MoTaChiTiet", moTaChiTietSanPham)
+                );
+            XElement eExist;
+            try
+            {
+                eExist = xDoc
+                    .Element("ThongTinChiTiet")
+                    .Elements("SanPham")
+                    .Where(e => e.Element("MaSanPham").Value == maSanPham).Single();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
+            eExist = aProduce;
+            xDoc.Save(pathXML, SaveOptions.None);
+            tonKho = iTonKho.ToString();
+            soLuongNhap = string.Empty;
+            return true;
         }
+
+        ///// <summary>
+        ///// Lưu vào xaml file
+        ///// </summary>
+        //public Boolean Save()
+        //{
+        //    // Nếu mã sản phẩm chưa tồn tại, tạo mới
+
+        //    return AddAProduceToXDocAndSave();
+        //}
 
         /// <summary>
         /// Check file ThongTinChiTiet.xml tồn tại không? Không tồn tại tạo file mới

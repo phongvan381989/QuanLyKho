@@ -12,6 +12,7 @@
     </UserControl.Resources>
     <Grid DataContext="{Binding Source={StaticResource vmThongTinChiTiet}}"> -->
     <Grid>
-        <Button Name="Luu" Content="Lưu" Style="{StaticResource ButtonStyle}" Command="{Binding commandSave}"/>
+        <Button Name="Luu" Content="Lưu" Style="{StaticResource ButtonStyle}" Command="{Binding commandSave}"
+                ToolTip="Lưu sản phẩm mới hoặc cập nhật thông tin sản phẩm cũ"/>
     </Grid>
 </UserControl>

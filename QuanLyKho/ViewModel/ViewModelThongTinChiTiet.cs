@@ -400,7 +400,14 @@ namespace QuanLyKho.ViewModel
             try
             {
                 bResult = false;
-                bResult = sanPhamHienThi.Save();
+                // Nếu mã sản phẩm chưa tồn tại, tạo mới
+                if (listMaSanPham.Count() == 0)
+                    bResult = sanPhamHienThi.AddAProduceToXDocAndSave();
+                else // Cập nhật
+                {
+                    if(!string.IsNullOrEmpty(maSanPham))
+                        bResult = sanPhamHienThi.UpdateAProducToXDocAndSave();
+                }
             }
             catch(FormatException ex)
             {
@@ -408,6 +415,10 @@ namespace QuanLyKho.ViewModel
                 strError = ex.Message;
             }
             catch(OverflowException ex)
+            {
+                strError = ex.Message;
+            }
+            catch (InvalidOperationException ex)
             {
                 strError = ex.Message;
             }

@@ -393,8 +393,32 @@ namespace QuanLyKho.ViewModel
             }
         }
 
+        /// <summary>
+        /// Check dữ liệu nhập vào đúng định dạng, giá trị
+        /// </summary>
+        /// <returns></returns>
+        public Boolean CheckValidInputs()
+        {
+            // Check năm xuất bản
+            if (!Common.CheckTimeValid(namXuatBan, true))
+            {
+                MessageBox.Show("Thời gian nhập không đúng.");
+                return false;
+            }
+            return true;
+        }
+
         public void Save()
         {
+            if(!CheckValidInputs())
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(maSanPham))
+            {
+                MessageBox.Show("Mã sản phẩm không được để trống");
+                return;
+            }
             Boolean bResult = true;
             string strError = "";
             try
@@ -405,8 +429,7 @@ namespace QuanLyKho.ViewModel
                     bResult = sanPhamHienThi.AddAProduceToXDocAndSave();
                 else // Cập nhật
                 {
-                    if(!string.IsNullOrEmpty(maSanPham))
-                        bResult = sanPhamHienThi.UpdateAProducToXDocAndSave();
+                    bResult = sanPhamHienThi.UpdateAProducToXDocAndSave();
                 }
             }
             catch(FormatException ex)

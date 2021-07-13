@@ -9,7 +9,8 @@
     <Grid>
         <TextBox Name="textBoxChonThoiGian" Style="{StaticResource TextBoxStyleCode}"
               ToolTip="Nhập thời gian: Ngày/Tháng/Năm, Tháng/Năm hoặc Năm"
-                 LostFocus="TextBoxChonThoiGian_LostFocus">
+              Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+              Path=ThoiGianText, UpdateSourceTrigger=PropertyChanged}">
             
         </TextBox>
     </Grid>

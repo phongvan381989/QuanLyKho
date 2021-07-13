@@ -141,21 +141,6 @@ namespace QuanLyKho.Model
         public Boolean UpdateAProducToXDocAndSave()
         {
             Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
-            XElement aProduce = new XElement("SanPham",
-                new XElement("MaSanPham", maSanPham),
-                new XElement("TonKho", iTonKho.ToString()),
-                new XElement("TenSanPham", tenSanPham),
-                new XElement("TacGia", tacGia),
-                new XElement("NguoiDich", nguoiDich),
-                new XElement("NhaPhatHanh", nhaPhatHanh),
-                new XElement("NhaXuatBan", nhaXuatBan),
-                new XElement("NamXuatBan", namXuatBan),
-                new XElement("KichThuocDai", kichThuocDai),
-                new XElement("KichThuocRong", kichThuocRong),
-                new XElement("KichThuocCao", kichThuocCao),
-                new XElement("ThuMucMedia", thuMucMedia),
-                new XElement("MoTaChiTiet", moTaChiTietSanPham)
-                );
             XElement eExist;
             try
             {
@@ -168,7 +153,18 @@ namespace QuanLyKho.Model
             {
                 throw new InvalidOperationException(ex.Message);
             }
-            eExist = aProduce;
+            eExist.Element("TonKho").Value = iTonKho.ToString();
+            eExist.Element("TenSanPham").Value = string.IsNullOrEmpty(tenSanPham)? string.Empty:tenSanPham;
+            eExist.Element("TacGia").Value = string.IsNullOrEmpty(tacGia) ? string.Empty : tacGia;
+            eExist.Element("NguoiDich").Value = string.IsNullOrEmpty(nguoiDich) ? string.Empty : nguoiDich;
+            eExist.Element("NhaPhatHanh").Value = string.IsNullOrEmpty(nhaPhatHanh) ? string.Empty : nhaPhatHanh;
+            eExist.Element("NhaXuatBan").Value = string.IsNullOrEmpty(nhaPhatHanh) ? string.Empty : nhaXuatBan;
+            eExist.Element("NamXuatBan").Value = string.IsNullOrEmpty(namXuatBan) ? string.Empty : namXuatBan;
+            eExist.Element("KichThuocDai").Value = string.IsNullOrEmpty(kichThuocDai) ? string.Empty : kichThuocDai;
+            eExist.Element("KichThuocRong").Value = string.IsNullOrEmpty(kichThuocRong) ? string.Empty : kichThuocRong;
+            eExist.Element("KichThuocCao").Value = string.IsNullOrEmpty(kichThuocCao) ? string.Empty : kichThuocCao;
+            eExist.Element("ThuMucMedia").Value = string.IsNullOrEmpty(thuMucMedia) ? string.Empty : thuMucMedia;
+            eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTietSanPham) ? string.Empty : moTaChiTietSanPham;
             xDoc.Save(pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
             soLuongNhap = string.Empty;

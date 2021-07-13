@@ -70,7 +70,7 @@
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>
-                            <local:UserControlComboBoxSearch x:Name="nhaXuatBan" Width="{StaticResource WidthTextBox}"
+                            <local:UserControlComboBoxSearch x:Name="NhaXuatBan" Width="{StaticResource WidthTextBox}"
                                               ComboBoxSearchItemSource="{Binding listNhaXuatBan , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                               ComboBoxSearchText="{Binding nhaXuatBan , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaXuatBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -80,6 +80,7 @@
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Năm xuất bản</TextBlock>
                             <!--<TextBox Name="NamXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                 <local:UserControlChonThoiGian x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"
+                                               ThoiGianText="{Binding Path=namXuatBan , Mode=TwoWay}"
                                                />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">

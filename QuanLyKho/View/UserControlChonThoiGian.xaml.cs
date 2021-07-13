@@ -26,6 +26,14 @@ namespace QuanLyKho.View
             InitializeComponent();
         }
 
+        public static readonly DependencyProperty ThoiGianTextProperty = DependencyProperty.Register("ThoiGianText", typeof(String), typeof(UserControlChonThoiGian), null);
+
+        public String ThoiGianText
+        {
+            get { return (String)GetValue(ThoiGianTextProperty); }
+            set { SetValue(ThoiGianTextProperty, value); }
+        }
+
         /// <summary>
         /// Định dạng: YYYY
         /// </summary>
@@ -95,20 +103,9 @@ namespace QuanLyKho.View
             return true;
         }
 
-        /// <summary>
-        ///  Check text có thể convert sang dạng thời gian
-        ///  03/08/1989 -> DD/MM/YYYY
-        ///  3/8/1989 -> DD/MM/YYYY
-        ///  8/1989 -> MM/YYYY
-        ///  1989->YYYY
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void TextBoxChonThoiGian_LostFocus(object sender, RoutedEventArgs e)
+        public Boolean CheckValid(string text)
         {
-            string text = ((TextBox)sender).Text;
-            char[] delimiterChars = {'_', '.', '-', '/' };
+            char[] delimiterChars = { '_', '.', '-', '/' };
             string[] words = text.Split(delimiterChars);
             Boolean isOk = true;
             do
@@ -121,17 +118,17 @@ namespace QuanLyKho.View
                 }
 
                 // Text dạng YYYY
-                if(length == 1)
+                if (length == 1)
                 {
-                    if(!CheckYear(words[0]))
+                    if (!CheckYear(words[0]))
                     {
                         isOk = false;
                         break;
                     }
                 }
-                else if(length == 2) // Text dạng MM/YYYY
+                else if (length == 2) // Text dạng MM/YYYY
                 {
-                    if(!CheckMonth(words[0]) || !CheckYear(words[1]))
+                    if (!CheckMonth(words[0]) || !CheckYear(words[1]))
                     {
                         isOk = false;
                         break;
@@ -148,6 +145,25 @@ namespace QuanLyKho.View
 
             } while (false);
 
+            if (!isOk)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        ///  Check text có thể convert sang dạng thời gian
+        ///  03/08/1989 -> DD/MM/YYYY
+        ///  3/8/1989 -> DD/MM/YYYY
+        ///  8/1989 -> MM/YYYY
+        ///  1989->YYYY
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBoxChonThoiGian_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Boolean isOk = CheckValid(((TextBox)sender).Text);
             if(!isOk)
             {
                 MessageBox.Show("Thời gian nhập không đúng.");

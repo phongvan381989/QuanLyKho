@@ -16,11 +16,13 @@ namespace QuanLyKho
     {
         private string pathApp;
         private string pathDataXMLThongTinChiTiet;
+        private string pathDataXMLNhapXuatChiTiet;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             pathApp = System.AppDomain.CurrentDomain.BaseDirectory;
             pathDataXMLThongTinChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLThongTinChiTiet"]);
+            pathDataXMLNhapXuatChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLNhapXuatChiTiet"]);
         }
 
         public string GetPathApp()
@@ -31,6 +33,11 @@ namespace QuanLyKho
         public string GetPathDataXMLThongTinChiTiet()
         {
             return pathDataXMLThongTinChiTiet;
+        }
+
+        public string GetPathDataXMLNhapXuatChiTiet()
+        {
+            return pathDataXMLNhapXuatChiTiet;
         }
     }
 }

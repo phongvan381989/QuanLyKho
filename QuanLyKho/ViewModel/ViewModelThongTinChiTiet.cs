@@ -24,6 +24,7 @@ namespace QuanLyKho.ViewModel
         }
 
         public ModelThongTinChiTiet sanPhamHienThi { get; set; }
+        public ModelNhapXuatChiTiet nhapXuatChiTiet { get; set; }
 
         
         public ViewModelThongTinChiTiet()
@@ -31,6 +32,7 @@ namespace QuanLyKho.ViewModel
             try
             {
                 sanPhamHienThi = new ModelThongTinChiTiet();
+                nhapXuatChiTiet = new ModelNhapXuatChiTiet();
             }
             catch (Exception ex)
             {
@@ -423,30 +425,50 @@ namespace QuanLyKho.ViewModel
             string strError = "";
             try
             {
-                bResult = false;
-                // Nếu mã sản phẩm chưa tồn tại, tạo mới
-                if (listMaSanPham.Count() == 0)
-                    bResult = sanPhamHienThi.AddAProduceToXDocAndSave();
-                else // Cập nhật
+                do
                 {
-                    bResult = sanPhamHienThi.UpdateAProducToXDocAndSave();
-                }
+                    // Nếu mã sản phẩm chưa tồn tại, tạo mới
+                    if (listMaSanPham.Count() == 0)
+                    {
+                        if (!sanPhamHienThi.AddAProduceToXDocAndSave())
+                        {
+                            bResult = false;
+                            break;
+                        }
+                    }
+                    else // Cập nhật
+                    {
+                        if (!sanPhamHienThi.UpdateAProducToXDocAndSave())
+                        {
+                            bResult = false;
+                            break;
+                        }
+                    }
+                    // Lưu thông tin nhập xuất chi tiết
+                    if(!nhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(maSanPham, soLuongNhap))
+                    {
+                        bResult = false;
+                        break;
+                    }
+                } while (false);
             }
-            catch(FormatException ex)
+            catch (FormatException ex)
             {
                 bResult = false;
                 strError = ex.Message;
             }
             catch(OverflowException ex)
             {
+                bResult = false;
                 strError = ex.Message;
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
+                bResult = false;
                 strError = ex.Message;
             }
 
-            if(bResult)
+            if (bResult)
             {
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Sản phẩm");
             }

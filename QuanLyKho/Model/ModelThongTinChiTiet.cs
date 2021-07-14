@@ -93,7 +93,7 @@ namespace QuanLyKho.Model
         {
             if(xDoc == null)
             {
-                CheckAndCreateXML(pathXML);
+                Common.CheckAndCreateXML(pathXML, "ThongTinChiTiet");
             }
             try
             {
@@ -130,7 +130,6 @@ namespace QuanLyKho.Model
             xDoc.Root.Add(aProduce);
             xDoc.Save(pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
-            soLuongNhap = string.Empty;
             return true;
         }
 
@@ -141,18 +140,20 @@ namespace QuanLyKho.Model
         public Boolean UpdateAProducToXDocAndSave()
         {
             Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
-            XElement eExist;
-            try
+            IEnumerable<XElement> le;
+            XElement eExist = null;
+
+            le = xDoc
+                .Element("ThongTinChiTiet")
+                .Elements("SanPham")
+                .Where(e => e.Element("MaSanPham").Value == maSanPham);
+            if(le.Count() != 0 )
             {
-                eExist = xDoc
-                    .Element("ThongTinChiTiet")
-                    .Elements("SanPham")
-                    .Where(e => e.Element("MaSanPham").Value == maSanPham).Single();
+                eExist = le.ElementAt(0);
             }
-            catch (InvalidOperationException ex)
-            {
-                throw new InvalidOperationException(ex.Message);
-            }
+            if (eExist == null)
+                return false;
+
             eExist.Element("TonKho").Value = iTonKho.ToString();
             eExist.Element("TenSanPham").Value = string.IsNullOrEmpty(tenSanPham)? string.Empty:tenSanPham;
             eExist.Element("TacGia").Value = string.IsNullOrEmpty(tacGia) ? string.Empty : tacGia;
@@ -167,7 +168,6 @@ namespace QuanLyKho.Model
             eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTietSanPham) ? string.Empty : moTaChiTietSanPham;
             xDoc.Save(pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
-            soLuongNhap = string.Empty;
             return true;
         }
 
@@ -180,29 +180,6 @@ namespace QuanLyKho.Model
 
         //    return AddAProduceToXDocAndSave();
         //}
-
-        /// <summary>
-        /// Check file ThongTinChiTiet.xml tồn tại không? Không tồn tại tạo file mới
-        /// </summary>
-        /// <param name="path"></param>
-        private void CheckAndCreateXML(string path)
-        {
-            if (!File.Exists(path))
-            {
-                // Check thư mục data có tồn tại không. Nếu không tạo thư mục
-                string folderPath = Path.GetDirectoryName(path);
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                XDocument xmlDocument = new XDocument(
-                new XDeclaration("1.0", "utf-8", "yes"),
-                new XElement("ThongTinChiTiet"));
-
-                xmlDocument.Save(path, SaveOptions.None);
-            }
-        }
 
         /// <summary>
         /// Lấy được tất cả giá trị của 1 thành phần

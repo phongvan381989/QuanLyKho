@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace QuanLyKho.General
 {
@@ -201,61 +203,83 @@ namespace QuanLyKho.General
                 else
                     return false;
             }
-            try
+
+            char[] delimiterChars = { '_', '.', '-', '/' };
+            string[] words = text.Split(delimiterChars);
+            Boolean isOk = true;
+            do
             {
-                DateTime dt = DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                return true;
-            }
-            catch (Exception ex)
+                int length = words.Length;
+                if (length > 3 || length < 1)
+                {
+                    isOk = false;
+                    break;
+                }
+
+                // Text dạng YYYY
+                if (length == 1)
+                {
+                    if (!CheckYear(words[0]))
+                    {
+                        isOk = false;
+                        break;
+                    }
+                }
+                else if (length == 2) // Text dạng MM/YYYY
+                {
+                    if (!CheckMonth(words[0]) || !CheckYear(words[1]))
+                    {
+                        isOk = false;
+                        break;
+                    }
+                }
+                else // Text dạng DD/MM/YYYY
+                {
+                    if (!CheckDayOfMonth(words[0]) || !CheckMonth(words[1]) || !CheckYear(words[2]))
+                    {
+                        try
+                        {
+                            DateTime dt = DateTime.ParseExact(text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        }
+                        catch (Exception ex)
+                        {
+                            isOk = false;
+                        }
+                    }
+                }
+
+            } while (false);
+
+            if (!isOk)
             {
                 return false;
             }
+            return true;
+        }
+        #endregion
 
-        //    char[] delimiterChars = { '_', '.', '-', '/' };
-        //    string[] words = text.Split(delimiterChars);
-        //    Boolean isOk = true;
-        //    do
-        //    {
-        //        int length = words.Length;
-        //        if (length > 3 || length < 1)
-        //        {
-        //            isOk = false;
-        //            break;
-        //        }
+        #region xml file
+        /// <summary>
+        /// Check file ThongTinChiTiet.xml tồn tại không? Không tồn tại tạo file mới
+        /// </summary>
+        /// <param name="path"></param>
+        public static void CheckAndCreateXML(string path, string fileName)
+        {
+            if (!File.Exists(path))
+            {
+                // Check thư mục data có tồn tại không. Nếu không tạo thư mục
+                string folderPath = Path.GetDirectoryName(path);
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
 
-        //        // Text dạng YYYY
-        //        if (length == 1)
-        //        {
-        //            if (!CheckYear(words[0]))
-        //            {
-        //                isOk = false;
-        //                break;
-        //            }
-        //        }
-        //        else if (length == 2) // Text dạng MM/YYYY
-        //        {
-        //            if (!CheckMonth(words[0]) || !CheckYear(words[1]))
-        //            {
-        //                isOk = false;
-        //                break;
-        //            }
-        //        }
-        //        else // Text dạng DD/MM/YYYY
-        //        {
-        //            if (!CheckDayOfMonth(words[0]) || !CheckMonth(words[1]) || !CheckYear(words[2]))
-        //            {
-        //                isOk = false;
-        //                break;
-        //            }
-        //        }
+                XDocument xmlDocument = new XDocument(
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XElement(fileName));
 
-        //    } while (false);
-
-        //    if (!isOk)
-        //    {
-        //        return false;
-        //    }
-        //    return true;
+                xmlDocument.Save(path, SaveOptions.None);
+            }
         }
         #endregion
     }

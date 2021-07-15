@@ -15,7 +15,8 @@ namespace QuanLyKho.General
     {
         First,
         Last,
-        All
+        All,
+        Same
     }
 
     class Common

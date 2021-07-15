@@ -22,7 +22,14 @@ namespace QuanLyKho.ViewModel
                 return _commandSave;
             }
         }
-
+        private CommandThongTinChiTiet_Delete _commandDelete;
+        public ICommand commandDelete
+        {
+            get
+            {
+                return _commandDelete;
+            }
+        }
         public ModelThongTinChiTiet sanPhamHienThi { get; set; }
         public ModelNhapXuatChiTiet nhapXuatChiTiet { get; set; }
 
@@ -39,6 +46,7 @@ namespace QuanLyKho.ViewModel
                 MessageBox.Show(ex.Message);
             }
             _commandSave = new CommandThongTinChiTiet_Save(this);
+            _commandDelete = new CommandThongTinChiTiet_Delete(this);
         }
 
         #region Mã sản phẩm
@@ -471,6 +479,10 @@ namespace QuanLyKho.ViewModel
             if (bResult)
             {
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Sản phẩm");
+                // Cập nhật source của combobox
+                listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);
+                listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.First);
+                listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.First);
             }
             else
             {
@@ -479,12 +491,35 @@ namespace QuanLyKho.ViewModel
             }
         }
 
+        public void Delete()
+        {
+            MessageBoxResult boxResult = MessageBox.Show("Không thể lấy lại thông tin đã xóa. Bạn chắc chắn muốn xóa sản phẩm này và dữ liệu liên quan?",
+                "Xóa sản phẩm", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (boxResult == MessageBoxResult.No)
+                return;
+
+            if(string.IsNullOrEmpty(maSanPham))
+            {
+                MessageBox.Show("Không thể xóa vì ô mã sản phẩm trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Check sản phẩm có tồn tại
+            ObservableCollection<string> lTemp = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
+            if(lTemp.Count() == 0)
+            {
+                MessageBox.Show("Sản phẩm không tồn tại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            sanPhamHienThi.Delete();
+            nhapXuatChiTiet.Delete(maSanPham);
+            General.Common.ShowAutoClosingMessageBox("Xóa thành công", "Sản phẩm");
+        }
+
         public void UpdateSanPhamHienThi()
         {
-            //sanPhamHienThi.maSanPham = "123456789";
-            //sanPhamHienThi.thuMucMedia = @"E:\TUNM\QuanLyKho\QuanLyKho\obj\Debug\View";
-            //sanPhamHienThi.moTaChiTietSanPham = @"sách quá là hay.";
-
             listMaSanPham = sanPhamHienThi.ListMaSanPham();
             listNhaPhatHanh = sanPhamHienThi.ListNhaPhatHanh();
             listNhaXuatBan = sanPhamHienThi.ListNhaXuatBan();

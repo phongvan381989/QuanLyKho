@@ -130,6 +130,9 @@ namespace QuanLyKho.Model
             xDoc.Root.Add(aProduce);
             xDoc.Save(pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
+            // Cập nhật vào list truy xuất nhanh
+            InitializeBuffer();
+
             return true;
         }
 
@@ -285,7 +288,7 @@ namespace QuanLyKho.Model
         /// Danh sách giá trị một thành phần với 1 text được tìm từ list
         /// </summary>
         /// <param name="name">Tên thành phần.</param>
-        /// <param name="strStart">Text bắt đầu.</param>
+        /// <param name="str">Text cần được chứa.</param>
         /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
         /// <returns></returns>
         public ObservableCollection<string> ListGiaTriMotThanhPhanVoiATextFromList(string name, string str, ParameterSearch parameterSearch)
@@ -307,7 +310,10 @@ namespace QuanLyKho.Model
                     && listOriginal[i].EndsWith(str, StringComparison.OrdinalIgnoreCase))
 
                     || (parameterSearch == ParameterSearch.All
-                    && listOriginal[i].IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0))
+                    && listOriginal[i].IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0)
+
+                    || (parameterSearch == ParameterSearch.Same
+                    && listOriginal[i].Equals(str) == true))
                 {
                     list.Add(listOriginal[i]);
                 }
@@ -363,6 +369,19 @@ namespace QuanLyKho.Model
         public ObservableCollection<string> ListMaSanPham()
         {
             return GetListFromName("MaSanPham");
+        }
+
+        public Boolean Delete()
+        {
+            if(xDoc!=null)
+            {
+                xDoc
+                    .Element("ThongTinChiTiet")
+                    .Elements("SanPham")
+                    .Where(e => e.Element("MaSanPham").Value == maSanPham).Remove();
+                xDoc.Save(pathXML, SaveOptions.None);
+            }
+            return true;
         }
     }
 }

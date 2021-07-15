@@ -60,7 +60,7 @@ namespace QuanLyKho.Model
         /// </summary>
         public Boolean AddOrUpdateAProduceToXDocAndSave(string maSanPham, string soLuongNhap)
         {
-            // Tìm xem mã sản phẩm đã tồn tại
+            // Tìm mã sản phẩm đã tồn tại
             IEnumerable<XElement> le;
             XElement eExist = null;
             le = xDoc
@@ -71,7 +71,7 @@ namespace QuanLyKho.Model
             {
                 eExist = le.ElementAt(0);
             }
-            string time = DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm:ss");
+            string time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             Int32 iSoLuongNhap = Common.ConvertStringToInt32(soLuongNhap);
             if (eExist == null) // tạo mới mã sản phẩm
             {
@@ -93,6 +93,19 @@ namespace QuanLyKho.Model
                 eExist.Add(el);
             }
             xDoc.Save(pathXML, SaveOptions.None);
+            return true;
+        }
+
+        public Boolean Delete(string maSanPham)
+        {
+            if (xDoc != null)
+            {
+                xDoc
+                    .Element("NhapXuatChiTiet")
+                    .Elements("SanPham")
+                    .Where(e => e.Element("MaSanPham").Value == maSanPham).Remove();
+                xDoc.Save(pathXML, SaveOptions.None);
+            }
             return true;
         }
     }

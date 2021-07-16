@@ -9,7 +9,8 @@
              d:DesignHeight="1000" d:DesignWidth="1200">
     <UserControl.Resources>
         <sys:Double x:Key="WidthTextBlock">150</sys:Double>
-        <sys:Double x:Key="WidthTextBox">200</sys:Double>
+        <sys:Double x:Key="WidthTextBox">400</sys:Double>
+        <sys:Double x:Key="WidthLeftArea">550</sys:Double>
         <sys:Double x:Key="HeightWrapTextLine">40</sys:Double>
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -86,18 +87,18 @@
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Kích Thước(cm)</TextBlock>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> dài</TextBlock>
-                <local:UserControlSoThucDuong  x:Name="KichThuocDai" Width="30"
+                <local:UserControlSoThucDuong  x:Name="KichThuocDai" Width="60"
                                                SoThucDuongText="{Binding  Path = kichThuocDai, Mode=TwoWay}"/>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> rộng</TextBlock>
-                <local:UserControlSoThucDuong  x:Name="KichThuocRong" Width="30"
+                <local:UserControlSoThucDuong  x:Name="KichThuocRong" Width="60"
                                                SoThucDuongText="{Binding  Path = kichThuocRong, Mode=TwoWay}"/>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> cao</TextBlock>
-                <local:UserControlSoThucDuong  x:Name="KichThuocCao" Width="30"
+                <local:UserControlSoThucDuong  x:Name="KichThuocCao" Width="60"
                                                SoThucDuongText="{Binding  Path = kichThuocCao, Mode=TwoWay}"/>
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Thư mục media</TextBlock>
-                <TextBox Name="ThuMucMedia" Style="{StaticResource TextBoxStyleCode}" Width="150" IsEnabled="True"
+                <TextBox Name="ThuMucMedia" Style="{StaticResource TextBoxStyleCode}" Width="350" IsEnabled="True"
                          Text="{Binding Path=thuMucMedia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Name="MediaBrowse" Content="Browse" Width="50" Height="30" Click="MediaBrowse_Click"/>
             </WrapPanel>
@@ -111,7 +112,7 @@
                                   TextWrapping="Wrap"
                                   AcceptsReturn="True"
                                   VerticalScrollBarVisibility="Visible"
-                                    Width="350"
+                                    Width="{StaticResource WidthLeftArea}"
                                     Height="300"
                     Text="{Binding Path=moTaChiTietSanPham, Mode=TwoWay}"
                                 >

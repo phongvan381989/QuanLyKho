@@ -15,9 +15,8 @@
               Path=ComboBoxSearchText, UpdateSourceTrigger=PropertyChanged}"
             IsSynchronizedWithCurrentItem="False"
             IsTextSearchEnabled="False"
-            SelectedItem =""
             IsDropDownOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
               Path=ComboBoxSearchIsDropDownOpen, UpdateSourceTrigger=PropertyChanged}"
-                  />
+              SelectionChanged="ComboBox_SelectionChanged"/>
     </Grid>
 </UserControl>

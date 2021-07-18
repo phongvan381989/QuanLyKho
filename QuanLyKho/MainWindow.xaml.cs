@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,13 +28,26 @@ namespace QuanLyKho
         {
             InitializeComponent();
         }
-        private Boolean isThongTinChiTiet = false;// Biến check view nào đã tạo. Nếu tạo rồi không tạo nữa
+
+        /// <summary>
+        /// Đối tượng MainStackPanelContent chưa 1 usercontrol tại 1 thời điểm. Hàm này lấy type của usercontrol hiện tại
+        /// </summary>
+        private Type GetTypeOfMainStackPanelContent()
+        {
+            if(MainStackPanelContent.Children.Count == 1)
+            {
+                foreach (UIElement child in MainStackPanelContent.Children)
+                {
+                    return child.GetType();
+                }
+            }
+            return null;
+        }
         private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
-            if (isThongTinChiTiet)
+            if (GetTypeOfMainStackPanelContent() == typeof(UserControlThongTinChiTiet))
                 return;
 
-            isThongTinChiTiet = true;
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
 
             // Phải đọc được file db

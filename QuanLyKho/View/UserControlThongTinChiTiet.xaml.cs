@@ -17,7 +17,6 @@ namespace QuanLyKho.View
         private void MediaBrowse_Click(object sender, RoutedEventArgs e)
         {
             CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            //dialog.InitialDirectory = "C:\\Users";
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
@@ -25,11 +24,6 @@ namespace QuanLyKho.View
                 DisplayMedia.mediaFolder = dialog.FileName;
                 DisplayMedia.InitDisplay();
             }
-        }
-
-        private void MaSanPham_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            System.Windows.MessageBox.Show("Test my selected event");
         }
     }
 }

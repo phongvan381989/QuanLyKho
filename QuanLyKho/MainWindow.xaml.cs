@@ -27,9 +27,13 @@ namespace QuanLyKho
         {
             InitializeComponent();
         }
-
+        private Boolean isThongTinChiTiet = false;// Biến check view nào đã tạo. Nếu tạo rồi không tạo nữa
         private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
+            if (isThongTinChiTiet)
+                return;
+
+            isThongTinChiTiet = true;
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
 
             // Phải đọc được file db

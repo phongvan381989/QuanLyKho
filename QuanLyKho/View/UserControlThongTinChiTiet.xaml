@@ -32,7 +32,7 @@
                                                           ComboBoxSearchItemSource="{Binding listMaSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                           ComboBoxSearchText="{Binding maSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                           ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listMaSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                          ComboBoxSearchSelectionChanged ="MaSanPham_SelectionChanged"/>
+                                                          />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>

@@ -93,7 +93,30 @@ namespace QuanLyKho.ViewModel
                 {
                     sanPhamHienThi.maSanPham = value;
                     OnPropertyChanged("maSanPham");
-                    listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
+                    // Tìm sản phẩm có mã giống
+                    listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Same);
+                    if (listMaSanPham.Count() == 1)
+                    {
+                        sanPhamHienThi.GetASanPhamFromMaSanPham();
+
+                        OnPropertyChanged("tonKho");
+                        OnPropertyChanged("tenSanPham");
+                        OnPropertyChanged("tacGia");
+                        OnPropertyChanged("nguoiDich");
+                        OnPropertyChanged("nhaPhatHanh");
+                        OnPropertyChanged("nhaXuatBan");
+                        OnPropertyChanged("namXuatBan");
+                        OnPropertyChanged("kichThuocDai");
+                        OnPropertyChanged("kichThuocRong");
+                        OnPropertyChanged("kichThuocCao");
+                        OnPropertyChanged("thuMucMedia");
+                        OnPropertyChanged("moTaChiTiet");
+
+                    }
+                    else// Tìm sản phẩm có mã kết thúc giống
+                    {
+                        listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
+                    }
                     if (listMaSanPham.Count != 0)
                         isDropDownOpen_listMaSanPham = true;
                     else
@@ -386,19 +409,19 @@ namespace QuanLyKho.ViewModel
             }
         }
 
-        public string moTaChiTietSanPham
+        public string moTaChiTiet
         {
             get
             {
-                return sanPhamHienThi.moTaChiTietSanPham;
+                return sanPhamHienThi.moTaChiTiet;
             }
 
             set
             {
-                if (sanPhamHienThi.moTaChiTietSanPham != value)
+                if (sanPhamHienThi.moTaChiTiet != value)
                 {
-                    sanPhamHienThi.moTaChiTietSanPham = value;
-                    OnPropertyChanged("moTaChiTietSanPham");
+                    sanPhamHienThi.moTaChiTiet = value;
+                    OnPropertyChanged("moTaChiTiet");
                 }
             }
         }

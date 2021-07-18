@@ -58,6 +58,9 @@ namespace QuanLyKho.Model
         }
         #endregion
 
+        /// <summary>
+        /// Đây là trường key, trong file mã sản phẩm là duy nhất tương ứng với 1 sản phẩm
+        /// </summary>
         public string maSanPham { get; set; }
 
         public string soLuongNhap { get; set; }
@@ -84,7 +87,7 @@ namespace QuanLyKho.Model
 
         public string thuMucMedia { get; set; }
 
-        public string moTaChiTietSanPham { get; set; }
+        public string moTaChiTiet { get; set; }
 
         private string pathXML;
         private XDocument xDoc;
@@ -124,7 +127,7 @@ namespace QuanLyKho.Model
                 new XElement("KichThuocRong", kichThuocRong),
                 new XElement("KichThuocCao", kichThuocCao),
                 new XElement("ThuMucMedia", thuMucMedia),
-                new XElement("MoTaChiTiet", moTaChiTietSanPham)
+                new XElement("MoTaChiTiet", moTaChiTiet)
                 );
 
             xDoc.Root.Add(aProduce);
@@ -136,27 +139,35 @@ namespace QuanLyKho.Model
             return true;
         }
 
+        private XElement GetAXElementFromMaSanPham()
+        {
+            XElement eExist = null;
+            if (xDoc == null)
+                return eExist;
+
+            IEnumerable<XElement> le;
+            le = xDoc
+                .Element("ThongTinChiTiet")
+                .Elements("SanPham")
+                .Where(e => e.Element("MaSanPham").Value == maSanPham);
+            if (le.Count() != 0)
+            {
+                eExist = le.ElementAt(0);
+            }
+            return eExist;
+        }
+
         /// <summary>
         /// Cập nhật 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
         /// <returns></returns>
         public Boolean UpdateAProducToXDocAndSave()
         {
-            Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
-            IEnumerable<XElement> le;
-            XElement eExist = null;
-
-            le = xDoc
-                .Element("ThongTinChiTiet")
-                .Elements("SanPham")
-                .Where(e => e.Element("MaSanPham").Value == maSanPham);
-            if(le.Count() != 0 )
-            {
-                eExist = le.ElementAt(0);
-            }
+            XElement eExist = GetAXElementFromMaSanPham();
             if (eExist == null)
                 return false;
 
+            Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
             eExist.Element("TonKho").Value = iTonKho.ToString();
             eExist.Element("TenSanPham").Value = string.IsNullOrEmpty(tenSanPham)? string.Empty:tenSanPham;
             eExist.Element("TacGia").Value = string.IsNullOrEmpty(tacGia) ? string.Empty : tacGia;
@@ -168,7 +179,7 @@ namespace QuanLyKho.Model
             eExist.Element("KichThuocRong").Value = string.IsNullOrEmpty(kichThuocRong) ? string.Empty : kichThuocRong;
             eExist.Element("KichThuocCao").Value = string.IsNullOrEmpty(kichThuocCao) ? string.Empty : kichThuocCao;
             eExist.Element("ThuMucMedia").Value = string.IsNullOrEmpty(thuMucMedia) ? string.Empty : thuMucMedia;
-            eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTietSanPham) ? string.Empty : moTaChiTietSanPham;
+            eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTiet) ? string.Empty : moTaChiTiet;
             xDoc.Save(pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
             return true;
@@ -383,5 +394,41 @@ namespace QuanLyKho.Model
             }
             return true;
         }
+
+        /// <summary>
+        /// Lấy thông tin từ 1 XElement <SanPham> cập nhật cho model
+        /// </summary>
+        /// <param name="element">XElemnet của tag <SanPham></param>
+        /// <param name="sanPham">Đối tượng model cần cập nhật thông tin</param>
+        private void ConvertXElementToModel(XElement element)
+        {
+            tonKho = element.Element("TonKho").Value;
+            tenSanPham = element.Element("TenSanPham").Value;
+            tacGia = element.Element("TacGia").Value;
+            nguoiDich = element.Element("NguoiDich").Value;
+            nhaPhatHanh = element.Element("NhaPhatHanh").Value;
+            nhaXuatBan = element.Element("NhaXuatBan").Value;
+            namXuatBan = element.Element("NamXuatBan").Value;
+            kichThuocDai = element.Element("KichThuocDai").Value;
+            kichThuocRong = element.Element("KichThuocRong").Value;
+            kichThuocCao = element.Element("KichThuocCao").Value;
+            thuMucMedia = element.Element("ThuMucMedia").Value;
+            moTaChiTiet = element.Element("MoTaChiTiet").Value;
+        }
+
+        /// <summary>
+        /// Từ mã sản phẩm lấy thông tin sản phẩm
+        /// </summary>
+        public void GetASanPhamFromMaSanPham()
+        {
+            if (string.IsNullOrEmpty(maSanPham))
+                return;
+
+            XElement eExist = GetAXElementFromMaSanPham();
+            if (eExist == null)
+                return;
+            ConvertXElementToModel(eExist);
+        }
+
     }
 }

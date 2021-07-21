@@ -27,6 +27,7 @@ namespace QuanLyKho.View
         }
 
         private string oldText = "";
+        private Int32 oldCaret;
         public static readonly DependencyProperty IntegerTextProperty = DependencyProperty.Register("IntegerText", typeof(String), typeof(UserControlTextBoxIntegerOnly), null);
 
         public String IntegerText
@@ -41,26 +42,28 @@ namespace QuanLyKho.View
             if (string.Compare(textbox.Text, oldText) == 0)
                 return;
 
-            if(string.IsNullOrEmpty(textbox.Text))
+            Int32 result;
+            if(Int32.TryParse(textbox.Text, out result))
             {
-                oldText = "";
-                return;
-            }
-            if(textbox.Text == "-")
-            {
-                oldText = "-";
-                return;
-            }
-
-            try
-            {
-                int result = Int32.Parse(textbox.Text);
                 oldText = textbox.Text;
+                oldCaret = textbox.CaretIndex;
+                return;
             }
-            catch (Exception)
+            textbox.Text = oldText;
+            textbox.CaretIndex = oldCaret;
+        }
+
+        private void TextBoxIntegerOnly_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key <= Key.Down && e.Key >= Key.End)
             {
-                textbox.Text = oldText;
+                oldCaret = ((TextBox)sender).CaretIndex;
             }
+        }
+
+        private void TextBoxIntegerOnly_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            oldCaret = ((TextBox)sender).CaretIndex;
         }
     }
 }

@@ -11,7 +11,9 @@
                  ToolTip="Nhập số tiền"
                  TextChanged="TextBoxTienVND_TextChanged"
                  Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-                 Path=TienVNDText, UpdateSourceTrigger=PropertyChanged}">
+                 Path=TienVNDText, UpdateSourceTrigger=PropertyChanged}"
+                 PreviewKeyUp="TextBoxTienVND_PreviewKeyUp"
+                 PreviewMouseLeftButtonUp="TextBoxTienVND_PreviewMouseLeftButtonUp">
         </TextBox>
     </Grid>
 </UserControl>

@@ -12,5 +12,7 @@
               ToolTip="Nhập số nguyên"
               Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
               Path=IntegerText, UpdateSourceTrigger=PropertyChanged}"
+              PreviewKeyUp="TextBoxIntegerOnly_PreviewKeyUp"
+              PreviewMouseLeftButtonUp="TextBoxIntegerOnly_PreviewMouseLeftButtonUp"
               />
 </UserControl>

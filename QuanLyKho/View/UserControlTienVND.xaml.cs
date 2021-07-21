@@ -35,7 +35,7 @@ namespace QuanLyKho.View
             set { SetValue(TienVNDTextProperty, value); }
         }
         private string oldText = "";
-        private int oldCaretIndex = -1;
+        private int oldCaret = -1;
         private void TextBoxTienVND_TextChanged(object sender, TextChangedEventArgs e)
         {
             string  textbox = ((TextBox)sender).Text;
@@ -56,32 +56,47 @@ namespace QuanLyKho.View
                     if (textbox.ElementAt(i) == '0' && sb.Length == 0)
                     {
                         ((TextBox)sender).Text = oldText;
-                        ((TextBox)sender).CaretIndex = oldCaretIndex;
+                        ((TextBox)sender).CaretIndex = oldCaret;
                         return;
                     }
                     sb.Append(textbox.ElementAt(i));
                 }
             }
 
-            try
+            Int32 result;
+            if (Int32.TryParse(sb.ToString(), out result))
             {
-                int result = Int32.Parse(sb.ToString());
+                Int32 carret = ((TextBox)sender).CaretIndex;
                 // Thêm ','
                 length = sb.Length;
-                if (length > 3 && length < 7)
-                    sb.Insert(length - 3, ',');
-                else if(length > 6 && length < 10)
-                {
-                    sb.Insert(length - 3, ',');
-                    sb.Insert(length - 6, ',');
-                }
-                else if(length > 9)
+                if (length > 9)
                 {
                     sb.Insert(length - 3, ',');
                     sb.Insert(length - 6, ',');
                     sb.Insert(length - 9, ',');
+                    if (carret > length - 9)
+                        carret = carret + 3;
+                    else if (carret > length - 6)
+                        carret = carret + 2;
+                    else if (carret > length - 3)
+                        carret = carret + 1;
                 }
-                int carret = -1;
+                else if (length > 6)
+                {
+                    sb.Insert(length - 3, ',');
+                    sb.Insert(length - 6, ',');
+                    if (carret > length - 6)
+                        carret = carret + 2;
+                    else if (carret > length - 3)
+                        carret = carret + 1;
+                }
+                else if (length > 3)
+                {
+                    sb.Insert(length - 3, ',');
+                    if (carret > length - 3)
+                        carret = carret + 1;
+                }
+
                 if (textbox.Length == oldText.Length + 1)
                     carret = ((TextBox)sender).CaretIndex + 1;
                 else
@@ -89,12 +104,26 @@ namespace QuanLyKho.View
                 ((TextBox)sender).Text = sb.ToString();
                 ((TextBox)sender).CaretIndex = carret;
                 oldText = sb.ToString();
-                oldCaretIndex = carret;
+                oldCaret = carret;
             }
-            catch (Exception)
+            else
             {
                 ((TextBox)sender).Text = oldText;
+                ((TextBox)sender).CaretIndex = oldCaret;
             }
+        }
+
+        private void TextBoxTienVND_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key <= Key.Down && e.Key >= Key.End)
+            {
+                oldCaret = ((TextBox)sender).CaretIndex;
+            }
+        }
+
+        private void TextBoxTienVND_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            oldCaret = ((TextBox)sender).CaretIndex;
         }
     }
 }

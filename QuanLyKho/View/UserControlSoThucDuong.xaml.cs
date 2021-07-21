@@ -28,6 +28,7 @@ namespace QuanLyKho.View
         }
 
         private string oldText;
+        private Int32 oldCaret;
 
         public static readonly DependencyProperty SoThucDuongTextProperty = DependencyProperty.Register("SoThucDuongText", typeof(String), typeof(UserControlSoThucDuong), null);
 
@@ -40,21 +41,36 @@ namespace QuanLyKho.View
         private void TextBoxSoDuong_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textbox = ((TextBox)sender);
-            if (string.IsNullOrEmpty(textbox.Text))
-            {
-                oldText = "";
+            if (string.Compare(textbox.Text, oldText) == 0)
                 return;
+
+
+            float result;
+            if(float.TryParse(textbox.Text, out result))
+            {
+                if (result > 0)
+                {
+                    oldText = textbox.Text;
+                    oldCaret = textbox.CaretIndex;
+                    return;
+                }
             }
 
-            try
+            textbox.Text = oldText;
+            textbox.CaretIndex = oldCaret;
+        }
+
+        private void TextBoxSoDuong_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key <= Key.Down && e.Key >= Key.End)
             {
-                float result = float.Parse(textbox.Text);
-                oldText = textbox.Text;
+                oldCaret = ((TextBox)sender).CaretIndex;
             }
-            catch (FormatException)
-            {
-                textbox.Text = oldText;
-            }
+        }
+
+        private void TextBoxSoDuong_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            oldCaret = ((TextBox)sender).CaretIndex;
         }
     }
 }

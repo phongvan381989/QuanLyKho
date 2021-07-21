@@ -38,6 +38,9 @@ namespace QuanLyKho.View
         private void TextBoxIntegerOnly_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textbox = ((TextBox)sender);
+            if (string.Compare(textbox.Text, oldText) == 0)
+                return;
+
             if(string.IsNullOrEmpty(textbox.Text))
             {
                 oldText = "";
@@ -54,7 +57,7 @@ namespace QuanLyKho.View
                 int result = Int32.Parse(textbox.Text);
                 oldText = textbox.Text;
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 textbox.Text = oldText;
             }

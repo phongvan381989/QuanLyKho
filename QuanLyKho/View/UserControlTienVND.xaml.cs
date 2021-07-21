@@ -35,9 +35,12 @@ namespace QuanLyKho.View
             set { SetValue(TienVNDTextProperty, value); }
         }
         private string oldText = "";
+        private int oldCaretIndex = -1;
         private void TextBoxTienVND_TextChanged(object sender, TextChangedEventArgs e)
         {
             string  textbox = ((TextBox)sender).Text;
+            if (string.Compare(textbox, oldText) == 0)
+                return;
             if (string.IsNullOrEmpty(textbox))
             {
                 oldText = "";
@@ -48,10 +51,14 @@ namespace QuanLyKho.View
             // Chỉ lấy các ký tự 0->9
             for (int i = 0; i < length; i++)
             {
-                if(textbox.ElementAt(i) >= '0' && textbox.ElementAt(i) <=9)
+                if(textbox.ElementAt(i) >= '0' && textbox.ElementAt(i) <= '9')
                 {
                     if (textbox.ElementAt(i) == '0' && sb.Length == 0)
-                        break;
+                    {
+                        ((TextBox)sender).Text = oldText;
+                        ((TextBox)sender).CaretIndex = oldCaretIndex;
+                        return;
+                    }
                     sb.Append(textbox.ElementAt(i));
                 }
             }
@@ -59,17 +66,32 @@ namespace QuanLyKho.View
             try
             {
                 int result = Int32.Parse(sb.ToString());
-                if (result < 1000000000) // check giới hạn trên
+                // Thêm ','
+                length = sb.Length;
+                if (length > 3 && length < 7)
+                    sb.Insert(length - 3, ',');
+                else if(length > 6 && length < 10)
                 {
-                    // Thêm ','
-                    if (sb.Length > 4 && sb.Length < 7)
-                        sb.Insert(sb.Length - 3, ',');
-                    else if(sb.Length > 6 && sb.Length < 10)
-
-                    oldText = textbox.Text;
+                    sb.Insert(length - 3, ',');
+                    sb.Insert(length - 6, ',');
                 }
+                else if(length > 9)
+                {
+                    sb.Insert(length - 3, ',');
+                    sb.Insert(length - 6, ',');
+                    sb.Insert(length - 9, ',');
+                }
+                int carret = -1;
+                if (textbox.Length == oldText.Length + 1)
+                    carret = ((TextBox)sender).CaretIndex + 1;
+                else
+                    carret = ((TextBox)sender).CaretIndex + 2;
+                ((TextBox)sender).Text = sb.ToString();
+                ((TextBox)sender).CaretIndex = carret;
+                oldText = sb.ToString();
+                oldCaretIndex = carret;
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 ((TextBox)sender).Text = oldText;
             }

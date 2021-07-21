@@ -35,6 +35,13 @@
                                                           />
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Giá</TextBlock>
+                            <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
+                            <local:UserControlTienVND x:Name="GiaSanPham" Width="{StaticResource WidthTextBox}"
+                                                                             TienVNDText="{Binding  Path = giaSanPham, Mode=TwoWay}"
+                                                                             />
+                        </WrapPanel>
+                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
                             <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                             <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
@@ -45,6 +52,12 @@
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tồn kho</TextBlock>
                             <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="False"
                                      Text="{Binding Path=tonKho, Mode=TwoWay}"/>
+                        </WrapPanel>
+                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Cảnh báo</TextBlock>
+                            <TextBox Name="TonKhoCanhBaoHetHang" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
+                                                 Text="{Binding Path=tonKhoCanhBaoHetHang, Mode=TwoWay}"
+                                     ToolTip="Khi tồn kho ít hơn hoặc bằng số lượng cảnh cảnh báo hết hàng. Thông báo sẽ được bất trên màn hình"/>
                         </WrapPanel>
                         <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tên</TextBlock>

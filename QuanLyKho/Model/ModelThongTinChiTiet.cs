@@ -19,7 +19,7 @@ namespace QuanLyKho.Model
             pathXML = ((App)Application.Current).GetPathDataXMLThongTinChiTiet();
             InitializeXDoc();
             InitializeBuffer();
-
+            //ThemThanhPhanMoi("GiaSanPham", null);
         }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -63,9 +63,13 @@ namespace QuanLyKho.Model
         /// </summary>
         public string maSanPham { get; set; }
 
+        public string giaSanPham { get; set; }
+
         public string soLuongNhap { get; set; }
 
         public string tonKho { get; set; }
+
+        public string tonKhoCanhBaoHetHang { get; set; }
 
         public string tenSanPham { get; set; }
 
@@ -116,7 +120,9 @@ namespace QuanLyKho.Model
             Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
             XElement aProduce = new XElement("SanPham",
                 new XElement("MaSanPham", maSanPham),
+                new XElement("GiaSanPham", giaSanPham),
                 new XElement("TonKho", iTonKho.ToString()),
+                new XElement("TonKhoCanhBaoHetHang", tonKhoCanhBaoHetHang),
                 new XElement("TenSanPham", tenSanPham),
                 new XElement("TacGia", tacGia),
                 new XElement("NguoiDich", nguoiDich),
@@ -167,9 +173,11 @@ namespace QuanLyKho.Model
             if (eExist == null)
                 return false;
 
+            eExist.Element("GiaSanPham").Value = string.IsNullOrEmpty(giaSanPham) ? string.Empty : giaSanPham;
             Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
             eExist.Element("TonKho").Value = iTonKho.ToString();
-            eExist.Element("TenSanPham").Value = string.IsNullOrEmpty(tenSanPham)? string.Empty:tenSanPham;
+            eExist.Element("TonKhoCanhBaoHetHang").Value = string.IsNullOrEmpty(tonKhoCanhBaoHetHang) ? string.Empty : tonKhoCanhBaoHetHang;
+            eExist.Element("TenSanPham").Value = string.IsNullOrEmpty(tenSanPham) ? string.Empty : tenSanPham;
             eExist.Element("TacGia").Value = string.IsNullOrEmpty(tacGia) ? string.Empty : tacGia;
             eExist.Element("NguoiDich").Value = string.IsNullOrEmpty(nguoiDich) ? string.Empty : nguoiDich;
             eExist.Element("NhaPhatHanh").Value = string.IsNullOrEmpty(nhaPhatHanh) ? string.Empty : nhaPhatHanh;
@@ -402,7 +410,9 @@ namespace QuanLyKho.Model
         /// <param name="sanPham">Đối tượng model cần cập nhật thông tin</param>
         private void ConvertXElementToModel(XElement element)
         {
+            giaSanPham = element.Element("GiaSanPham").Value;
             tonKho = element.Element("TonKho").Value;
+            tonKhoCanhBaoHetHang = element.Element("TonKhoCanhBaoHetHang").Value;
             tenSanPham = element.Element("TenSanPham").Value;
             tacGia = element.Element("TacGia").Value;
             nguoiDich = element.Element("NguoiDich").Value;
@@ -430,5 +440,49 @@ namespace QuanLyKho.Model
             ConvertXElementToModel(eExist);
         }
 
+        /// <summary>
+        /// Thêm thành phần thông tin mới vào mỗi <SanPham> tag
+        /// </summary>
+        /// <param name="name"> Tên thành phần mới</param>
+        /// <param name="value">Giá trị thành phần mới</param>
+        /// <return>Thành công trả về string trống. Ngược lại trả về thông tin lỗi</return>
+        public string ThemThanhPhanMoi(string name, string value)
+        {
+            string mes = string.Empty;
+            if(xDoc == null)
+            {
+                mes = "Dữ liệu thông tin chi tiết sản phẩm chưa có.";
+                return mes;
+            }
+            // Lấy <SanPham> đầu tiên, check xem tên mới đã tồn tại hay chưa
+            XElement eFirstProduce = xDoc
+                    .Element("ThongTinChiTiet")
+                    .Element("SanPham");
+
+            if(eFirstProduce == null)// chưa tồn tại bất cứ sản phẩm nào
+            {
+                eFirstProduce = new XElement("SanPham",
+                    new XElement(name, value));
+                xDoc.Root.Add(eFirstProduce);
+            }
+
+            // Check tên thành phần mới đã tồn tại
+            foreach (var element in eFirstProduce.Elements())
+            {
+                if(string.Compare( element.Name.LocalName, name) == 0)
+                {
+                    mes = "Thành phần mới đã tồn tại.";
+                    return mes;
+                }
+            }
+
+            // Thêm thành phần mới
+            foreach(var element in xDoc.Root.Elements("SanPham"))
+            {
+                element.Add(new XElement(name, value));
+            }
+            xDoc.Save(pathXML, SaveOptions.None);
+            return mes;
+        }
     }
 }

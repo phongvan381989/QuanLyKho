@@ -104,6 +104,9 @@
     <Compile Include="View\UserControlTextBoxIntegerOnly.xaml.cs">
       <DependentUpon>UserControlTextBoxIntegerOnly.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControlTienVND.xaml.cs">
+      <DependentUpon>UserControlTienVND.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControlTextBoxIntegerOnly.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlTienVND.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

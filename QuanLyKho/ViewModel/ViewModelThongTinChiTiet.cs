@@ -99,7 +99,9 @@ namespace QuanLyKho.ViewModel
                     {
                         sanPhamHienThi.GetASanPhamFromMaSanPham();
 
+                        OnPropertyChanged("giaSanPham");
                         OnPropertyChanged("tonKho");
+                        OnPropertyChanged("tonKhoCanhBaoHetHang");
                         OnPropertyChanged("tenSanPham");
                         OnPropertyChanged("tacGia");
                         OnPropertyChanged("nguoiDich");
@@ -125,6 +127,23 @@ namespace QuanLyKho.ViewModel
             }
         }
         #endregion
+
+        public string giaSanPham
+        {
+            get
+            {
+                return sanPhamHienThi.giaSanPham;
+            }
+
+            set
+            {
+                if (sanPhamHienThi.giaSanPham != value)
+                {
+                    sanPhamHienThi.giaSanPham = value;
+                    OnPropertyChanged("giaSanPham");
+                }
+            }
+        }
 
         public string soLuongNhap
         {
@@ -159,6 +178,24 @@ namespace QuanLyKho.ViewModel
                 }
             }
         }
+
+        public string tonKhoCanhBaoHetHang
+        {
+            get
+            {
+                return sanPhamHienThi.tonKhoCanhBaoHetHang;
+            }
+
+            set
+            {
+                if (sanPhamHienThi.tonKhoCanhBaoHetHang != value)
+                {
+                    sanPhamHienThi.tonKhoCanhBaoHetHang = value;
+                    OnPropertyChanged("tonKhoCanhBaoHetHang");
+                }
+            }
+        }
+        
 
         public string tenSanPham
         {

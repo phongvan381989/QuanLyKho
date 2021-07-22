@@ -48,32 +48,28 @@ namespace QuanLyKho.View
             }
             int length = textbox.Length;
             StringBuilder sb = new StringBuilder("", 10);
-            bool isNagative = false;
+            Int32 carret = ((TextBox)sender).CaretIndex;
             // Chỉ lấy các ký tự 0->9 và '-' ở đầu
             for (int i = 0; i < length; i++)
             {
-                if(i == 0 && textbox.ElementAt(i) == '-')
-                {
-                    sb.Append(textbox.ElementAt(i));
-                    isNagative = true;
-                    continue;
-                }
-
                 if(textbox.ElementAt(i) >= '0' && textbox.ElementAt(i) <= '9')
                 {
-                    if (textbox.ElementAt(i) == '0' && (sb.Length == 0 || (sb.Length == 1 && isNagative))) // Số 0 ở đầu
+                    if (textbox.ElementAt(i) == '0' && sb.Length == 0)// Số 0 ở đầu
                     {
+                        if (carret >= i)
+                            carret--;
                         continue;
                     }
                     sb.Append(textbox.ElementAt(i));
                     continue;
                 }
+                if (carret >= i)
+                    carret--;
             }
 
             Int32 result;
             if (Int32.TryParse(sb.ToString(), out result))
             {
-                Int32 carret = ((TextBox)sender).CaretIndex;
                 // Thêm ','
                 length = sb.Length;
                 if (length > 9)
@@ -81,20 +77,20 @@ namespace QuanLyKho.View
                     sb.Insert(length - 3, ',');
                     sb.Insert(length - 6, ',');
                     sb.Insert(length - 9, ',');
-                    if (carret > length - 9)
+                    if (carret > length - 3)
                         carret = carret + 3;
-                    else if (carret > length - 6)
+                    else if (carret > length - 6 )
                         carret = carret + 2;
-                    else if (carret > length - 3)
+                    else if (carret > length - 9)
                         carret = carret + 1;
                 }
                 else if (length > 6)
                 {
                     sb.Insert(length - 3, ',');
                     sb.Insert(length - 6, ',');
-                    if (carret > length - 6)
+                    if (carret > length - 3)
                         carret = carret + 2;
-                    else if (carret > length - 3)
+                    else if (carret > length -6)
                         carret = carret + 1;
                 }
                 else if (length > 3)
@@ -104,14 +100,10 @@ namespace QuanLyKho.View
                         carret = carret + 1;
                 }
 
-                if (textbox.Length == oldText.Length + 1)
-                    carret = ((TextBox)sender).CaretIndex + 1;
-                else
-                    carret = ((TextBox)sender).CaretIndex + 2;
-                ((TextBox)sender).Text = sb.ToString();
-                ((TextBox)sender).CaretIndex = carret;
                 oldText = sb.ToString();
                 oldCaret = carret;
+                ((TextBox)sender).Text = sb.ToString();
+                ((TextBox)sender).CaretIndex = carret;
             }
             else
             {

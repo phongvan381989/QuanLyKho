@@ -48,18 +48,25 @@ namespace QuanLyKho.View
             }
             int length = textbox.Length;
             StringBuilder sb = new StringBuilder("", 10);
-            // Chỉ lấy các ký tự 0->9
+            bool isNagative = false;
+            // Chỉ lấy các ký tự 0->9 và '-' ở đầu
             for (int i = 0; i < length; i++)
             {
+                if(i == 0 && textbox.ElementAt(i) == '-')
+                {
+                    sb.Append(textbox.ElementAt(i));
+                    isNagative = true;
+                    continue;
+                }
+
                 if(textbox.ElementAt(i) >= '0' && textbox.ElementAt(i) <= '9')
                 {
-                    if (textbox.ElementAt(i) == '0' && sb.Length == 0)
+                    if (textbox.ElementAt(i) == '0' && (sb.Length == 0 || (sb.Length == 1 && isNagative))) // Số 0 ở đầu
                     {
-                        ((TextBox)sender).Text = oldText;
-                        ((TextBox)sender).CaretIndex = oldCaret;
-                        return;
+                        continue;
                     }
                     sb.Append(textbox.ElementAt(i));
+                    continue;
                 }
             }
 

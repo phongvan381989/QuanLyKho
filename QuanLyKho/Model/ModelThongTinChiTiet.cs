@@ -34,9 +34,11 @@ namespace QuanLyKho.Model
         private ObservableCollection<string> listNhaPhatHanh;
         private ObservableCollection<string> listNhaXuatBan;
         private ObservableCollection<string> listMaSanPham;
+        private ObservableCollection<string> listTenSanPham;
         private void InitializeBuffer()
         {
             listMaSanPham = ListGiaTriMotThanhPhanFromXDoc("MaSanPham", false);
+            listTenSanPham = ListGiaTriMotThanhPhanFromXDoc("TenSanPham", false);
             listNhaPhatHanh = ListGiaTriMotThanhPhanFromXDoc("NhaPhatHanh", false);
             listNhaXuatBan = ListGiaTriMotThanhPhanFromXDoc("NhaXuatBan", false);
         }
@@ -54,14 +56,20 @@ namespace QuanLyKho.Model
                 return listNhaPhatHanh;
             else if (name == "NhaXuatBan")
                 return listNhaXuatBan;
+            else if (name == "TenSanPham")
+                return listTenSanPham;
             return null;
         }
         #endregion
 
         /// <summary>
+        /// Mô tả lỗi hiện tại
+        /// </summary>
+        public string ErrorMessage;
+        /// <summary>
         /// Đây là trường key, trong file mã sản phẩm là duy nhất tương ứng với 1 sản phẩm
         /// </summary>
-        public string maSanPham { get; set; }
+        public string maSanPham { get; set; } // Trường này là unique
 
         public string giaSanPham { get; set; }
 
@@ -71,6 +79,9 @@ namespace QuanLyKho.Model
 
         public string tonKhoCanhBaoHetHang { get; set; }
 
+        /// <summary>
+        /// Trường này là unique
+        /// </summary>
         public string tenSanPham { get; set; }
 
         public string tacGia { get; set; }
@@ -162,6 +173,25 @@ namespace QuanLyKho.Model
             }
             return eExist;
         }
+
+        private XElement GetAXElementFromTenSanPham()
+        {
+            XElement eExist = null;
+            if (xDoc == null)
+                return eExist;
+
+            IEnumerable<XElement> le;
+            le = xDoc
+                .Element("ThongTinChiTiet")
+                .Elements("SanPham")
+                .Where(e => e.Element("TenSanPham").Value == tenSanPham);
+            if (le.Count() != 0)
+            {
+                eExist = le.ElementAt(0);
+            }
+            return eExist;
+        }
+
 
         /// <summary>
         /// Cập nhật 1 sản phẩm vào xDoc và lưu ra file
@@ -277,7 +307,10 @@ namespace QuanLyKho.Model
                             && element.Value.EndsWith(str, StringComparison.OrdinalIgnoreCase))
 
                             ||(parameterSearch == ParameterSearch.All
-                            && element.Value.IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0))
+                            && element.Value.IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0)
+
+                            || (parameterSearch == ParameterSearch.Same
+                                && string.Compare(element.Value, str) == 0))
                         {
                             if(isIncludeSame)
                                 list.Add(element.Value);
@@ -340,7 +373,7 @@ namespace QuanLyKho.Model
             return list;
         }
         /// <summary>
-        /// Tìm kiếm nhà phát hành có tên bắt đầu bằng 1 đoạn text
+        /// Tìm kiếm nhà phát hành
         /// </summary>
         /// <param name="str"></param>
         /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
@@ -351,7 +384,7 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
-        /// Tìm kiếm nhà xuất bản có tên bắt đầu bằng 1 đoạn text
+        /// Tìm kiếm nhà xuất bản
         /// </summary>
         /// <param name="str"></param>
         /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
@@ -371,7 +404,7 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
-        /// Tìm kiếm nhà phát hành có tên bắt đầu bằng 1 đoạn text
+        /// Tìm kiếm mã sản phẩm
         /// </summary>
         /// <param name="str"></param>
         /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
@@ -382,12 +415,32 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
+        /// Tìm kiếm tên sản phẩm
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> SearchTenSanPhamAText(string str, ParameterSearch parameterSearch)
+        {
+            return ListGiaTriMotThanhPhanVoiATextFromList("TenSanPham", str, parameterSearch);
+        }
+
+        /// <summary>
         /// Danh sách tất cả mã sản phẩm
         /// </summary>
         /// <returns></returns>
         public ObservableCollection<string> ListMaSanPham()
         {
             return GetListFromName("MaSanPham");
+        }
+
+        /// <summary>
+        /// Danh sách tất cả tên sản phẩm
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<string> ListTenSanPham()
+        {
+            return GetListFromName("TenSanPham");
         }
 
         public Boolean Delete()
@@ -441,6 +494,20 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
+        /// Từ tên sản phẩm lấy thông tin sản phẩm
+        /// </summary>
+        public void GetASanPhamFromTenSanPham()
+        {
+            if (string.IsNullOrEmpty(tenSanPham))
+                return;
+
+            XElement eExist = GetAXElementFromTenSanPham();
+            if (eExist == null)
+                return;
+            ConvertXElementToModel(eExist);
+        }
+
+        /// <summary>
         /// Thêm thành phần thông tin mới vào mỗi <SanPham> tag
         /// </summary>
         /// <param name="name"> Tên thành phần mới</param>
@@ -483,6 +550,30 @@ namespace QuanLyKho.Model
             }
             xDoc.Save(pathXML, SaveOptions.None);
             return mes;
+        }
+
+        /// <summary>
+        /// Check dữ liệu hợp lệ trước khi update
+        /// maSanPham phải tổn tại, tenSanPham không được trùng với tenSanPham ở các maSanPham khác
+        /// </summary>
+        /// <param name="maSP"></param>
+        /// <param name="tenSP"></param>
+        /// <returns></returns>
+        public Boolean CanUpdateAProducde(string maSP, string tenSP)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Check dữ liệu hợp lệ trước khi thêm mới 1 sản phẩm
+        /// maSanPham phải không tồn tại, tenSanPham không tồn tại
+        /// </summary>
+        /// <param name="maSP"></param>
+        /// <param name="tenSP"></param>
+        /// <returns></returns>
+        public Boolean CanAddAProduce(string maSP, string tenSP)
+        {
+            return true;
         }
     }
 }

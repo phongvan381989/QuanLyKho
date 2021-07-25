@@ -114,6 +114,10 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("thuMucMedia");
                         OnPropertyChanged("moTaChiTiet");
 
+                        // Cập nhật các buffer khác
+                        listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
+                        listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
+                        listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
                     }
                     else// Tìm sản phẩm có mã kết thúc giống
                     {
@@ -195,8 +199,38 @@ namespace QuanLyKho.ViewModel
                 }
             }
         }
-        
 
+        #region Tên Sản Phẩm
+        private Boolean pIsDropDownOpen_listTenSanPham;
+
+        public Boolean isDropDownOpen_listTenSanPham
+        {
+            get
+            {
+                return pIsDropDownOpen_listTenSanPham;
+            }
+
+            set
+            {
+                pIsDropDownOpen_listTenSanPham = value;
+                OnPropertyChanged("isDropDownOpen_listTenSanPham");
+            }
+        }
+
+        private ObservableCollection<string> plistTenSanPham;
+
+        public ObservableCollection<string> listTenSanPham
+        {
+            get
+            {
+                return plistTenSanPham;
+            }
+            set
+            {
+                plistTenSanPham = value;
+                OnPropertyChanged("listTenSanPham");
+            }
+        }
         public string tenSanPham
         {
             get
@@ -210,9 +244,44 @@ namespace QuanLyKho.ViewModel
                 {
                     sanPhamHienThi.tenSanPham = value;
                     OnPropertyChanged("tenSanPham");
+                    // Tìm sản phẩm có mã giống
+                    listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.Same);
+                    if (listTenSanPham.Count() == 1)
+                    {
+                        sanPhamHienThi.GetASanPhamFromTenSanPham();
+
+                        OnPropertyChanged("giaSanPham");
+                        OnPropertyChanged("tonKho");
+                        OnPropertyChanged("tonKhoCanhBaoHetHang");
+                        OnPropertyChanged("tenSanPham");
+                        OnPropertyChanged("tacGia");
+                        OnPropertyChanged("nguoiDich");
+                        OnPropertyChanged("nhaPhatHanh");
+                        OnPropertyChanged("nhaXuatBan");
+                        OnPropertyChanged("namXuatBan");
+                        OnPropertyChanged("kichThuocDai");
+                        OnPropertyChanged("kichThuocRong");
+                        OnPropertyChanged("kichThuocCao");
+                        OnPropertyChanged("thuMucMedia");
+                        OnPropertyChanged("moTaChiTiet");
+
+                        // Cập nhật các buffer khác
+                        listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
+                        listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
+                        listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
+                    }
+                    else// Tìm sản phẩm có tên chứa
+                    {
+                        listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.All);
+                    }
+                    if (listTenSanPham.Count != 0)
+                        isDropDownOpen_listTenSanPham = true;
+                    else
+                        isDropDownOpen_listTenSanPham = false;
                 }
             }
         }
+        #endregion
 
         public string tacGia
         {
@@ -475,6 +544,11 @@ namespace QuanLyKho.ViewModel
                 MessageBox.Show("Thời gian nhập không đúng.");
                 return false;
             }
+            if (string.IsNullOrEmpty(maSanPham))
+            {
+                MessageBox.Show("Mã sản phẩm không được để trống");
+                return false;
+            }
             return true;
         }
 
@@ -482,11 +556,6 @@ namespace QuanLyKho.ViewModel
         {
             if(!CheckValidInputs())
             {
-                return;
-            }
-            if (string.IsNullOrEmpty(maSanPham))
-            {
-                MessageBox.Show("Mã sản phẩm không được để trống");
                 return;
             }
             Boolean bResult = true;
@@ -581,6 +650,7 @@ namespace QuanLyKho.ViewModel
         public void UpdateSanPhamHienThi()
         {
             listMaSanPham = sanPhamHienThi.ListMaSanPham();
+            listTenSanPham = sanPhamHienThi.ListTenSanPham();
             listNhaPhatHanh = sanPhamHienThi.ListNhaPhatHanh();
             listNhaXuatBan = sanPhamHienThi.ListNhaXuatBan();
         }

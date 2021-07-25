@@ -28,71 +28,74 @@
         <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical" Name="nhapDuLieu">
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
-                            <local:UserControlComboBoxSearch x:Name="maSanPham" Width="{StaticResource WidthTextBox}"
+                            <local:UserControlComboBoxSearch x:Name="MaSanPham" Width="{StaticResource WidthTextBox}"
                                                           ComboBoxSearchItemSource="{Binding listMaSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                           ComboBoxSearchText="{Binding maSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                           ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listMaSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                           />
                         </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tên</TextBlock>
+                <local:UserControlComboBoxSearch x:Name="TenSanPham" Width="{StaticResource WidthTextBox}"
+                                                          ComboBoxSearchItemSource="{Binding listTenSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          ComboBoxSearchText="{Binding tenSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listTenSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          />
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Giá</TextBlock>
                             <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                             <local:UserControlTienVND x:Name="GiaSanPham" Width="{StaticResource WidthTextBox}"
                                                                              TienVNDText="{Binding  Path = giaSanPham, Mode=TwoWay}"
                                                                              />
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
-                            <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
-                            <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
-                                                                 IntegerText="{Binding  Path = soLuongNhap, Mode=TwoWay}"
-                                                                 />
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tồn kho</TextBlock>
-                            <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="False"
-                                     Text="{Binding Path=tonKho, Mode=TwoWay}"/>
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Cảnh báo</TextBlock>
-                            <TextBox Name="TonKhoCanhBaoHetHang" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
+                    </WrapPanel>
+                    <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
+                        <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
+                        <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
+                                                                IntegerText="{Binding  Path = soLuongNhap, Mode=TwoWay}"
+                                                                />
+                    </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tồn kho</TextBlock>
+                <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="False"
+                                    Text="{Binding Path=tonKho, Mode=TwoWay}"/>
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Cảnh báo</TextBlock>
+                <TextBox Name="TonKhoCanhBaoHetHang" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
                                                  Text="{Binding Path=tonKhoCanhBaoHetHang, Mode=TwoWay}"
                                      ToolTip="Khi tồn kho ít hơn hoặc bằng số lượng cảnh cảnh báo hết hàng. Thông báo sẽ được bất trên màn hình"/>
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tên</TextBlock>
-                            <TextBox Name="TenSanPham" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
-                                     Text="{Binding Path=tenSanPham, Mode=TwoWay}"/>
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                             <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tác giả</TextBlock>
                             <TextBox Name="TacGia" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
                                      Text="{Binding Path=tacGia, Mode=TwoWay}"/>
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Người dịch</TextBlock>
-                            <TextBox Name="NguoiDich" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
-                                     Text="{Binding Path=nguoiDich, Mode=TwoWay}"/>
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
-                            <local:UserControlComboBoxSearch x:Name="nhaPhatHanh" Width="{StaticResource WidthTextBox}"
-                                              ComboBoxSearchItemSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ComboBoxSearchText="{Binding nhaPhatHanh , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaPhatHanh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              />
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>
-                            <local:UserControlComboBoxSearch x:Name="NhaXuatBan" Width="{StaticResource WidthTextBox}"
-                                              ComboBoxSearchItemSource="{Binding listNhaXuatBan , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ComboBoxSearchText="{Binding nhaXuatBan , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaXuatBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              />
-                        </WrapPanel>
-                        <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Năm xuất bản</TextBlock>
-                            <!--<TextBox Name="NamXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Người dịch</TextBlock>
+                <TextBox Name="NguoiDich" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                            Text="{Binding Path=nguoiDich, Mode=TwoWay}"/>
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
+                <local:UserControlComboBoxSearch x:Name="nhaPhatHanh" Width="{StaticResource WidthTextBox}"
+                                    ComboBoxSearchItemSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ComboBoxSearchText="{Binding nhaPhatHanh , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaPhatHanh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    />
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>
+                <local:UserControlComboBoxSearch x:Name="NhaXuatBan" Width="{StaticResource WidthTextBox}"
+                                    ComboBoxSearchItemSource="{Binding listNhaXuatBan , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ComboBoxSearchText="{Binding nhaXuatBan , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaXuatBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    />
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Năm xuất bản</TextBlock>
+                <!--<TextBox Name="NamXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                 <local:UserControlChonThoiGian x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"
                                                ThoiGianText="{Binding Path=namXuatBan , Mode=TwoWay}"
                                                />
@@ -120,13 +123,13 @@
             </WrapPanel>
             <WrapPanel>
                 <TextBox
-                                  Name="MoTaChiTietSanPham"
-                                    Style="{StaticResource TextBoxStyleCode}"
-                                  TextWrapping="Wrap"
-                                  AcceptsReturn="True"
-                                  VerticalScrollBarVisibility="Visible"
-                                    Width="{StaticResource WidthLeftArea}"
-                                    Height="300"
+                    Name="MoTaChiTietSanPham"
+                    Style="{StaticResource TextBoxStyleCode}"
+                    TextWrapping="Wrap"
+                    AcceptsReturn="True"
+                    VerticalScrollBarVisibility="Visible"
+                    Width="{StaticResource WidthLeftArea}"
+                    Height="300"
                     Text="{Binding Path=moTaChiTietSanPham, Mode=TwoWay}"
                                 >
                     <!--This TextBox will allow the user to enter multiple lines of text.  When the RETURN key is pressed, 

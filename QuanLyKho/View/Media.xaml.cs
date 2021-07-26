@@ -26,7 +26,7 @@ namespace QuanLyKho.View
         public string mediaFolder { get; set; }
         // index ảnh hiển thị
         public int index { get; set; } // default-1
-        public List<string> listMediaFiles;// default: số phần từ là 0
+        public List<string> listMediaFiles;// default: số phần tử là 0
 
         public Media()
         {

@@ -14,9 +14,9 @@
     <Grid>
         <StackPanel>
             <Button Name="Save" Content="Lưu" Style="{StaticResource ButtonStyle}" Command="{Binding commandSave}"
-                    ToolTip="Lưu sản phẩm mới hoặc cập nhật thông tin sản phẩm cũ"/>
+                    ToolTip="Ctrl + S. Lưu sản phẩm mới hoặc cập nhật thông tin sản phẩm cũ"/>
             <Button Name="Delete" Content="Xóa" Style="{StaticResource ButtonStyle}" Command="{Binding commandDelete}"
-                    ToolTip="Xóa sản phẩm"/>
+                    ToolTip="Ctrl + D. Xóa sản phẩm"/>
         </StackPanel>
     </Grid>
 </UserControl>

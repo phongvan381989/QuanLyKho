@@ -15,6 +15,7 @@
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding commandSave}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding commandDelete}" Gesture="CTRL+D"/>
     </UserControl.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>

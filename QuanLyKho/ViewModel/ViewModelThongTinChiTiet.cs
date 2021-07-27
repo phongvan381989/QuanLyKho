@@ -97,7 +97,7 @@ namespace QuanLyKho.ViewModel
                     listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Same);
                     if (listMaSanPham.Count() == 1)
                     {
-                        sanPhamHienThi.GetASanPhamFromMaSanPham();
+                        sanPhamHienThi.GetASanPhamFromMaSanPham(sanPhamHienThi.maSanPham);
 
                         OnPropertyChanged("giaSanPham");
                         OnPropertyChanged("tonKho");
@@ -248,7 +248,7 @@ namespace QuanLyKho.ViewModel
                     listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.Same);
                     if (listTenSanPham.Count() == 1)
                     {
-                        sanPhamHienThi.GetASanPhamFromTenSanPham();
+                        sanPhamHienThi.GetASanPhamFromTenSanPham(sanPhamHienThi.tenSanPham);
 
                         OnPropertyChanged("giaSanPham");
                         OnPropertyChanged("tonKho");

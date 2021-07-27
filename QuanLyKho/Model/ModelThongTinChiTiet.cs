@@ -156,7 +156,12 @@ namespace QuanLyKho.Model
             return true;
         }
 
-        private XElement GetAXElementFromMaSanPham()
+        /// <summary>
+        /// Lấy được XElement với mã sản phẩm
+        /// </summary>
+        /// <param name="maSP"></param>
+        /// <returns></returns>
+        private XElement GetAXElementFromMaSanPham(string maSP)
         {
             XElement eExist = null;
             if (xDoc == null)
@@ -166,7 +171,7 @@ namespace QuanLyKho.Model
             le = xDoc
                 .Element("ThongTinChiTiet")
                 .Elements("SanPham")
-                .Where(e => e.Element("MaSanPham").Value == maSanPham);
+                .Where(e => e.Element("MaSanPham").Value == maSP);
             if (le.Count() != 0)
             {
                 eExist = le.ElementAt(0);
@@ -174,7 +179,12 @@ namespace QuanLyKho.Model
             return eExist;
         }
 
-        private XElement GetAXElementFromTenSanPham()
+        /// <summary>
+        ///  Lấy XElement sản phẩm từ tên sản phẩm
+        /// </summary>
+        /// <param name="tenSP"></param>
+        /// <returns></returns>
+        private XElement GetAXElementFromTenSanPham(string tenSP)
         {
             XElement eExist = null;
             if (xDoc == null)
@@ -184,14 +194,13 @@ namespace QuanLyKho.Model
             le = xDoc
                 .Element("ThongTinChiTiet")
                 .Elements("SanPham")
-                .Where(e => e.Element("TenSanPham").Value == tenSanPham);
+                .Where(e => e.Element("TenSanPham").Value == tenSP);
             if (le.Count() != 0)
             {
                 eExist = le.ElementAt(0);
             }
             return eExist;
         }
-
 
         /// <summary>
         /// Cập nhật 1 sản phẩm vào xDoc và lưu ra file
@@ -199,7 +208,7 @@ namespace QuanLyKho.Model
         /// <returns></returns>
         public Boolean UpdateAProducToXDocAndSave()
         {
-            XElement eExist = GetAXElementFromMaSanPham();
+            XElement eExist = GetAXElementFromMaSanPham(maSanPham);
             if (eExist == null)
                 return false;
 
@@ -482,12 +491,12 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Từ mã sản phẩm lấy thông tin sản phẩm
         /// </summary>
-        public void GetASanPhamFromMaSanPham()
+        public void GetASanPhamFromMaSanPham(string maSP)
         {
-            if (string.IsNullOrEmpty(maSanPham))
+            if (string.IsNullOrEmpty(maSP))
                 return;
 
-            XElement eExist = GetAXElementFromMaSanPham();
+            XElement eExist = GetAXElementFromMaSanPham(maSP);
             if (eExist == null)
                 return;
             ConvertXElementToModel(eExist);
@@ -496,12 +505,12 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Từ tên sản phẩm lấy thông tin sản phẩm
         /// </summary>
-        public void GetASanPhamFromTenSanPham()
+        public void GetASanPhamFromTenSanPham(string tenSP)
         {
-            if (string.IsNullOrEmpty(tenSanPham))
+            if (string.IsNullOrEmpty(tenSP))
                 return;
 
-            XElement eExist = GetAXElementFromTenSanPham();
+            XElement eExist = GetAXElementFromTenSanPham(tenSP);
             if (eExist == null)
                 return;
             ConvertXElementToModel(eExist);
@@ -558,9 +567,31 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="maSP"></param>
         /// <param name="tenSP"></param>
+        /// <param name="isCheckExist">true: Có check mã sản phẩm tồn tại hay không</param>
         /// <returns></returns>
-        public Boolean CanUpdateAProducde(string maSP, string tenSP)
+        public Boolean CanUpdateAProducde(string maSP, string tenSP, Boolean isCheckMaSPExist)
         {
+            // Check maSanPham có tồn tại
+            XElement eExist = null;
+            if (isCheckMaSPExist)
+            {
+                eExist = GetAXElementFromMaSanPham(maSP);
+                if (eExist == null)
+                {
+                    ErrorMessage = "Mã sản phẩm không tồn tại. Không thể cập nhật thông tin sản phẩm với mã này.";
+                    MyLogger.GetInstance().Info(ErrorMessage);
+                    return false;
+                }
+            }
+
+            // Check tên sản phẩm là duy nhất, và thuộc mã sản phẩm trên
+            eExist = GetAXElementFromTenSanPham(tenSP);
+            if(eExist != null && string.Compare(eExist.Element("MaSanPham").Value, maSP) != 0)
+            {
+                ErrorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể cập nhật thông tin sản phẩm với tên này.";
+                MyLogger.GetInstance().Info(ErrorMessage);
+                return false;
+            }
             return true;
         }
 
@@ -568,11 +599,33 @@ namespace QuanLyKho.Model
         /// Check dữ liệu hợp lệ trước khi thêm mới 1 sản phẩm
         /// maSanPham phải không tồn tại, tenSanPham không tồn tại
         /// </summary>
-        /// <param name="maSP"></param>
+        /// <param name="maSP">Phải đảm bảo chưa tồn tại trước khi gọi hàm</param>
         /// <param name="tenSP"></param>
+        /// <param name="isCheckExist">true: Có check mã sản phẩm tồn tại hay không</param>
         /// <returns></returns>
-        public Boolean CanAddAProduce(string maSP, string tenSP)
+        public Boolean CanAddAProduceWithTenSP(string maSP, string tenSP, Boolean isCheckMaSPExist)
         {
+            // Check maSanPham có tồn tại
+            XElement eExist = null;
+            if (isCheckMaSPExist)
+            {
+                eExist = GetAXElementFromMaSanPham(maSP);
+                if (eExist != null)
+                {
+                    ErrorMessage = "Mã sản phẩm đã tồn tại. Không thể tạo mới sản phẩm với mã này.";
+                    MyLogger.GetInstance().Info(ErrorMessage);
+                    return false;
+                }
+            }
+            // Check tên sản phẩm là duy nhất, và thuộc mã sản phẩm trên
+            eExist = GetAXElementFromTenSanPham(tenSP);
+            if (eExist != null)
+            {
+                ErrorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể dùng tên này với sản phảm tạo mới.";
+                MyLogger.GetInstance().Info(ErrorMessage);
+                return false;
+            }
+
             return true;
         }
     }

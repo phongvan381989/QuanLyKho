@@ -21,8 +21,9 @@ namespace QuanLyKho.View
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 ThuMucMedia.Text = dialog.FileName;
-                DisplayMedia.mediaFolder = dialog.FileName;
-                DisplayMedia.InitDisplay();
+                //DisplayMedia.mediaFolder = dialog.FileName;
+                //DisplayMedia.InitDisplay();
+                //vmM
             }
         }
     }

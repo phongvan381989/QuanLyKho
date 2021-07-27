@@ -7,18 +7,18 @@
              xmlns:localViewModel="clr-namespace:QuanLyKho.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <!--<UserControl.InputBindings>
-        <KeyBinding Command="{Binding commandSave}" Key="Left"/>
-        <KeyBinding Command="{Binding commandDelete}" Key="Right"/>
-    </UserControl.InputBindings>-->
-    <!--<UserControl.DataContext>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding Path=commandLeft}" Key="Left"/>
+        <KeyBinding Command="{Binding Path=commandRight}" Key="Right"/>
+    </UserControl.InputBindings>
+    <UserControl.DataContext>
         <localViewModel:ViewModelMedia/>
-    </UserControl.DataContext>-->
+    </UserControl.DataContext>
     <Grid>
         <DockPanel LastChildFill = "True">
-            <Button Name="Truoc" Width="50" Content = "Trước" Click = "Click_Truoc" />
-            <Button Name="Sau"  Width="50" Content = "Sau" DockPanel.Dock = "Right" Click = "Click_Sau" />
-            <Image Name="ContentMedia" Stretch="Uniform" Margin="5" Source="imagePath"/>
+            <Button Name="Truoc" Width="50" Content = "Trước" Command="{Binding Path=commandLeft}"/>
+            <Button Name="Sau"  Width="50" Content = "Sau" DockPanel.Dock = "Right" Command="{Binding Path=commandRight}"/>
+            <Image Name="ContentMedia" Stretch="Uniform" Margin="5" Source= "{Binding Path=imagePath}"/>
         </DockPanel>
     </Grid>
 </UserControl>

@@ -36,6 +36,7 @@ namespace QuanLyKho.ViewModel
         
         public ViewModelThongTinChiTiet()
         {
+            vmMedia = new ViewModelMedia();
             try
             {
                 sanPhamHienThi = new ModelThongTinChiTiet();
@@ -511,9 +512,12 @@ namespace QuanLyKho.ViewModel
                 {
                     sanPhamHienThi.thuMucMedia = value;
                     OnPropertyChanged("thuMucMedia");
+                    vmMedia.folderPath = sanPhamHienThi.thuMucMedia;
                 }
             }
         }
+
+        public ViewModelMedia vmMedia { get; set; }
 
         public string moTaChiTiet
         {

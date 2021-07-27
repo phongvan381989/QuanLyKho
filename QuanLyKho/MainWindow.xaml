@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:QuanLyKho"
         mc:Ignorable="d"
         Title="Play With Me" WindowState ="Maximized" WindowStyle="SingleBorderWindow">
+    <!--<Window.DataContext>
+        <local:ViewModelThongTinChiTiet></local:ViewModelThongTinChiTiet>
+    </Window.DataContext>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

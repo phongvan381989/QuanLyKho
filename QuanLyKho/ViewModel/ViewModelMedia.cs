@@ -8,10 +8,68 @@ using System.Threading.Tasks;
 
 namespace QuanLyKho.ViewModel
 {
-    class ViewModelMedia : ViewModelBase
+    public class ViewModelMedia : ViewModelBase
     {
-        public string imagePath { get; set; }
-        public string folderPath { get; set; }
+        public ViewModelMedia()
+        {
+            listMediaFiles = new List<string>();
+            _commandLeft = new CommandMedia_Left(this);
+            _commandRight = new CommandMedia_Right(this);
+        }
+        private string _imagePath;
+        public string imagePath
+        {
+            get
+            {
+                return _imagePath;
+            }
+            set
+            {
+                if(_imagePath != value)
+                {
+                    _imagePath = value;
+                    OnPropertyChanged("imagePath");
+                }
+            }
+        }
+
+        private string _folderPath;
+
+        public string folderPath
+        {
+            get
+            {
+                return _folderPath;
+            }
+            set
+            {
+                if(_folderPath != value)
+                {
+                    _folderPath = value;
+                    //OnPropertyChanged("folderPath");
+                    InitDisplay();
+                }
+            }
+        }
+
+        private CommandMedia_Left _commandLeft;
+        public CommandMedia_Left commandLeft
+        {
+            get
+            {
+                return _commandLeft;
+            }
+        }
+
+        private CommandMedia_Right _commandRight;
+        public CommandMedia_Right commandRight
+        {
+            get
+            {
+                return _commandRight;
+            }
+        }
+
         // index ảnh hiển thị
         public int index { get; set; } // default-1
         public List<string> listMediaFiles;// default: số phần tử là 0
@@ -50,15 +108,14 @@ namespace QuanLyKho.ViewModel
                 // Cập nhật lại danh sách file ảnh
                 GetAllMediaFiles();
             }
-            //DisplayAMedia(path);
         }
+
         public void InitDisplay()
         {
             GetAllMediaFiles();
             if (index != -1)
             {
                 imagePath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
-                //DisplayAMedia(path);
             }
         }
 
@@ -81,14 +138,5 @@ namespace QuanLyKho.ViewModel
             if (listMediaFiles.Count() != 0)
                 index = 0;
         }
-        //private void DisplayAMedia(string path)
-        //{
-        //    MyLogger.GetInstance().DebugFormat("Display meadia {0}", path);
-        //    BitmapImage bitmap = new BitmapImage();
-        //    bitmap.BeginInit();
-        //    bitmap.UriSource = new Uri(path);
-        //    bitmap.EndInit();
-        //    ContentMedia.Source = bitmap;
-        //}
     }
 }

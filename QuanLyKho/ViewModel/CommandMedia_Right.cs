@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace QuanLyKho.ViewModel
 {
-    class CommandMedia_Right : ICommand
+    public class CommandMedia_Right : ICommand
     {
         private ViewModelMedia vm;
 

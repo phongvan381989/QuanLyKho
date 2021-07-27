@@ -65,7 +65,12 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Mô tả lỗi hiện tại
         /// </summary>
-        public string ErrorMessage;
+        private string errorMessage;
+
+        public string GetErrorMessage()
+        {
+            return errorMessage;
+        }
         /// <summary>
         /// Đây là trường key, trong file mã sản phẩm là duy nhất tương ứng với 1 sản phẩm
         /// </summary>
@@ -472,6 +477,7 @@ namespace QuanLyKho.Model
         /// <param name="sanPham">Đối tượng model cần cập nhật thông tin</param>
         private void ConvertXElementToModel(XElement element)
         {
+            maSanPham = element.Element("MaSanPham").Value;
             giaSanPham = element.Element("GiaSanPham").Value;
             tonKho = element.Element("TonKho").Value;
             tonKhoCanhBaoHetHang = element.Element("TonKhoCanhBaoHetHang").Value;
@@ -578,8 +584,8 @@ namespace QuanLyKho.Model
                 eExist = GetAXElementFromMaSanPham(maSP);
                 if (eExist == null)
                 {
-                    ErrorMessage = "Mã sản phẩm không tồn tại. Không thể cập nhật thông tin sản phẩm với mã này.";
-                    MyLogger.GetInstance().Info(ErrorMessage);
+                    errorMessage = "Mã sản phẩm không tồn tại. Không thể cập nhật thông tin sản phẩm với mã này.";
+                    MyLogger.GetInstance().Info(errorMessage);
                     return false;
                 }
             }
@@ -588,8 +594,8 @@ namespace QuanLyKho.Model
             eExist = GetAXElementFromTenSanPham(tenSP);
             if(eExist != null && string.Compare(eExist.Element("MaSanPham").Value, maSP) != 0)
             {
-                ErrorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể cập nhật thông tin sản phẩm với tên này.";
-                MyLogger.GetInstance().Info(ErrorMessage);
+                errorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể cập nhật thông tin sản phẩm với tên này.";
+                MyLogger.GetInstance().Info(errorMessage);
                 return false;
             }
             return true;
@@ -612,8 +618,8 @@ namespace QuanLyKho.Model
                 eExist = GetAXElementFromMaSanPham(maSP);
                 if (eExist != null)
                 {
-                    ErrorMessage = "Mã sản phẩm đã tồn tại. Không thể tạo mới sản phẩm với mã này.";
-                    MyLogger.GetInstance().Info(ErrorMessage);
+                    errorMessage = "Mã sản phẩm đã tồn tại. Không thể tạo mới sản phẩm với mã này.";
+                    MyLogger.GetInstance().Info(errorMessage);
                     return false;
                 }
             }
@@ -621,8 +627,8 @@ namespace QuanLyKho.Model
             eExist = GetAXElementFromTenSanPham(tenSP);
             if (eExist != null)
             {
-                ErrorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể dùng tên này với sản phảm tạo mới.";
-                MyLogger.GetInstance().Info(ErrorMessage);
+                errorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể dùng tên này với sản phẩm tạo mới.";
+                MyLogger.GetInstance().Info(errorMessage);
                 return false;
             }
 

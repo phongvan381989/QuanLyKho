@@ -251,6 +251,7 @@ namespace QuanLyKho.ViewModel
                     {
                         sanPhamHienThi.GetASanPhamFromTenSanPham(sanPhamHienThi.tenSanPham);
 
+                        OnPropertyChanged("maSanPham");
                         OnPropertyChanged("giaSanPham");
                         OnPropertyChanged("tonKho");
                         OnPropertyChanged("tonKhoCanhBaoHetHang");
@@ -542,15 +543,24 @@ namespace QuanLyKho.ViewModel
         /// <returns></returns>
         public Boolean CheckValidInputs()
         {
+            // Mã sản phẩm không trống
+            if (string.IsNullOrWhiteSpace(maSanPham))
+            {
+                MessageBox.Show("Mã sản phẩm không được để trống");
+                return false;
+            }
+
+            // Tên sản phẩm không trông
+            if(string.IsNullOrWhiteSpace(tenSanPham))
+            {
+                MessageBox.Show("Tên sản phẩm không được để trống");
+                return false;
+            }
+
             // Check năm xuất bản
             if (!Common.CheckTimeValid(namXuatBan, true))
             {
                 MessageBox.Show("Thời gian nhập không đúng.");
-                return false;
-            }
-            if (string.IsNullOrEmpty(maSanPham))
-            {
-                MessageBox.Show("Mã sản phẩm không được để trống");
                 return false;
             }
             return true;
@@ -571,6 +581,11 @@ namespace QuanLyKho.ViewModel
                     // Nếu mã sản phẩm chưa tồn tại, tạo mới
                     if (listMaSanPham.Count() == 0)
                     {
+                        if(!sanPhamHienThi.CanAddAProduceWithTenSP(maSanPham, tenSanPham, false))
+                        {
+                            MessageBox.Show(sanPhamHienThi.GetErrorMessage());
+                            return;
+                        }
                         if (!sanPhamHienThi.AddAProduceToXDocAndSave())
                         {
                             bResult = false;
@@ -579,6 +594,11 @@ namespace QuanLyKho.ViewModel
                     }
                     else // Cập nhật
                     {
+                        if (!sanPhamHienThi.CanUpdateAProducde(maSanPham, tenSanPham, false))
+                        {
+                            MessageBox.Show(sanPhamHienThi.GetErrorMessage());
+                            return;
+                        }
                         if (!sanPhamHienThi.UpdateAProducToXDocAndSave())
                         {
                             bResult = false;
@@ -632,7 +652,7 @@ namespace QuanLyKho.ViewModel
             if (boxResult == MessageBoxResult.No)
                 return;
 
-            if(string.IsNullOrEmpty(maSanPham))
+            if(string.IsNullOrWhiteSpace(maSanPham))
             {
                 MessageBox.Show("Không thể xóa vì ô mã sản phẩm trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;

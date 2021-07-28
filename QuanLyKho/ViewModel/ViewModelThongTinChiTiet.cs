@@ -251,11 +251,11 @@ namespace QuanLyKho.ViewModel
                     {
                         sanPhamHienThi.GetASanPhamFromTenSanPham(sanPhamHienThi.tenSanPham);
 
-                        OnPropertyChanged("maSanPham");
+                        //OnPropertyChanged("maSanPham");
+                        maSanPham = sanPhamHienThi.maSanPham;
                         OnPropertyChanged("giaSanPham");
                         OnPropertyChanged("tonKho");
                         OnPropertyChanged("tonKhoCanhBaoHetHang");
-                        OnPropertyChanged("tenSanPham");
                         OnPropertyChanged("tacGia");
                         OnPropertyChanged("nguoiDich");
                         OnPropertyChanged("nhaPhatHanh");
@@ -634,6 +634,7 @@ namespace QuanLyKho.ViewModel
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Sản phẩm");
                 // Cập nhật source của combobox
                 listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);
+                listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.First);
                 listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.First);
                 listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.First);
             }

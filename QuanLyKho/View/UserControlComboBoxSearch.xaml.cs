@@ -17,17 +17,17 @@ using System.Windows.Shapes;
 
 namespace QuanLyKho.View
 {
-    public class ComboBoxSearchSelectedAction
-    {
-        public event Action<string> selectedAction;
+    //public class ComboBoxSearchSelectedAction
+    //{
+    //    public event Action<string> selectedAction;
 
-        //// What would call this??
-        //protected void OnMyEvent(EventArgs e)
-        //{
-        //    if (MyEvent != null)
-        //        MyEvent(this, e);
-        //}
-    }
+    //    //// What would call this??
+    //    //protected void OnMyEvent(EventArgs e)
+    //    //{
+    //    //    if (MyEvent != null)
+    //    //        MyEvent(this, e);
+    //    //}
+    //}
 
     /// <summary>
     /// Interaction logic for UserControlComboBoxSearch.xaml
@@ -77,22 +77,22 @@ namespace QuanLyKho.View
             set { SetValue(ComboBoxSearchIsDropDownOpenProperty, value); }
         }
 
-        // Register the routed event
-        public static readonly RoutedEvent ComboBoxSearchSelectionChangedEvent =
-        EventManager.RegisterRoutedEvent("ComboBoxSearchSelectionChanged", RoutingStrategy.Bubble,
-        typeof(RoutedEventHandler), typeof(UserControlComboBoxSearch));
+        //// Register the routed event
+        //public static readonly RoutedEvent ComboBoxSearchSelectionChangedEvent =
+        //EventManager.RegisterRoutedEvent("ComboBoxSearchSelectionChanged", RoutingStrategy.Bubble,
+        //typeof(RoutedEventHandler), typeof(UserControlComboBoxSearch));
 
-        // .NET wrapper
-        public event RoutedEventHandler ComboBoxSearchSelectionChanged
-        {
-            add { AddHandler(ComboBoxSearchSelectionChangedEvent, value); }
-            remove { RemoveHandler(ComboBoxSearchSelectionChangedEvent, value); }
-        }
+        //// .NET wrapper
+        //public event RoutedEventHandler ComboBoxSearchSelectionChanged
+        //{
+        //    add { AddHandler(ComboBoxSearchSelectionChangedEvent, value); }
+        //    remove { RemoveHandler(ComboBoxSearchSelectionChangedEvent, value); }
+        //}
 
         // Raise the routed event "SelectionChanged"
         private void ComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            RaiseEvent(new RoutedEventArgs(UserControlComboBoxSearch.ComboBoxSearchSelectionChangedEvent));
+            //RaiseEvent(new RoutedEventArgs(UserControlComboBoxSearch.ComboBoxSearchSelectionChangedEvent));
         }
     }
 }

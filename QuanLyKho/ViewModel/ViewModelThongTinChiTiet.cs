@@ -48,6 +48,8 @@ namespace QuanLyKho.ViewModel
             }
             _commandSave = new CommandThongTinChiTiet_Save(this);
             _commandDelete = new CommandThongTinChiTiet_Delete(this);
+            bMSPChangeBecauseListMSP = false;
+            bTSPChangeBecauseListTSP = false;
         }
 
         #region Mã sản phẩm
@@ -81,6 +83,10 @@ namespace QuanLyKho.ViewModel
                 OnPropertyChanged("listMaSanPham");
             }
         }
+        /// <summary>
+        /// Khi listMaSanPham cập nhật có 1 phần tử, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bMSPChangeBecauseListMSP = true
+        /// </summary>
+        private Boolean bMSPChangeBecauseListMSP;
         public string maSanPham
         {
             get
@@ -90,13 +96,13 @@ namespace QuanLyKho.ViewModel
 
             set
             {
-                if (sanPhamHienThi.maSanPham != value)
+                if (!bMSPChangeBecauseListMSP && sanPhamHienThi.maSanPham != value)
                 {
                     sanPhamHienThi.maSanPham = value;
                     OnPropertyChanged("maSanPham");
                     // Tìm sản phẩm có mã giống
-                    listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Same);
-                    if (listMaSanPham.Count() == 1)
+                    ObservableCollection<string>  listTemp = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Same);
+                    if (listTemp.Count() == 1)
                     {
                         sanPhamHienThi.GetASanPhamFromMaSanPham(sanPhamHienThi.maSanPham);
 
@@ -116,7 +122,11 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("moTaChiTiet");
 
                         // Cập nhật các buffer khác
+                        bMSPChangeBecauseListMSP = true;
+                        listMaSanPham = listTemp;
                         listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
+
+                        bTSPChangeBecauseListTSP = true;
                         listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
                         listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
                     }
@@ -129,6 +139,9 @@ namespace QuanLyKho.ViewModel
                     else
                         isDropDownOpen_listMaSanPham = false;
                 }
+
+                if (bMSPChangeBecauseListMSP)
+                    bMSPChangeBecauseListMSP = false;
             }
         }
         #endregion
@@ -232,6 +245,11 @@ namespace QuanLyKho.ViewModel
                 OnPropertyChanged("listTenSanPham");
             }
         }
+
+        /// <summary>
+        /// Khi listTenSanPham cập nhật có 1 phần tử, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bTSPChangeBecauseListTSP = true
+        /// </summary>
+        private Boolean bTSPChangeBecauseListTSP;
         public string tenSanPham
         {
             get
@@ -241,7 +259,7 @@ namespace QuanLyKho.ViewModel
 
             set
             {
-                if (sanPhamHienThi.tenSanPham != value)
+                if (!bTSPChangeBecauseListTSP && sanPhamHienThi.tenSanPham != value)
                 {
                     sanPhamHienThi.tenSanPham = value;
                     OnPropertyChanged("tenSanPham");
@@ -251,8 +269,7 @@ namespace QuanLyKho.ViewModel
                     {
                         sanPhamHienThi.GetASanPhamFromTenSanPham(sanPhamHienThi.tenSanPham);
 
-                        //OnPropertyChanged("maSanPham");
-                        maSanPham = sanPhamHienThi.maSanPham;
+                        OnPropertyChanged("maSanPham");
                         OnPropertyChanged("giaSanPham");
                         OnPropertyChanged("tonKho");
                         OnPropertyChanged("tonKhoCanhBaoHetHang");
@@ -268,7 +285,10 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("moTaChiTiet");
 
                         // Cập nhật các buffer khác
+                        bMSPChangeBecauseListMSP = true;
                         listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
+
+                        bTSPChangeBecauseListTSP = true;
                         listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
                         listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
                     }
@@ -281,6 +301,9 @@ namespace QuanLyKho.ViewModel
                     else
                         isDropDownOpen_listTenSanPham = false;
                 }
+
+                if (bTSPChangeBecauseListTSP)
+                    bTSPChangeBecauseListTSP = false;
             }
         }
         #endregion

@@ -20,9 +20,14 @@
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"/>
         </Style>
-        
+
         <Style x:Key="ComboBoxSearchStyle" TargetType="ComboBox">
             <Setter Property="FontSize" Value="20"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}" Value="1">
+                    <Setter Property="SelectedIndex" Value="-1" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
     </Application.Resources>
 </Application>

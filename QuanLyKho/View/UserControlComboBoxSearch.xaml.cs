@@ -93,6 +93,8 @@ namespace QuanLyKho.View
         private void ComboBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             //RaiseEvent(new RoutedEventArgs(UserControlComboBoxSearch.ComboBoxSearchSelectionChangedEvent));
+            int x;
+            x = 10;
         }
     }
 }

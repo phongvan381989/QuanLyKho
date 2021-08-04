@@ -48,8 +48,8 @@ namespace QuanLyKho.ViewModel
             }
             _commandSave = new CommandThongTinChiTiet_Save(this);
             _commandDelete = new CommandThongTinChiTiet_Delete(this);
-            bMSPChangeBecauseListMSP = false;
-            bTSPChangeBecauseListTSP = false;
+            bMSPChangeBecauseSelectedTSP = false;
+            bTSPChangeBecauseSelectedMSP = false;
         }
 
         #region Mã sản phẩm
@@ -83,10 +83,11 @@ namespace QuanLyKho.ViewModel
                 OnPropertyChanged("listMaSanPham");
             }
         }
+
         /// <summary>
-        /// Khi listMaSanPham cập nhật có 1 phần tử, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bMSPChangeBecauseListMSP = true
+        /// listMaSanPham cập nhật có 1 phần tử khi chọn khớp tên sản phẩm, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bMSPChangeBecauseSelectedTSP = true
         /// </summary>
-        private Boolean bMSPChangeBecauseListMSP;
+        private Boolean bMSPChangeBecauseSelectedTSP;
         public string maSanPham
         {
             get
@@ -96,10 +97,9 @@ namespace QuanLyKho.ViewModel
 
             set
             {
-                if (!bMSPChangeBecauseListMSP && sanPhamHienThi.maSanPham != value)
+                if (!bMSPChangeBecauseSelectedTSP && sanPhamHienThi.maSanPham != value)
                 {
                     sanPhamHienThi.maSanPham = value;
-                    OnPropertyChanged("maSanPham");
                     // Tìm sản phẩm có mã giống
                     ObservableCollection<string>  listTemp = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Same);
                     if (listTemp.Count() == 1)
@@ -122,16 +122,18 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("moTaChiTiet");
 
                         // Cập nhật các buffer khác
-                        bMSPChangeBecauseListMSP = true;
-                        listMaSanPham = listTemp;
-                        listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
 
-                        bTSPChangeBecauseListTSP = true;
+                        listMaSanPham = listTemp;
+                        bTSPChangeBecauseSelectedMSP = true;
+                        listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
+                        bTSPChangeBecauseSelectedMSP = false;
                         listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
                         listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
                     }
                     else// Tìm sản phẩm có mã kết thúc giống
                     {
+                        OnPropertyChanged("maSanPham");
+
                         listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
                     }
                     if (listMaSanPham.Count != 0)
@@ -139,9 +141,6 @@ namespace QuanLyKho.ViewModel
                     else
                         isDropDownOpen_listMaSanPham = false;
                 }
-
-                if (bMSPChangeBecauseListMSP)
-                    bMSPChangeBecauseListMSP = false;
             }
         }
         #endregion
@@ -247,9 +246,9 @@ namespace QuanLyKho.ViewModel
         }
 
         /// <summary>
-        /// Khi listTenSanPham cập nhật có 1 phần tử, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bTSPChangeBecauseListTSP = true
+        /// listTenSanPham cập nhật có 1 phần tử do chọn khớp mã sản phẩm, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bTSPChangeBecauseSelectedMSP = true
         /// </summary>
-        private Boolean bTSPChangeBecauseListTSP;
+        private Boolean bTSPChangeBecauseSelectedMSP;
         public string tenSanPham
         {
             get
@@ -259,13 +258,12 @@ namespace QuanLyKho.ViewModel
 
             set
             {
-                if (!bTSPChangeBecauseListTSP && sanPhamHienThi.tenSanPham != value)
+                if (!bTSPChangeBecauseSelectedMSP && sanPhamHienThi.tenSanPham != value)
                 {
                     sanPhamHienThi.tenSanPham = value;
-                    OnPropertyChanged("tenSanPham");
                     // Tìm sản phẩm có mã giống
-                    listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.Same);
-                    if (listTenSanPham.Count() == 1)
+                    ObservableCollection<string> listTemp = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.Same);
+                    if (listTemp.Count() == 1)
                     {
                         sanPhamHienThi.GetASanPhamFromTenSanPham(sanPhamHienThi.tenSanPham);
 
@@ -284,16 +282,18 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("thuMucMedia");
                         OnPropertyChanged("moTaChiTiet");
 
+                        listTenSanPham = listTemp;
                         // Cập nhật các buffer khác
-                        bMSPChangeBecauseListMSP = true;
+                        bMSPChangeBecauseSelectedTSP = true;
                         listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
+                        bMSPChangeBecauseSelectedTSP = false;
 
-                        bTSPChangeBecauseListTSP = true;
                         listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
                         listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
                     }
                     else// Tìm sản phẩm có tên chứa
                     {
+                        OnPropertyChanged("tenSanPham");
                         listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.All);
                     }
                     if (listTenSanPham.Count != 0)
@@ -301,9 +301,6 @@ namespace QuanLyKho.ViewModel
                     else
                         isDropDownOpen_listTenSanPham = false;
                 }
-
-                if (bTSPChangeBecauseListTSP)
-                    bTSPChangeBecauseListTSP = false;
             }
         }
         #endregion
@@ -654,6 +651,7 @@ namespace QuanLyKho.ViewModel
 
             if (bResult)
             {
+                OnPropertyChanged("tonKho");
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Sản phẩm");
                 // Cập nhật source của combobox
                 listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);

@@ -23,11 +23,11 @@
 
         <Style x:Key="ComboBoxSearchStyle" TargetType="ComboBox">
             <Setter Property="FontSize" Value="20"/>
-            <Style.Triggers>
+            <!--<Style.Triggers>
                 <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}" Value="1">
-                    <Setter Property="SelectedIndex" Value="-1" />
+                    <Setter Property="SelectedIndex" Value="0" />
                 </DataTrigger>
-            </Style.Triggers>
+            </Style.Triggers>-->
         </Style>
     </Application.Resources>
 </Application>

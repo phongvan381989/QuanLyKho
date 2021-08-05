@@ -20,6 +20,7 @@ namespace QuanLyKho.Model
             InitializeXDoc();
             InitializeBuffer();
             //ThemThanhPhanMoi("GiaSanPham", null);
+            //ThemThanhPhanMoi("ViTriLuuKho", null);
         }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -109,6 +110,8 @@ namespace QuanLyKho.Model
 
         public string moTaChiTiet { get; set; }
 
+        public string viTriLuuKho { get; set; }
+
         private string pathXML;
         private XDocument xDoc;
 
@@ -149,7 +152,8 @@ namespace QuanLyKho.Model
                 new XElement("KichThuocRong", kichThuocRong),
                 new XElement("KichThuocCao", kichThuocCao),
                 new XElement("ThuMucMedia", thuMucMedia),
-                new XElement("MoTaChiTiet", moTaChiTiet)
+                new XElement("MoTaChiTiet", moTaChiTiet),
+                new XElement("ViTriLuuKho", viTriLuuKho)
                 );
 
             xDoc.Root.Add(aProduce);
@@ -232,6 +236,7 @@ namespace QuanLyKho.Model
             eExist.Element("KichThuocCao").Value = string.IsNullOrEmpty(kichThuocCao) ? string.Empty : kichThuocCao;
             eExist.Element("ThuMucMedia").Value = string.IsNullOrEmpty(thuMucMedia) ? string.Empty : thuMucMedia;
             eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTiet) ? string.Empty : moTaChiTiet;
+            eExist.Element("ViTriLuuKho").Value = string.IsNullOrEmpty(viTriLuuKho) ? string.Empty : viTriLuuKho;
             xDoc.Save(pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
             return true;
@@ -492,6 +497,7 @@ namespace QuanLyKho.Model
             kichThuocCao = element.Element("KichThuocCao").Value;
             thuMucMedia = element.Element("ThuMucMedia").Value;
             moTaChiTiet = element.Element("MoTaChiTiet").Value;
+            viTriLuuKho = element.Element("ViTriLuuKho").Value;
         }
 
         /// <summary>

@@ -120,6 +120,7 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("kichThuocCao");
                         OnPropertyChanged("thuMucMedia");
                         OnPropertyChanged("moTaChiTiet");
+                        OnPropertyChanged("viTriLuuKho");
 
                         // Cập nhật các buffer khác
 
@@ -281,6 +282,7 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("kichThuocCao");
                         OnPropertyChanged("thuMucMedia");
                         OnPropertyChanged("moTaChiTiet");
+                        OnPropertyChanged("viTriLuuKho");
 
                         listTenSanPham = listTemp;
                         // Cập nhật các buffer khác
@@ -556,6 +558,24 @@ namespace QuanLyKho.ViewModel
                 }
             }
         }
+
+        public string viTriLuuKho
+        {
+            get
+            {
+                return sanPhamHienThi.viTriLuuKho;
+            }
+
+            set
+            {
+                if(sanPhamHienThi.viTriLuuKho != value)
+                {
+                    sanPhamHienThi.viTriLuuKho = value;
+                    OnPropertyChanged("viTriLuuKho");
+                }
+            }
+        }
+
 
         /// <summary>
         /// Check dữ liệu nhập vào đúng định dạng, giá trị

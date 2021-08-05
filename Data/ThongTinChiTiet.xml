@@ -16,11 +16,12 @@
     <KichThuocCao>1</KichThuocCao>
     <ThuMucMedia></ThuMucMedia>
     <MoTaChiTiet></MoTaChiTiet>
+    <ViTriLuuKho>A11</ViTriLuuKho>
   </SanPham>
   <SanPham>
     <MaSanPham>12346</MaSanPham>
     <GiaSanPham>50,000</GiaSanPham>
-    <TonKho>105</TonKho>
+    <TonKho>15</TonKho>
     <TonKhoCanhBaoHetHang>5</TonKhoCanhBaoHetHang>
     <TenSanPham>Maru</TenSanPham>
     <TacGia></TacGia>
@@ -33,6 +34,7 @@
     <KichThuocCao>1</KichThuocCao>
     <ThuMucMedia></ThuMucMedia>
     <MoTaChiTiet></MoTaChiTiet>
+    <ViTriLuuKho>B12</ViTriLuuKho>
   </SanPham>
   <SanPham>
     <MaSanPham>12347</MaSanPham>
@@ -50,6 +52,7 @@
     <KichThuocCao>1</KichThuocCao>
     <ThuMucMedia></ThuMucMedia>
     <MoTaChiTiet></MoTaChiTiet>
+    <ViTriLuuKho>C13</ViTriLuuKho>
   </SanPham>
   <SanPham>
     <MaSanPham>12348</MaSanPham>
@@ -67,5 +70,6 @@
     <KichThuocCao>1</KichThuocCao>
     <ThuMucMedia></ThuMucMedia>
     <MoTaChiTiet></MoTaChiTiet>
+    <ViTriLuuKho>D14</ViTriLuuKho>
   </SanPham>
 </ThongTinChiTiet>

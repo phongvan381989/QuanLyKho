@@ -90,11 +90,45 @@ namespace QuanLyKho.View
         //}
 
         // Raise the routed event "SelectionChanged"
-        private void ComboBox_SelectionChanged(object sender, RoutedEventArgs e)
+        //private void ComboBox_SelectionChanged(object sender, RoutedEventArgs e)
+        //{
+        //RaiseEvent(new RoutedEventArgs(UserControlComboBoxSearch.ComboBoxSearchSelectionChangedEvent));
+        ////    int x;
+        ////    x = 10;
+        //}
+
+        private Int32 iCarret = -1;
+        private void ComboBox_DropDownOpened(object sender, EventArgs e)
         {
-            //RaiseEvent(new RoutedEventArgs(UserControlComboBoxSearch.ComboBoxSearchSelectionChangedEvent));
-            int x;
-            x = 10;
+            TextBox textBox = (TextBox)((ComboBox)sender).Template.FindName("PART_EditableTextBox", (ComboBox)sender);
+            string str = textBox.Text;
+            string str1 = textBox.SelectedText;
+            //if(iCarret >= 0)
+                textBox.SelectionStart = iCarret;
+            //else
+                //textBox.SelectionStart = textBox.CaretIndex;
+            textBox.SelectionLength = 0;
+        }
+
+        private void ComboBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //TextBox textBox = (TextBox)((ComboBox)sender).Template.FindName("PART_EditableTextBox", (ComboBox)sender);
+            //iCarret = textBox.CaretIndex;
+        }
+
+        /// <summary>
+        /// Lấy được carret trước khi combobox sổ list, dẫn tới select text ở ô input text là thay đổi carret
+        /// </summary>
+        public void GetCarretBeforeIsDropDownOpenTrue()
+        {
+            TextBox textBox = (TextBox)MyComboxSearch.Template.FindName("PART_EditableTextBox", (ComboBox)MyComboxSearch);
+            iCarret = textBox.CaretIndex;
+        }
+
+        private void MyComboxSearch_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            TextBox textBox = (TextBox)((ComboBox)sender).Template.FindName("PART_EditableTextBox", (ComboBox)sender);
+            iCarret = textBox.CaretIndex;
         }
     }
 }

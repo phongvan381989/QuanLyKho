@@ -120,6 +120,12 @@
                 <Button Name="MediaBrowse" Content="Browse" Width="50" Height="30" Click="MediaBrowse_Click"/>
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Vị trí lưu kho</TextBlock>
+                <TextBox x:Name="ViTriLuuKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
+                                               Text="{Binding Path=viTriLuuKho , Mode=TwoWay}"
+                                               />
+            </WrapPanel>
+            <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mô tả</TextBlock>
             </WrapPanel>
             <WrapPanel>

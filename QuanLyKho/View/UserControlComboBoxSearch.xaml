@@ -7,16 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ComboBox Style="{StaticResource ComboBoxSearchStyle}"
+        <ComboBox Style="{StaticResource ComboBoxSearchStyle}" Name="MyComboxSearch"
             IsEditable="True"
             ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
               Path=ComboBoxSearchItemSource, UpdateSourceTrigger=PropertyChanged}"
             Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-              Path=ComboBoxSearchText, UpdateSourceTrigger=PropertyChanged}"
+              Path=ComboBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            TextBoxBase.TextChanged="ComboBox_TextChanged"
+                  TextBoxBase.PreviewKeyUp ="MyComboxSearch_PreviewKeyUp"
             IsSynchronizedWithCurrentItem="False"
             IsTextSearchEnabled="False"
             IsDropDownOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
               Path=ComboBoxSearchIsDropDownOpen, UpdateSourceTrigger=PropertyChanged}"
-              SelectionChanged="ComboBox_SelectionChanged"/>
+              DropDownOpened="ComboBox_DropDownOpened"/>
     </Grid>
 </UserControl>

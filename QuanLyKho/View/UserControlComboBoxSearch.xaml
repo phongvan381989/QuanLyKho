@@ -12,9 +12,8 @@
             ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
               Path=ComboBoxSearchItemSource, UpdateSourceTrigger=PropertyChanged}"
             Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-              Path=ComboBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+              Path=ComboBoxSearchText, UpdateSourceTrigger=Explicit, Mode=TwoWay}"
             TextBoxBase.TextChanged="ComboBox_TextChanged"
-                  TextBoxBase.PreviewKeyUp ="MyComboxSearch_PreviewKeyUp"
             IsSynchronizedWithCurrentItem="False"
             IsTextSearchEnabled="False"
             IsDropDownOpen="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 

@@ -10,7 +10,7 @@
         <ComboBox Style="{StaticResource ComboBoxSearchStyle}" Name="MyComboxSearch"
             IsEditable="True"
             ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-              Path=ComboBoxSearchItemSource, UpdateSourceTrigger=PropertyChanged}"
+              Path=ComboBoxSearchItemSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
             Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
               Path=ComboBoxSearchText, UpdateSourceTrigger=Explicit, Mode=TwoWay}"
             TextBoxBase.TextChanged="ComboBox_TextChanged"

@@ -97,7 +97,7 @@ namespace QuanLyKho.ViewModel
 
             set
             {
-                if (!bMSPChangeBecauseSelectedTSP && sanPhamHienThi.maSanPham != value)
+                if (/*!bMSPChangeBecauseSelectedTSP && */sanPhamHienThi.maSanPham != value)
                 {
                     sanPhamHienThi.maSanPham = value;
                     // Tìm sản phẩm có mã giống

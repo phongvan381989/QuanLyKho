@@ -79,11 +79,13 @@
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\CommandListBoxSearch_Collapse.cs" />
     <Compile Include="ViewModel\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\CommandThongTinChiTiet_Delete.cs" />
     <Compile Include="ViewModel\CommandThongTinChiTiet_Save.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\ViewModelListBoxSearch.cs" />
     <Compile Include="ViewModel\ViewModelMedia.cs" />
     <Compile Include="ViewModel\ViewModelThongTinChiTiet.cs" />
     <Compile Include="View\Media.xaml.cs">
@@ -94,6 +96,9 @@
     </Compile>
     <Compile Include="View\UserControlComboBoxSearch.xaml.cs">
       <DependentUpon>UserControlComboBoxSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControlListBoxSearch.xaml.cs">
+      <DependentUpon>UserControlListBoxSearch.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlSoThucDuong.xaml.cs">
       <DependentUpon>UserControlSoThucDuong.xaml</DependentUpon>
@@ -135,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControlComboBoxSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlListBoxSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -29,5 +29,8 @@
                 </DataTrigger>
             </Style.Triggers>-->
         </Style>
+        <Style x:Key="ListBoxSearchStyle" TargetType="ListBox">
+            <Setter Property="FontSize" Value="20"/>
+        </Style> 
     </Application.Resources>
 </Application>

@@ -53,19 +53,21 @@ namespace QuanLyKho.ViewModel
         }
 
         #region Mã sản phẩm
-        private Boolean pIsDropDownOpen_listMaSanPham;
 
-        public Boolean isDropDownOpen_listMaSanPham
+        private Visibility pListMaSanPhamVisibility;
+        public Visibility listMaSanPhamVisibility
         {
             get
             {
-                return pIsDropDownOpen_listMaSanPham;
+                return pListMaSanPhamVisibility;
             }
-
             set
             {
-                pIsDropDownOpen_listMaSanPham = value;
-                OnPropertyChanged("isDropDownOpen_listMaSanPham");
+                if (pListMaSanPhamVisibility != value)
+                {
+                    pListMaSanPhamVisibility = value;
+                    OnPropertyChanged("listMaSanPhamVisibility");
+                }
             }
         }
 
@@ -123,7 +125,6 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("viTriLuuKho");
 
                         // Cập nhật các buffer khác
-
                         listMaSanPham = listTemp;
                         bTSPChangeBecauseSelectedMSP = true;
                         listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
@@ -138,9 +139,9 @@ namespace QuanLyKho.ViewModel
                         listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
                     }
                     if (listMaSanPham.Count != 0)
-                        isDropDownOpen_listMaSanPham = true;
+                        listMaSanPhamVisibility = Visibility.Visible;
                     else
-                        isDropDownOpen_listMaSanPham = false;
+                        listMaSanPhamVisibility = Visibility.Collapsed;
                 }
             }
         }

@@ -54,20 +54,34 @@ namespace QuanLyKho.ViewModel
 
         #region Mã sản phẩm
 
-        private Visibility pListMaSanPhamVisibility;
-        public Visibility listMaSanPhamVisibility
+        private Boolean pbListBoxSearchPopupIsOpen;
+        public Boolean blistBoxSearchPopupIsOpen
         {
             get
             {
-                return pListMaSanPhamVisibility;
+                return pbListBoxSearchPopupIsOpen;
             }
             set
             {
-                if (pListMaSanPhamVisibility != value)
+                if (pbListBoxSearchPopupIsOpen != value)
                 {
-                    pListMaSanPhamVisibility = value;
-                    OnPropertyChanged("listMaSanPhamVisibility");
+                    pbListBoxSearchPopupIsOpen = value;
+                    OnPropertyChanged("blistBoxSearchPopupIsOpen");
                 }
+            }
+        }
+
+        private Boolean pbCheckSelectedItemFromListMSP;
+        public Boolean bCheckSelectedItemFromListMSP
+        {
+            get
+            {
+                return pbCheckSelectedItemFromListMSP;
+            }
+            set
+            {
+                pbCheckSelectedItemFromListMSP = value;
+                OnPropertyChanged("bCheckSelectedItemFromListMSP");
             }
         }
 
@@ -139,9 +153,17 @@ namespace QuanLyKho.ViewModel
                         listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
                     }
                     if (listMaSanPham.Count != 0)
-                        listMaSanPhamVisibility = Visibility.Visible;
+                    {
+                        if (!bCheckSelectedItemFromListMSP)
+                            blistBoxSearchPopupIsOpen = true;
+                        else
+                        {
+                            blistBoxSearchPopupIsOpen = false;
+                            bCheckSelectedItemFromListMSP = false;
+                        }
+                    }
                     else
-                        listMaSanPhamVisibility = Visibility.Collapsed;
+                        blistBoxSearchPopupIsOpen = false;
                 }
             }
         }

@@ -25,7 +25,8 @@ namespace QuanLyKho.View
         public UserControlListBoxSearch()
         {
             InitializeComponent();
-            ListBoxSearchVisibility = Visibility.Collapsed;
+            ListBoxSearchPopupIsOpen = false;
+            ListBoxSearchCheckSelectedItem = false;
         }
 
         public static readonly DependencyProperty ListBoxSearchItemSourceProperty = DependencyProperty.Register("ListBoxSearchItemSource", typeof(IEnumerable), typeof(UserControlListBoxSearch), null);
@@ -42,19 +43,24 @@ namespace QuanLyKho.View
             set { SetValue(ListBoxSearchTextProperty, value); }
         }
         
-        public static readonly DependencyProperty ListBoxSearchVisibilityProperty = DependencyProperty.Register("ListBoxSearchVisibility", typeof(Visibility), typeof(UserControlListBoxSearch), null);
-        public Visibility ListBoxSearchVisibility
+        public static readonly DependencyProperty ListBoxSearchPopupIsOpenProperty = DependencyProperty.Register("ListBoxSearchPopupIsOpen", typeof(Boolean), typeof(UserControlListBoxSearch), null);
+        public Boolean ListBoxSearchPopupIsOpen
         {
-            get { return (Visibility)GetValue(ListBoxSearchVisibilityProperty); }
-            set { SetValue(ListBoxSearchVisibilityProperty, value); }
+            get { return (Boolean)GetValue(ListBoxSearchPopupIsOpenProperty); }
+            set { SetValue(ListBoxSearchPopupIsOpenProperty, value); }
+        }
+
+        // Khi item của listbox được chọn bằng enter, double chuột biến này có giá trị true.
+        public static readonly DependencyProperty ListBoxSearchCheckSelectedItemProperty = DependencyProperty.Register("ListBoxSearchCheckSelectedItem", typeof(Boolean), typeof(UserControlListBoxSearch), null);
+        public Boolean ListBoxSearchCheckSelectedItem
+        {
+            get { return (Boolean)GetValue(ListBoxSearchCheckSelectedItemProperty); }
+            set { SetValue(ListBoxSearchCheckSelectedItemProperty, value); }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (ListBoxSearchVisibility != Visibility.Visible)
-                ListBoxSearchVisibility = Visibility.Visible;
-            else
-                ListBoxSearchVisibility = Visibility.Collapsed;
+            ListBoxSearchPopupIsOpen = !ListBoxSearchPopupIsOpen;
         }
 
         private void ListBox_TargetUpdated(object sender, DataTransferEventArgs e)
@@ -71,7 +77,8 @@ namespace QuanLyKho.View
                 ListBox lb = sender as ListBox;
                 if (lb != null && lb.SelectedIndex != -1)
                 {
-                    ListBoxSearchVisibility = Visibility.Collapsed;
+                    ListBoxSearchPopupIsOpen = false;
+                    ListBoxSearchCheckSelectedItem = true;
                     TextBoxSearchValue.Text = lb.SelectedValue.ToString();
                 }
             }
@@ -82,14 +89,15 @@ namespace QuanLyKho.View
             ListBox lb = sender as ListBox;
             if (lb != null && lb.SelectedIndex != -1)
             {
-                ListBoxSearchVisibility = Visibility.Collapsed;
+                ListBoxSearchPopupIsOpen = false;
+                ListBoxSearchCheckSelectedItem = true;
                 TextBoxSearchValue.Text = lb.SelectedValue.ToString();
             }
         }
 
         private void ListBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            ListBoxSearchVisibility = Visibility.Collapsed;
+            //ListBoxSearchVisibility = Visibility.Collapsed;
         }
     }
 }

@@ -7,47 +7,34 @@
              xmlns:localViewModel="clr-namespace:QuanLyKho.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <!--<UserControl.Resources>
-        <localViewModel:ColapseConverter x:Key="colapseConverter" />
-    </UserControl.Resources>
-    <UserControl.DataContext>
-        <localViewModel:ViewModelListBoxSearch/>
-    </UserControl.DataContext>-->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <DockPanel LastChildFill = "True" Grid.Column="0" Grid.Row="0">
+        <DockPanel LastChildFill = "True" Name="DockPanelInputText">
             <Button Width="50" Height="30" Click="Button_Click" DockPanel.Dock="Right"></Button>
             <TextBox Name="TextBoxSearchValue" Style="{StaticResource TextBoxStyleCode}"
                         Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
             Path=ListBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
         </DockPanel>
-    <DockPanel LastChildFill = "True" Grid.Column="0" Grid.Row="1"
-               Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-            Path=ListBoxSearchVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-        <ListBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+        <Popup Width="{Binding ActualWidth, ElementName=DockPanelInputText}"
+            IsOpen ="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+            Path=ListBoxSearchPopupIsOpen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+               HorizontalAlignment="Center" VerticalAlignment="Center" Height="200">
+            <ListBox Name="ListBoxResultSearchValue" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
                     Path=ListBoxSearchItemSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, NotifyOnTargetUpdated=True}"
                  TargetUpdated="ListBox_TargetUpdated"
                  Style="{StaticResource ListBoxSearchStyle}"
-                 Height="150"
                  SelectedIndex="0"
                  KeyDown="ListBox_KeyDown"
                  MouseDoubleClick="ListBox_MouseDoubleClick"
                  LostFocus="ListBox_LostFocus"
                  >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </DockPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Popup>
     </Grid>
 </UserControl>

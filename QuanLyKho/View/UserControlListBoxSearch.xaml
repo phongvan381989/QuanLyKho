@@ -9,7 +9,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <DockPanel LastChildFill = "True" Name="DockPanelInputText">
-            <Button Width="50" Height="30" Click="Button_Click" DockPanel.Dock="Right"></Button>
+            <Button Width="50" Height="30" Click="Button_Click" DockPanel.Dock="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resource/downarrow_48pixel.png"  Stretch="Fill"/>
+                </StackPanel>
+            </Button>
             <TextBox Name="TextBoxSearchValue" Style="{StaticResource TextBoxStyleCode}"
                         Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
             Path=ListBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>

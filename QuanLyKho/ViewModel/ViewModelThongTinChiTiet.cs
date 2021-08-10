@@ -48,25 +48,22 @@ namespace QuanLyKho.ViewModel
             }
             _commandSave = new CommandThongTinChiTiet_Save(this);
             _commandDelete = new CommandThongTinChiTiet_Delete(this);
-            bMSPChangeBecauseSelectedTSP = false;
-            bTSPChangeBecauseSelectedMSP = false;
         }
 
         #region Mã sản phẩm
-
-        private Boolean pbListBoxSearchPopupIsOpen;
-        public Boolean blistBoxSearchPopupIsOpen
+        private Boolean pbListBoxSearchPopupIsOpenMSP;
+        public Boolean blistBoxSearchPopupIsOpenMSP
         {
             get
             {
-                return pbListBoxSearchPopupIsOpen;
+                return pbListBoxSearchPopupIsOpenMSP;
             }
             set
             {
-                if (pbListBoxSearchPopupIsOpen != value)
+                if (pbListBoxSearchPopupIsOpenMSP != value)
                 {
-                    pbListBoxSearchPopupIsOpen = value;
-                    OnPropertyChanged("blistBoxSearchPopupIsOpen");
+                    pbListBoxSearchPopupIsOpenMSP = value;
+                    OnPropertyChanged("blistBoxSearchPopupIsOpenMSP");
                 }
             }
         }
@@ -100,10 +97,6 @@ namespace QuanLyKho.ViewModel
             }
         }
 
-        /// <summary>
-        /// listMaSanPham cập nhật có 1 phần tử khi chọn khớp tên sản phẩm, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bMSPChangeBecauseSelectedTSP = true
-        /// </summary>
-        private Boolean bMSPChangeBecauseSelectedTSP;
         public string maSanPham
         {
             get
@@ -116,9 +109,10 @@ namespace QuanLyKho.ViewModel
                 if (/*!bMSPChangeBecauseSelectedTSP && */sanPhamHienThi.maSanPham != value)
                 {
                     sanPhamHienThi.maSanPham = value;
+                    OnPropertyChanged("maSanPham");
                     // Tìm sản phẩm có mã giống
-                    ObservableCollection<string>  listTemp = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Same);
-                    if (listTemp.Count() == 1)
+                    listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Same);
+                    if (listMaSanPham.Count() == 1)
                     {
                         sanPhamHienThi.GetASanPhamFromMaSanPham(sanPhamHienThi.maSanPham);
 
@@ -138,32 +132,29 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("moTaChiTiet");
                         OnPropertyChanged("viTriLuuKho");
 
-                        // Cập nhật các buffer khác
-                        listMaSanPham = listTemp;
-                        bTSPChangeBecauseSelectedMSP = true;
+                        // Cập nhật các buffer
                         listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
-                        bTSPChangeBecauseSelectedMSP = false;
                         listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
                         listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
                     }
                     else// Tìm sản phẩm có mã kết thúc giống
                     {
-                        OnPropertyChanged("maSanPham");
-
                         listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
                     }
                     if (listMaSanPham.Count != 0)
                     {
-                        if (!bCheckSelectedItemFromListMSP)
-                            blistBoxSearchPopupIsOpen = true;
+                        if (bCheckSelectedItemFromListMSP)
+                        {
+                            blistBoxSearchPopupIsOpenMSP = false;
+                            bCheckSelectedItemFromListMSP = false;
+                        }
                         else
                         {
-                            blistBoxSearchPopupIsOpen = false;
-                            bCheckSelectedItemFromListMSP = false;
+                            blistBoxSearchPopupIsOpenMSP = true;
                         }
                     }
                     else
-                        blistBoxSearchPopupIsOpen = false;
+                        blistBoxSearchPopupIsOpenMSP = false;
                 }
             }
         }
@@ -238,19 +229,34 @@ namespace QuanLyKho.ViewModel
         }
 
         #region Tên Sản Phẩm
-        private Boolean pIsDropDownOpen_listTenSanPham;
-
-        public Boolean isDropDownOpen_listTenSanPham
+        private Boolean pbListBoxSearchPopupIsOpenTSP;
+        public Boolean blistBoxSearchPopupIsOpenTSP
         {
             get
             {
-                return pIsDropDownOpen_listTenSanPham;
+                return pbListBoxSearchPopupIsOpenTSP;
             }
-
             set
             {
-                pIsDropDownOpen_listTenSanPham = value;
-                OnPropertyChanged("isDropDownOpen_listTenSanPham");
+                if (pbListBoxSearchPopupIsOpenTSP != value)
+                {
+                    pbListBoxSearchPopupIsOpenTSP = value;
+                    OnPropertyChanged("blistBoxSearchPopupIsOpenTSP");
+                }
+            }
+        }
+
+        private Boolean pbCheckSelectedItemFromListTSP;
+        public Boolean bCheckSelectedItemFromListTSP
+        {
+            get
+            {
+                return pbCheckSelectedItemFromListTSP;
+            }
+            set
+            {
+                pbCheckSelectedItemFromListTSP = value;
+                OnPropertyChanged("bCheckSelectedItemFromListTSP");
             }
         }
 
@@ -269,10 +275,6 @@ namespace QuanLyKho.ViewModel
             }
         }
 
-        /// <summary>
-        /// listTenSanPham cập nhật có 1 phần tử do chọn khớp mã sản phẩm, combobox sẽ tự động chọn-> hàm set được gọi. Lúc này bTSPChangeBecauseSelectedMSP = true
-        /// </summary>
-        private Boolean bTSPChangeBecauseSelectedMSP;
         public string tenSanPham
         {
             get
@@ -282,12 +284,13 @@ namespace QuanLyKho.ViewModel
 
             set
             {
-                if (!bTSPChangeBecauseSelectedMSP && sanPhamHienThi.tenSanPham != value)
+                if (sanPhamHienThi.tenSanPham != value)
                 {
                     sanPhamHienThi.tenSanPham = value;
+                    OnPropertyChanged("tenSanPham");
                     // Tìm sản phẩm có mã giống
-                    ObservableCollection<string> listTemp = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.Same);
-                    if (listTemp.Count() == 1)
+                    listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.Same);
+                    if (listTenSanPham.Count() == 1)
                     {
                         sanPhamHienThi.GetASanPhamFromTenSanPham(sanPhamHienThi.tenSanPham);
 
@@ -307,24 +310,30 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("moTaChiTiet");
                         OnPropertyChanged("viTriLuuKho");
 
-                        listTenSanPham = listTemp;
-                        // Cập nhật các buffer khác
-                        bMSPChangeBecauseSelectedTSP = true;
+                        // Cập nhật các buffer
                         listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
-                        bMSPChangeBecauseSelectedTSP = false;
-
                         listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
                         listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
                     }
                     else// Tìm sản phẩm có tên chứa
                     {
-                        OnPropertyChanged("tenSanPham");
                         listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.All);
                     }
+
                     if (listTenSanPham.Count != 0)
-                        isDropDownOpen_listTenSanPham = true;
+                    {
+                        if (bCheckSelectedItemFromListTSP)
+                        {
+                            blistBoxSearchPopupIsOpenTSP = false;
+                            bCheckSelectedItemFromListTSP = false;
+                        }
+                        else
+                        {
+                            blistBoxSearchPopupIsOpenTSP = true;
+                        }
+                    }
                     else
-                        isDropDownOpen_listTenSanPham = false;
+                        blistBoxSearchPopupIsOpenTSP = false;
                 }
             }
         }
@@ -365,19 +374,34 @@ namespace QuanLyKho.ViewModel
         }
 
         #region Nhà phát hành
-        private Boolean pIsDropDownOpen_listNhaPhatHanh;
-
-        public Boolean isDropDownOpen_listNhaPhatHanh
+        private Boolean pbListBoxSearchPopupIsOpenNPH;
+        public Boolean blistBoxSearchPopupIsOpenNPH
         {
             get
             {
-                return pIsDropDownOpen_listNhaPhatHanh;
+                return pbListBoxSearchPopupIsOpenNPH;
             }
-
             set
             {
-                pIsDropDownOpen_listNhaPhatHanh = value;
-                OnPropertyChanged("isDropDownOpen_listNhaPhatHanh");
+                if (pbListBoxSearchPopupIsOpenNPH != value)
+                {
+                    pbListBoxSearchPopupIsOpenNPH = value;
+                    OnPropertyChanged("blistBoxSearchPopupIsOpenNPH");
+                }
+            }
+        }
+
+        private Boolean pbCheckSelectedItemFromListNPH;
+        public Boolean bCheckSelectedItemFromListNPH
+        {
+            get
+            {
+                return pbCheckSelectedItemFromListNPH;
+            }
+            set
+            {
+                pbCheckSelectedItemFromListNPH = value;
+                OnPropertyChanged("bCheckSelectedItemFromListNPH");
             }
         }
 
@@ -410,10 +434,21 @@ namespace QuanLyKho.ViewModel
                     sanPhamHienThi.nhaPhatHanh = value;
                     OnPropertyChanged("nhaPhatHanh");
                     listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(value, ParameterSearch.First);
+
                     if (listNhaPhatHanh.Count != 0)
-                        isDropDownOpen_listNhaPhatHanh = true;
+                    {
+                        if (bCheckSelectedItemFromListNPH)
+                        {
+                            blistBoxSearchPopupIsOpenNPH = false;
+                            bCheckSelectedItemFromListNPH = false;
+                        }
+                        else
+                        {
+                            blistBoxSearchPopupIsOpenNPH = true;
+                        }
+                    }
                     else
-                        isDropDownOpen_listNhaPhatHanh = false;
+                        blistBoxSearchPopupIsOpenNPH = false;
                 }
             }
         }
@@ -421,19 +456,34 @@ namespace QuanLyKho.ViewModel
 
         #region Nhà Xuất Bản
 
-        private Boolean pIsDropDownOpen_listNhaXuatBan;
-
-        public Boolean isDropDownOpen_listNhaXuatBan
+        private Boolean pbListBoxSearchPopupIsOpenNXB;
+        public Boolean blistBoxSearchPopupIsOpenNXB
         {
             get
             {
-                return pIsDropDownOpen_listNhaXuatBan;
+                return pbListBoxSearchPopupIsOpenNXB;
             }
-
             set
             {
-                pIsDropDownOpen_listNhaXuatBan = value;
-                OnPropertyChanged("isDropDownOpen_listNhaXuatBan");
+                if (pbListBoxSearchPopupIsOpenNXB != value)
+                {
+                    pbListBoxSearchPopupIsOpenNXB = value;
+                    OnPropertyChanged("blistBoxSearchPopupIsOpenNXB");
+                }
+            }
+        }
+
+        private Boolean pbCheckSelectedItemFromListNXB;
+        public Boolean bCheckSelectedItemFromListNXB
+        {
+            get
+            {
+                return pbCheckSelectedItemFromListNXB;
+            }
+            set
+            {
+                pbCheckSelectedItemFromListNXB = value;
+                OnPropertyChanged("bCheckSelectedItemFromListNXB");
             }
         }
 
@@ -469,9 +519,19 @@ namespace QuanLyKho.ViewModel
                     OnPropertyChanged("nhaXuatBan");
                     listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(value, ParameterSearch.First);
                     if (listNhaXuatBan.Count != 0)
-                        isDropDownOpen_listNhaXuatBan = true;
+                    {
+                        if (bCheckSelectedItemFromListNXB)
+                        {
+                            blistBoxSearchPopupIsOpenNXB = false;
+                            bCheckSelectedItemFromListNXB = false;
+                        }
+                        else
+                        {
+                            blistBoxSearchPopupIsOpenNXB = true;
+                        }
+                    }
                     else
-                        isDropDownOpen_listNhaXuatBan = false;
+                        blistBoxSearchPopupIsOpenNXB = false;
                 }
             }
         }
@@ -701,11 +761,19 @@ namespace QuanLyKho.ViewModel
                 listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.First);
                 listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.First);
                 listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.First);
+
+                if(sanPhamHienThi.CreateSampleData())
+                {
+                    General.Common.ShowAutoClosingMessageBox("CreateSampleData thành công", "Sản phẩm");
+                }
+                else
+                {
+                    General.Common.ShowAutoClosingMessageBox("CreateSampleData thất bại", "Sản phẩm");
+                }
             }
             else
             {
                 MessageBox.Show("Lưu không thành công!" + strError, "Sản phẩm", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
         }
 

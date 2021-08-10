@@ -26,22 +26,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height = "*" />
         </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical" Name="nhapDuLieu">
-            <WrapPanel>
+            <WrapPanel Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
                 <local:UserControlListBoxSearch x:Name="MaSanPham" Width="{StaticResource WidthTextBox}"
                                                           ListBoxSearchItemSource="{Binding listMaSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                           ListBoxSearchText="{Binding maSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                          ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenMSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                           ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListMSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                           />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tên</TextBlock>
-                <local:UserControlComboBoxSearch x:Name="TenSanPham" Width="{StaticResource WidthTextBox}"
-                                                          ComboBoxSearchItemSource="{Binding listTenSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                                          ComboBoxSearchText="{Binding tenSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                          ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listTenSanPham, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <local:UserControlListBoxSearch x:Name="TenSanPham" Width="{StaticResource WidthTextBox}"
+                                                          ListBoxSearchItemSource="{Binding listTenSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          ListBoxSearchText="{Binding tenSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenTSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListTSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                           />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
@@ -81,18 +83,20 @@
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
-                <local:UserControlComboBoxSearch x:Name="nhaPhatHanh" Width="{StaticResource WidthTextBox}"
-                                    ComboBoxSearchItemSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                    ComboBoxSearchText="{Binding nhaPhatHanh , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaPhatHanh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <local:UserControlListBoxSearch x:Name="nhaPhatHanh" Width="{StaticResource WidthTextBox}"
+                                    ListBoxSearchItemSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ListBoxSearchText="{Binding nhaPhatHanh , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenNPH, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListNPH, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà xuất bản</TextBlock>
-                <local:UserControlComboBoxSearch x:Name="NhaXuatBan" Width="{StaticResource WidthTextBox}"
-                                    ComboBoxSearchItemSource="{Binding listNhaXuatBan , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                    ComboBoxSearchText="{Binding nhaXuatBan , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    ComboBoxSearchIsDropDownOpen="{Binding isDropDownOpen_listNhaXuatBan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <local:UserControlListBoxSearch x:Name="NhaXuatBan" Width="{StaticResource WidthTextBox}"
+                                    ListBoxSearchItemSource="{Binding listNhaXuatBan , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ListBoxSearchText="{Binding nhaXuatBan , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenNXB, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListNXB, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
@@ -145,6 +149,7 @@
                 </TextBox>
             </WrapPanel>
         </StackPanel>
+        </ScrollViewer>
         <DockPanel LastChildFill = "True" Grid.Row = "0" Grid.Column = "1">
             <local:Media x:Name="DisplayMedia" DataContext="{Binding Path=vmMedia}">
 

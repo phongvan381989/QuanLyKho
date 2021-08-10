@@ -640,5 +640,25 @@ namespace QuanLyKho.Model
 
             return true;
         }
+
+
+        public Boolean CreateSampleData()
+        {
+            try
+            {
+                for (int i = 0; i < 5000; i++)
+                {
+                    string str = "_" + i.ToString();
+                    maSanPham = maSanPham + str;
+                    tenSanPham = tenSanPham + str;
+                    AddAProduceToXDocAndSave();
+                }
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

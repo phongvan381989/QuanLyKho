@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace QuanLyKho.ViewModel
 {
@@ -16,25 +17,74 @@ namespace QuanLyKho.ViewModel
             _commandLeft = new CommandMedia_Left(this);
             _commandRight = new CommandMedia_Right(this);
         }
-        private string _imagePath;
-        public string imagePath
+        private string _mediaPath;
+        public string mediaPath
         {
             get
             {
-                return _imagePath;
+                return _mediaPath;
             }
             set
             {
-                if(_imagePath != value)
+                if(_mediaPath != value)
                 {
-                    _imagePath = value;
-                    OnPropertyChanged("imagePath");
+                    _mediaPath = value;
+                    string strExtension = "*" + Path.GetExtension(_mediaPath);
+                    OnPropertyChanged("mediaPath");
+
+                    // Check phần mở rộng là file ảnh
+                    List<string> listTemp = ((App)Application.Current).GetListImageFormats();
+                    if (listTemp != null && listTemp.Count() != 0)
+                    {
+                        if (listTemp.Exists(str=>str.ToUpper() == strExtension.ToUpper()))
+                        {
+                            isDisplayImage = Visibility.Visible;
+                            isDisplayVideo = Visibility.Collapsed;
+                            return;
+                        }
+                    }
+
+                    isDisplayImage = Visibility.Collapsed;
+                    isDisplayVideo = Visibility.Visible;
+                }
+            }
+        }
+
+        private Visibility _isDisplayVideo;
+        public Visibility isDisplayVideo
+        {
+            get
+            {
+                return _isDisplayVideo;
+            }
+            set
+            {
+                if(_isDisplayVideo != value)
+                {
+                    _isDisplayVideo = value;
+                    OnPropertyChanged("isDisplayVideo");
+                }
+            }
+        }
+
+        private Visibility _isDisplayImage;
+        public Visibility isDisplayImage
+        {
+            get
+            {
+                return isDisplayVideo;
+            }
+            set
+            {
+                if (_isDisplayImage != value)
+                {
+                    _isDisplayImage = value;
+                    OnPropertyChanged("isDisplayImage");
                 }
             }
         }
 
         private string _folderPath;
-
         public string folderPath
         {
             get
@@ -82,8 +132,8 @@ namespace QuanLyKho.ViewModel
             else
                 index--;
 
-            imagePath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
-            if (!File.Exists(imagePath))
+            mediaPath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
+            if (!File.Exists(mediaPath))
             {
                 // Ảnh bị xóa trong lúc đang xem thông tin
                 // Cập nhật lại danh sách file ảnh
@@ -101,8 +151,8 @@ namespace QuanLyKho.ViewModel
             else
                 index++;
 
-            imagePath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
-            if (!File.Exists(imagePath))
+            mediaPath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
+            if (!File.Exists(mediaPath))
             {
                 // Ảnh bị xóa trong lúc đang xem thông tin
                 // Cập nhật lại danh sách file ảnh
@@ -110,12 +160,12 @@ namespace QuanLyKho.ViewModel
             }
         }
 
-        public void InitDisplay()
+        private void InitDisplay()
         {
             GetAllMediaFiles();
             if (index != -1)
             {
-                imagePath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
+                mediaPath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
             }
         }
 
@@ -131,9 +181,27 @@ namespace QuanLyKho.ViewModel
             if (!Directory.Exists(folderPath))
                 return;
 
-            listMediaFiles.AddRange(Directory.GetFiles(folderPath, "*.png").ToList());
-            listMediaFiles.AddRange(Directory.GetFiles(folderPath, "*.jpg").ToList());
-            listMediaFiles.AddRange(Directory.GetFiles(folderPath, "*.jpeg").ToList());
+            // Image formats
+            List<string> listTemp = ((App)Application.Current).GetListImageFormats();
+            if (listTemp != null && listTemp.Count() != 0)
+            {
+                foreach(string str in listTemp)
+                {
+                    listMediaFiles.AddRange(Directory.GetFiles(folderPath, str).ToList());
+                }
+                //listMediaFiles.AddRange(Directory.GetFiles(folderPath, "*.png").ToList());
+                //listMediaFiles.AddRange(Directory.GetFiles(folderPath, "*.jpg").ToList());
+                //listMediaFiles.AddRange(Directory.GetFiles(folderPath, "*.jpeg").ToList());
+            }
+            // Video formats
+            listTemp = ((App)Application.Current).GetListVideoFormats();
+            if (listTemp != null && listTemp.Count() != 0)
+            {
+                foreach (string str in listTemp)
+                {
+                    listMediaFiles.AddRange(Directory.GetFiles(folderPath, str).ToList());
+                }
+            }
             listMediaFiles.Sort();
             if (listMediaFiles.Count() != 0)
                 index = 0;

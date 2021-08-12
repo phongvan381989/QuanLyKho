@@ -18,7 +18,10 @@
         <DockPanel LastChildFill = "True">
             <Button Name="Truoc" Width="50" Content = "Trước" Command="{Binding Path=commandLeft}"/>
             <Button Name="Sau"  Width="50" Content = "Sau" DockPanel.Dock = "Right" Command="{Binding Path=commandRight}"/>
-            <Image Name="ContentMedia" Stretch="Uniform" Margin="5" Source= "{Binding Path=imagePath}"/>
+            <MediaElement Name="VideoContent" Source="{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged}" Stretch="Uniform"
+                          Visibility="{Binding Path=isDisplayVideo, UpdateSourceTrigger=PropertyChanged}"/>
+            <Image Name="ImageContent" Stretch="Uniform" Margin="5" Source= "{Binding Path=mediaPath}"
+                   Visibility="{Binding Path=isDisplayImage, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
     </Grid>
 </UserControl>

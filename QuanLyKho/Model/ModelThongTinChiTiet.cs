@@ -644,13 +644,15 @@ namespace QuanLyKho.Model
 
         public Boolean CreateSampleData()
         {
+            string mspTemp = maSanPham;
+            string tspTemp = tenSanPham;
             try
             {
-                for (int i = 0; i < 5000; i++)
+                for (int i = 0; i < 500; i++)
                 {
                     string str = "_" + i.ToString();
-                    maSanPham = maSanPham + str;
-                    tenSanPham = tenSanPham + str;
+                    maSanPham = mspTemp + str;
+                    tenSanPham = tspTemp + str;
                     AddAProduceToXDocAndSave();
                 }
             }

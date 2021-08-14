@@ -129,6 +129,7 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("kichThuocRong");
                         OnPropertyChanged("kichThuocCao");
                         OnPropertyChanged("thuMucMedia");
+                        vmMedia.folderPath = thuMucMedia;
                         OnPropertyChanged("moTaChiTiet");
                         OnPropertyChanged("viTriLuuKho");
 
@@ -307,6 +308,7 @@ namespace QuanLyKho.ViewModel
                         OnPropertyChanged("kichThuocRong");
                         OnPropertyChanged("kichThuocCao");
                         OnPropertyChanged("thuMucMedia");
+                        vmMedia.folderPath = thuMucMedia;
                         OnPropertyChanged("moTaChiTiet");
                         OnPropertyChanged("viTriLuuKho");
 
@@ -762,14 +764,14 @@ namespace QuanLyKho.ViewModel
                 listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.First);
                 listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.First);
 
-                if(sanPhamHienThi.CreateSampleData())
-                {
-                    General.Common.ShowAutoClosingMessageBox("CreateSampleData thành công", "Sản phẩm");
-                }
-                else
-                {
-                    General.Common.ShowAutoClosingMessageBox("CreateSampleData thất bại", "Sản phẩm");
-                }
+                //if(sanPhamHienThi.CreateSampleData())
+                //{
+                //    General.Common.ShowAutoClosingMessageBox("CreateSampleData thành công", "Sản phẩm");
+                //}
+                //else
+                //{
+                //    General.Common.ShowAutoClosingMessageBox("CreateSampleData thất bại", "Sản phẩm");
+                //}
             }
             else
             {

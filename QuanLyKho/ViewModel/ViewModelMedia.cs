@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace QuanLyKho.ViewModel
 {
@@ -16,6 +18,7 @@ namespace QuanLyKho.ViewModel
             listMediaFiles = new List<string>();
             _commandLeft = new CommandMedia_Left(this);
             _commandRight = new CommandMedia_Right(this);
+            _commandRotateLeft = new CommandMedia_RotateLeft(this);
         }
         private string _mediaPath;
         public string mediaPath
@@ -120,6 +123,15 @@ namespace QuanLyKho.ViewModel
             }
         }
 
+        private CommandMedia_RotateLeft _commandRotateLeft;
+        public CommandMedia_RotateLeft commandRotateLeft
+        {
+            get
+            {
+                return _commandRotateLeft;
+            }
+        }
+
         // index ảnh hiển thị
         public int index { get; set; } // default-1
         public List<string> listMediaFiles;// default: số phần tử là 0
@@ -158,6 +170,16 @@ namespace QuanLyKho.ViewModel
                 // Cập nhật lại danh sách file ảnh
                 GetAllMediaFiles();
             }
+        }
+
+        public void RotateLeft(Object parameter)
+        {
+            if (parameter == null)
+                return;
+            Image img = parameter as Image;
+            img.RenderTransformOrigin = new Point(0.5, 0.5);
+            RotateTransform rotateTransform1 = new RotateTransform(90);
+            img.RenderTransform = rotateTransform1;
         }
 
         private void InitDisplay()

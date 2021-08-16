@@ -15,13 +15,22 @@
         <localViewModel:ViewModelMedia/>
     </UserControl.DataContext>
     <Grid>
-        <DockPanel LastChildFill = "True">
-            <Button Name="Truoc" Width="50" Content = "Trước" Command="{Binding Path=commandLeft}"/>
-            <Button Name="Sau"  Width="50" Content = "Sau" DockPanel.Dock = "Right" Command="{Binding Path=commandRight}"/>
-            <MediaElement Name="VideoContent"  Stretch="Uniform" Margin="5" Source="{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                          Visibility="{Binding Path=isDisplayVideo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
-            <Image Name="ImageContent" Stretch="Uniform" Margin="5" Source= "{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                   Visibility="{Binding Path=isDisplayImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" Height="30">
+                <Button Name="LeftMedia" Width="70" Content = "Trước" Command="{Binding Path=commandLeft}"/>
+                <Button Name="RightMedia"  Width="70" Content = "Sau" Command="{Binding Path=commandRight}"/>
+                <Button Name="LeftRotate"  Width="70" Content = "Xoay Trái" Command="{Binding Path=commandRotateLeft}"
+                        CommandParameter="{Binding ElementName=ImageContent}"/>
+                <Button Name="RightRotate"  Width="70" Content = "Xoay Phải" Command="{Binding Path=commandRotateRight}"/>
+            </StackPanel>
+            <DockPanel>
+                <MediaElement Name="VideoContent"  Stretch="Uniform" Margin="5" Source="{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                              Visibility="{Binding Path=isDisplayVideo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+                <Image Name="ImageContent" Stretch="Uniform"  Margin="5"
+                       Source= "{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                       Visibility="{Binding Path=isDisplayImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                </Image>
+            </DockPanel>
         </DockPanel>
     </Grid>
 </UserControl>

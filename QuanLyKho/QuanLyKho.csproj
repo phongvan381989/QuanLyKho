@@ -82,6 +82,7 @@
     <Compile Include="ViewModel\CommandListBoxSearch_Collapse.cs" />
     <Compile Include="ViewModel\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\CommandMedia_Right.cs" />
+    <Compile Include="ViewModel\CommandMedia_RotateLeft.cs" />
     <Compile Include="ViewModel\CommandThongTinChiTiet_Delete.cs" />
     <Compile Include="ViewModel\CommandThongTinChiTiet_Save.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

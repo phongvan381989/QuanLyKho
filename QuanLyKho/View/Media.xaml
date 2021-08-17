@@ -17,18 +17,25 @@
     <Grid>
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Center" Height="30">
-                <Button Name="LeftMedia" Width="70" Content = "Trước" Command="{Binding Path=commandLeft}"/>
-                <Button Name="RightMedia"  Width="70" Content = "Sau" Command="{Binding Path=commandRight}"/>
-                <Button Name="LeftRotate"  Width="70" Content = "Xoay Trái" Command="{Binding Path=commandRotateLeft}"
-                        CommandParameter="{Binding ElementName=ImageContent}"/>
-                <Button Name="RightRotate"  Width="70" Content = "Xoay Phải" Command="{Binding Path=commandRotateRight}"/>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding Path=visililityLeftRigth}">
+                    <Button Name="LeftMedia" Width="70" Content = "Trước" Command="{Binding Path=commandLeft}"/>
+                    <Button Name="RightMedia"  Width="70" Content = "Sau" Command="{Binding Path=commandRight}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding Path=visililityRotates}">
+                    <Button Name="LeftRotate"  Width="70" Content = "Xoay Trái" Command="{Binding Path=commandRotateLeft}"/>
+                    <Button Name="RightRotate"  Width="70" Content = "Xoay Phải" Command="{Binding Path=commandRotateRight}"/>
+                </StackPanel>
             </StackPanel>
             <DockPanel>
                 <MediaElement Name="VideoContent"  Stretch="Uniform" Margin="5" Source="{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                               Visibility="{Binding Path=isDisplayVideo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
                 <Image Name="ImageContent" Stretch="Uniform"  Margin="5"
                        Source= "{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                       Visibility="{Binding Path=isDisplayImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                       Visibility="{Binding Path=isDisplayImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                       >
+                    <Image.LayoutTransform >
+                        <RotateTransform Angle="{Binding Path=rotateAngle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+                    </Image.LayoutTransform>
                 </Image>
             </DockPanel>
         </DockPanel>

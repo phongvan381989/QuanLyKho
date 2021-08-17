@@ -19,6 +19,8 @@ namespace QuanLyKho.ViewModel
             _commandLeft = new CommandMedia_Left(this);
             _commandRight = new CommandMedia_Right(this);
             _commandRotateLeft = new CommandMedia_RotateLeft(this);
+            _commandRotateRight = new CommandMedia_RotateRight(this);
+            _rotateAngle = 0;
         }
         private string _mediaPath;
         public string mediaPath
@@ -32,6 +34,18 @@ namespace QuanLyKho.ViewModel
                 if(_mediaPath != value)
                 {
                     _mediaPath = value;
+                    rotateAngle = 0;
+                    if (string.IsNullOrWhiteSpace(_mediaPath))
+                    {
+                        visililityLeftRigth = Visibility.Hidden;
+                        visililityRotates = Visibility.Hidden;
+
+                        isDisplayImage = Visibility.Collapsed;
+                        isDisplayVideo = Visibility.Collapsed;
+                    }
+
+                    visililityLeftRigth = Visibility.Visible;
+                    visililityRotates = Visibility.Visible;
                     string strExtension = "*" + Path.GetExtension(_mediaPath);
                     OnPropertyChanged("mediaPath");
 
@@ -49,6 +63,7 @@ namespace QuanLyKho.ViewModel
 
                     isDisplayImage = Visibility.Collapsed;
                     isDisplayVideo = Visibility.Visible;
+                    visililityRotates = Visibility.Hidden;
                 }
             }
         }
@@ -132,6 +147,50 @@ namespace QuanLyKho.ViewModel
             }
         }
 
+        private CommandMedia_RotateRight _commandRotateRight;
+        public CommandMedia_RotateRight commandRotateRight
+        {
+            get
+            {
+                return _commandRotateRight;
+            }
+        }
+
+        private Visibility _visililityLeftRigth;
+        public Visibility visililityLeftRigth
+        {
+            get
+            {
+                return _visililityLeftRigth;
+            }
+            set
+            {
+                if(_visililityLeftRigth != value)
+                {
+                    _visililityLeftRigth = value;
+                    OnPropertyChanged("visililityLeftRigth");
+                }
+            }
+        }
+
+        private Visibility _visililityRotates;
+        public Visibility visililityRotates
+        {
+            get
+            {
+                return _visililityRotates;
+            }
+
+            set
+            {
+                if(_visililityRotates != value)
+                {
+                    _visililityRotates = value;
+                    OnPropertyChanged("visililityRotates");
+                }
+            }
+        }
+
         // index ảnh hiển thị
         public int index { get; set; } // default-1
         public List<string> listMediaFiles;// default: số phần tử là 0
@@ -172,14 +231,32 @@ namespace QuanLyKho.ViewModel
             }
         }
 
+        private double _rotateAngle;
+        public double rotateAngle
+        {
+            get
+            {
+                return _rotateAngle;
+            }
+
+            set
+            {
+                if(_rotateAngle != value)
+                {
+                    _rotateAngle = value;
+                    OnPropertyChanged("rotateAngle");
+                }
+            }
+        }
+
         public void RotateLeft(Object parameter)
         {
-            if (parameter == null)
-                return;
-            Image img = parameter as Image;
-            img.RenderTransformOrigin = new Point(0.5, 0.5);
-            RotateTransform rotateTransform1 = new RotateTransform(90);
-            img.RenderTransform = rotateTransform1;
+            rotateAngle = rotateAngle - 90;
+        }
+
+        public void RotateRight(Object parameter)
+        {
+            rotateAngle = rotateAngle + 90;
         }
 
         private void InitDisplay()
@@ -188,6 +265,10 @@ namespace QuanLyKho.ViewModel
             if (index != -1)
             {
                 mediaPath = System.IO.Path.Combine(folderPath, listMediaFiles.ElementAt(index));
+            }
+            else
+            {
+                mediaPath = string.Empty;
             }
         }
 

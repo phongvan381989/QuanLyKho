@@ -95,9 +95,11 @@ namespace QuanLyKho.View
             }
         }
 
-        private void ListBox_LostFocus(object sender, RoutedEventArgs e)
+        private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
-            //ListBoxSearchVisibility = Visibility.Collapsed;
+            var us = (UserControlListBoxSearch)sender;
+            if(!us.IsKeyboardFocusWithin && !PopupResult.IsKeyboardFocusWithin)
+                ListBoxSearchPopupIsOpen = false;
         }
     }
 }

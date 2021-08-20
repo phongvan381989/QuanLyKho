@@ -28,10 +28,10 @@
             </StackPanel>
             <DockPanel>
                 <MediaElement Name="VideoContent"  Stretch="Uniform" Margin="5" Source="{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                              Visibility="{Binding Path=isDisplayVideo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+                              Visibility="{Binding Path=visDisplayVideo, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
                 <Image Name="ImageContent" Stretch="Uniform"  Margin="5"
                        Source= "{Binding Path=mediaPath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                       Visibility="{Binding Path=isDisplayImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                       Visibility="{Binding Path=visDisplayImage, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                        >
                     <Image.LayoutTransform >
                         <RotateTransform Angle="{Binding Path=rotateAngle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>

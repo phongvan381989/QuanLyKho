@@ -20,7 +20,9 @@ namespace QuanLyKho.ViewModel
             _commandRight = new CommandMedia_Right(this);
             _commandRotateLeft = new CommandMedia_RotateLeft(this);
             _commandRotateRight = new CommandMedia_RotateRight(this);
-            _rotateAngle = 0;
+            rotateAngle = 0;
+            visililityRotates = Visibility.Collapsed;
+            visililityLeftRigth = Visibility.Collapsed;
         }
         private string _mediaPath;
         public string mediaPath
@@ -40,8 +42,9 @@ namespace QuanLyKho.ViewModel
                         visililityLeftRigth = Visibility.Hidden;
                         visililityRotates = Visibility.Hidden;
 
-                        isDisplayImage = Visibility.Collapsed;
-                        isDisplayVideo = Visibility.Collapsed;
+                        visDisplayImage = Visibility.Collapsed;
+                        visDisplayVideo = Visibility.Collapsed;
+                        return;
                     }
 
                     visililityLeftRigth = Visibility.Visible;
@@ -55,49 +58,49 @@ namespace QuanLyKho.ViewModel
                     {
                         if (listTemp.Exists(str=>str.ToUpper() == strExtension.ToUpper()))
                         {
-                            isDisplayImage = Visibility.Visible;
-                            isDisplayVideo = Visibility.Collapsed;
+                            visDisplayImage = Visibility.Visible;
+                            visDisplayVideo = Visibility.Collapsed;
                             return;
                         }
                     }
 
-                    isDisplayImage = Visibility.Collapsed;
-                    isDisplayVideo = Visibility.Visible;
+                    visDisplayImage = Visibility.Collapsed;
+                    visDisplayVideo = Visibility.Visible;
                     visililityRotates = Visibility.Hidden;
                 }
             }
         }
 
-        private Visibility _isDisplayVideo;
-        public Visibility isDisplayVideo
+        private Visibility _visDisplayVideo;
+        public Visibility visDisplayVideo
         {
             get
             {
-                return _isDisplayVideo;
+                return _visDisplayVideo;
             }
             set
             {
-                if(_isDisplayVideo != value)
+                if(_visDisplayVideo != value)
                 {
-                    _isDisplayVideo = value;
-                    OnPropertyChanged("isDisplayVideo");
+                    _visDisplayVideo = value;
+                    OnPropertyChanged("visDisplayVideo");
                 }
             }
         }
 
-        private Visibility _isDisplayImage;
-        public Visibility isDisplayImage
+        private Visibility _visDisplayImage;
+        public Visibility visDisplayImage
         {
             get
             {
-                return isDisplayVideo;
+                return _visDisplayImage;
             }
             set
             {
-                if (_isDisplayImage != value)
+                if (_visDisplayImage != value)
                 {
-                    _isDisplayImage = value;
-                    OnPropertyChanged("isDisplayImage");
+                    _visDisplayImage = value;
+                    OnPropertyChanged("visDisplayImage");
                 }
             }
         }

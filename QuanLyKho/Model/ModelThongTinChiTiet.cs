@@ -19,8 +19,7 @@ namespace QuanLyKho.Model
             pathXML = ((App)Application.Current).GetPathDataXMLThongTinChiTiet();
             InitializeXDoc();
             InitializeBuffer();
-            //ThemThanhPhanMoi("GiaSanPham", null);
-            //ThemThanhPhanMoi("ViTriLuuKho", null);
+            //ThemThanhPhanMoi("KhoiLuong", null);
         }
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -106,6 +105,8 @@ namespace QuanLyKho.Model
 
         public string kichThuocCao { get; set; }
 
+        public string khoiLuong { get; set; }
+
         public string thuMucMedia { get; set; }
 
         public string moTaChiTiet { get; set; }
@@ -151,6 +152,7 @@ namespace QuanLyKho.Model
                 new XElement("KichThuocDai", kichThuocDai),
                 new XElement("KichThuocRong", kichThuocRong),
                 new XElement("KichThuocCao", kichThuocCao),
+                new XElement("KhoiLuong", khoiLuong),
                 new XElement("ThuMucMedia", thuMucMedia),
                 new XElement("MoTaChiTiet", moTaChiTiet),
                 new XElement("ViTriLuuKho", viTriLuuKho)
@@ -234,6 +236,7 @@ namespace QuanLyKho.Model
             eExist.Element("KichThuocDai").Value = string.IsNullOrEmpty(kichThuocDai) ? string.Empty : kichThuocDai;
             eExist.Element("KichThuocRong").Value = string.IsNullOrEmpty(kichThuocRong) ? string.Empty : kichThuocRong;
             eExist.Element("KichThuocCao").Value = string.IsNullOrEmpty(kichThuocCao) ? string.Empty : kichThuocCao;
+            eExist.Element("KhoiLuong").Value = string.IsNullOrEmpty(khoiLuong) ? string.Empty : khoiLuong;
             eExist.Element("ThuMucMedia").Value = string.IsNullOrEmpty(thuMucMedia) ? string.Empty : thuMucMedia;
             eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTiet) ? string.Empty : moTaChiTiet;
             eExist.Element("ViTriLuuKho").Value = string.IsNullOrEmpty(viTriLuuKho) ? string.Empty : viTriLuuKho;
@@ -482,22 +485,23 @@ namespace QuanLyKho.Model
         /// <param name="sanPham">Đối tượng model cần cập nhật thông tin</param>
         private void ConvertXElementToModel(XElement element)
         {
-            maSanPham = element.Element("MaSanPham").Value;
-            giaSanPham = element.Element("GiaSanPham").Value;
-            tonKho = element.Element("TonKho").Value;
-            tonKhoCanhBaoHetHang = element.Element("TonKhoCanhBaoHetHang").Value;
-            tenSanPham = element.Element("TenSanPham").Value;
-            tacGia = element.Element("TacGia").Value;
-            nguoiDich = element.Element("NguoiDich").Value;
-            nhaPhatHanh = element.Element("NhaPhatHanh").Value;
-            nhaXuatBan = element.Element("NhaXuatBan").Value;
-            namXuatBan = element.Element("NamXuatBan").Value;
-            kichThuocDai = element.Element("KichThuocDai").Value;
-            kichThuocRong = element.Element("KichThuocRong").Value;
-            kichThuocCao = element.Element("KichThuocCao").Value;
-            thuMucMedia = element.Element("ThuMucMedia").Value;
-            moTaChiTiet = element.Element("MoTaChiTiet").Value;
-            viTriLuuKho = element.Element("ViTriLuuKho").Value;
+            maSanPham = element.Element("MaSanPham")?.Value;
+            giaSanPham = element.Element("GiaSanPham")?.Value;
+            tonKho = element.Element("TonKho")?.Value;
+            tonKhoCanhBaoHetHang = element.Element("TonKhoCanhBaoHetHang")?.Value;
+            tenSanPham = element.Element("TenSanPham")?.Value;
+            tacGia = element.Element("TacGia")?.Value;
+            nguoiDich = element.Element("NguoiDich")?.Value;
+            nhaPhatHanh = element.Element("NhaPhatHanh")?.Value;
+            nhaXuatBan = element.Element("NhaXuatBan")?.Value;
+            namXuatBan = element.Element("NamXuatBan")?.Value;
+            kichThuocDai = element.Element("KichThuocDai")?.Value;
+            kichThuocRong = element.Element("KichThuocRong")?.Value;
+            kichThuocCao = element.Element("KichThuocCao")?.Value;
+            khoiLuong = element.Element("KhoiLuong")?.Value;
+            thuMucMedia = element.Element("ThuMucMedia")?.Value;
+            moTaChiTiet = element.Element("MoTaChiTiet")?.Value;
+            viTriLuuKho = element.Element("ViTriLuuKho")?.Value;
         }
 
         /// <summary>
@@ -598,7 +602,7 @@ namespace QuanLyKho.Model
 
             // Check tên sản phẩm là duy nhất, và thuộc mã sản phẩm trên
             eExist = GetAXElementFromTenSanPham(tenSP);
-            if(eExist != null && string.Compare(eExist.Element("MaSanPham").Value, maSP) != 0)
+            if(eExist != null && string.Compare(eExist.Element("MaSanPham")?.Value, maSP) != 0)
             {
                 errorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể cập nhật thông tin sản phẩm với tên này.";
                 MyLogger.GetInstance().Info(errorMessage);

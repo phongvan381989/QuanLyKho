@@ -33,7 +33,7 @@
                 <local:UserControlListBoxSearch x:Name="MaSanPham" Width="{StaticResource WidthTextBox}"
                                                           ListBoxSearchItemSource="{Binding listMaSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                           ListBoxSearchText="{Binding maSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                          ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenMSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          bListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenMSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                           ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListMSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                           />
             </WrapPanel>
@@ -42,7 +42,7 @@
                 <local:UserControlListBoxSearch x:Name="TenSanPham" Width="{StaticResource WidthTextBox}"
                                                           ListBoxSearchItemSource="{Binding listTenSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                           ListBoxSearchText="{Binding tenSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                          ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenTSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                          bListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenTSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                           ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListTSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                           />
             </WrapPanel>
@@ -86,7 +86,7 @@
                 <local:UserControlListBoxSearch x:Name="nhaPhatHanh" Width="{StaticResource WidthTextBox}"
                                     ListBoxSearchItemSource="{Binding listNhaPhatHanh , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                     ListBoxSearchText="{Binding nhaPhatHanh , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenNPH, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    bListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenNPH, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListNPH, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     />
             </WrapPanel>
@@ -95,13 +95,12 @@
                 <local:UserControlListBoxSearch x:Name="NhaXuatBan" Width="{StaticResource WidthTextBox}"
                                     ListBoxSearchItemSource="{Binding listNhaXuatBan , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                     ListBoxSearchText="{Binding nhaXuatBan , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    ListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenNXB, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    bListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenNXB, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     ListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListNXB, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Năm xuất bản</TextBlock>
-                <!--<TextBox Name="NamXuatBan" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                 <local:UserControlChonThoiGian x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"
                                                ThoiGianText="{Binding Path=namXuatBan , Mode=TwoWay}"
                                                />
@@ -118,6 +117,11 @@
                 <local:UserControlSoThucDuong  x:Name="KichThuocCao" Width="60"
                                                SoThucDuongText="{Binding  Path = kichThuocCao, Mode=TwoWay}"/>
             </WrapPanel>
+            <WrapPanel Height="{StaticResource HeightWrapTextLine}">
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Khốilượng(kg)</TextBlock>
+                    <local:UserControlSoThucDuong  x:Name="KhoiLuong" Width="{StaticResource WidthTextBox}"
+                                               SoThucDuongText="{Binding  Path = khoiLuong, Mode=TwoWay}"/>
+                </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Thư mục media</TextBlock>
                 <TextBox Name="ThuMucMedia" Style="{StaticResource TextBoxStyleCode}" Width="350" IsEnabled="True"

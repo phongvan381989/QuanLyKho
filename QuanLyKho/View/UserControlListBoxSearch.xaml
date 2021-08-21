@@ -7,7 +7,7 @@
              xmlns:localViewModel="clr-namespace:QuanLyKho.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" LostFocus="UserControl_LostFocus">
-    <Grid>
+    <Grid KeyUp="Grid_KeyUp">
         <DockPanel LastChildFill = "True" Name="DockPanelInputText">
             <Button Name="ButtonDropList"  Width="50" Height="30" Click="Button_Click" DockPanel.Dock="Right">
                 <StackPanel Orientation="Horizontal">
@@ -20,14 +20,14 @@
         </DockPanel>
         <Popup Name="PopupResult"  Width="{Binding ActualWidth, ElementName=DockPanelInputText}"
             IsOpen ="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-            Path=ListBoxSearchPopupIsOpen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+            Path=bListBoxSearchPopupIsOpen, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Height="200">
             <ListBox Name="ListBoxResultSearchValue" ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
                     Path=ListBoxSearchItemSource, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, NotifyOnTargetUpdated=True}"
                  TargetUpdated="ListBox_TargetUpdated"
                  Style="{StaticResource ListBoxSearchStyle}"
                  SelectedIndex="0"
-                 KeyDown="ListBox_KeyDown"
+                 KeyUp="ListBox_KeyUp"
                  MouseDoubleClick="ListBox_MouseDoubleClick"
                  >
                 <ListBox.ItemTemplate>

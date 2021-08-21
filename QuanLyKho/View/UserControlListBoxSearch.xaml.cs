@@ -25,7 +25,7 @@ namespace QuanLyKho.View
         public UserControlListBoxSearch()
         {
             InitializeComponent();
-            ListBoxSearchPopupIsOpen = false;
+            bListBoxSearchPopupIsOpen = false;
             ListBoxSearchCheckSelectedItem = false;
         }
 
@@ -43,8 +43,8 @@ namespace QuanLyKho.View
             set { SetValue(ListBoxSearchTextProperty, value); }
         }
         
-        public static readonly DependencyProperty ListBoxSearchPopupIsOpenProperty = DependencyProperty.Register("ListBoxSearchPopupIsOpen", typeof(Boolean), typeof(UserControlListBoxSearch), null);
-        public Boolean ListBoxSearchPopupIsOpen
+        public static readonly DependencyProperty ListBoxSearchPopupIsOpenProperty = DependencyProperty.Register("bListBoxSearchPopupIsOpen", typeof(Boolean), typeof(UserControlListBoxSearch), null);
+        public Boolean bListBoxSearchPopupIsOpen
         {
             get { return (Boolean)GetValue(ListBoxSearchPopupIsOpenProperty); }
             set { SetValue(ListBoxSearchPopupIsOpenProperty, value); }
@@ -60,7 +60,7 @@ namespace QuanLyKho.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ListBoxSearchPopupIsOpen = !ListBoxSearchPopupIsOpen;
+            bListBoxSearchPopupIsOpen = !bListBoxSearchPopupIsOpen;
         }
 
         private void ListBox_TargetUpdated(object sender, DataTransferEventArgs e)
@@ -70,36 +70,59 @@ namespace QuanLyKho.View
                 lb.SelectedIndex = 0;
         }
 
-        private void ListBox_KeyDown(object sender, KeyEventArgs e)
+        private void ESelectAITem(object sender)
+        {
+            ListBox lb = sender as ListBox;
+            if (lb != null && lb.SelectedIndex != -1)
+            {
+                bListBoxSearchPopupIsOpen = false;
+                ListBoxSearchCheckSelectedItem = true;
+                TextBoxSearchValue.Text = lb.SelectedValue.ToString();
+            }
+        }
+
+        private void ListBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                ListBox lb = sender as ListBox;
-                if (lb != null && lb.SelectedIndex != -1)
-                {
-                    ListBoxSearchPopupIsOpen = false;
-                    ListBoxSearchCheckSelectedItem = true;
-                    TextBoxSearchValue.Text = lb.SelectedValue.ToString();
-                }
+                ESelectAITem(sender);
             }
         }
 
         private void ListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ListBox lb = sender as ListBox;
-            if (lb != null && lb.SelectedIndex != -1)
-            {
-                ListBoxSearchPopupIsOpen = false;
-                ListBoxSearchCheckSelectedItem = true;
-                TextBoxSearchValue.Text = lb.SelectedValue.ToString();
-            }
+            ESelectAITem(sender);
         }
 
         private void UserControl_LostFocus(object sender, RoutedEventArgs e)
         {
             var us = (UserControlListBoxSearch)sender;
             if(!us.IsKeyboardFocusWithin && !PopupResult.IsKeyboardFocusWithin)
-                ListBoxSearchPopupIsOpen = false;
+                bListBoxSearchPopupIsOpen = false;
+        }
+
+        private void Grid_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                bListBoxSearchPopupIsOpen = false;
+            }
+            else if(e.Key == Key.Down)
+            {
+                if (TextBoxSearchValue.IsKeyboardFocused)
+                {
+                    if (!bListBoxSearchPopupIsOpen)
+                        bListBoxSearchPopupIsOpen = true;
+                    if (ListBoxResultSearchValue.HasItems)
+                    {
+                        ListBoxResultSearchValue.SelectedIndex = 0;
+                        var listBoxItem = (ListBoxItem)ListBoxResultSearchValue
+                                             .ItemContainerGenerator
+                                               .ContainerFromItem(ListBoxResultSearchValue.SelectedItem);
+                        listBoxItem.Focus();
+                    }
+                }
+            }
         }
     }
 }

@@ -655,7 +655,7 @@ namespace QuanLyKho.ViewModel
                 return false;
             }
 
-            // Tên sản phẩm không trông
+            // Tên sản phẩm không trống
             if(string.IsNullOrWhiteSpace(tenSanPham))
             {
                 MessageBox.Show("Tên sản phẩm không được để trống");

@@ -11,7 +11,7 @@
             TextChanged="TextBoxSoDuong_TextChanged"
             ToolTip="Nhập số dương"
             Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-            Path=SoThucDuongText, UpdateSourceTrigger=PropertyChanged}"
+            Path=SoThucDuongText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
             PreviewKeyUp="TextBoxSoDuong_PreviewKeyUp"
             PreviewMouseLeftButtonUp="TextBoxSoDuong_PreviewMouseLeftButtonUp">
         </TextBox>

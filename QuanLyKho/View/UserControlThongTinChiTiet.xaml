@@ -27,7 +27,7 @@
             <RowDefinition Height = "*" />
         </Grid.RowDefinitions>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical" Name="nhapDuLieu">
+            <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical" Name="nhapDuLieu">
             <WrapPanel Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
                 <local:UserControlListBoxSearch x:Name="MaSanPham" Width="{StaticResource WidthTextBox}"
@@ -48,38 +48,41 @@
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Giá</TextBlock>
-                <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
                 <local:UserControlTienVND x:Name="GiaSanPham" Width="{StaticResource WidthTextBox}"
                                                                              TienVNDText="{Binding  Path = giaSanPham, Mode=TwoWay}"
                                                                              />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Số lượng nhập</TextBlock>
-                <!--<TextBox Name="SoLuongNhap" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"/>-->
-                <local:UserControlTextBoxIntegerOnly x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
-                                                            IntegerText="{Binding  Path = soLuongNhap, Mode=TwoWay}"
-                                                            />
+                <local:UserControlMyTextBox x:Name="SoLuongNhap" Width="{StaticResource WidthTextBox}"
+                                            MyTextBoxText="{Binding  Path = soLuongNhap, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            MyTextBoxType="MyInteger"
+                                            />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tồn kho</TextBlock>
-                <TextBox Name="TonKho" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="False"
-                                    Text="{Binding Path=tonKho, Mode=TwoWay}"/>
+                    <local:UserControlMyTextBox x:Name="TonKho" Width="{StaticResource WidthTextBox}" IsEnabled="False"
+                                    MyTextBoxText="{Binding Path=tonKho, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                MyTextBoxType="MyNormal"/>
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Cảnh báo</TextBlock>
-                <TextBox Name="TonKhoCanhBaoHetHang" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}"
-                                                 Text="{Binding Path=tonKhoCanhBaoHetHang, Mode=TwoWay}"
-                                     ToolTip="Khi tồn kho ít hơn hoặc bằng số lượng cảnh cảnh báo hết hàng. Thông báo sẽ được bất trên màn hình"/>
+                <local:UserControlMyTextBox x:Name="TonKhoCanhBaoHetHang" Width="{StaticResource WidthTextBox}"
+                                                 MyTextBoxText="{Binding Path=tonKhoCanhBaoHetHang, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            MyTextBoxType="MyInteger"
+                                     />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tác giả</TextBlock>
-                <TextBox Name="TacGia" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
-                                     Text="{Binding Path=tacGia, Mode=TwoWay}"/>
+                <local:UserControlMyTextBox x:Name="TacGia"  Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                                     MyTextBoxText="{Binding Path=tacGia, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            MyTextBoxType="MyNormal"/>
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Người dịch</TextBlock>
-                <TextBox Name="NguoiDich" Style="{StaticResource TextBoxStyleCode}" Width="{StaticResource WidthTextBox}" IsEnabled="True"
-                            Text="{Binding Path=nguoiDich, Mode=TwoWay}"/>
+                <local:UserControlMyTextBox x:Name="NguoiDich" Width="{StaticResource WidthTextBox}" IsEnabled="True"
+                            MyTextBoxText="{Binding Path=nguoiDich, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            MyTextBoxType="MyNormal"/>
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Nhà phát hành</TextBlock>
@@ -101,26 +104,32 @@
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Năm xuất bản</TextBlock>
-                <local:UserControlChonThoiGian x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"
-                                               ThoiGianText="{Binding Path=namXuatBan , Mode=TwoWay}"
+                <local:UserControlMyTextBox x:Name="NamXuatBan" Width="{StaticResource WidthTextBox}"
+                                               MyTextBoxText="{Binding Path=namXuatBan, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                />
             </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Kích Thước(cm)</TextBlock>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> dài</TextBlock>
-                <local:UserControlSoThucDuong  x:Name="KichThuocDai" Width="60"
-                                               SoThucDuongText="{Binding  Path = kichThuocDai, Mode=TwoWay}"/>
+                <local:UserControlMyTextBox  x:Name="KichThuocDai" Width="60"
+                                               MyTextBoxText="{Binding  Path = kichThuocDai, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             MyTextBoxType="MyPositiveFloat"/>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> rộng</TextBlock>
-                <local:UserControlSoThucDuong  x:Name="KichThuocRong" Width="60"
-                                               SoThucDuongText="{Binding  Path = kichThuocRong, Mode=TwoWay}"/>
+                    <local:UserControlMyTextBox  x:Name="KichThuocRong" Width="60"
+                                               MyTextBoxText="{Binding  Path = kichThuocRong, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                 MyTextBoxType="MyPositiveFloat"/>
                 <TextBlock Style="{StaticResource TextBlockStyle}"> cao</TextBlock>
-                <local:UserControlSoThucDuong  x:Name="KichThuocCao" Width="60"
-                                               SoThucDuongText="{Binding  Path = kichThuocCao, Mode=TwoWay}"/>
+                    <local:UserControlMyTextBox  x:Name="KichThuocCao" Width="60"
+                                               MyTextBoxText="{Binding  Path = kichThuocCao, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                 MyTextBoxType="MyPositiveFloat"/>
             </WrapPanel>
             <WrapPanel Height="{StaticResource HeightWrapTextLine}">
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Khốilượng(kg)</TextBlock>
-                    <local:UserControlSoThucDuong  x:Name="KhoiLuong" Width="{StaticResource WidthTextBox}"
-                                               SoThucDuongText="{Binding  Path = khoiLuong, Mode=TwoWay}"/>
+                    <!--<local:UserControlSoThucDuong  x:Name="KhoiLuong" Width="{StaticResource WidthTextBox}"
+                                               SoThucDuongText="{Binding  Path = khoiLuong, Mode=TwoWay}"/>-->
+                    <local:UserControlMyTextBox x:Name="KhoiLuong" Width="{StaticResource WidthTextBox}"
+                                                MyTextBoxText="{Binding Path = khoiLuong, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                MyTextBoxType="MyPositiveFloat"/>
                 </WrapPanel>
             <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                 <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Thư mục media</TextBlock>

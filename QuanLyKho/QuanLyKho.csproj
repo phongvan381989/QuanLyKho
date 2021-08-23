@@ -100,6 +100,9 @@
     <Compile Include="View\UserControlListBoxSearch.xaml.cs">
       <DependentUpon>UserControlListBoxSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControlMyTextBox.xaml.cs">
+      <DependentUpon>UserControlMyTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControlSoThucDuong.xaml.cs">
       <DependentUpon>UserControlSoThucDuong.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControlListBoxSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlMyTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

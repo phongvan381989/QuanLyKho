@@ -26,7 +26,7 @@ namespace QuanLyKho.View
         {
             InitializeComponent();
             bListBoxSearchPopupIsOpen = false;
-            ListBoxSearchCheckSelectedItem = false;
+            bListBoxSearchCheckSelectedItem = false;
         }
 
         public static readonly DependencyProperty ListBoxSearchItemSourceProperty = DependencyProperty.Register("ListBoxSearchItemSource", typeof(IEnumerable), typeof(UserControlListBoxSearch), null);
@@ -51,11 +51,18 @@ namespace QuanLyKho.View
         }
 
         // Khi item của listbox được chọn bằng enter, double chuột biến này có giá trị true.
-        public static readonly DependencyProperty ListBoxSearchCheckSelectedItemProperty = DependencyProperty.Register("ListBoxSearchCheckSelectedItem", typeof(Boolean), typeof(UserControlListBoxSearch), null);
-        public Boolean ListBoxSearchCheckSelectedItem
+        public static readonly DependencyProperty ListBoxSearchCheckSelectedItemProperty = DependencyProperty.Register("bListBoxSearchCheckSelectedItem", typeof(Boolean), typeof(UserControlListBoxSearch), null);
+        public Boolean bListBoxSearchCheckSelectedItem
         {
             get { return (Boolean)GetValue(ListBoxSearchCheckSelectedItemProperty); }
             set { SetValue(ListBoxSearchCheckSelectedItemProperty, value); }
+        }
+
+        public static readonly DependencyProperty ListBoxSearchToolTipProperty = DependencyProperty.Register("ListBoxSearchToolTip", typeof(Object), typeof(UserControlListBoxSearch), null);
+        public Object ListBoxSearchToolTip
+        {
+            get { return (Boolean)GetValue(ListBoxSearchToolTipProperty); }
+            set { SetValue(ListBoxSearchToolTipProperty, value); }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -76,7 +83,7 @@ namespace QuanLyKho.View
             if (lb != null && lb.SelectedIndex != -1)
             {
                 bListBoxSearchPopupIsOpen = false;
-                ListBoxSearchCheckSelectedItem = true;
+                bListBoxSearchCheckSelectedItem = true;
                 TextBoxSearchValue.Text = lb.SelectedValue.ToString();
             }
         }

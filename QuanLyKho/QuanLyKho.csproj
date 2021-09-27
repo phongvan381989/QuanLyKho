@@ -49,6 +49,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.WindowsAPICodePack-Shell.1.1.0.0\lib\Microsoft.WindowsAPICodePack.ShellExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=106.12.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.12.0\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -85,9 +88,23 @@
     <Compile Include="ViewModel\CommandMedia_RotateRight.cs" />
     <Compile Include="ViewModel\CommandThongTinChiTiet_Delete.cs" />
     <Compile Include="ViewModel\CommandThongTinChiTiet_Save.cs" />
+    <Compile Include="ViewModel\Dev\CommandTiki.cs" />
+    <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelMedia.cs" />
     <Compile Include="ViewModel\ViewModelThongTinChiTiet.cs" />
+    <Compile Include="View\Dev\UserControlDev.xaml.cs">
+      <DependentUpon>UserControlDev.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dev\UserControlShopee.xaml.cs">
+      <DependentUpon>UserControlShopee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dev\UserControlSMDevelop.xaml.cs">
+      <DependentUpon>UserControlSMDevelop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dev\UserControlTiki.xaml.cs">
+      <DependentUpon>UserControlTiki.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
     </Compile>
@@ -131,6 +148,22 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dev\UserControlDev.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dev\UserControlShopee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dev\UserControlSMDevelop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dev\UserControlTiki.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,6 +241,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\downarrow_48pixel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\Dev\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

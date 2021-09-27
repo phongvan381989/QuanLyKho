@@ -52,11 +52,11 @@ namespace QuanLyKho.View
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if(MyTextBoxType == eMyTextBoxTypes.MyNormal)
+            if (MyTextBoxType == eMyTextBoxTypes.MyNormal)
             {
 
             }
-            else if(MyTextBoxType == eMyTextBoxTypes.MyTime)
+            else if (MyTextBoxType == eMyTextBoxTypes.MyTime)
             {
                 MyTextBoxName.ToolTip = "Nhập thời gian: Ngày/Tháng/Năm, Tháng/Năm hoặc Năm";
             }
@@ -222,7 +222,7 @@ namespace QuanLyKho.View
             }
             else
             {
-                if(result < 0)
+                if (result < 0)
                 {
                     isOk = false;
                 }
@@ -235,7 +235,7 @@ namespace QuanLyKho.View
         public Boolean CheckValidNotNullOrWhiteSpace(string text)
         {
             Boolean isOk = true;
-            if(string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(text))
             {
                 isOk = false;
             }
@@ -266,21 +266,21 @@ namespace QuanLyKho.View
             }
             else if (MyTextBoxType == eMyTextBoxTypes.MyTime)
             {
-                if(!CheckValidMyTime(MyTextBoxText))
+                if (!CheckValidMyTime(MyTextBoxText))
                 {
                     errorMessage = "Thời gian nhập không chính xác.";
                 }
             }
             else if (MyTextBoxType == eMyTextBoxTypes.MyInteger)
             {
-                if(!CheckValidMyInteger(MyTextBoxText))
+                if (!CheckValidMyInteger(MyTextBoxText))
                 {
                     errorMessage = "Số nguyên nhập không chính xác.";
                 }
             }
             else if (MyTextBoxType == eMyTextBoxTypes.MyPositiveFloat)
             {
-                if(!CheckValidMyPositiveFloat(MyTextBoxText))
+                if (!CheckValidMyPositiveFloat(MyTextBoxText))
                 {
                     errorMessage = "Số thực dương nhập không chính xác.";
                 }
@@ -293,6 +293,32 @@ namespace QuanLyKho.View
                 }
             }
             return errorMessage;
+        }
+
+        private void MyTextBoxName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            /// Thêm dấu , mỗi 3 ký tự VD: 100,000,000
+            if (MyTextBoxType == eMyTextBoxTypes.MyMoneyVND)
+            {
+                /// Xóa bỏ ký tự , đã thêm
+                StringBuilder str =  new StringBuilder(MyTextBoxText);
+                str.Replace(",", "");
+                int oldLength = str.Length;
+                int i = 1;
+                while(oldLength - i * 3 > 0)
+                {
+                    str.Insert(oldLength - i * 3, ",");
+                    i++;
+                }
+
+                Int32 caret = ((TextBox)sender).CaretIndex;
+                if (MyTextBoxText.Length < str.Length)
+                    caret++;
+                else if (MyTextBoxText.Length > str.Length)
+                    caret--;
+                MyTextBoxText = str.ToString();
+                ((TextBox)sender).CaretIndex = caret;
+            }
         }
     }
 }

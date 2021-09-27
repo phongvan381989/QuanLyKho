@@ -10,8 +10,8 @@
     <Grid>
         <TextBox Name="MyTextBoxName" Style="{StaticResource TextBoxStyleCode}"
               Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-              Path=MyTextBoxText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-
+              Path=MyTextBoxText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                 TextChanged="MyTextBoxName_TextChanged">
         </TextBox>
     </Grid>
 </UserControl>

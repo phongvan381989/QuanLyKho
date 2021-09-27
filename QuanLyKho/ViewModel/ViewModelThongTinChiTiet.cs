@@ -662,12 +662,6 @@ namespace QuanLyKho.ViewModel
                 return false;
             }
 
-            // Check năm xuất bản
-            if (!Common.CheckTimeValid(namXuatBan, true))
-            {
-                MessageBox.Show("Thời gian nhập không đúng.");
-                return false;
-            }
             return true;
         }
 

@@ -15,8 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuanLyKho.General;
 using QuanLyKho.View;
+using QuanLyKho.View.Dev;
 using QuanLyKho.ViewModel;
-
+//using QuanLyKho.ViewModel.D;
 namespace QuanLyKho
 {
     /// <summary>
@@ -24,9 +25,19 @@ namespace QuanLyKho
     /// </summary>
     public partial class MainWindow : Window
     {
+        public enum MainMenuSelectIndex
+        {
+            None,
+            NhapXuat,
+            Dev
+        }
+
+        public MainMenuSelectIndex mainMenuSelect { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            mainMenuSelect = MainMenuSelectIndex.None;
+            //Application.Current.MainWindow = this;
         }
 
         /// <summary>
@@ -45,8 +56,11 @@ namespace QuanLyKho
         }
         private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
         {
-            if (GetTypeOfMainStackPanelContent() == typeof(UserControlThongTinChiTiet))
+            //if (GetTypeOfMainStackPanelContent() == typeof(UserControlThongTinChiTiet))
+            //    return;
+            if (mainMenuSelect == MainMenuSelectIndex.NhapXuat)
                 return;
+            mainMenuSelect = MainMenuSelectIndex.NhapXuat;
 
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
 
@@ -63,6 +77,29 @@ namespace QuanLyKho
                 SubMenu.Children.Clear();
                 SubMenu.Children.Add(new UserControlSMNhapXuat());
             }
+        }
+
+        private void MMDevelop_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainMenuSelect == MainMenuSelectIndex.Dev)
+                return;
+            mainMenuSelect = MainMenuSelectIndex.Dev;
+            MainStackPanelContent.Children.Clear();
+            MainStackPanelContent.Children.Add(new UserControlTiki());
+            SubMenu.Children.Clear();
+            SubMenu.Children.Add(new UserControlSMDevelop());
+        }
+
+        public void MMDevelop_SM_Tiki()
+        {
+            MainStackPanelContent.Children.Clear();
+            MainStackPanelContent.Children.Add(new UserControlTiki());
+        }
+
+        public void MMDevelop_SM_Shopee()
+        {
+            MainStackPanelContent.Children.Clear();
+            MainStackPanelContent.Children.Add(new UserControlShopee());
         }
     }
 }

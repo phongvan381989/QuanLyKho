@@ -16,7 +16,10 @@
             </Button>
             <TextBox Name="TextBoxSearchValue" Style="{StaticResource TextBoxStyleCode}"
                         Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-            Path=ListBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
+            Path=ListBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                Path=ListBoxSearchToolTip, UpdateSourceTrigger=Explicit, Mode=OneTime}">
+            </TextBox>
         </DockPanel>
         <Popup Name="PopupResult"  Width="{Binding ActualWidth, ElementName=DockPanelInputText}"
             IsOpen ="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 

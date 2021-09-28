@@ -8,10 +8,10 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel>
-            <Button Name="TiKi" Content="Tiki" Style="{StaticResource ButtonStyle}" Click="TiKi_Click"/>
-            <Button Name="Shopee" Content="Shopee" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="Shopee_Click"/>
-            <Button Name="Lazada" Content="Lazada" Style="{StaticResource ButtonStyle}" IsEnabled="False"/>
-            <Button Name="Sendo" Content="Sendo" Style="{StaticResource ButtonStyle}" IsEnabled="False"/>
+            <Button Name="TiKi" Content="Tiki" Style="{StaticResource MenuButtonStyle}" Click="TiKi_Click"/>
+            <Button Name="Shopee" Content="Shopee" Style="{StaticResource MenuButtonStyle}" IsEnabled="True" Click="Shopee_Click"/>
+            <Button Name="Lazada" Content="Lazada" Style="{StaticResource MenuButtonStyle}" IsEnabled="False"/>
+            <Button Name="Sendo" Content="Sendo" Style="{StaticResource MenuButtonStyle}" IsEnabled="False"/>
 
         </StackPanel>
     </Grid>

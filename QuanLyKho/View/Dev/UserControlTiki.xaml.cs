@@ -37,18 +37,29 @@ namespace QuanLyKho.View.Dev
             TextBoxHTTPRequest.Text = strHTTPRequest;
             TextboxHTTPResponse.Text = strHTTPResponse;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BtnGetTokenAuth_Click(object sender, RoutedEventArgs e)
         {
             var client = new RestClient("https://api.tiki.vn/integration/v1/sellers/me/inventories?status=1&type=1");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
-            request.AddHeader("Authorization", "Bearer oBFbzjNVNjZzITue5k9scD4sgkeotAdVMjwNtlpm754.qU-HcuKjwct2sNQhe6vaTMIt3a0KLd0yNYmsIx_LUFg");
+            request.AddHeader("Authorization", "Bearer 5xcP33zicKodO8crb_XWXqZ1nE6aO6_LD3qghSm91h4.vRgewC765wshvhHYzgdm5lm-PEBPe1KBsCKx5V70NAo");
             var fullUrl = client.BuildUri(request);
             //client.
             strHTTPRequest = fullUrl.ToString();
             IRestResponse response = client.Execute(request);
             strHTTPResponse = response.Content;
             ShowHTTPRequestAndResponse();
+
+            //var client = new RestClient("https://api.tiki.vn/sc/oauth2/token");
+            //RestRequest request = new RestRequest(Method.POST);
+            //request.AddHeader("Authorization", "Basic NjI0OTcxNjgyMDkyMjIyNjpDQXlUOUJ6Q3dTQXpFMkpzempud3huN3dxUnZlcDdFWg==");
+            //request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+            //request.AddParameter("grant_type", "client_credentials");
+            //request.AddParameter("client_id", "6249716820922226");
+            //request.AddParameter("scope", "");
+            //IRestResponse response = client.Execute(request);
+            //strHTTPResponse = response.Content;
+            //ShowHTTPRequestAndResponse();
         }
     }
 }

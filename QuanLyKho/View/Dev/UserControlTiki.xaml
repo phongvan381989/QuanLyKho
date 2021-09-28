@@ -9,7 +9,7 @@
     <Grid>
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >
-                <Button Click="Button_Click">Get Token Author</Button>
+                <Button Name="BtnGetTokenAuth" Style="{StaticResource ButtonStyle}" Click="BtnGetTokenAuth_Click">Get Token Author</Button>
             </WrapPanel>
             <DockPanel LastChildFill="True" Width="300" DockPanel.Dock="Left">
                 <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" HorizontalAlignment="Center">Request</TextBlock>

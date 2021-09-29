@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace QuanLyKho.Model
 {
-    public class ModelThongTinChiTiet : INotifyPropertyChanged
+    public class ModelThongTinChiTiet : ModelXML
     {
         public ModelThongTinChiTiet()
         {
@@ -21,15 +21,7 @@ namespace QuanLyKho.Model
             InitializeBuffer();
             //ThemThanhPhanMoi("KhoiLuong", null);
         }
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        private void RaisePropertyChanged(string property)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
-        }
         #region list phục vụ truy xuất nhanh thành phần
         private ObservableCollection<string> listNhaPhatHanh;
         private ObservableCollection<string> listNhaXuatBan;
@@ -112,25 +104,6 @@ namespace QuanLyKho.Model
         public string moTaChiTiet { get; set; }
 
         public string viTriLuuKho { get; set; }
-
-        private string pathXML;
-        private XDocument xDoc;
-
-        public void InitializeXDoc()
-        {
-            if(xDoc == null)
-            {
-                Common.CheckAndCreateXML(pathXML, "ThongTinChiTiet");
-            }
-            try
-            {
-                xDoc = XDocument.Load(pathXML);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Không đọc được file ThongTinChiTiet.xml. " + e.Message);
-            }
-        }
 
         /// <summary>
         /// Thêm 1 sản phẩm vào xDoc và lưu ra file

@@ -80,8 +80,10 @@
     </ApplicationDefinition>
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
+    <Compile Include="Model\Dev\ModelThongTinBaoMat.cs" />
     <Compile Include="Model\ModelNhapXuatChiTiet.cs" />
     <Compile Include="Model\ModelThongTinChiTiet.cs" />
+    <Compile Include="Model\ModelXML.cs" />
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
@@ -245,8 +247,6 @@
   <ItemGroup>
     <Resource Include="Resource\downarrow_48pixel.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Dev\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -27,6 +27,7 @@ namespace QuanLyKho.View.Dev
         }
         string strHTTPRequest;
         string strHTTPResponse;
+
         private void GetTokenAuthorization_Click(object sender, RoutedEventArgs e)
         {
             //Application.Current.MainWindow.;

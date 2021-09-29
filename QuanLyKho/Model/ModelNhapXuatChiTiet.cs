@@ -10,31 +10,13 @@ using System.Xml.Linq;
 
 namespace QuanLyKho.Model
 {
-    public class ModelNhapXuatChiTiet
+    public class ModelNhapXuatChiTiet : ModelXML
     {
-        private string pathXML;
-        private XDocument xDoc;
 
         public ModelNhapXuatChiTiet()
         {
             pathXML = ((App)Application.Current).GetPathDataXMLNhapXuatChiTiet();
             InitializeXDoc();
-        }
-
-        public void InitializeXDoc()
-        {
-            if (xDoc == null)
-            {
-                Common.CheckAndCreateXML(pathXML, "NhapXuatChiTiet");
-            }
-            try
-            {
-                xDoc = XDocument.Load(pathXML);
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Không đọc được file NhapXuatChiTiet.xml. " + e.Message);
-            }
         }
 
         #region list phục vụ truy xuất nhanh thành phần

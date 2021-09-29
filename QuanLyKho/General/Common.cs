@@ -258,30 +258,5 @@ namespace QuanLyKho.General
             return true;
         }
         #endregion
-
-        #region xml file
-        /// <summary>
-        /// Check file ThongTinChiTiet.xml tồn tại không? Không tồn tại tạo file mới
-        /// </summary>
-        /// <param name="path"></param>
-        public static void CheckAndCreateXML(string path, string fileName)
-        {
-            if (!File.Exists(path))
-            {
-                // Check thư mục data có tồn tại không. Nếu không tạo thư mục
-                string folderPath = Path.GetDirectoryName(path);
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                XDocument xmlDocument = new XDocument(
-                new XDeclaration("1.0", "utf-8", "yes"),
-                new XElement(fileName));
-
-                xmlDocument.Save(path, SaveOptions.None);
-            }
-        }
-        #endregion
     }
 }

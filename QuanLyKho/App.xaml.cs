@@ -15,8 +15,9 @@ namespace QuanLyKho
     public partial class App : Application
     {
         private string pathApp;
-        private string configDataXMLThongTinChiTiet;
-        private string configDataXMLNhapXuatChiTiet;
+        private string pathDataXMLThongTinChiTiet;
+        private string pathDataXMLNhapXuatChiTiet;
+        private string pathDataXMLThongTinBaoMat;
         private Int32 configTonKhoCanhBaoHetHangChung;
         private List<string> listImageFormats;
         private List<string> listVideoFormats;
@@ -24,8 +25,9 @@ namespace QuanLyKho
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             pathApp = System.AppDomain.CurrentDomain.BaseDirectory;
-            configDataXMLThongTinChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLThongTinChiTiet"]);
-            configDataXMLNhapXuatChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLNhapXuatChiTiet"]);
+            pathDataXMLThongTinChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLThongTinChiTiet"]);
+            pathDataXMLNhapXuatChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLNhapXuatChiTiet"]);
+            pathDataXMLThongTinBaoMat = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLThongTinBaoMat"]);
             string strTemp = ConfigurationManager.AppSettings["TonKhoCanhBaoHetHangChung"];
             if (!Int32.TryParse(strTemp, out configTonKhoCanhBaoHetHangChung))
                 configTonKhoCanhBaoHetHangChung = 5;// default value
@@ -38,12 +40,17 @@ namespace QuanLyKho
 
         public string GetPathDataXMLThongTinChiTiet()
         {
-            return configDataXMLThongTinChiTiet;
+            return pathDataXMLThongTinChiTiet;
         }
 
         public string GetPathDataXMLNhapXuatChiTiet()
         {
-            return configDataXMLNhapXuatChiTiet;
+            return pathDataXMLNhapXuatChiTiet;
+        }
+
+        public string GetPathDataXMLThongTinBaoMat()
+        {
+            return pathDataXMLThongTinBaoMat;
         }
 
         public Int32 GetTonKhoCanhBaoHetHangChung()

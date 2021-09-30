@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using QuanLyKho.Model.Dev;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,16 +41,18 @@ namespace QuanLyKho.View.Dev
         }
         private void BtnGetTokenAuth_Click(object sender, RoutedEventArgs e)
         {
-            var client = new RestClient("https://api.tiki.vn/integration/v1/sellers/me/inventories?status=1&type=1");
-            client.Timeout = -1;
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Authorization", "Bearer 5xcP33zicKodO8crb_XWXqZ1nE6aO6_LD3qghSm91h4.vRgewC765wshvhHYzgdm5lm-PEBPe1KBsCKx5V70NAo");
-            var fullUrl = client.BuildUri(request);
-            //client.
-            strHTTPRequest = fullUrl.ToString();
-            IRestResponse response = client.Execute(request);
-            strHTTPResponse = response.Content;
-            ShowHTTPRequestAndResponse();
+            ModelThongTinBaoMat ttbm = new ModelThongTinBaoMat();
+            //ttbm.Tiki_SaveClientID("1234567890");
+            //var client = new RestClient("https://api.tiki.vn/integration/v1/sellers/me/inventories?status=1&type=1");
+            //client.Timeout = -1;
+            //var request = new RestRequest(Method.GET);
+            //request.AddHeader("Authorization", "Bearer 5xcP33zicKodO8crb_XWXqZ1nE6aO6_LD3qghSm91h4.vRgewC765wshvhHYzgdm5lm-PEBPe1KBsCKx5V70NAo");
+            //var fullUrl = client.BuildUri(request);
+            ////client.
+            //strHTTPRequest = fullUrl.ToString();
+            //IRestResponse response = client.Execute(request);
+            //strHTTPResponse = response.Content;
+            //ShowHTTPRequestAndResponse();
 
             //var client = new RestClient("https://api.tiki.vn/sc/oauth2/token");
             //RestRequest request = new RestRequest(Method.POST);

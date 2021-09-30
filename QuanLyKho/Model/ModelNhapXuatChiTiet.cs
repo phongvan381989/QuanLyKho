@@ -19,24 +19,6 @@ namespace QuanLyKho.Model
             InitializeXDoc();
         }
 
-        #region list phục vụ truy xuất nhanh thành phần
-        //private ObservableCollection<string> listMaSanPham;
-        //private void InitializeBuffer()
-        //{
-        //    listMaSanPham = new ObservableCollection<string>();
-        //    if (xDoc != null)
-        //    {
-        //        foreach (XElement element in xDoc.Descendants("MaSanPham"))
-        //        {
-        //            if (!string.IsNullOrEmpty(element.Value))
-        //            {
-        //                listMaSanPham.Add(element.Value);
-        //            }
-        //        }
-        //    }
-        //}
-        #endregion
-
         /// <summary>
         /// Thêm mới hoặc cập nhật 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>

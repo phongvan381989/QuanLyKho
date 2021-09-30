@@ -44,7 +44,7 @@ namespace QuanLyKho.Model
 
         public void InitializeXDoc()
         {
-            string fileName = Path.GetFileName(pathXML);
+            string fileName = Path.GetFileNameWithoutExtension(pathXML);
             if (xDoc == null)
             {
                 CheckAndCreateXML(pathXML, fileName);

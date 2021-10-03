@@ -80,7 +80,8 @@
     </ApplicationDefinition>
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
-    <Compile Include="Model\Dev\ModelThongTinBaoMat.cs" />
+    <Compile Include="Model\Dev\ModelThongTinBaoMatTiki.cs" />
+    <Compile Include="Model\Dev\TikiDataClass\AccessToken.cs" />
     <Compile Include="Model\ModelNhapXuatChiTiet.cs" />
     <Compile Include="Model\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />
@@ -107,8 +108,8 @@
     <Compile Include="View\Dev\UserControlSMDevelop.xaml.cs">
       <DependentUpon>UserControlSMDevelop.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dev\UserControlTiki.xaml.cs">
-      <DependentUpon>UserControlTiki.xaml</DependentUpon>
+    <Compile Include="View\Dev\UserControlTikiTestAPI.xaml.cs">
+      <DependentUpon>UserControlTikiTestAPI.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
@@ -168,7 +169,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dev\UserControlTiki.xaml">
+    <Page Include="View\Dev\UserControlTikiTestAPI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

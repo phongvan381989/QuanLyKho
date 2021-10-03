@@ -151,12 +151,12 @@ namespace QuanLyKho.Model
             if (xDoc == null)
                 return eExist;
 
-            IEnumerable<XElement> le;
+            IEnumerable<XElement> le = null;
             le = xDoc
                 .Element("ThongTinChiTiet")
                 .Elements("SanPham")
                 .Where(e => e.Element("MaSanPham").Value == maSP);
-            if (le.Count() != 0)
+            if (le != null && le.Count() != 0)
             {
                 eExist = le.ElementAt(0);
             }

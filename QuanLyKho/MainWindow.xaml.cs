@@ -85,7 +85,7 @@ namespace QuanLyKho
                 return;
             mainMenuSelect = MainMenuSelectIndex.Dev;
             MainStackPanelContent.Children.Clear();
-            MainStackPanelContent.Children.Add(new UserControlTiki());
+            MainStackPanelContent.Children.Add(new UserControlTikiTestAPI());
             SubMenu.Children.Clear();
             SubMenu.Children.Add(new UserControlSMDevelop());
         }
@@ -93,7 +93,7 @@ namespace QuanLyKho
         public void MMDevelop_SM_Tiki()
         {
             MainStackPanelContent.Children.Clear();
-            MainStackPanelContent.Children.Add(new UserControlTiki());
+            MainStackPanelContent.Children.Add(new UserControlTikiTestAPI());
         }
 
         public void MMDevelop_SM_Shopee()

@@ -19,6 +19,7 @@
         </Grid.RowDefinitions>
         <StackPanel Name="MainMenu" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
             <Button Name="MMNhapXuat" Content="Nhập Xuất" Style="{StaticResource MenuButtonStyle}" Click="Button_Click_MMNhapXuat"/>
+            <Button Name="MMTiki" Content="Tiki" Style="{StaticResource MenuButtonStyle}" Click="MMTiki_Click"/>
             <Button Name="MMDevelop" Content="Dev" Style="{StaticResource MenuButtonStyle}" Click="MMDevelop_Click"/> 
         </StackPanel>
         <Grid  Grid.Row="1" Grid.Column="0">

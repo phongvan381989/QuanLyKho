@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Linq;
+using QuanLyKho.Model.Dev.TikiDataClass;
 
 namespace QuanLyKho.Model.Dev
 {
     public class ModelThongTinBaoMatTiki : ModelXML
     {
+        private const string eTikiAuthorizationName = "Authorization";
         private const string eTikiAccesTokenName = "AccessToken";
         private const string eTikiIDName = "ID";
         private const string eTikiIDHomeName = "Home";
@@ -217,29 +219,33 @@ namespace QuanLyKho.Model.Dev
         /// <param name="clientID">inhouse app ID</param>
         /// <param name="secret">Secret</param>
         /// <returns></returns>
-        public string Tiki_InhouseAppSaveAccessToken(string clientID, string accessToken)
+        public string Tiki_InhouseAppSaveAccessToken(string clientID, Authorization authorization)
         {
-            if (accessToken == null)
-                accessToken = string.Empty;
+            if (authorization == null)
+                return string.Empty;
             XElement eTiki = TiKi_GetTikiNode();
 
             IEnumerable<XElement> lElement = null;
             lElement = eTiki.Elements("Client").Where(e => e.Element(eTikiIDName).Value == clientID);
 
-            XElement eAccessToken = lElement.ElementAt(0).Element(eTikiAccesTokenName);
-            if (eAccessToken == null)
+            XElement eAuthorization = lElement.ElementAt(0).Element(eTikiAuthorizationName);
+            if (eAuthorization == null)
             {
-                XElement newE = new XElement(eTikiAccesTokenName, accessToken);
+                XElement newE = new XElement(eTikiAuthorizationName, 
+                                             new XElement(eTikiAccesTokenName, authorization.access_token),
+                                             new XElement ("ExpiresIn", authorization.expires_in),
+                                             new XElement("Scope", authorization.scope),
+                                             new XElement("TokenType", authorization.token_type));
                 lElement.ElementAt(0).Add(newE);
                 xDoc.Save(pathXML, SaveOptions.None);
             }
             else
             {
-                if (eAccessToken.Value != accessToken)
-                {
-                    eAccessToken.Value = accessToken;
-                    xDoc.Save(pathXML, SaveOptions.None);
-                }
+                eAuthorization.Element(eTikiAccesTokenName).Value = authorization.access_token;
+                eAuthorization.Element("ExpiresIn").Value = authorization.expires_in;
+                eAuthorization.Element("Scope").Value = authorization.scope;
+                eAuthorization.Element("TokenType").Value = authorization.token_type;
+                xDoc.Save(pathXML, SaveOptions.None);
             }
             return string.Empty;
         }
@@ -251,7 +257,7 @@ namespace QuanLyKho.Model.Dev
         /// <returns></returns>
         public string Tiki_InhouseGetAccessToken(string clientID)
         {
-            return TiKi_GetClientNode(clientID).Element(eTikiAccesTokenName).Value;
+            return TiKi_GetClientNode(clientID).Element(eTikiAuthorizationName).Element(eTikiAccesTokenName).Value;
         }
 
         /// <summary>

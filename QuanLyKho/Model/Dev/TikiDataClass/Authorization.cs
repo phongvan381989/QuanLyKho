@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyKho.Model.Dev.TikiDataClass
 {
-    public class AccessToken
+    public class Authorization
     {
         public string access_token { get; set; }
         public string expires_in { get; set; }

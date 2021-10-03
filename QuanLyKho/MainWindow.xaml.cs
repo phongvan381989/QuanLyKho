@@ -101,5 +101,10 @@ namespace QuanLyKho
             MainStackPanelContent.Children.Clear();
             MainStackPanelContent.Children.Add(new UserControlShopee());
         }
+
+        private void MMTiki_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

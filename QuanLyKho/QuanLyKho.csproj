@@ -81,7 +81,7 @@
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
     <Compile Include="Model\Dev\ModelThongTinBaoMatTiki.cs" />
-    <Compile Include="Model\Dev\TikiDataClass\AccessToken.cs" />
+    <Compile Include="Model\Dev\TikiDataClass\Authorization.cs" />
     <Compile Include="Model\ModelNhapXuatChiTiet.cs" />
     <Compile Include="Model\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />

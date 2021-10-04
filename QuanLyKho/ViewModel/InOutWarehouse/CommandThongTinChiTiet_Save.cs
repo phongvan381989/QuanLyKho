@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace QuanLyKho.ViewModel
+namespace QuanLyKho.ViewModel.InOutWarehouse
 {
     public class CommandThongTinChiTiet_Save: ICommand
     {

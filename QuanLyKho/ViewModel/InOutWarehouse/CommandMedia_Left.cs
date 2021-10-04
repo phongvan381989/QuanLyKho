@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace QuanLyKho.ViewModel
+namespace QuanLyKho.ViewModel.InOutWarehouse
 {
-    public class CommandMedia_RotateLeft : ICommand
+    public class CommandMedia_Left : ICommand
     {
         private ViewModelMedia vm;
 
-        public CommandMedia_RotateLeft(ViewModelMedia vmInput)
+        public CommandMedia_Left(ViewModelMedia vmInput)
         {
             vm = vmInput;
         }
@@ -21,7 +21,7 @@ namespace QuanLyKho.ViewModel
         }
         public void Execute(object parameter)
         {
-            vm.RotateLeft(parameter);
+            vm.Left();
         }
         public event EventHandler CanExecuteChanged;
     }

@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace QuanLyKho.ViewModel
+namespace QuanLyKho.ViewModel.InOutWarehouse
 {
-    class CommandThongTinChiTiet_Delete : ICommand
+    public class CommandMedia_Right : ICommand
     {
-        private ViewModelThongTinChiTiet vm;
+        private ViewModelMedia vm;
 
-        public CommandThongTinChiTiet_Delete(ViewModelThongTinChiTiet vmInput)
+        public CommandMedia_Right(ViewModelMedia vmInput)
         {
             vm = vmInput;
         }
@@ -21,7 +21,7 @@ namespace QuanLyKho.ViewModel
         }
         public void Execute(object parameter)
         {
-            vm.Delete();
+            vm.Right();
         }
         public event EventHandler CanExecuteChanged;
     }

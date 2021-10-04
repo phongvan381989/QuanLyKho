@@ -14,9 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuanLyKho.General;
-using QuanLyKho.View;
+using QuanLyKho.View.InOutWarehouse;
 using QuanLyKho.View.Dev;
-using QuanLyKho.ViewModel;
+using QuanLyKho.ViewModel.InOutWarehouse;
 //using QuanLyKho.ViewModel.D;
 namespace QuanLyKho
 {
@@ -65,7 +65,7 @@ namespace QuanLyKho
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
 
             // Phải đọc được file db
-            if (vmThongTinChiTiet.sanPhamHienThi != null)
+            if (vmThongTinChiTiet.sanPhamHienThi != null && vmThongTinChiTiet.nhapXuatChiTiet != null)
             {
                 vmThongTinChiTiet.UpdateSanPhamHienThi();
                 this.DataContext = vmThongTinChiTiet;
@@ -102,7 +102,7 @@ namespace QuanLyKho
             MainStackPanelContent.Children.Add(new UserControlShopee());
         }
 
-        private void MMTiki_Click(object sender, RoutedEventArgs e)
+        private void MMConfig_Click(object sender, RoutedEventArgs e)
         {
 
         }

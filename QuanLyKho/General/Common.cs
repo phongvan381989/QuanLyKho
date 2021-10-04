@@ -244,6 +244,7 @@ namespace QuanLyKho.General
                         }
                         catch (Exception ex)
                         {
+                            string ms = ex.Message;
                             isOk = false;
                         }
                     }

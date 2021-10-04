@@ -17,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
-namespace QuanLyKho.View
+namespace QuanLyKho.View.InOutWarehouse
 {
     /// <summary>
     /// Interaction logic for UserControlSMNhapXuat.xaml

@@ -82,23 +82,23 @@
     <Compile Include="General\MyLogger.cs" />
     <Compile Include="Model\Dev\ModelThongTinBaoMatTiki.cs" />
     <Compile Include="Model\Dev\TikiDataClass\Authorization.cs" />
-    <Compile Include="Model\ModelNhapXuatChiTiet.cs" />
-    <Compile Include="Model\ModelThongTinChiTiet.cs" />
+    <Compile Include="Model\InOutWarehouse\ModelNhapXuatChiTiet.cs" />
+    <Compile Include="Model\InOutWarehouse\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\CommandMedia_Left.cs" />
-    <Compile Include="ViewModel\CommandMedia_Right.cs" />
-    <Compile Include="ViewModel\CommandMedia_RotateLeft.cs" />
-    <Compile Include="ViewModel\CommandMedia_RotateRight.cs" />
-    <Compile Include="ViewModel\CommandThongTinChiTiet_Delete.cs" />
-    <Compile Include="ViewModel\CommandThongTinChiTiet_Save.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateRight.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Delete.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Save.cs" />
     <Compile Include="ViewModel\Dev\CommandTiki.cs" />
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\ViewModelMedia.cs" />
-    <Compile Include="ViewModel\ViewModelThongTinChiTiet.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTiet.cs" />
     <Compile Include="View\Dev\UserControlDev.xaml.cs">
       <DependentUpon>UserControlDev.xaml</DependentUpon>
     </Compile>
@@ -111,7 +111,7 @@
     <Compile Include="View\Dev\UserControlTikiTestAPI.xaml.cs">
       <DependentUpon>UserControlTikiTestAPI.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Media.xaml.cs">
+    <Compile Include="View\InOutWarehouse\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlChonThoiGian.xaml.cs">
@@ -129,10 +129,10 @@
     <Compile Include="View\UserControlSoThucDuong.xaml.cs">
       <DependentUpon>UserControlSoThucDuong.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlThongTinChiTiet.xaml.cs">
+    <Compile Include="View\InOutWarehouse\UserControlThongTinChiTiet.xaml.cs">
       <DependentUpon>UserControlThongTinChiTiet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlSMNhapXuat.xaml.cs">
+    <Compile Include="View\InOutWarehouse\UserControlSMNhapXuat.xaml.cs">
       <DependentUpon>UserControlSMNhapXuat.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlTextBoxIntegerOnly.xaml.cs">
@@ -173,7 +173,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Media.xaml">
+    <Page Include="View\InOutWarehouse\Media.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,11 +197,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlThongTinChiTiet.xaml">
+    <Page Include="View\InOutWarehouse\UserControlThongTinChiTiet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlSMNhapXuat.xaml">
+    <Page Include="View\InOutWarehouse\UserControlSMNhapXuat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,6 +248,10 @@
   <ItemGroup>
     <Resource Include="Resource\downarrow_48pixel.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\Config\" />
+    <Folder Include="ViewModel\Config\" />
+    <Folder Include="View\Config\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

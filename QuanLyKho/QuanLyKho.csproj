@@ -88,6 +88,7 @@
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Config\ViewModelConfigTiki.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
@@ -99,11 +100,17 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTiet.cs" />
+    <Compile Include="View\Config\UserControlConfigTiki.xaml.cs">
+      <DependentUpon>UserControlConfigTiki.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Config\UserControlSMConfig.xaml.cs">
+      <DependentUpon>UserControlSMConfig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Dev\UserControlDev.xaml.cs">
       <DependentUpon>UserControlDev.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dev\UserControlShopee.xaml.cs">
-      <DependentUpon>UserControlShopee.xaml</DependentUpon>
+    <Compile Include="View\Dev\UserControlShopeeTestAPI.xaml.cs">
+      <DependentUpon>UserControlShopeeTestAPI.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Dev\UserControlSMDevelop.xaml.cs">
       <DependentUpon>UserControlSMDevelop.xaml</DependentUpon>
@@ -114,19 +121,19 @@
     <Compile Include="View\InOutWarehouse\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlChonThoiGian.xaml.cs">
+    <Compile Include="View\UserControlCommon\UserControlChonThoiGian.xaml.cs">
       <DependentUpon>UserControlChonThoiGian.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlComboBoxSearch.xaml.cs">
+    <Compile Include="View\UserControlCommon\UserControlComboBoxSearch.xaml.cs">
       <DependentUpon>UserControlComboBoxSearch.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlListBoxSearch.xaml.cs">
+    <Compile Include="View\UserControlCommon\UserControlListBoxSearch.xaml.cs">
       <DependentUpon>UserControlListBoxSearch.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlMyTextBox.xaml.cs">
+    <Compile Include="View\UserControlCommon\UserControlMyTextBox.xaml.cs">
       <DependentUpon>UserControlMyTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlSoThucDuong.xaml.cs">
+    <Compile Include="View\UserControlCommon\UserControlSoThucDuong.xaml.cs">
       <DependentUpon>UserControlSoThucDuong.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InOutWarehouse\UserControlThongTinChiTiet.xaml.cs">
@@ -135,10 +142,10 @@
     <Compile Include="View\InOutWarehouse\UserControlSMNhapXuat.xaml.cs">
       <DependentUpon>UserControlSMNhapXuat.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlTextBoxIntegerOnly.xaml.cs">
+    <Compile Include="View\UserControlCommon\UserControlTextBoxIntegerOnly.xaml.cs">
       <DependentUpon>UserControlTextBoxIntegerOnly.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControlTienVND.xaml.cs">
+    <Compile Include="View\UserControlCommon\UserControlTienVND.xaml.cs">
       <DependentUpon>UserControlTienVND.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -157,11 +164,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Config\UserControlConfigTiki.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Config\UserControlSMConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Dev\UserControlDev.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dev\UserControlShopee.xaml">
+    <Page Include="View\Dev\UserControlShopeeTestAPI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,23 +192,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlChonThoiGian.xaml">
+    <Page Include="View\UserControlCommon\UserControlChonThoiGian.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlComboBoxSearch.xaml">
+    <Page Include="View\UserControlCommon\UserControlComboBoxSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlListBoxSearch.xaml">
+    <Page Include="View\UserControlCommon\UserControlListBoxSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlMyTextBox.xaml">
+    <Page Include="View\UserControlCommon\UserControlMyTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlSoThucDuong.xaml">
+    <Page Include="View\UserControlCommon\UserControlSoThucDuong.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,11 +220,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlTextBoxIntegerOnly.xaml">
+    <Page Include="View\UserControlCommon\UserControlTextBoxIntegerOnly.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControlTienVND.xaml">
+    <Page Include="View\UserControlCommon\UserControlTienVND.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,8 +265,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Config\" />
-    <Folder Include="ViewModel\Config\" />
-    <Folder Include="View\Config\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuanLyKho.View
+namespace QuanLyKho.View.UserControlCommon
 {
     /// <summary>
     /// Interaction logic for UserControlSoTuNhien.xaml

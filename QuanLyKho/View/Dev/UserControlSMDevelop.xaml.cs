@@ -28,13 +28,13 @@ namespace QuanLyKho.View.Dev
         private void TiKi_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
-            mw.MMDevelop_SM_Tiki();
+            mw.SetMainContentContainer(new UserControlTikiTestAPI(), null);
         }
 
         private void Shopee_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mw = (MainWindow)Application.Current.MainWindow;
-            mw.MMDevelop_SM_Shopee();
+            mw.SetMainContentContainer(new UserControlShopeeTestAPI(), null);
         }
     }
 }

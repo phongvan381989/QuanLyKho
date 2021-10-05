@@ -18,7 +18,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Name="MainMenu" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
-            <Button Name="MMNhapXuat" Content="Nhập Xuất" Style="{StaticResource MenuButtonStyle}" Click="Button_Click_MMNhapXuat"/>
+            <Button Name="MMNhapXuat" Content="Nhập Xuất" Style="{StaticResource MenuButtonStyle}" Click="MMNhapXuat_Click"/>
             <Button Name="MMConfig" Content="Cấu hình" Style="{StaticResource MenuButtonStyle}" Click="MMConfig_Click"
                     ToolTip="Cấu hình giá trị chung, thông tin shop trên tiki, shopee,"/>
             <Button Name="MMDevelop" Content="Dev" Style="{StaticResource MenuButtonStyle}" Click="MMDevelop_Click"/> 
@@ -31,7 +31,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Name="SubMenu" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical">
+            <StackPanel Name="SubMenuContainer" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical">
                 <!--<Label Content="Log in"/>
                 <Label Content="Log in"/>
                 <Label Content="Log in"/>
@@ -40,7 +40,7 @@
                 <Button Content="Add me for test" Click="Button_Click"/>
                 <Button Content="Remove me for test" Click="Button_Click_1"/>-->
             </StackPanel>
-            <DockPanel  Grid.Row="0" Grid.Column="1" Name="MainStackPanelContent" LastChildFill = "True">
+            <DockPanel  Grid.Row="0" Grid.Column="1" Name="MainContentContainer" LastChildFill = "True">
 
             </DockPanel>
         </Grid>

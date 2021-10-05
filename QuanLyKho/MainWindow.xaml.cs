@@ -17,6 +17,8 @@ using QuanLyKho.General;
 using QuanLyKho.View.InOutWarehouse;
 using QuanLyKho.View.Dev;
 using QuanLyKho.ViewModel.InOutWarehouse;
+using QuanLyKho.View.Config;
+using QuanLyKho.ViewModel;
 //using QuanLyKho.ViewModel.D;
 namespace QuanLyKho
 {
@@ -29,6 +31,7 @@ namespace QuanLyKho
         {
             None,
             NhapXuat,
+            Config,
             Dev
         }
 
@@ -41,23 +44,22 @@ namespace QuanLyKho
         }
 
         /// <summary>
-        /// Đối tượng MainStackPanelContent chưa 1 usercontrol tại 1 thời điểm. Hàm này lấy type của usercontrol hiện tại
+        /// Đối tượng MainContentContainer chứa 1 usercontrol tại 1 thời điểm. Hàm này lấy type của usercontrol hiện tại
         /// </summary>
-        private Type GetTypeOfMainStackPanelContent()
+        private Type GetTypeOfMainContentContainer()
         {
-            if(MainStackPanelContent.Children.Count == 1)
+            if(MainContentContainer.Children.Count == 1)
             {
-                foreach (UIElement child in MainStackPanelContent.Children)
+                foreach (UIElement child in MainContentContainer.Children)
                 {
                     return child.GetType();
                 }
             }
             return null;
         }
-        private void Button_Click_MMNhapXuat(object sender, RoutedEventArgs e)
+
+        private void MMNhapXuat_Click(object sender, RoutedEventArgs e)
         {
-            //if (GetTypeOfMainStackPanelContent() == typeof(UserControlThongTinChiTiet))
-            //    return;
             if (mainMenuSelect == MainMenuSelectIndex.NhapXuat)
                 return;
             mainMenuSelect = MainMenuSelectIndex.NhapXuat;
@@ -70,12 +72,12 @@ namespace QuanLyKho
                 vmThongTinChiTiet.UpdateSanPhamHienThi();
                 this.DataContext = vmThongTinChiTiet;
 
-                MainStackPanelContent.Children.Clear();
+                MainContentContainer.Children.Clear();
                 UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
-                MainStackPanelContent.Children.Add(ucThongTinChiTiet);
+                MainContentContainer.Children.Add(ucThongTinChiTiet);
 
-                SubMenu.Children.Clear();
-                SubMenu.Children.Add(new UserControlSMNhapXuat());
+                SubMenuContainer.Children.Clear();
+                SubMenuContainer.Children.Add(new UserControlSMNhapXuat());
             }
         }
 
@@ -84,27 +86,40 @@ namespace QuanLyKho
             if (mainMenuSelect == MainMenuSelectIndex.Dev)
                 return;
             mainMenuSelect = MainMenuSelectIndex.Dev;
-            MainStackPanelContent.Children.Clear();
-            MainStackPanelContent.Children.Add(new UserControlTikiTestAPI());
-            SubMenu.Children.Clear();
-            SubMenu.Children.Add(new UserControlSMDevelop());
-        }
-
-        public void MMDevelop_SM_Tiki()
-        {
-            MainStackPanelContent.Children.Clear();
-            MainStackPanelContent.Children.Add(new UserControlTikiTestAPI());
-        }
-
-        public void MMDevelop_SM_Shopee()
-        {
-            MainStackPanelContent.Children.Clear();
-            MainStackPanelContent.Children.Add(new UserControlShopee());
+            MainContentContainer.Children.Clear();
+            MainContentContainer.Children.Add(new UserControlTikiTestAPI());
+            SubMenuContainer.Children.Clear();
+            SubMenuContainer.Children.Add(new UserControlSMDevelop());
         }
 
         private void MMConfig_Click(object sender, RoutedEventArgs e)
         {
+            if (mainMenuSelect == MainMenuSelectIndex.Config)
+                return;
+            mainMenuSelect = MainMenuSelectIndex.Config;
+            MainContentContainer.Children.Clear();
+            MainContentContainer.Children.Add(new UserControlConfigTiki());
 
+            SubMenuContainer.Children.Clear();
+            SubMenuContainer.Children.Add(new UserControlSMConfig());
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="userControl">UserControl</param>
+        /// <param name="viewBase"> Datacontext</param>
+        public void SetMainContentContainer(UserControl userControl, ViewModelBase viewBase)
+        {
+            if (GetTypeOfMainContentContainer() == userControl.GetType())
+                return;
+
+            MainContentContainer.Children.Clear();
+            MainContentContainer.Children.Add(userControl);
+            if(viewBase != null)
+            {
+                MainContentContainer.DataContext = viewBase;
+            }
         }
     }
 }

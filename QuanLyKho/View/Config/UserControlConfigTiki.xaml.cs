@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuanLyKho.View.Dev
+namespace QuanLyKho.View.Config
 {
     /// <summary>
-    /// Interaction logic for UserControlShopee.xaml
+    /// Interaction logic for UserControlConfigTiki.xaml
     /// </summary>
-    public partial class UserControlShopee : UserControl
+    public partial class UserControlConfigTiki : UserControl
     {
-        public UserControlShopee()
+        public UserControlConfigTiki()
         {
             InitializeComponent();
         }

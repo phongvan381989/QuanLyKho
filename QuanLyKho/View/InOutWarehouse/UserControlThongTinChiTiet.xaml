@@ -28,7 +28,7 @@
             <RowDefinition Height = "*" />
         </Grid.RowDefinitions>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical" Name="nhapDuLieu">
+            <StackPanel Grid.Row = "0" Grid.Column = "0" Orientation="Vertical" Name="NhapDuLieu">
                 <WrapPanel Height="{StaticResource HeightWrapTextLine}">
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã sản phẩm</TextBlock>
                     <local:UserControlListBoxSearch x:Name="MaSanPham" Width="{StaticResource WidthTextBox}"

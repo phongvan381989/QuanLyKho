@@ -13,6 +13,7 @@ namespace QuanLyKho.Model.Dev
 {
     public class ModelThongTinBaoMatTiki : ModelXML
     {
+        private const string eTikiApplicationName = "Application";
         private const string eTikiAuthorizationName = "Authorization";
         private const string eTikiAccesTokenName = "AccessToken";
         private const string eTikiIDName = "ID";
@@ -23,12 +24,20 @@ namespace QuanLyKho.Model.Dev
         public string secretAppCode { get; set; }
         public ModelThongTinBaoMatTiki()
         {
-            pathXML = ((App)Application.Current).GetPathDataXMLThongTinBaoMat();
-            InitializeXDoc();
-            InitializeStruct();
             appID = string.Empty;
             homeAddress = string.Empty;
             secretAppCode = string.Empty;
+        }
+
+        /// <summary>
+        /// Khởi tạo biến phục vụ thao tác dữ liệu. Tại 1 thời điểm chỉ được 1 đối tượng ModelThongTinBaoMatTiki thực hiện thao tác dữ liệu
+        /// Tại 1 thời điểm, chỉ 1 đối tượng cần gọi hàm này.
+        /// </summary>
+        public void InitializeManipulateXDoc()
+        {
+            pathXML = ((App)Application.Current).GetPathDataXMLThongTinBaoMat();
+            InitializeXDoc();
+            InitializeStruct();
         }
 
         public Boolean SaveAccessToken()
@@ -104,7 +113,7 @@ namespace QuanLyKho.Model.Dev
         {
             XElement eTiki = TiKi_GetTikiNode();
             IEnumerable<XElement> lElement = null;
-            lElement = eTiki.Elements("Application").Where(e => e.Element(eTikiIDName).Value == appID);
+            lElement = eTiki.Elements(eTikiApplicationName).Where(e => e.Element(eTikiIDName).Value == appID);
             if (lElement == null)
                 return null;
             return lElement.ElementAt(0);
@@ -132,14 +141,14 @@ namespace QuanLyKho.Model.Dev
             XElement eTiki = TiKi_GetTikiNode();
 
             IEnumerable<XElement> lElement = null;
-            lElement = eTiki.Elements("Application").Where(e=>e.Element(eTikiIDName).Value == appID);
+            lElement = eTiki.Elements(eTikiApplicationName).Where(e=>e.Element(eTikiIDName).Value == appID);
             if (lElement != null && lElement.Count() != 0) 
             {
                 return string.Empty;
             }
             else // Tạo mới
             {
-                XElement newE = new XElement("Application",
+                XElement newE = new XElement(eTikiApplicationName,
                                 new XElement(eTikiIDName, appID));
 
                 eTiki.Add(newE);
@@ -161,7 +170,7 @@ namespace QuanLyKho.Model.Dev
             XElement eTiki = TiKi_GetTikiNode();
 
             IEnumerable<XElement> lElement = null;
-            lElement = eTiki.Elements("Application").Where(e => e.Element(eTikiIDName).Value == appID);
+            lElement = eTiki.Elements(eTikiApplicationName).Where(e => e.Element(eTikiIDName).Value == appID);
 
             XElement eHome = lElement.ElementAt(0).Element(eTikiHomeName);
             if(eHome == null)
@@ -204,7 +213,7 @@ namespace QuanLyKho.Model.Dev
             XElement eTiki = TiKi_GetTikiNode();
 
             IEnumerable<XElement> lElement = null;
-            lElement = eTiki.Elements("Application").Where(e => e.Element(eTikiIDName).Value == appID);
+            lElement = eTiki.Elements(eTikiApplicationName).Where(e => e.Element(eTikiIDName).Value == appID);
 
             XElement eSecret = lElement.ElementAt(0).Element(eTikiSecretName);
             if (eSecret == null)
@@ -247,7 +256,7 @@ namespace QuanLyKho.Model.Dev
             XElement eTiki = TiKi_GetTikiNode();
 
             IEnumerable<XElement> lElement = null;
-            lElement = eTiki.Elements("Application").Where(e => e.Element(eTikiIDName).Value == appID);
+            lElement = eTiki.Elements(eTikiApplicationName).Where(e => e.Element(eTikiIDName).Value == appID);
 
             XElement eAuthorization = lElement.ElementAt(0).Element(eTikiAuthorizationName);
             if (eAuthorization == null)
@@ -306,7 +315,7 @@ namespace QuanLyKho.Model.Dev
             XElement eTiki = TiKi_GetTikiNode();
 
             IEnumerable<XElement> lElement = null;
-            lElement = eTiki.Elements("Application").Where(e => e.Element(eTikiIDName).Value == appID);
+            lElement = eTiki.Elements(eTikiApplicationName).Where(e => e.Element(eTikiIDName).Value == appID);
             if (lElement != null && lElement.Count() != 0)// Update
             {
                 XElement newEHome = new XElement(eTikiHomeName, home);
@@ -316,7 +325,7 @@ namespace QuanLyKho.Model.Dev
             }
             else // Tạo mới
             {
-                XElement newE = new XElement("Application",
+                XElement newE = new XElement(eTikiApplicationName,
                                 new XElement(eTikiIDName, appID),
                                 new XElement(eTikiHomeName, home),
                                 new XElement(eTikiSecretName, secret));
@@ -335,7 +344,7 @@ namespace QuanLyKho.Model.Dev
             xDoc
                 .Element("ThongTinBaoMat")
                 .Element("Tiki")
-                .Elements("Application").Where(e => e.Element(eTikiIDName).Value == appID).Remove();
+                .Elements(eTikiApplicationName).Where(e => e.Element(eTikiIDName).Value == appID).Remove();
             xDoc.Save(pathXML, SaveOptions.None);
             return string.Empty;
         }
@@ -359,13 +368,56 @@ namespace QuanLyKho.Model.Dev
                 return "ID Ứng Dụng không tồn tại";
 
             Tiki_InhouseAppDelete(appID);
+            appID = string.Empty;
+            homeAddress = string.Empty;
+            secretAppCode = string.Empty;
             return string.Empty;
         }
 
-        static public ObservableCollection<ModelThongTinBaoMatTiki> GetListTikiConfigApp()
+        /// <summary>
+        /// Convert 1 node App tới đối tượng ModelThongTinBaoMatTiki
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        ModelThongTinBaoMatTiki Tiki_InhouseAppConvertXElementToOjectModelTTBM(XElement xElement)
         {
+            if (xElement.Name != eTikiApplicationName)
+                return null;
+            ModelThongTinBaoMatTiki ttbm = new ModelThongTinBaoMatTiki();
+            ttbm.appID = xElement.Element(eTikiIDName).Value;
+            ttbm.homeAddress = xElement.Element(eTikiHomeName).Value;
+            ttbm.secretAppCode = xElement.Element(eTikiSecretName).Value;
+            return ttbm;
+        }
+
+        public ObservableCollection<ModelThongTinBaoMatTiki> Tiki_InhouseAppGetListTikiConfigApp()
+        {
+            IEnumerable<XElement> lElement = xDoc
+                .Element("ThongTinBaoMat")
+                .Element("Tiki").Elements(eTikiApplicationName);
+            if (lElement == null || lElement.Count() == 0)
+                return null;
+
             ObservableCollection<ModelThongTinBaoMatTiki> list = null;
+            foreach(XElement e in lElement)
+            {
+                list.Add(Tiki_InhouseAppConvertXElementToOjectModelTTBM(e));
+            }
             return list;
+        }
+
+        /// <summary>
+        /// Copy những đối tượng phục vụ binding ở màn hình ViewModelTikiConfigApp gồm:
+        /// public string appID
+        /// public string homeAddress
+        /// public string secretAppCode
+        /// </summary>
+        /// <param name="ttbm"></param>
+        public void CopyPropertyViewConfigApp(ModelThongTinBaoMatTiki ttbm)
+        {
+            appID = ttbm.appID;
+            homeAddress = ttbm.homeAddress;
+            secretAppCode = ttbm.secretAppCode;
         }
     }
 }

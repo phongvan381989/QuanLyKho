@@ -14,8 +14,15 @@ namespace QuanLyKho.ViewModel.Config
     {
         public ViewModelTikiConfigApp()
         {
-            plistTikiConfigApp = new ObservableCollection<ModelThongTinBaoMatTiki>();
             ttbmTiki = new ModelThongTinBaoMatTiki();
+            ttbmTiki.InitializeManipulateXDoc();
+            listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
+            if(listTikiConfigApp.Count() != 0)
+            {
+                appID = listTikiConfigApp.ElementAt(0).appID;
+                homeAddress = listTikiConfigApp.ElementAt(0).homeAddress;
+                secretAppCode = listTikiConfigApp.ElementAt(0).secretAppCode;
+            }
         }
         private ObservableCollection<ModelThongTinBaoMatTiki> plistTikiConfigApp;
         public ObservableCollection<ModelThongTinBaoMatTiki> listTikiConfigApp

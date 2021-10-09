@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
+    <Compile Include="Model\Config\TikiConfigApp.cs" />
     <Compile Include="Model\Dev\ModelThongTinBaoMatTiki.cs" />
     <Compile Include="Model\Dev\TikiDataClass\Authorization.cs" />
     <Compile Include="Model\InOutWarehouse\ModelNhapXuatChiTiet.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Config\ViewModelConfigTiki.cs" />
+    <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
@@ -100,8 +101,8 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTiet.cs" />
-    <Compile Include="View\Config\UserControlConfigTiki.xaml.cs">
-      <DependentUpon>UserControlConfigTiki.xaml</DependentUpon>
+    <Compile Include="View\Config\UserControlTikiConfigApp.xaml.cs">
+      <DependentUpon>UserControlTikiConfigApp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Config\UserControlSMConfig.xaml.cs">
       <DependentUpon>UserControlSMConfig.xaml</DependentUpon>
@@ -164,7 +165,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Config\UserControlConfigTiki.xaml">
+    <Page Include="View\Config\UserControlTikiConfigApp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -263,8 +264,6 @@
   <ItemGroup>
     <Resource Include="Resource\downarrow_48pixel.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Config\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

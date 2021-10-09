@@ -98,7 +98,7 @@ namespace QuanLyKho
                 return;
             mainMenuSelect = MainMenuSelectIndex.Config;
             MainContentContainer.Children.Clear();
-            MainContentContainer.Children.Add(new UserControlConfigTiki());
+            MainContentContainer.Children.Add(new UserControlTikiConfigApp());
 
             SubMenuContainer.Children.Clear();
             SubMenuContainer.Children.Add(new UserControlSMConfig());

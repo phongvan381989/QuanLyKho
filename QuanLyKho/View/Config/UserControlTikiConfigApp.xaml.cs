@@ -18,9 +18,9 @@ namespace QuanLyKho.View.Config
     /// <summary>
     /// Interaction logic for UserControlConfigTiki.xaml
     /// </summary>
-    public partial class UserControlConfigTiki : UserControl
+    public partial class UserControlTikiConfigApp : UserControl
     {
-        public UserControlConfigTiki()
+        public UserControlTikiConfigApp()
         {
             InitializeComponent();
         }

@@ -29,7 +29,7 @@ namespace QuanLyKho.View.Config
         private void TiKi_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mw = (MainWindow)App.Current.MainWindow;
-            mw.SetMainContentContainer(new UserControlConfigTiki(), new ViewModelConfigTiki());
+            mw.SetMainContentContainer(new UserControlTikiConfigApp(), new ViewModelTikiConfigApp());
         }
     }
 }

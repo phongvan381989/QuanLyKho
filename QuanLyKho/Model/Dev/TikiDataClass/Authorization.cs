@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuanLyKho.Model.Dev.TikiDataClass
 {
+    /// <summary>
+    /// Chứa thông tin ủy quyền connect tới shop Tiki
+    /// </summary>
     public class Authorization
     {
         public string access_token { get; set; }

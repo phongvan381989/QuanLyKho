@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="QuanLyKho.View.Config.UserControlConfigTiki"
+﻿<UserControl x:Class="QuanLyKho.View.Config.UserControlTikiConfigApp"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyKho.View.UserControlCommon"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1200">
     <UserControl.Resources>
         <sys:Double x:Key="WidthTextBlock">200</sys:Double>
         <sys:Double x:Key="WidthTextBox">400</sys:Double>
@@ -32,8 +32,8 @@
                 </WrapPanel>
                 <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Địa Chỉ Cửa Hàng</TextBlock>
-                    <local:UserControlMyTextBox x:Name="ShopURLAddress" Width="{StaticResource WidthTextBox}"
-                                                MyTextBoxText="{Binding  Path = shopURLAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    <local:UserControlMyTextBox x:Name="HomeAddress" Width="{StaticResource WidthTextBox}"
+                                                MyTextBoxText="{Binding  Path = homeAddress, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 MyTextBoxType="MyNormal" ToolTip="Địa chỉ web cửa hàng"/>
                 </WrapPanel>
                 <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
@@ -42,21 +42,27 @@
                                                 MyTextBoxText="{Binding  Path = secretAppCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 MyTextBoxType="MyNormal" ToolTip="Mã bí mật của ứng dụng liên kết cửa hàng"/>
                 </WrapPanel>
+                <WrapPanel Height="20"></WrapPanel>
+                <WrapPanel Height="{StaticResource HeightWrapTextLine}" HorizontalAlignment="Center">
+                    <Button Name="Add" Content="Thêm" Width="50" Style="{StaticResource ButtonStyle}"/>
+                    <TextBlock Width="50"></TextBlock>
+                    <Button Name="Delete" Content="Xóa" Width="50" Style="{StaticResource ButtonStyle}"/>
+                </WrapPanel>
             </StackPanel>
         </ScrollViewer>
         <DockPanel LastChildFill = "True" Grid.Row = "0" Grid.Column = "1">
-            <ListView Margin="10" Name="lvUsers">
+            <ListView ItemsSource="{Binding Path=listTikiConfigApp}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Age" Width="50" DisplayMemberBinding="{Binding Age}" />
-                        <GridViewColumn Header="Mail" Width="150">
+                        <GridViewColumn Header="ID Ứng Dụng" Width="200" DisplayMemberBinding="{Binding appID}" />
+                        <GridViewColumn Header="Địa Chỉ Cửa Hàng" Width="400">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Mail}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                                    <TextBlock Text="{Binding shopURLAddress}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn Header="Mã Bí Mật" Width="200" DisplayMemberBinding="{Binding secretAppCode}" />
                     </GridView>
                 </ListView.View>
             </ListView>

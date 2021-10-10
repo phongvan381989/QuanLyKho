@@ -731,7 +731,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             if (bResult)
             {
                 OnPropertyChanged("tonKho");
-                General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Sản phẩm");
+                General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Lưu");
                 // Cập nhật source của combobox
                 listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);
                 listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.First);
@@ -777,7 +777,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
             sanPhamHienThi.Delete();
             nhapXuatChiTiet.Delete(maSanPham);
-            General.Common.ShowAutoClosingMessageBox("Xóa thành công", "Sản phẩm");
+            General.Common.ShowAutoClosingMessageBox("Xóa thành công", "Xóa");
         }
 
         public void UpdateSanPhamHienThi()

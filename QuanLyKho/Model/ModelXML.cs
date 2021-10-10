@@ -11,12 +11,10 @@ namespace QuanLyKho.Model
     public class ModelXML
     {
         public string pathXML;
-        public XDocument xDoc;
 
         public ModelXML()
         {
             pathXML = string.Empty;
-            xDoc = null;
         }
 
         /// <summary>
@@ -42,7 +40,7 @@ namespace QuanLyKho.Model
             }
         }
 
-        public void InitializeXDoc()
+        public void InitializeXDoc(ref XDocument xDoc)
         {
             string fileName = Path.GetFileNameWithoutExtension(pathXML);
             if (xDoc == null)
@@ -55,6 +53,7 @@ namespace QuanLyKho.Model
             }
             catch (Exception e)
             {
+                xDoc = null;
                 throw new Exception("Không đọc được " + fileName + ". " + e.Message);
             }
         }

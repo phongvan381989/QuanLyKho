@@ -28,7 +28,7 @@
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> ID Ứng Dụng</TextBlock>
                     <local:UserControlMyTextBox x:Name="AppID" Width="{StaticResource WidthTextBox}"
                                                 MyTextBoxText="{Binding  Path = appID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                MyTextBoxType="MyNormal" ToolTip="ID ứng dụng liên kết với cửa hàng"/>
+                                                MyTextBoxType="MyNormal" ToolTip="ID của ứng dụng/phần mềm liên kết với cửa hàng. Một cửa hàng trên Tiki có thể liên kết với nhiều ứng dụng"/>
                 </WrapPanel>
                 <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Địa Chỉ Cửa Hàng</TextBlock>
@@ -44,25 +44,34 @@
                 </WrapPanel>
                 <WrapPanel Height="20"></WrapPanel>
                 <WrapPanel Height="{StaticResource HeightWrapTextLine}" HorizontalAlignment="Center">
-                    <Button Name="Add" Content="Thêm" Width="50" Style="{StaticResource ButtonStyle}"/>
+                    <Button Name="Add" Content="Thêm/Cập Nhật" Width="150" Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandAdd}"
+                            ToolTip="Thêm ứng dụng liên kết tới cửa hàng"/>
                     <TextBlock Width="50"></TextBlock>
-                    <Button Name="Delete" Content="Xóa" Width="50" Style="{StaticResource ButtonStyle}"/>
+                    <Button Name="Delete" Content="Xóa" Width="150" Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandDelete}"
+                            ToolTip="Xóa ứng dụng liên kết tới cửa hàng"/>
+                    <TextBlock Width="50"></TextBlock>
+                    <Button Name="Use" Content="Hủy/Sử Dụng" Width="150" Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandUse}"
+                            ToolTip="Sử dụng ID ứng dụng để liên kết với cửa hàng. Một cửa hàng tại 1 thời điểm chỉ được sử dụng 1 ID ứng dụng.
+                            ID ứng dụng đang sử dụng khác sẽ bị vô hiệu hóa."/>
+                    <!--NOTE: Chỉ hiện nút này khi 1 cửa hàng có 2 liên kết ứng dụng-->
                 </WrapPanel>
             </StackPanel>
         </ScrollViewer>
         <DockPanel LastChildFill = "True" Grid.Row = "0" Grid.Column = "1">
-            <ListView ItemsSource="{Binding Path=listTikiConfigApp}">
+            <ListView ItemsSource="{Binding Path=listTikiConfigApp, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                      SelectedValue="{Binding Path=dataTikiConfigApp, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="ID Ứng Dụng" Width="200" DisplayMemberBinding="{Binding appID}" />
                         <GridViewColumn Header="Địa Chỉ Cửa Hàng" Width="400">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding shopURLAddress}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                                    <TextBlock Text="{Binding homeAddress}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Mã Bí Mật" Width="200" DisplayMemberBinding="{Binding secretAppCode}" />
+                        <GridViewColumn Header="Mã Bí Mật" Width="300" DisplayMemberBinding="{Binding secretAppCode}" />
+                        <GridViewColumn Header="Sử Dụng" Width="100" DisplayMemberBinding="{Binding usingApp}" />
                     </GridView>
                 </ListView.View>
             </ListView>

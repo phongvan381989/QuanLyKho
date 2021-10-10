@@ -19,6 +19,7 @@ using QuanLyKho.View.Dev;
 using QuanLyKho.ViewModel.InOutWarehouse;
 using QuanLyKho.View.Config;
 using QuanLyKho.ViewModel;
+using QuanLyKho.ViewModel.Config;
 //using QuanLyKho.ViewModel.D;
 namespace QuanLyKho
 {
@@ -96,12 +97,12 @@ namespace QuanLyKho
         {
             if (mainMenuSelect == MainMenuSelectIndex.Config)
                 return;
-            mainMenuSelect = MainMenuSelectIndex.Config;
-            MainContentContainer.Children.Clear();
-            MainContentContainer.Children.Add(new UserControlTikiConfigApp());
 
             SubMenuContainer.Children.Clear();
             SubMenuContainer.Children.Add(new UserControlSMConfig());
+
+            mainMenuSelect = MainMenuSelectIndex.Config;
+            SetMainContentContainer(new UserControlTikiConfigApp(), new ViewModelTikiConfigApp());
         }
 
         /// <summary>
@@ -116,10 +117,7 @@ namespace QuanLyKho
 
             MainContentContainer.Children.Clear();
             MainContentContainer.Children.Add(userControl);
-            if(viewBase != null)
-            {
-                MainContentContainer.DataContext = viewBase;
-            }
+            MainContentContainer.DataContext = viewBase;
         }
     }
 }

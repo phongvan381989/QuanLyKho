@@ -82,7 +82,7 @@ namespace QuanLyKho.View.Dev
                 strHTTPResponse = response.Content;
                 ShowHTTPRequestAndResponse();
 
-                Model.Dev.TikiDataClass.Authorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiDataClass.Authorization>(response.Content);
+                Model.Dev.TikiDataClass.DataAuthorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiDataClass.DataAuthorization>(response.Content);
                 ttbm.Tiki_InhouseAppSaveAccessToken(clientID, accessToken);
             }
 

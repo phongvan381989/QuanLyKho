@@ -80,15 +80,18 @@
     </ApplicationDefinition>
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
-    <Compile Include="Model\Config\TikiConfigApp.cs" />
+    <Compile Include="Model\Config\DataTikiConfigApp.cs" />
     <Compile Include="Model\Dev\ModelThongTinBaoMatTiki.cs" />
-    <Compile Include="Model\Dev\TikiDataClass\Authorization.cs" />
+    <Compile Include="Model\Dev\TikiDataClass\DataAuthorization.cs" />
     <Compile Include="Model\InOutWarehouse\ModelNhapXuatChiTiet.cs" />
     <Compile Include="Model\InOutWarehouse\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Config\CommandTikiConfigApp_Add.cs" />
+    <Compile Include="ViewModel\Config\CommandTikiConfigApp_Delete.cs" />
+    <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />

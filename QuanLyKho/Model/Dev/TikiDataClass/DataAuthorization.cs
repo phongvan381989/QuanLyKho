@@ -9,7 +9,7 @@ namespace QuanLyKho.Model.Dev.TikiDataClass
     /// <summary>
     /// Chứa thông tin ủy quyền connect tới shop Tiki
     /// </summary>
-    public class Authorization
+    public class DataAuthorization
     {
         public string access_token { get; set; }
         public string expires_in { get; set; }

@@ -24,6 +24,13 @@
             usingApp = inputUsingApp;
         }
 
+        public DataTikiConfigApp(DataTikiConfigApp dataTikiConfigApp)
+        {
+            appID = dataTikiConfigApp.appID;
+            homeAddress = dataTikiConfigApp.homeAddress;
+            secretAppCode = dataTikiConfigApp.secretAppCode;
+            usingApp = dataTikiConfigApp.usingApp;
+        }
         public void Empty()
         {
             appID = string.Empty;

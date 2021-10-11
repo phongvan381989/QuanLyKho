@@ -28,7 +28,8 @@
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> ID Ứng Dụng</TextBlock>
                     <local:UserControlMyTextBox x:Name="AppID" Width="{StaticResource WidthTextBox}"
                                                 MyTextBoxText="{Binding  Path = appID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                                MyTextBoxType="MyNormal" ToolTip="ID của ứng dụng/phần mềm liên kết với cửa hàng. Một cửa hàng trên Tiki có thể liên kết với nhiều ứng dụng"/>
+                                                MyTextBoxType="MyNormal" ToolTip="ID của ứng dụng/phần mềm liên kết với cửa hàng.
+                                                Một cửa hàng trên Tiki có thể liên kết với nhiều ứng dụng. Giá trị này là duy nhất và dùng để định danh."/>
                 </WrapPanel>
                 <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Địa Chỉ Cửa Hàng</TextBlock>
@@ -41,6 +42,13 @@
                     <local:UserControlMyTextBox x:Name="SecretAppCode" Width="{StaticResource WidthTextBox}"
                                                 MyTextBoxText="{Binding  Path = secretAppCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 MyTextBoxType="MyNormal" ToolTip="Mã bí mật của ứng dụng liên kết cửa hàng"/>
+                </WrapPanel>
+                <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Sử Dụng Ứng Dụng</TextBlock>
+                    <local:UserControlMyTextBox  Width="{StaticResource WidthTextBox}"
+                              MyTextBoxText="{Binding Path = usingApp, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" IsEnabled="False"
+                              MyTextBoxType="MyNormal" ToolTip="Sử dụng ID ứng dụng để liên kết với cửa hàng. Một cửa hàng tại 1 thời điểm chỉ được sử dụng 1 ID ứng dụng.
+                            ID ứng dụng đang sử dụng khác sẽ bị vô hiệu hóa."/>
                 </WrapPanel>
                 <WrapPanel Height="20"></WrapPanel>
                 <WrapPanel Height="{StaticResource HeightWrapTextLine}" HorizontalAlignment="Center">

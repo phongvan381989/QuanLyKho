@@ -7,11 +7,11 @@ using System.Windows.Input;
 
 namespace QuanLyKho.ViewModel.Config
 {
-    public class CommandTikiConfigApp_Add : ICommand
+    public class CommandTikiConfigApp_AddOrUpdate : ICommand
     {
         private ViewModelTikiConfigApp vm;
 
-        public CommandTikiConfigApp_Add(ViewModelTikiConfigApp vmInput)
+        public CommandTikiConfigApp_AddOrUpdate(ViewModelTikiConfigApp vmInput)
         {
             vm = vmInput;
         }
@@ -21,7 +21,7 @@ namespace QuanLyKho.ViewModel.Config
         }
         public void Execute(object parameter)
         {
-            vm.Add();
+            vm.AddOrUpdate();
         }
         public event EventHandler CanExecuteChanged;
     }

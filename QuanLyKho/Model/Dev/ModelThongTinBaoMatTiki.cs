@@ -435,7 +435,7 @@ namespace QuanLyKho.Model.Dev
                         break;
                     }
                 }
-                else
+                else if(e.Element(eTikiHomeName).Value == home)
                     e.Element(eTikiUsingAppName).Value = DataTikiConfigApp.constNotUsingApp;
             }
             xDoc.Save(pathXML, SaveOptions.None);

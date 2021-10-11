@@ -18,12 +18,12 @@ namespace QuanLyKho.ViewModel.Config
             pdataTikiConfigApp = new DataTikiConfigApp();
             ttbmTiki = new ModelThongTinBaoMatTiki();
             listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
-            pcommandAdd = new CommandTikiConfigApp_Add(this);
+            pcommandAdd = new CommandTikiConfigApp_AddOrUpdate(this);
             pcommandDelete = new CommandTikiConfigApp_Delete(this);
             pcommandUse = new CommandTikiConfigApp_Use(this);
         }
-        private CommandTikiConfigApp_Add pcommandAdd;
-        public CommandTikiConfigApp_Add commandAdd
+        private CommandTikiConfigApp_AddOrUpdate pcommandAdd;
+        public CommandTikiConfigApp_AddOrUpdate commandAdd
         {
             get
             {
@@ -76,12 +76,14 @@ namespace QuanLyKho.ViewModel.Config
                         appID = value.appID;
                         homeAddress = value.homeAddress;
                         secretAppCode = value.secretAppCode;
+                        usingApp = value.usingApp;
                     }
                     else
                     {
                         appID = string.Empty;
                         homeAddress = string.Empty;
                         secretAppCode = string.Empty;
+                        usingApp = string.Empty;
                     }
                 }
             }
@@ -139,18 +141,45 @@ namespace QuanLyKho.ViewModel.Config
             }
         }
 
-        /// <summary>
-        /// Thêm và lưu vào db
-        /// </summary>
-        public void Add()
+        public string usingApp
         {
+            get
+            {
+                return pdataTikiConfigApp.usingApp;
+            }
+
+            set
+            {
+                if (pdataTikiConfigApp.usingApp != value)
+                {
+                    pdataTikiConfigApp.usingApp = value;
+                    OnPropertyChanged("usingApp");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Thêm/cập nhât và lưu vào db
+        /// </summary>
+        public void AddOrUpdate()
+        {
+            string appIDTemp = pdataTikiConfigApp.appID;
             string str = ttbmTiki.Tiki_InhouseAppAddOrUpdate(pdataTikiConfigApp);
-            if(str != string.Empty)
+            if (str != string.Empty)
             {
                 MessageBox.Show(str);
                 return;
             }
             listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
+            Int32 count = listTikiConfigApp.Count();
+            for(int i = 0; i < count; i++)
+            {
+                if(listTikiConfigApp[i].appID == appIDTemp)
+                {
+                    dataTikiConfigApp = new DataTikiConfigApp(listTikiConfigApp[i]);
+                }
+            }
+            //UpdateList();
             Common.ShowAutoClosingMessageBox("Thêm mới thành công.", "Thêm/Cập Nhật");
         }
 
@@ -160,13 +189,13 @@ namespace QuanLyKho.ViewModel.Config
         public void Delete()
         {
             string str = ttbmTiki.Tiki_InhouseAppDelete(dataTikiConfigApp);
-            listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
-            dataTikiConfigApp = new DataTikiConfigApp();
+            //dataTikiConfigApp = new DataTikiConfigApp();
             if (str != string.Empty)
             {
                 MessageBox.Show(str);
                 return;
             }
+            listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
             Common.ShowAutoClosingMessageBox("Xóa thành công.", "Xóa");
         }
 
@@ -175,12 +204,22 @@ namespace QuanLyKho.ViewModel.Config
         /// </summary>
         public void Use()
         {
+            string appIDTemp = pdataTikiConfigApp.appID;
             string str = ttbmTiki.Tiki_InhouseSetUsingApp(dataTikiConfigApp);
-            listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
+            //UpdateList();
             if (str != string.Empty)
             {
                 MessageBox.Show(str);
                 return;
+            }
+            listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
+            Int32 count = listTikiConfigApp.Count();
+            for (int i = 0; i < count; i++)
+            {
+                if (listTikiConfigApp[i].appID == appIDTemp)
+                {
+                    dataTikiConfigApp = new DataTikiConfigApp(listTikiConfigApp[i]);
+                }
             }
             Common.ShowAutoClosingMessageBox("Set thành công.", "Hủy/Sử Dụng");
         }

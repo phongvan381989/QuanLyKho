@@ -89,7 +89,7 @@
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Config\CommandTikiConfigApp_Add.cs" />
+    <Compile Include="ViewModel\Config\CommandTikiConfigApp_AddOrUpdate.cs" />
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Delete.cs" />
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />

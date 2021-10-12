@@ -267,6 +267,8 @@
   <ItemGroup>
     <Resource Include="Resource\downarrow_48pixel.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\Dev\TikiAPI\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

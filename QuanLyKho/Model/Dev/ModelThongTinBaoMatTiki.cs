@@ -410,7 +410,7 @@ namespace QuanLyKho.Model.Dev
         /// </summary>
         /// <param name="appID"></param>
         /// <returns></returns>
-            public string Tiki_InhouseSetUsingApp(string appID)
+        public string Tiki_InhouseSetUsingApp(string appID)
         {
             if (!Tiki_CheckClientIDExist(appID))
                 return "ID ứng dụng không tồn tại.";
@@ -440,6 +440,27 @@ namespace QuanLyKho.Model.Dev
             }
             xDoc.Save(pathXML, SaveOptions.None);
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Lấy được danh sách ứng dụng đang được sử dụng
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<DataTikiConfigApp> Tiki_InhouseAppGetListUsingApp()
+        {
+            IEnumerable<XElement> lElement = xDoc
+                .Element("ThongTinBaoMat")
+                .Element("Tiki").Elements(eTikiApplicationName);
+            if (lElement == null || lElement.Count() == 0)
+                return null;
+
+            ObservableCollection<DataTikiConfigApp> list = new ObservableCollection<DataTikiConfigApp>();
+            foreach (XElement e in lElement)
+            {
+                if(e.Element(eTikiUsingAppName).Value == DataTikiConfigApp.constUsingApp)
+                list.Add(Tiki_InhouseAppConvertXElementToOjectTikiConfigApp(e));
+            }
+            return list;
         }
     }
 }

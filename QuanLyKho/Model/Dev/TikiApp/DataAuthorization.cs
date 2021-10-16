@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyKho.Model.Dev.TikiDataClass
+namespace QuanLyKho.Model.Dev.TikiApp
 {
     /// <summary>
     /// Chứa thông tin ủy quyền connect tới shop Tiki

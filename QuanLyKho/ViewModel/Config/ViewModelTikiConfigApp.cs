@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using QuanLyKho.Model.Config;
-using QuanLyKho.Model.Dev;
 using QuanLyKho.General;
 
 namespace QuanLyKho.ViewModel.Config
@@ -163,6 +162,13 @@ namespace QuanLyKho.ViewModel.Config
         /// </summary>
         public void AddOrUpdate()
         {
+            if (string.IsNullOrEmpty(pdataTikiConfigApp.appID)
+                || string.IsNullOrEmpty(pdataTikiConfigApp.homeAddress)
+                || string.IsNullOrEmpty(pdataTikiConfigApp.secretAppCode))
+            {
+                MessageBox.Show("Vui lòng tạo giá trị cho các ô nhập dữ liệu ID ứng dụng.", "Hủy/Sử Dụng");
+                return;
+            }
             string appIDTemp = pdataTikiConfigApp.appID;
             string str = ttbmTiki.Tiki_InhouseAppAddOrUpdate(pdataTikiConfigApp);
             if (str != string.Empty)
@@ -188,6 +194,11 @@ namespace QuanLyKho.ViewModel.Config
         /// </summary>
         public void Delete()
         {
+            if (string.IsNullOrEmpty(pdataTikiConfigApp.appID))
+            {
+                MessageBox.Show("Vui lòng chọn 1 ứng dụng từ danh sách.", "Hủy/Sử Dụng");
+                return;
+            }
             string str = ttbmTiki.Tiki_InhouseAppDelete(dataTikiConfigApp);
             //dataTikiConfigApp = new DataTikiConfigApp();
             if (str != string.Empty)
@@ -205,6 +216,16 @@ namespace QuanLyKho.ViewModel.Config
         public void Use()
         {
             string appIDTemp = pdataTikiConfigApp.appID;
+            if (string.IsNullOrEmpty(appIDTemp))
+            {
+                MessageBox.Show("Vui lòng chọn 1 ứng dụng từ danh sách.", "Hủy/Sử Dụng");
+                return;
+            }
+            MessageBoxResult msResult = MessageBox.Show(@"Sử dụng ID ứng dụng để liên kết với cửa hàng. Một cửa hàng tại 1 thời điểm chỉ được sử dụng 1 ID ứng dụng.ID ứng dụng đang sử dụng khác của cửa hàngsẽ bị vô hiệu hóa.
+Bạn muốn thực hiện?", "Hủy/Sử Dụng", MessageBoxButton.YesNo);
+            if (msResult == MessageBoxResult.No)
+                return;
+
             string str = ttbmTiki.Tiki_InhouseSetUsingApp(dataTikiConfigApp);
             //UpdateList();
             if (str != string.Empty)

@@ -81,8 +81,8 @@
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
     <Compile Include="Model\Config\DataTikiConfigApp.cs" />
-    <Compile Include="Model\Dev\ModelThongTinBaoMatTiki.cs" />
-    <Compile Include="Model\Dev\TikiDataClass\DataAuthorization.cs" />
+    <Compile Include="Model\Config\ModelThongTinBaoMatTiki.cs" />
+    <Compile Include="Model\Dev\TikiApp\DataAuthorization.cs" />
     <Compile Include="Model\InOutWarehouse\ModelNhapXuatChiTiet.cs" />
     <Compile Include="Model\InOutWarehouse\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />
@@ -93,6 +93,7 @@
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Delete.cs" />
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
+    <Compile Include="ViewModel\Dev\TikiAPI\Orders\GetListOrders.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
@@ -268,7 +269,7 @@
     <Resource Include="Resource\downarrow_48pixel.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\Dev\TikiAPI\" />
+    <Folder Include="Model\Dev\TikiApp\Orders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

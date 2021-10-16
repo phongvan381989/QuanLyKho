@@ -59,8 +59,7 @@
                             ToolTip="Xóa ứng dụng liên kết tới cửa hàng"/>
                     <TextBlock Width="50"></TextBlock>
                     <Button Name="Use" Content="Hủy/Sử Dụng" Width="150" Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandUse}"
-                            ToolTip="Sử dụng ID ứng dụng để liên kết với cửa hàng. Một cửa hàng tại 1 thời điểm chỉ được sử dụng 1 ID ứng dụng.
-                            ID ứng dụng đang sử dụng khác sẽ bị vô hiệu hóa."/>
+                            ToolTip="Sử dụng ID ứng dụng để liên kết với cửa hàng. Một cửa hàng tại 1 thời điểm chỉ được sử dụng 1 ID ứng dụng. ID ứng dụng đang sử dụng khác sẽ bị vô hiệu hóa."/>
                     <!--NOTE: Chỉ hiện nút này khi 1 cửa hàng có 2 liên kết ứng dụng-->
                 </WrapPanel>
             </StackPanel>

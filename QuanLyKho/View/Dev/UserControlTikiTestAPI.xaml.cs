@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev;
 using QuanLyKho.Model.Dev.TikiDataClass;
 using RestSharp;
@@ -82,9 +83,13 @@ namespace QuanLyKho.View.Dev
                 strHTTPResponse = response.Content;
                 ShowHTTPRequestAndResponse();
 
-                Model.Dev.TikiDataClass.DataAuthorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiDataClass.DataAuthorization>(response.Content);
+                Model.Dev.TikiApp.DataAuthorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiApp.DataAuthorization>(response.Content);
                 ttbm.Tiki_InhouseAppSaveAccessToken(clientID, accessToken);
             }
+        }
+
+        private void BtnGetListOrder_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

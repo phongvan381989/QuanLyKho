@@ -14,7 +14,7 @@ namespace QuanLyKho.Model
 {
     public class ModelThongTinChiTiet : ModelXML
     {
-        static public XDocument xDoc = null; // Biến thao tác duy nhất cho mọi đối tượng
+        static public XDocument xDoc = null; // Biến thao tác xml file duy nhất cho mọi đối tượng
         public ModelThongTinChiTiet()
         {
             pathXML = ((App)Application.Current).GetPathDataXMLThongTinChiTiet();

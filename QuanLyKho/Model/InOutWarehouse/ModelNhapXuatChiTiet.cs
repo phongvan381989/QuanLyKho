@@ -12,7 +12,7 @@ namespace QuanLyKho.Model
 {
     public class ModelNhapXuatChiTiet : ModelXML
     {
-        static public XDocument xDoc = null; // Biến thao tác duy nhất cho mọi đối tượng
+        static public XDocument xDoc = null; // Biến thao tác xml data duy nhất cho mọi đối tượng
         public ModelNhapXuatChiTiet()
         {
             pathXML = ((App)Application.Current).GetPathDataXMLNhapXuatChiTiet();

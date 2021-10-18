@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev;
-using QuanLyKho.Model.Dev.TikiDataClass;
+using QuanLyKho.ViewModel.Dev.TikiAPI;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -90,7 +90,27 @@ namespace QuanLyKho.View.Dev
 
         private void BtnGetListOrder_Click(object sender, RoutedEventArgs e)
         {
-
+            string appID = "6249716820922226";
+            string contentBearer = CommonTikiAPI.ttbm.Tiki_InhouseGetAccessToken(appID);
+            if(string.IsNullOrEmpty(contentBearer))
+            {
+                string str = CommonTikiAPI.GetDataAuthorization(appID);
+                if (!string.IsNullOrEmpty(str))
+                {
+                    MessageBox.Show(str);
+                }
+                contentBearer = CommonTikiAPI.ttbm.Tiki_InhouseGetAccessToken(appID);
+            }
+            var client = new RestClient("https://api.tiki.vn/integration/v2/orders?page=1&limit=20&status=queueing&item_inventory_type=backorder&item_confirmation_status=waiting&filter_date_by=today");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Authorization", "Bearer " + contentBearer);//5xcP33zicKodO8crb_XWXqZ1nE6aO6_LD3qghSm91h4.vRgewC765wshvhHYzgdm5lm-PEBPe1KBsCKx5V70NAo");
+            var fullUrl = client.BuildUri(request);
+            //client.
+            strHTTPRequest = fullUrl.ToString();
+            IRestResponse response = client.Execute(request);
+            strHTTPResponse = response.Content;
+            ShowHTTPRequestAndResponse();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace QuanLyKho.Model.Config
         private const string eTikiHomeName = "Home";
         private const string eTikiSecretName = "Secret";
         private const string eTikiUsingAppName = "UsingApp";
-        static public XDocument xDoc = null; // Biến thao tác duy nhất cho mọi đối tượng
+        static public XDocument xDoc = null; // Biến thao tác xml data duy nhất cho mọi đối tượng
         public ModelThongTinBaoMatTiki()
         {
             pathXML = ((App)Application.Current).GetPathDataXMLThongTinBaoMat();
@@ -242,12 +242,8 @@ namespace QuanLyKho.Model.Config
         {
             if (authorization == null)
                 return string.Empty;
-            XElement eTiki = TiKi_GetTikiNode();
-
-            IEnumerable<XElement> lElement = null;
-            lElement = eTiki.Elements(eTikiApplicationName).Where(e => e.Element(eTikiIDName).Value == appID);
-
-            XElement eAuthorization = lElement.ElementAt(0).Element(eTikiAuthorizationName);
+            XElement appNode = TiKi_GetApplicationNode(appID);
+            XElement eAuthorization = appNode.Element(eTikiAuthorizationName);
             if (eAuthorization == null)
             {
                 XElement newE = new XElement(eTikiAuthorizationName, 
@@ -255,8 +251,7 @@ namespace QuanLyKho.Model.Config
                                              new XElement ("ExpiresIn", authorization.expires_in),
                                              new XElement("Scope", authorization.scope),
                                              new XElement("TokenType", authorization.token_type));
-                lElement.ElementAt(0).Add(newE);
-                xDoc.Save(pathXML, SaveOptions.None);
+                appNode.Add(newE);
             }
             else
             {
@@ -264,8 +259,8 @@ namespace QuanLyKho.Model.Config
                 eAuthorization.Element("ExpiresIn").Value = authorization.expires_in;
                 eAuthorization.Element("Scope").Value = authorization.scope;
                 eAuthorization.Element("TokenType").Value = authorization.token_type;
-                xDoc.Save(pathXML, SaveOptions.None);
             }
+            xDoc.Save(pathXML, SaveOptions.None);
             return string.Empty;
         }
 
@@ -276,7 +271,14 @@ namespace QuanLyKho.Model.Config
         /// <returns></returns>
         public string Tiki_InhouseGetAccessToken(string appID)
         {
-            return TiKi_GetApplicationNode(appID).Element(eTikiAuthorizationName).Element(eTikiAccesTokenName).Value;
+            XElement authoNode = TiKi_GetApplicationNode(appID).Element(eTikiAuthorizationName);
+            if (authoNode == null)
+                return string.Empty;
+            XElement accessTokenNode = authoNode.Element(eTikiAccesTokenName);
+            if (accessTokenNode == null)
+                return string.Empty;
+
+            return accessTokenNode.Value;
         }
 
         /// <summary>

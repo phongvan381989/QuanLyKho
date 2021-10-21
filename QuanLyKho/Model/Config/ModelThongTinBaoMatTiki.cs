@@ -238,7 +238,7 @@ namespace QuanLyKho.Model.Config
         /// <param name="appID">inhouse app ID</param>
         /// <param name="secret">Secret</param>
         /// <returns></returns>
-        public string Tiki_InhouseAppSaveAccessToken(string appID, DataAuthorization authorization)
+        public string Tiki_InhouseAppSaveAccessToken(string appID, Authorization authorization)
         {
             if (authorization == null)
                 return string.Empty;

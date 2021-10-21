@@ -82,7 +82,19 @@
     <Compile Include="General\MyLogger.cs" />
     <Compile Include="Model\Config\DataTikiConfigApp.cs" />
     <Compile Include="Model\Config\ModelThongTinBaoMatTiki.cs" />
-    <Compile Include="Model\Dev\TikiApp\DataAuthorization.cs" />
+    <Compile Include="Model\Dev\TikiApp\Authorization.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\CancelInfo.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\CustomerInfo.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\DeliveryConfirmation.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\InstallmentInfo.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\Order.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\OrderInvoice.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\OrderItemV2.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\PaymentInfo.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\RMAInfo.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\ShippingInfo.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\StatusHistory.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\TikiWarehouseInfo.cs" />
     <Compile Include="Model\InOutWarehouse\ModelNhapXuatChiTiet.cs" />
     <Compile Include="Model\InOutWarehouse\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />
@@ -269,8 +281,6 @@
   <ItemGroup>
     <Resource Include="Resource\downarrow_48pixel.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\Dev\TikiApp\Orders\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

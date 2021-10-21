@@ -33,7 +33,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
             {
                 return "Lấy quyền truy cập shop lỗi. Vui lòng thử lại.";
             }
-            Model.Dev.TikiApp.DataAuthorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiApp.DataAuthorization>(response.Content);
+            Model.Dev.TikiApp.Authorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiApp.Authorization>(response.Content);
             ttbm.Tiki_InhouseAppSaveAccessToken(appID, accessToken);
             return string.Empty;
         }

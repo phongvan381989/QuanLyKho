@@ -83,11 +83,14 @@ namespace QuanLyKho.View.Dev
                 strHTTPResponse = response.Content;
                 ShowHTTPRequestAndResponse();
 
-                Model.Dev.TikiApp.DataAuthorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiApp.DataAuthorization>(response.Content);
+                Model.Dev.TikiApp.Authorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiApp.Authorization>(response.Content);
                 ttbm.Tiki_InhouseAppSaveAccessToken(clientID, accessToken);
             }
         }
 
+        //App Name: CallAPIFromApplicaitionCSharp
+        //App ID: 6249716820922226
+        //App Secret: 9IfqSeQngzps840fhdQoZ0GLC34gTPob
         private void BtnGetListOrder_Click(object sender, RoutedEventArgs e)
         {
             string appID = "6249716820922226";
@@ -104,7 +107,7 @@ namespace QuanLyKho.View.Dev
             var client = new RestClient("https://api.tiki.vn/integration/v2/orders?page=1&limit=20&status=queueing&item_inventory_type=backorder&item_confirmation_status=waiting&filter_date_by=today");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
-            request.AddHeader("Authorization", "Bearer " + contentBearer);//5xcP33zicKodO8crb_XWXqZ1nE6aO6_LD3qghSm91h4.vRgewC765wshvhHYzgdm5lm-PEBPe1KBsCKx5V70NAo");
+            request.AddHeader("Authorization", "Bearer " + contentBearer);
             var fullUrl = client.BuildUri(request);
             //client.
             strHTTPRequest = fullUrl.ToString();

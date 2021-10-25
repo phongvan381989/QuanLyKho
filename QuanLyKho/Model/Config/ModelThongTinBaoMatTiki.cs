@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using QuanLyKho.Model.Dev.TikiApp;
 using QuanLyKho.Model.Config;
 using System.Collections.ObjectModel;
+using QuanLyKho.Model.Dev.TikiApp.Config;
 
 namespace QuanLyKho.Model.Config
 {
@@ -31,7 +32,7 @@ namespace QuanLyKho.Model.Config
 
         public Boolean SaveAccessToken()
         {
-            var client = new RestClient("https://api.tiki.vn/sc/oauth2/token");
+            var client = new RestClient(TikiConstValues.cstrAuthenHTTPAddress);//("https://api.tiki.vn/sc/oauth2/token");
             RestRequest request = new RestRequest(Method.POST);
             request.AddHeader("Authorization", "Basic NjI0OTcxNjgyMDkyMjIyNjpDQXlUOUJ6Q3dTQXpFMkpzempud3huN3dxUnZlcDdFWg==");
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -79,7 +80,7 @@ namespace QuanLyKho.Model.Config
                 return true;
             }
 
-                return true;
+            return true;
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace QuanLyKho.Model.Config
         /// <param name="appID">inhouse app ID</param>
         /// <param name="secret">Secret</param>
         /// <returns></returns>
-        public string Tiki_InhouseAppSaveAccessToken(string appID, Authorization authorization)
+        public string Tiki_InhouseAppSaveAccessToken(string appID, TikiAuthorization authorization)
         {
             if (authorization == null)
                 return string.Empty;
@@ -318,7 +319,7 @@ namespace QuanLyKho.Model.Config
                                 new XElement(eTikiIDName, appID),
                                 new XElement(eTikiHomeName, home),
                                 new XElement(eTikiSecretName, secret),
-                                new XElement(eTikiUsingAppName, DataTikiConfigApp.constNotUsingApp));
+                                new XElement(eTikiUsingAppName, TikiConfigApp.constNotUsingApp));
                 eTiki.Add(newE);
             }
             xDoc.Save(pathXML, SaveOptions.None);
@@ -343,7 +344,7 @@ namespace QuanLyKho.Model.Config
         /// <summary>
         /// Thêm hoặc cập nhật một cấu hình ứng dụngvà lưu vào db
         /// </summary>
-        public string Tiki_InhouseAppAddOrUpdate(DataTikiConfigApp tikiConfigApp)
+        public string Tiki_InhouseAppAddOrUpdate(TikiConfigApp tikiConfigApp)
         {
             Tiki_InhouseAppAddOrUpdate(tikiConfigApp.appID, tikiConfigApp.homeAddress, tikiConfigApp.secretAppCode);
             return string.Empty;
@@ -353,7 +354,7 @@ namespace QuanLyKho.Model.Config
         /// Xóa một cấu hình ứng dụng
         /// </summary>
         /// <returns></returns>
-        public string Tiki_InhouseAppDelete(DataTikiConfigApp tikiConfigApp)
+        public string Tiki_InhouseAppDelete(TikiConfigApp tikiConfigApp)
         {
             if (!Tiki_CheckClientIDExist(tikiConfigApp.appID))
                 return "ID Ứng Dụng không tồn tại";
@@ -366,11 +367,11 @@ namespace QuanLyKho.Model.Config
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        DataTikiConfigApp Tiki_InhouseAppConvertXElementToOjectTikiConfigApp(XElement xElement)
+        TikiConfigApp Tiki_InhouseAppConvertXElementToOjectTikiConfigApp(XElement xElement)
         {
             if (xElement.Name != eTikiApplicationName)
                 return null;
-            DataTikiConfigApp tikiConfig = new DataTikiConfigApp(xElement.Element(eTikiIDName).Value,
+            TikiConfigApp tikiConfig = new TikiConfigApp(xElement.Element(eTikiIDName).Value,
                 xElement.Element(eTikiHomeName).Value,
                 xElement.Element(eTikiSecretName).Value,
                 xElement.Element(eTikiUsingAppName).Value);
@@ -381,7 +382,7 @@ namespace QuanLyKho.Model.Config
         /// Get list tiki config phục vụ binding
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<DataTikiConfigApp> Tiki_InhouseAppGetListTikiConfigApp()
+        public ObservableCollection<TikiConfigApp> Tiki_InhouseAppGetListTikiConfigApp()
         {
             IEnumerable<XElement> lElement = xDoc
                 .Element("ThongTinBaoMat")
@@ -389,7 +390,7 @@ namespace QuanLyKho.Model.Config
             if (lElement == null || lElement.Count() == 0)
                 return null;
 
-            ObservableCollection<DataTikiConfigApp> list = new ObservableCollection<DataTikiConfigApp>();
+            ObservableCollection<TikiConfigApp> list = new ObservableCollection<TikiConfigApp>();
             foreach(XElement e in lElement)
             {
                 list.Add(Tiki_InhouseAppConvertXElementToOjectTikiConfigApp(e));
@@ -402,7 +403,7 @@ namespace QuanLyKho.Model.Config
         /// </summary>
         /// <param name="appID"></param>
         /// <returns></returns>
-        public string Tiki_InhouseSetUsingApp(DataTikiConfigApp tikiConfigApp)
+        public string Tiki_InhouseSetUsingApp(TikiConfigApp tikiConfigApp)
         {
             return Tiki_InhouseSetUsingApp(tikiConfigApp.appID);
         }
@@ -429,16 +430,16 @@ namespace QuanLyKho.Model.Config
             {
                 if (e.Element(eTikiHomeName).Value == home && e.Element(eTikiIDName).Value == appID)
                 {
-                    if (e.Element(eTikiUsingAppName).Value == DataTikiConfigApp.constNotUsingApp) // Set Sử dụng
-                        e.Element(eTikiUsingAppName).Value = DataTikiConfigApp.constUsingApp;
+                    if (e.Element(eTikiUsingAppName).Value == TikiConfigApp.constNotUsingApp) // Set Sử dụng
+                        e.Element(eTikiUsingAppName).Value = TikiConfigApp.constUsingApp;
                     else // Hủy sử dụng
                     {
-                        e.Element(eTikiUsingAppName).Value = DataTikiConfigApp.constNotUsingApp;
+                        e.Element(eTikiUsingAppName).Value = TikiConfigApp.constNotUsingApp;
                         break;
                     }
                 }
                 else if(e.Element(eTikiHomeName).Value == home)
-                    e.Element(eTikiUsingAppName).Value = DataTikiConfigApp.constNotUsingApp;
+                    e.Element(eTikiUsingAppName).Value = TikiConfigApp.constNotUsingApp;
             }
             xDoc.Save(pathXML, SaveOptions.None);
             return string.Empty;
@@ -448,7 +449,7 @@ namespace QuanLyKho.Model.Config
         /// Lấy được danh sách ứng dụng đang được sử dụng
         /// </summary>
         /// <returns> Trả về null nếu không có</returns>
-        public ObservableCollection<DataTikiConfigApp> Tiki_InhouseAppGetListUsingApp()
+        public List<TikiConfigApp> Tiki_InhouseAppGetListUsingApp()
         {
             IEnumerable<XElement> lElement = xDoc
                 .Element("ThongTinBaoMat")
@@ -456,10 +457,10 @@ namespace QuanLyKho.Model.Config
             if (lElement == null || lElement.Count() == 0)
                 return null;
 
-            ObservableCollection<DataTikiConfigApp> list = new ObservableCollection<DataTikiConfigApp>();
+            List<TikiConfigApp> list = new List<TikiConfigApp>();
             foreach (XElement e in lElement)
             {
-                if(e.Element(eTikiUsingAppName).Value == DataTikiConfigApp.constUsingApp)
+                if(e.Element(eTikiUsingAppName).Value == TikiConfigApp.constUsingApp)
                 list.Add(Tiki_InhouseAppConvertXElementToOjectTikiConfigApp(e));
             }
             return list;

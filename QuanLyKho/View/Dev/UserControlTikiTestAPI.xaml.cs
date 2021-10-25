@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev;
+using QuanLyKho.Model.Dev.TikiApp;
+using QuanLyKho.Model.Dev.TikiApp.Config;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using RestSharp;
 using System;
@@ -45,7 +47,6 @@ namespace QuanLyKho.View.Dev
         }
         private void BtnGetTokenAuth_Click(object sender, RoutedEventArgs e)
         {
-            ModelThongTinBaoMatTiki ttbm = new ModelThongTinBaoMatTiki();
             string clientID = "6249716820922226";
             // TUNM Testing Start
             //ttbm.Tiki_InhouseSaveAppID("6249716820922226");
@@ -66,10 +67,10 @@ namespace QuanLyKho.View.Dev
             //strHTTPResponse = response.Content;
             //ShowHTTPRequestAndResponse();
 
-            var client = new RestClient("https://api.tiki.vn/sc/oauth2/token");
+            var client = new RestClient(TikiConstValues.cstrAuthenHTTPAddress);
             RestRequest request = new RestRequest(Method.POST);
             //request.AddHeader("Authorization", "Basic NjI0OTcxNjgyMDkyMjIyNjpDQXlUOUJ6Q3dTQXpFMkpzempud3huN3dxUnZlcDdFWg==");
-            request.AddHeader("Authorization", "Basic " + ttbm.Tiki_GetAppCredentialBase64Format(clientID));
+            request.AddHeader("Authorization", "Basic " + CommonTikiAPI.ttbm.Tiki_GetAppCredentialBase64Format(clientID));
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "client_credentials");
             request.AddParameter("client_id", clientID);
@@ -83,14 +84,15 @@ namespace QuanLyKho.View.Dev
                 strHTTPResponse = response.Content;
                 ShowHTTPRequestAndResponse();
 
-                Model.Dev.TikiApp.Authorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiApp.Authorization>(response.Content);
-                ttbm.Tiki_InhouseAppSaveAccessToken(clientID, accessToken);
+                TikiAuthorization accessToken = JsonConvert.DeserializeObject<TikiAuthorization>(response.Content);
+                CommonTikiAPI.ttbm.Tiki_InhouseAppSaveAccessToken(clientID, accessToken);
             }
         }
 
         //App Name: CallAPIFromApplicaitionCSharp
         //App ID: 6249716820922226
         //App Secret: 9IfqSeQngzps840fhdQoZ0GLC34gTPob
+        //Home: https://tiki.vn/cua-hang/play-with-me
         private void BtnGetListOrder_Click(object sender, RoutedEventArgs e)
         {
             string appID = "6249716820922226";

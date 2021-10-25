@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using QuanLyKho.Model.Config;
 using QuanLyKho.General;
+using QuanLyKho.ViewModel.Dev.TikiAPI;
 
 namespace QuanLyKho.ViewModel.Config
 {
@@ -14,8 +15,8 @@ namespace QuanLyKho.ViewModel.Config
     {
         public ViewModelTikiConfigApp()
         {
-            pdataTikiConfigApp = new DataTikiConfigApp();
-            ttbmTiki = new ModelThongTinBaoMatTiki();
+            pdataTikiConfigApp = new TikiConfigApp();
+            ttbmTiki = CommonTikiAPI.ttbm;
             listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
             pcommandAdd = new CommandTikiConfigApp_AddOrUpdate(this);
             pcommandDelete = new CommandTikiConfigApp_Delete(this);
@@ -45,8 +46,8 @@ namespace QuanLyKho.ViewModel.Config
                 return pcommandUse;
             }
         }
-        private ObservableCollection<DataTikiConfigApp> plistTikiConfigApp;
-        public ObservableCollection<DataTikiConfigApp> listTikiConfigApp
+        private ObservableCollection<TikiConfigApp> plistTikiConfigApp;
+        public ObservableCollection<TikiConfigApp> listTikiConfigApp
         {
             get
             {
@@ -59,8 +60,8 @@ namespace QuanLyKho.ViewModel.Config
             }
         }
 
-        public DataTikiConfigApp pdataTikiConfigApp;
-        public DataTikiConfigApp dataTikiConfigApp
+        public TikiConfigApp pdataTikiConfigApp;
+        public TikiConfigApp dataTikiConfigApp
         {
             get
             {
@@ -182,7 +183,7 @@ namespace QuanLyKho.ViewModel.Config
             {
                 if(listTikiConfigApp[i].appID == appIDTemp)
                 {
-                    dataTikiConfigApp = new DataTikiConfigApp(listTikiConfigApp[i]);
+                    dataTikiConfigApp = new TikiConfigApp(listTikiConfigApp[i]);
                 }
             }
             //UpdateList();
@@ -239,7 +240,7 @@ Bạn muốn thực hiện?", "Hủy/Sử Dụng", MessageBoxButton.YesNo);
             {
                 if (listTikiConfigApp[i].appID == appIDTemp)
                 {
-                    dataTikiConfigApp = new DataTikiConfigApp(listTikiConfigApp[i]);
+                    dataTikiConfigApp = new TikiConfigApp(listTikiConfigApp[i]);
                 }
             }
             Common.ShowAutoClosingMessageBox("Set thành công.", "Hủy/Sử Dụng");

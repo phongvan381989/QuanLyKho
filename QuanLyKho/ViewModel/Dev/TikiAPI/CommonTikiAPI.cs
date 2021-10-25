@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using QuanLyKho.Model.Config;
+using QuanLyKho.Model.Dev.TikiApp.Config;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,11 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
     public class CommonTikiAPI
     {
         static public ModelThongTinBaoMatTiki ttbm = new ModelThongTinBaoMatTiki();
+
+        /// <summary>
+        /// Chứa danh sách các app đang sử dụng
+        /// </summary>
+        static public List<TikiConfigApp> listTikiConfigAppUsing = new List<TikiConfigApp>();
         /// <summary>
         /// Khi Access token phục vụ authorization hết hạn, gọi hàm này lấy access token mới
         /// </summary>
@@ -33,9 +39,20 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
             {
                 return "Lấy quyền truy cập shop lỗi. Vui lòng thử lại.";
             }
-            Model.Dev.TikiApp.Authorization accessToken = JsonConvert.DeserializeObject<Model.Dev.TikiApp.Authorization>(response.Content);
+            TikiAuthorization accessToken = JsonConvert.DeserializeObject<TikiAuthorization>(response.Content);
             ttbm.Tiki_InhouseAppSaveAccessToken(appID, accessToken);
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Cập nhật danh sách ứng dụng đang sử dụng
+        /// </summary>
+        static void GetListTikiConfigAppUsing()
+        {
+            listTikiConfigAppUsing.Clear();
+            List<TikiConfigApp> l = ttbm.Tiki_InhouseAppGetListUsingApp();
+            if (l != null)
+                listTikiConfigAppUsing = l;
         }
     }
 }

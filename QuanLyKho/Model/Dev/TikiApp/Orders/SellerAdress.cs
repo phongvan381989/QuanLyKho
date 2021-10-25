@@ -11,14 +11,14 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
     /// </summary>
     public class SellerAdress
     {
-        public string street { get; set }
+        public string street { get; set; }
 
-        public string ward { get; set }
+        public string ward { get; set; }
 
-        public string district { get; set }
+        public string district { get; set; }
 
-        public string region { get; set }
+        public string region { get; set; }
 
-        public string country { get; set }
+        public string country { get; set; }
     }
 }

@@ -1,13 +1,15 @@
-﻿namespace QuanLyKho.Model.Config
+﻿using QuanLyKho.Model.Dev.TikiApp.Config;
+
+namespace QuanLyKho.Model.Config
 {
     /// <summary>
     /// Chứa cấu hình để connect tới shop Tiki gồm: appID, homeAddress, secretAppCode
     /// </summary>
-    public class DataTikiConfigApp
+    public class TikiConfigApp
     {
         public const string constUsingApp = "Đang Sử Dụng";
         public const string constNotUsingApp = "Không Sử Dụng";
-        public DataTikiConfigApp()
+        public TikiConfigApp()
         {
             Empty();
         }
@@ -15,21 +17,24 @@
         public string homeAddress { get; set; }
         public string secretAppCode { get; set; }
         public string usingApp { get; set; } // Nhận 1 trong 2 giá trị: Đang Sử Dụng hoặc Không Sử Dụng
+        public TikiAuthorization tikiAu{get; set;}
 
-        public DataTikiConfigApp(string inputAppID, string inputHomeAddress, string inputSecretAppCode, string inputUsingApp)
+        public TikiConfigApp(string inputAppID, string inputHomeAddress, string inputSecretAppCode, string inputUsingApp)
         {
             appID = inputAppID;
             homeAddress = inputHomeAddress;
             secretAppCode = inputSecretAppCode;
             usingApp = inputUsingApp;
+            tikiAu = new TikiAuthorization();
         }
 
-        public DataTikiConfigApp(DataTikiConfigApp dataTikiConfigApp)
+        public TikiConfigApp(TikiConfigApp dataTikiConfigApp)
         {
             appID = dataTikiConfigApp.appID;
             homeAddress = dataTikiConfigApp.homeAddress;
             secretAppCode = dataTikiConfigApp.secretAppCode;
             usingApp = dataTikiConfigApp.usingApp;
+            tikiAu = dataTikiConfigApp.tikiAu;
         }
         public void Empty()
         {
@@ -39,12 +44,13 @@
             usingApp = constNotUsingApp;
         }
 
-        public void SetAllValue(string inputAppID, string inputHomeAddress, string inputSecretAppCode, string inputUsingApp)
+        public void SetAllValue(string inputAppID, string inputHomeAddress, string inputSecretAppCode, string inputUsingApp, TikiAuthorization inputTikiAu)
         {
             appID = inputAppID;
             homeAddress = inputHomeAddress;
             secretAppCode = inputSecretAppCode;
             usingApp = inputUsingApp;
+            tikiAu = inputTikiAu;
         }
     }
 }

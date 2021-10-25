@@ -23,7 +23,7 @@ namespace QuanLyKho
         private List<string> listImageFormats;
         private List<string> listVideoFormats;
 
-        public List<DataTikiConfigApp> lTikiAppUsing;
+        public List<TikiConfigApp> lTikiAppUsing;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {

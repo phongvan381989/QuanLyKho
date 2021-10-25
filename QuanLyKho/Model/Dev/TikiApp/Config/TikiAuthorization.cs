@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuanLyKho.Model.Dev.TikiApp
+namespace QuanLyKho.Model.Dev.TikiApp.Config
 {
     /// <summary>
     /// Chứa thông tin ủy quyền connect tới shop Tiki
     /// </summary>
-    public class Authorization
+    public class TikiAuthorization
     {
         public string access_token { get; set; }
         public string expires_in { get; set; }

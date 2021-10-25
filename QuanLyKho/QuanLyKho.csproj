@@ -80,9 +80,10 @@
     </ApplicationDefinition>
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
-    <Compile Include="Model\Config\DataTikiConfigApp.cs" />
+    <Compile Include="Model\Dev\TikiApp\Config\TikiConfigApp.cs" />
     <Compile Include="Model\Config\ModelThongTinBaoMatTiki.cs" />
-    <Compile Include="Model\Dev\TikiApp\Authorization.cs" />
+    <Compile Include="Model\Dev\TikiApp\Config\TikiAuthorization.cs" />
+    <Compile Include="Model\Dev\TikiApp\TikiConstValues.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\CancelInfo.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\CustomerInfo.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\DeliveryConfirmation.cs" />

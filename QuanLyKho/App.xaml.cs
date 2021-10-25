@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.Model.Config;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -22,6 +23,8 @@ namespace QuanLyKho
         private List<string> listImageFormats;
         private List<string> listVideoFormats;
 
+        public List<DataTikiConfigApp> lTikiAppUsing;
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             pathApp = System.AppDomain.CurrentDomain.BaseDirectory;
@@ -31,6 +34,7 @@ namespace QuanLyKho
             string strTemp = ConfigurationManager.AppSettings["TonKhoCanhBaoHetHangChung"];
             if (!Int32.TryParse(strTemp, out configTonKhoCanhBaoHetHangChung))
                 configTonKhoCanhBaoHetHangChung = 5;// default value
+
         }
 
         public string GetPathApp()

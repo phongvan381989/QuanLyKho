@@ -32,7 +32,7 @@ namespace QuanLyKho.General
         /// <summary>
         /// Thời gian để 1 message box tự đóng tính theo miliseconds
         /// </summary>
-        public static readonly Int32 timeToCloseMessageBox = 2000;
+        public static Int32 timeToCloseMessageBox = 2000;
 
         public static Boolean IsInteger(string text)
         {

@@ -83,6 +83,11 @@
     <Compile Include="Model\Dev\TikiApp\Config\TikiConfigApp.cs" />
     <Compile Include="Model\Config\ModelThongTinBaoMatTiki.cs" />
     <Compile Include="Model\Dev\TikiApp\Config\TikiAuthorization.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\ListOrders.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\OrderFulfillmentType.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\OrderItemConfirmationStatus.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\OrderItemInventoryType.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\Paging.cs" />
     <Compile Include="Model\Dev\TikiApp\TikiConstValues.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\CancelInfo.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\CustomerInfo.cs" />
@@ -132,7 +137,7 @@
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateRight.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Delete.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Save.cs" />
-    <Compile Include="ViewModel\Dev\CommandTiki.cs" />
+    <Compile Include="ViewModel\Dev\DevNameValuePair.cs" />
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QuanLyKho.General;
 using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev.TikiApp.Config;
 using RestSharp;
@@ -20,11 +21,11 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
         /// </summary>
         static public List<TikiConfigApp> listTikiConfigAppUsing = new List<TikiConfigApp>();
         /// <summary>
-        /// Khi Access token phục vụ authorization hết hạn, gọi hàm này lấy access token mới
+        /// Khi Access token phục vụ authorization hết hạn, gọi hàm này lấy access token mới và lưu và db xml
         /// </summary>
         /// <param name="appID"></param>
         /// <returns>empty nếu thành công. Ngược lại trả về string mô tả lỗi</returns>
-        static public string GetDataAuthorization(string appID)
+        static public string RefreshDataAuthorization(string appID)
         {
             var client = new RestClient("https://api.tiki.vn/sc/oauth2/token");
             RestRequest request = new RestRequest(Method.POST);
@@ -47,12 +48,58 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
         /// <summary>
         /// Cập nhật danh sách ứng dụng đang sử dụng
         /// </summary>
-        static void GetListTikiConfigAppUsing()
+        static public void GetListTikiConfigAppUsing()
         {
             listTikiConfigAppUsing.Clear();
             List<TikiConfigApp> l = ttbm.Tiki_InhouseAppGetListUsingApp();
             if (l != null)
                 listTikiConfigAppUsing = l;
+        }
+
+        /// <summary>
+        /// Thực hiện 1 request HTTP, nếu access token hết hạn thì làm mới
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="request"></param>
+        /// <param name="configApp"></param>
+        static public IRestResponse ExcuteRequestWithRefreshAccesToken(RestClient client, RestRequest request, TikiConfigApp configApp)
+        {
+            request.AddHeader("Authorization", "Bearer " + (string.IsNullOrEmpty(configApp.tikiAu.access_token) ? string.Empty: configApp.tikiAu.access_token));
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                // Làm mới access token
+                string str;
+                try
+                {
+                    str = CommonTikiAPI.RefreshDataAuthorization(configApp.appID);
+                }
+                catch (Exception ex)
+                {
+                    MyLogger.GetInstance().Warn(ex.Message);
+                    return null;
+                }
+                if (!string.IsNullOrEmpty(str))
+                {
+                    MyLogger.GetInstance().Warn(str);
+                    return null;
+                }
+                // Cập nhật configApp
+                configApp.tikiAu.access_token = CommonTikiAPI.ttbm.Tiki_InhouseGetAccessToken(configApp.appID);
+
+                // Thực hiện request lại
+                // Update Authorization
+                foreach (Parameter e in request.Parameters)
+                {
+                    if (e.Name == "Authorization")
+                    {
+                        e.Value = "Bearer " + configApp.tikiAu.access_token;
+                        break;
+                    }
+                }
+                response = client.Execute(request);
+            }
+            return response;
         }
     }
 }

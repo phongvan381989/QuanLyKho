@@ -22,21 +22,25 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// seller_confirmed	Confirmation status of this Order Item V2
         /// </summary>
         public string status { get; set; }
+
         /// <summary>
         /// 2020-05-16 08:33:35	When the latest confirmation happens
         /// </summary>
         public DateTime confirmed_at { get; set; }
+
         /// <summary>
         /// 2020-05-16 12:00:00	Available confirmation deadline
         /// </summary>
         public DateTime available_confirm_sla { get; set; }
+
         /// <summary>
         /// 2020-05-16 16:00:00	Pickup confirmation deadly (only for drop shipping)
         /// </summary>
         public DateTime pickup_confirm_sla { get; set; }
+
         /// <summary>
         /// 2020-05-16 08:33:35	When the latest confirmation happens
         /// </summary>
-        public IList<OrderItemConfirmationHistory> histories { get; set; }
+        public List<OrderItemConfirmationHistory> histories { get; set; }
     }
 }

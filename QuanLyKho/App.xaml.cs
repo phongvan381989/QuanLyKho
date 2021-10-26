@@ -1,4 +1,5 @@
 ﻿using QuanLyKho.Model.Config;
+using QuanLyKho.ViewModel.Dev.TikiAPI;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,7 +24,7 @@ namespace QuanLyKho
         private List<string> listImageFormats;
         private List<string> listVideoFormats;
 
-        public List<TikiConfigApp> lTikiAppUsing;
+        //public List<TikiConfigApp> lTikiAppUsing;
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -34,7 +35,7 @@ namespace QuanLyKho
             string strTemp = ConfigurationManager.AppSettings["TonKhoCanhBaoHetHangChung"];
             if (!Int32.TryParse(strTemp, out configTonKhoCanhBaoHetHangChung))
                 configTonKhoCanhBaoHetHangChung = 5;// default value
-
+            CommonTikiAPI.GetListTikiConfigAppUsing();
         }
 
         public string GetPathApp()

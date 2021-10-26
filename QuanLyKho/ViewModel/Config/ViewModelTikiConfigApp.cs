@@ -201,13 +201,13 @@ namespace QuanLyKho.ViewModel.Config
                 return;
             }
             string str = ttbmTiki.Tiki_InhouseAppDelete(dataTikiConfigApp);
-            //dataTikiConfigApp = new DataTikiConfigApp();
             if (str != string.Empty)
             {
                 MessageBox.Show(str);
                 return;
             }
             listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp();
+            CommonTikiAPI.GetListTikiConfigAppUsing();
             Common.ShowAutoClosingMessageBox("Xóa thành công.", "Xóa");
         }
 
@@ -243,6 +243,7 @@ Bạn muốn thực hiện?", "Hủy/Sử Dụng", MessageBoxButton.YesNo);
                     dataTikiConfigApp = new TikiConfigApp(listTikiConfigApp[i]);
                 }
             }
+            CommonTikiAPI.GetListTikiConfigAppUsing();
             Common.ShowAutoClosingMessageBox("Set thành công.", "Hủy/Sử Dụng");
         }
     }

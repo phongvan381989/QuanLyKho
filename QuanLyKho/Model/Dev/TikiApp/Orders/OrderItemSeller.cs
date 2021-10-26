@@ -15,6 +15,7 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// 33	Unique seller Id
         /// </summary>
         public Int32 id { get; set; }
+
         /// <summary>
         /// Zero Shop	Seller or Store name
         /// </summary>

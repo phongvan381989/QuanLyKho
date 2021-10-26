@@ -8,24 +8,35 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
 {
     public class Order
     {
+        public Int32 id { get; set; }
+
         /// <summary>
         /// 745467462	Unique order code
         /// </summary>
         public string code { get; set; }
-        /// <summary>
-        /// 896493516	The order code of the parent order
-        /// The parent order is splited or modified into this (and others) order
-        /// </summary>
-        public string relation_code { get; set; }
+
         /// <summary>
         /// cross_border	How the order is fulfilled a.k.a the fulfillment model of the order
         /// See order fulfillment type
         /// </summary>
         public string fulfillment_type { get; set; }
+
         /// <summary>
         /// complete	The status where the order is in the process to customer hands
         /// </summary>
         public string status { get; set; }
+
+        /// <summary>
+        /// 	All Order Item V2s details
+        /// </summary>
+        public List<OrderItemV2> items { get; set; }
+
+        /// <summary>
+        /// 896493516	The order code of the parent order
+        /// The parent order is splited or modified into this (and others) order
+        /// </summary>
+        public string relation_code { get; set; }
+
         /// <summary>
         /// false	Is this order a replacement for a returned product or a servicing product (RMA flow)
         /// </summary>
@@ -54,10 +65,6 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// 	The Tiki warehouse that fulfills the order
         /// </summary>
         public TikiWarehouseInfo tiki_warehouse { get; set; }
-        /// <summary>
-        /// 	All Order Item V2s details
-        /// </summary>
-        public IList<OrderItemV2> items { get; set; }
         /// <summary>
         /// 	Shipping information of the order: Shipping status, plan, partner, address
         /// </summary>

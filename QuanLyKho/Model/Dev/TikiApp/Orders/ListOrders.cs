@@ -9,9 +9,9 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
     /// <summary>
     /// Deserialize response HTTP to object of the class
     /// </summary>
-    public class ListOrders
+    public class PageOrders
     {
-        public List<Order> /*List<string>*/ data { get; set; }
+        public List<Order> data { get; set; }
         public Paging paging { get; set; }
     }
 }

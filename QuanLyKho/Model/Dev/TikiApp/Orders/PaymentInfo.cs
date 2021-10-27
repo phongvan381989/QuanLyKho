@@ -24,7 +24,6 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// </summary>
         public string status { get; set; }
 
-
         /// <summary>
         /// Thanh toán tiền mặt khi nhận hàng	Description of the payment method
         /// </summary>

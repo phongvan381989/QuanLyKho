@@ -39,8 +39,11 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         public bool is_virtual { get; set; }
 
         public bool is_ebook { get; set; }
+
         public bool is_bookcare { get; set; }
+
         public bool is_free_gift { get; set; }
+
         public bool is_fulfilled { get; set; }
 
         public Int32 backend_id { get; set; }
@@ -60,8 +63,12 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// <summary>
         /// Information of the withdrawals of the product items from Tiki warehouse
         /// </summary>
-        public InventoryWithdrawal inventory_withdrawals { get; set; }
+        public List<InventoryWithdrawal> inventory_withdrawals { get; set; }
 
-        //seller_inventory_id
+        public string seller_inventory_id { get; set; }
+
+        public string seller_inventory_name { get; set; }
+
+        public SellerIncomeDetail seller_income_detail { get; set; }
     }
 }

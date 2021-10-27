@@ -32,5 +32,7 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// Order TKB.RRSIIRQ3 BookingID 4283 has been delivered	Delivery note
         /// </summary>
         public string delivery_note { get; set; }
+
+        public List<Object> delivery_confirmation {get; set;}
     }
 }

@@ -21,7 +21,6 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// </summary>
         public string partner_name { get; set; }
 
-
         /// <summary>
         /// 31416789187639	Tracking number for the shipment
         /// </summary>
@@ -32,6 +31,18 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// </summary>
         public string status { get; set; }
 
+        public string pickup_shipping_code { get; set; }
+
+        public string pickup_partner_code { get; set; }
+
+        public string return_shipping_code { get; set; }
+
+        public string return_partner_code { get; set; }
+
+        public string delivery_shipping_code { get; set; }
+
+        public string delivery_partner_code { get; set; }
+
         /// <summary>
         /// 	Shipping plan details
         /// </summary>
@@ -41,5 +52,7 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// 	Shipping address details
         /// </summary>
         public ShippingAddress address { get; set; }
+
+        public string shipping_detail { get; set; }
     }
 }

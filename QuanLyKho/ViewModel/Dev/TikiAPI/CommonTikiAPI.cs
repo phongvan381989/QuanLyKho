@@ -66,6 +66,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
         {
             request.AddHeader("Authorization", "Bearer " + (string.IsNullOrEmpty(configApp.tikiAu.access_token) ? string.Empty: configApp.tikiAu.access_token));
             IRestResponse response = client.Execute(request);
+            //MyLogger.GetInstance().Debug(request.Parameters[0])
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
                 // Làm mới access token

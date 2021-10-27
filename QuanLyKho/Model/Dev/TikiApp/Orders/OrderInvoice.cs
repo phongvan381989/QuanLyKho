@@ -15,18 +15,22 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// 	1	Number of Order Item V2s
         /// </summary>
         public Int32 items_count { get; set; }
+
         /// <summary>
         /// 1	Total quantity of products over all Order Item V2s
         /// </summary>
         public Int32 items_quantity { get; set; }
+
         /// <summary>
         /// 409000.00	Total value of products over all Order Item V2s
         /// </summary>
         public Double subtotal { get; set; }
+
         /// <summary>
         /// 0.00	Total value of the order the customer needs to pay (counted all customer discounts and customer fees)
         /// </summary>
         public Double grand_total { get; set; }
+
         /// <summary>
         /// 0.00	For Cash on Delivery: Total value to collect from the customer when deliver
         /// </summary>

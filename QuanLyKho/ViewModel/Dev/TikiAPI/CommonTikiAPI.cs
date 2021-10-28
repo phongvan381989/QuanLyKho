@@ -62,7 +62,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
         /// <param name="client"></param>
         /// <param name="request"></param>
         /// <param name="configApp"></param>
-        static public IRestResponse ExcuteRequestWithRefreshAccesToken(RestClient client, RestRequest request, TikiConfigApp configApp)
+        static public IRestResponse ExcuteRequest(RestClient client, RestRequest request, TikiConfigApp configApp)
         {
             request.AddHeader("Authorization", "Bearer " + (string.IsNullOrEmpty(configApp.tikiAu.access_token) ? string.Empty: configApp.tikiAu.access_token));
             IRestResponse response = client.Execute(request);
@@ -89,15 +89,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
                 configApp.tikiAu.access_token = CommonTikiAPI.ttbm.Tiki_InhouseGetAccessToken(configApp.appID);
 
                 // Thực hiện request lại
-                // Update Authorization
-                foreach (Parameter e in request.Parameters)
-                {
-                    if (e.Name == "Authorization")
-                    {
-                        e.Value = "Bearer " + configApp.tikiAu.access_token;
-                        break;
-                    }
-                }
+                request.AddOrUpdateHeader("Authorization", "Bearer " + configApp.tikiAu.access_token);
                 response = client.Execute(request);
             }
             return response;

@@ -20,6 +20,8 @@ using QuanLyKho.ViewModel.InOutWarehouse;
 using QuanLyKho.View.Config;
 using QuanLyKho.ViewModel;
 using QuanLyKho.ViewModel.Config;
+using QuanLyKho.View.Order;
+using QuanLyKho.ViewModel.Order;
 //using QuanLyKho.ViewModel.D;
 namespace QuanLyKho
 {
@@ -33,6 +35,7 @@ namespace QuanLyKho
             None,
             NhapXuat,
             Config,
+            Order,
             Dev
         }
 
@@ -102,7 +105,7 @@ namespace QuanLyKho
             SubMenuContainer.Children.Add(new UserControlSMConfig());
 
             mainMenuSelect = MainMenuSelectIndex.Config;
-            SetMainContentContainer(new UserControlTikiConfigApp(), new ViewModelTikiConfigApp());
+            SetMainContentContainer(new UserControlConfigTikiApp(), new ViewModelTikiConfigApp());
         }
 
         /// <summary>
@@ -118,6 +121,18 @@ namespace QuanLyKho
             MainContentContainer.Children.Clear();
             MainContentContainer.Children.Add(userControl);
             MainContentContainer.DataContext = viewBase;
+        }
+
+        private void MMOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainMenuSelect == MainMenuSelectIndex.Order)
+                return;
+
+            SubMenuContainer.Children.Clear();
+            SubMenuContainer.Children.Add(new UserControlSMOrder());
+
+            mainMenuSelect = MainMenuSelectIndex.Order;
+            SetMainContentContainer(new UserControlOrderTiki(), new ViewModelOrderTiki());
         }
     }
 }

@@ -98,6 +98,7 @@
     <Compile Include="Model\Dev\TikiApp\Orders\Paging.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\SellerFee.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\SellerIncomeDetail.cs" />
+    <Compile Include="Model\Dev\TikiApp\Orders\ShippingDetail.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\Sibling.cs" />
     <Compile Include="Model\Dev\TikiApp\TikiConstValues.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\CancelInfo.cs" />
@@ -150,11 +151,13 @@
     <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Save.cs" />
     <Compile Include="ViewModel\Dev\DevNameValuePair.cs" />
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
+    <Compile Include="ViewModel\Order\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
+    <Compile Include="ViewModel\Order\ViewModelOrderTiki.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTiet.cs" />
-    <Compile Include="View\Config\UserControlTikiConfigApp.xaml.cs">
-      <DependentUpon>UserControlTikiConfigApp.xaml</DependentUpon>
+    <Compile Include="View\Config\UserControlConfigTikiApp.xaml.cs">
+      <DependentUpon>UserControlConfigTikiApp.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Config\UserControlSMConfig.xaml.cs">
       <DependentUpon>UserControlSMConfig.xaml</DependentUpon>
@@ -173,6 +176,12 @@
     </Compile>
     <Compile Include="View\InOutWarehouse\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Order\UserControlOrderTiki.xaml.cs">
+      <DependentUpon>UserControlOrderTiki.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Order\UserControlSMOrder.xaml.cs">
+      <DependentUpon>UserControlSMOrder.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlCommon\UserControlChonThoiGian.xaml.cs">
       <DependentUpon>UserControlChonThoiGian.xaml</DependentUpon>
@@ -217,7 +226,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Config\UserControlTikiConfigApp.xaml">
+    <Page Include="View\Config\UserControlConfigTikiApp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -242,6 +251,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InOutWarehouse\Media.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Order\UserControlOrderTiki.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Order\UserControlSMOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

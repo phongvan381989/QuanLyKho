@@ -20,7 +20,9 @@
         <StackPanel Name="MainMenu" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
             <Button Name="MMNhapXuat" Content="Nhập Xuất" Style="{StaticResource MenuButtonStyle}" Click="MMNhapXuat_Click"/>
             <Button Name="MMConfig" Content="Cấu hình" Style="{StaticResource MenuButtonStyle}" Click="MMConfig_Click"
-                    ToolTip="Cấu hình giá trị chung, thông tin shop trên tiki, shopee,"/>
+                    ToolTip="Cấu hình giá trị chung, thông tin shop trên tiki, shopee"/>
+            <Button Name="MMOrder" Content="Đơn hàng" Style="{StaticResource MenuButtonStyle}" Click="MMOrder_Click"
+                    ToolTip="Đơn hàng trên tiki, shopee"/>
             <Button Name="MMDevelop" Content="Dev" Style="{StaticResource MenuButtonStyle}" Click="MMDevelop_Click"/> 
         </StackPanel>
         <Grid  Grid.Row="1" Grid.Column="0">

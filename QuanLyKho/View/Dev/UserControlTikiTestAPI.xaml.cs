@@ -121,7 +121,7 @@ namespace QuanLyKho.View.Dev
             if (CommonTikiAPI.listTikiConfigAppUsing.Count() == 0)
                 return;
 
-            List<Order>lsOrder =  GetListOrders.GetListAllOrderNeedAvailabilityConfirmationOneShop(CommonTikiAPI.listTikiConfigAppUsing[0]);
+            List<QuanLyKho.Model.Dev.TikiApp.Orders.Order> lsOrder =  GetListOrders.GetListAllOrderNeedAvailabilityConfirmationOneShop(CommonTikiAPI.listTikiConfigAppUsing[0]);
         }
     }
 }

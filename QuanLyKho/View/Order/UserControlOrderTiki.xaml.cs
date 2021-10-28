@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuanLyKho.View.Config
+namespace QuanLyKho.View.Order
 {
     /// <summary>
-    /// Interaction logic for UserControlConfigTiki.xaml
+    /// Interaction logic for UserControlOrderTiki.xaml
     /// </summary>
-    public partial class UserControlTikiConfigApp : UserControl
+    public partial class UserControlOrderTiki : UserControl
     {
-        public UserControlTikiConfigApp()
+        public UserControlOrderTiki()
         {
             InitializeComponent();
         }

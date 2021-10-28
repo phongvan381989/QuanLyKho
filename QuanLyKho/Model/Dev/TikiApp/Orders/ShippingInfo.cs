@@ -53,6 +53,6 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
         /// </summary>
         public ShippingAddress address { get; set; }
 
-        public string shipping_detail { get; set; }
+        public ShippingDetail shipping_detail { get; set; }
     }
 }

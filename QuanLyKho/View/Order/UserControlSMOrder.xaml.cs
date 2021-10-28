@@ -1,4 +1,4 @@
-﻿using QuanLyKho.ViewModel.Config;
+﻿using QuanLyKho.ViewModel.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuanLyKho.View.Config
+namespace QuanLyKho.View.Order
 {
     /// <summary>
-    /// Interaction logic for UserControlSMConfig.xaml
+    /// Interaction logic for UserControlSMOrder.xaml
     /// </summary>
-    public partial class UserControlSMConfig : UserControl
+    public partial class UserControlSMOrder : UserControl
     {
-        public UserControlSMConfig()
+        public UserControlSMOrder()
         {
             InitializeComponent();
         }
@@ -29,7 +29,7 @@ namespace QuanLyKho.View.Config
         private void TiKi_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mw = (MainWindow)App.Current.MainWindow;
-            mw.SetMainContentContainer(new UserControlConfigTikiApp(), new ViewModelTikiConfigApp());
+            mw.SetMainContentContainer(new UserControlOrderTiki(), new ViewModelOrderTiki());
         }
     }
 }

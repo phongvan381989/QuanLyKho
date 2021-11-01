@@ -8,14 +8,21 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <DockPanel LastChildFill = "True">
-            <WrapPanel Orientation="Horizontal" Height="100" DockPanel.Dock = "Top" >
-                <ComboBox ItemsSource="{Binding Path=listShopUsing, UpdateSourceTrigger=PropertyChanged, Mode=OneTime}">
-                </ComboBox>
-                <Button Name="BtnGetListAllOrderNeedAvailabilityConfirmation" Style="{StaticResource ButtonStyle}" 
+            <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >
+                <StackPanel>
+                    <ComboBox ItemsSource="{Binding Path=listHomeAdressShopUsing, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                              Text="{Binding Path=homeAddressUsing, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                              SelectedIndex="{Binding Path=homeAddressIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                    </ComboBox>
+                </StackPanel>
+                <WrapPanel IsEnabled="{Binding Path=isEnabledButtons, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                    <Button Name="BtnGetListAllOrderNeedAvailabilityConfirmation" Style="{StaticResource ButtonStyle}" 
                         Command="{Binding Path=commandGetListAllOrderNeedAvailabilityConfirmation}"
                         ToolTip="Danh sách đơn hàng cần xác nhận còn hàng">Chờ Xác Nhận</Button>
+                    <Button>testing</Button>
+                </WrapPanel>
             </WrapPanel>
-            <DockPanel LastChildFill="True" Width="300" DockPanel.Dock="Left">
+            <DockPanel LastChildFill="True" Width="300" DockPanel.Dock="Left" Margin="0,0,0,-0.4">
                 <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" HorizontalAlignment="Center">Request</TextBlock>
                 <TextBox HorizontalAlignment="Stretch" Name="TextBoxHTTPRequest">
                 </TextBox>

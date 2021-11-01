@@ -5,6 +5,7 @@ using QuanLyKho.Model.Dev.TikiApp.Config;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -54,6 +55,21 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
             List<TikiConfigApp> l = ttbm.Tiki_InhouseAppGetListUsingApp();
             if (l != null)
                 listTikiConfigAppUsing = l;
+        }
+
+        /// <summary>
+        /// Lấy danh sách URL của shop đang sử dụng
+        /// </summary>
+        /// <returns>Nếu không có shop nào đang sử dụng, trả về list rỗng</returns>
+        static public ObservableCollection<String> GetListHomeAddressUsing()
+        {
+            ObservableCollection<String> lStr = new ObservableCollection<string>();
+            foreach(TikiConfigApp e in listTikiConfigAppUsing)
+            {
+                if(e.usingApp == TikiConfigApp.constUsingApp)
+                    lStr.Add(e.homeAddress);
+            }
+            return lStr;
         }
 
         /// <summary>

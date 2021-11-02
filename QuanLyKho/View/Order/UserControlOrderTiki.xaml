@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyKho.View.Order"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=tbOrderCode}">
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >
                 <StackPanel>
@@ -22,15 +22,31 @@
                     <Button>testing</Button>
                 </WrapPanel>
             </WrapPanel>
-            <DockPanel LastChildFill="True" Width="300" DockPanel.Dock="Left" Margin="0,0,0,-0.4">
-                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" HorizontalAlignment="Center">Request</TextBlock>
-                <TextBox HorizontalAlignment="Stretch" Name="TextBoxHTTPRequest">
-                </TextBox>
-            </DockPanel>
-            <DockPanel LastChildFill="True">
-                <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" HorizontalAlignment="Center">Response</TextBlock>
-                <TextBox HorizontalAlignment="Stretch" Name="TextboxHTTPResponse">
-                </TextBox>
+            <DockPanel LastChildFill = "True">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}" Name="tbOrderCode"></TextBox>
+                    <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandOrderTiki_GetOrderDetail}">Chi Tiết Đơn Hàng</Button>
+                </StackPanel>
+                <ListView ItemsSource="{Binding Path=listOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                      SelectedItem="{Binding Path=currentSelecteOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                          SelectedValue="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                          SelectedValuePath="code">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mã" Width="200" DisplayMemberBinding="{Binding code}" />
+                            <!--<GridViewColumn Header="Trạng Thái" Width="400">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding homeAddress}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>-->
+                            <GridViewColumn Header="Trạng Thái" Width="300" DisplayMemberBinding="{Binding status}" />
+                            <GridViewColumn Header="Ngày Tạo" Width="100" DisplayMemberBinding="{Binding created_at}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </DockPanel>
         </DockPanel>
     </Grid>

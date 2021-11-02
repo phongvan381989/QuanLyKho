@@ -21,8 +21,7 @@ using QuanLyKho.View.Config;
 using QuanLyKho.ViewModel;
 using QuanLyKho.ViewModel.Config;
 using QuanLyKho.View.Order;
-using QuanLyKho.ViewModel.Order;
-//using QuanLyKho.ViewModel.D;
+using QuanLyKho.ViewModel.Orders;
 namespace QuanLyKho
 {
     /// <summary>

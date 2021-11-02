@@ -142,7 +142,8 @@
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\CommonTikiAPI.cs" />
-    <Compile Include="ViewModel\Dev\TikiAPI\Orders\GetListOrders.cs" />
+    <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiGetListOrders.cs" />
+    <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiOrderViewBinding.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
@@ -151,8 +152,9 @@
     <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Save.cs" />
     <Compile Include="ViewModel\Dev\DevNameValuePair.cs" />
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
-    <Compile Include="ViewModel\Order\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
-    <Compile Include="ViewModel\Order\ViewModelOrderTiki.cs" />
+    <Compile Include="ViewModel\Orders\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
+    <Compile Include="ViewModel\Orders\CommandOrderTiki_GetOrderDetail.cs" />
+    <Compile Include="ViewModel\Orders\ViewModelOrderTiki.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTiet.cs" />

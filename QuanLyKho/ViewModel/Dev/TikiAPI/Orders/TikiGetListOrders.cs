@@ -16,7 +16,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
     /// Returns a list of orders managed by signing in seller, base on a specific search query
     /// https://open.tiki.vn/docs/docs/current/api-references/order-api-v2/#order-listing-v2
     /// </summary>
-    class GetListOrders
+    class TikiGetListOrders
     {
         // https://open.tiki.vn/docs/docs/current/api-references/order-api-v2/#order-listing-v2
         public enum EnumQueryParameters
@@ -79,11 +79,14 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// </summary>
         /// <param name="configApp">shop</param>
         /// <returns>Danh sách đơn hàng. List rỗng nếu không lấy thành công</returns>
-        static public List<QuanLyKho.Model.Dev.TikiApp.Orders.Order> GetListAllOrderNeedAvailabilityConfirmationOneShop(TikiConfigApp configApp)
+        static public List<Order> GetListAllOrderNeedAvailabilityConfirmationOneShop(TikiConfigApp configApp)
         {
+            List<Order> lsOrder = new List<Order>();
+            if (configApp == null)
+                return lsOrder;
+
             //GET /integration/v2/orders?page=1&limit=20&status=queueing&item_inventory_type=backorder&item_confirmation_status=waiting&filter_date_by=last30days
             List<DevNameValuePair> listValuePair = new List<DevNameValuePair>();
-            List<QuanLyKho.Model.Dev.TikiApp.Orders.Order> lsOrder = new List<QuanLyKho.Model.Dev.TikiApp.Orders.Order>();
             Int32 currentPage = 1;
             while (true)
             {
@@ -106,7 +109,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
                     //listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.item_confirmation_status], OrderItemConfirmationStatus.ArrayStringOrderItemConfirmationStatus[(int)OrderItemConfirmationStatus.EnumOrderItemConfirmationStatus.waiting]));
 
                     // Add filter_date_by=last30days
-                    listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.filter_date_by], OrderItemFilterByDate.ArrayStringOrderItemFilterByDate[(Int32)OrderItemFilterByDate.EnumOrderItemFilterByDate.last30days]));
+                    listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.filter_date_by], OrderItemFilterByDate.ArrayStringOrderItemFilterByDate[(Int32)OrderItemFilterByDate.EnumOrderItemFilterByDate.today]));
                 }
                 else // Các page sau chỉ cập nhật currentpage
                 {
@@ -159,9 +162,9 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// </summary>
         /// <param name="listConfigApp">danh sách shop</param>
         /// <returns>Danh sách đơn hàng. Rỗng nếu không lấy thành công</returns>
-        static public List<QuanLyKho.Model.Dev.TikiApp.Orders.Order> GetListAllOrderNeedAvailabilityConfirmationAllShops(List<TikiConfigApp> listConfigApp)
+        static public List<Order> GetListAllOrderNeedAvailabilityConfirmationAllShops(List<TikiConfigApp> listConfigApp)
         {
-            List<QuanLyKho.Model.Dev.TikiApp.Orders.Order> lsOrder = new List<QuanLyKho.Model.Dev.TikiApp.Orders.Order>();
+            List<Order> lsOrder = new List<Order>();
             int num = listConfigApp.Count();
             for(int i = 0; i < num; i++)
             {

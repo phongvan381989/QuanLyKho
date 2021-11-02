@@ -184,6 +184,7 @@ namespace QuanLyKho.ViewModel.Config
                 if(listTikiConfigApp[i].appID == appIDTemp)
                 {
                     dataTikiConfigApp = new TikiConfigApp(listTikiConfigApp[i]);
+                    break;
                 }
             }
             //UpdateList();

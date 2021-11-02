@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace QuanLyKho.ViewModel.Order
+namespace QuanLyKho.ViewModel.Orders
 {
     public class CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation : ICommand
     {

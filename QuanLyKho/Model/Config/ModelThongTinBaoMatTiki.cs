@@ -10,6 +10,7 @@ using QuanLyKho.Model.Dev.TikiApp;
 using QuanLyKho.Model.Config;
 using System.Collections.ObjectModel;
 using QuanLyKho.Model.Dev.TikiApp.Config;
+using QuanLyKho.General;
 
 namespace QuanLyKho.Model.Config
 {
@@ -39,9 +40,14 @@ namespace QuanLyKho.Model.Config
             request.AddParameter("grant_type", "client_credentials");
             request.AddParameter("client_id", "6249716820922226");
             request.AddParameter("scope", "");
-            IRestResponse response = client.Execute(request);
-            //strHTTPResponse = response.Content;
-            //ShowHTTPRequestAndResponse();
+            try
+            {
+                IRestResponse response = client.Execute(request);
+            }
+            catch(Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
             return true;
         }
 

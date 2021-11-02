@@ -35,7 +35,15 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
             request.AddParameter("grant_type", "client_credentials");
             request.AddParameter("client_id", appID);
             request.AddParameter("scope", "");
-            IRestResponse response = client.Execute(request);
+            IRestResponse response = null;
+            try
+            {
+                response = client.Execute(request);
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
@@ -73,11 +81,31 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
         }
 
         /// <summary>
+        /// Từ địa chỉ web shop lấy được đối tượng config
+        /// </summary>
+        /// <param name="homeAddress"></param>
+        /// <returns>Trả về null nếu không có đối tượng thỏa mãn</returns>
+        static public TikiConfigApp GetTikiConfigAppFromHomeAddress(string homeAddress)
+        {
+            TikiConfigApp tikiConfigApp = null;
+            foreach (TikiConfigApp e in listTikiConfigAppUsing)
+            {
+                if (e.usingApp == TikiConfigApp.constUsingApp && e.homeAddress == homeAddress)
+                {
+                    tikiConfigApp = e;
+                    break;
+                }
+            }
+            return tikiConfigApp;
+        }
+
+        /// <summary>
         /// Thực hiện 1 request HTTP, nếu access token hết hạn thì làm mới
         /// </summary>
         /// <param name="client"></param>
         /// <param name="request"></param>
         /// <param name="configApp"></param>
+        /// <returns></returns>
         static public IRestResponse ExcuteRequest(RestClient client, RestRequest request, TikiConfigApp configApp)
         {
             request.AddHeader("Authorization", "Bearer " + (string.IsNullOrEmpty(configApp.tikiAu.access_token) ? string.Empty: configApp.tikiAu.access_token));
@@ -94,12 +122,12 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
                 catch (Exception ex)
                 {
                     MyLogger.GetInstance().Warn(ex.Message);
-                    return null;
+                    return response;
                 }
                 if (!string.IsNullOrEmpty(str))
                 {
                     MyLogger.GetInstance().Warn(str);
-                    return null;
+                    return response;
                 }
                 // Cập nhật configApp
                 configApp.tikiAu.access_token = CommonTikiAPI.ttbm.Tiki_InhouseGetAccessToken(configApp.appID);

@@ -1,4 +1,5 @@
 ﻿using QuanLyKho.Model.Dev.TikiApp.Orders;
+using QuanLyKho.View.Order;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
 using System;
@@ -203,7 +204,13 @@ namespace QuanLyKho.ViewModel.Orders
 
         public void GetOrderDetail()
         {
-            MessageBox.Show(textOrderCodeGetDetail);
+            MessageBox.Show(System.AppDomain.CurrentDomain.BaseDirectory);
+            Window wdOrderDetail = new Window
+            {
+                Content = new UserControlProductInOrderTiki()
+            };
+            wdOrderDetail.DataContext = new ViewModelProductInOrderTiki();
+            wdOrderDetail.ShowDialog();
         }
     }
 }

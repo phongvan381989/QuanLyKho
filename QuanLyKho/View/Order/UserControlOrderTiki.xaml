@@ -31,7 +31,8 @@
                 <ListView ItemsSource="{Binding Path=listOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                       SelectedItem="{Binding Path=currentSelecteOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                           SelectedValue="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
-                          SelectedValuePath="code">
+                          SelectedValuePath="code"
+                          MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã" Width="200" DisplayMemberBinding="{Binding code}" />

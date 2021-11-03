@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.ViewModel.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace QuanLyKho.View.Order
         public UserControlOrderTiki()
         {
             InitializeComponent();
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (ViewModelOrderTiki)this.DataContext;
+            vm.GetOrderDetail();
         }
     }
 }

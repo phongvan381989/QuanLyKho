@@ -142,6 +142,7 @@
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\CommonTikiAPI.cs" />
+    <Compile Include="ViewModel\Dev\TikiAPI\Orders\ProductInOrderViewBindingTiki.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiGetListOrders.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiOrderViewBinding.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetOrderDetail.cs" />
+    <Compile Include="ViewModel\Orders\ViewModelProductInOrderTiki.cs" />
     <Compile Include="ViewModel\Orders\ViewModelOrderTiki.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />
@@ -178,6 +180,9 @@
     </Compile>
     <Compile Include="View\InOutWarehouse\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Order\UserControlProductInOrderTiki.xaml.cs">
+      <DependentUpon>UserControlProductInOrderTiki.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Order\UserControlOrderTiki.xaml.cs">
       <DependentUpon>UserControlOrderTiki.xaml</DependentUpon>
@@ -253,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InOutWarehouse\Media.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Order\UserControlProductInOrderTiki.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

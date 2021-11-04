@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -259,5 +260,32 @@ namespace QuanLyKho.General
             return true;
         }
         #endregion
+
+        /// <summary>
+        /// Check xem ảnh đã tồn tại trong thư mục hay chưa? Nếu chưa ải ảnh từ địa chỉ web và lưu
+        /// </summary>
+        /// <param name="url">https://salt.tikicdn.com/cache/280x280/ts/product/c5/53/ad/991011e797c67d6910b87491ddeee138.png</param>
+        /// <param name="pathFolder">Thư mục chứa ảnh</param>
+        public static void DownloadImageAndSave(string url, string pathFolder)
+        {
+            // Từ url lấy được tên ảnh
+            int lastIndex = url.LastIndexOf('/');
+            if (lastIndex == -1 || lastIndex == url.Length - 1)
+                return;
+            string fileName = url.Substring(lastIndex + 1);
+            // Check xem ảnh đã tồn tại hay chưa?
+            if (File.Exists(Path.Combine(pathFolder, fileName)))
+                return;
+
+
+            RestClient client = new RestClient(url);
+            client.Timeout = -1;
+            RestRequest request = new RestRequest(Method.GET);
+            //IRestResponse response = client.Execute(request);
+
+
+            var fileBytes = client.DownloadData(request);
+            File.WriteAllBytes(Path.Combine(pathFolder, fileName), fileBytes);
+        }
     }
 }

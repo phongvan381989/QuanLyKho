@@ -36,5 +36,10 @@ namespace QuanLyKho.Model.Dev.TikiApp.Products
         ///
         /// </summary>
         public string url_key { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool is_primary { get; set; }
     }
 }

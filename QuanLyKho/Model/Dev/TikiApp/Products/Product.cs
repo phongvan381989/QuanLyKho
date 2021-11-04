@@ -11,7 +11,7 @@ namespace QuanLyKho.Model.Dev.TikiApp.Products
         /// <summary>
         /// Unique product ID
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32 product_id { get; set; }
 
         /// <summary>
         /// SKU of product
@@ -111,13 +111,12 @@ namespace QuanLyKho.Model.Dev.TikiApp.Products
         /// <summary>
         /// The image gallery of product on TIKI
         /// </summary>
-        public IList<Image> images { get; set; }
+        public List<Image> images { get; set; }
 
         /// <summary>
         /// The categories that products are belong
         /// </summary>
-        public IList<Object> categories { get; set; }
-
+        public List<Category> categories { get; set; }
 
         /// <summary>
         /// inventory information

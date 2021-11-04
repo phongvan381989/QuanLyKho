@@ -9,7 +9,7 @@ namespace QuanLyKho.Model.Dev.TikiApp.Orders
     /// <summary>
     /// 
     /// </summary>
-    public class Paging
+    public class PagingOrder
     {
         public int total { get; set; }
         public int current_page { get; set; }

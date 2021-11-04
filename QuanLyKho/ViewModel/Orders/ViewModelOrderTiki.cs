@@ -1,4 +1,5 @@
-﻿using QuanLyKho.Model.Dev.TikiApp.Orders;
+﻿using QuanLyKho.General;
+using QuanLyKho.Model.Dev.TikiApp.Orders;
 using QuanLyKho.View.Order;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
@@ -20,16 +21,18 @@ namespace QuanLyKho.ViewModel.Orders
             pcommandOrderTiki_GetOrderDetail = new CommandOrderTiki_GetOrderDetail(this);
 
             // Lấy danh sách cửa hàng
-            listHomeAdressShopUsing = CommonTikiAPI.GetListHomeAddressUsing();
+            listHomeAddressShopUsing = CommonTikiAPI.GetListHomeAddressUsing();
             // Thêm tùy chọn tất cả shop nếu sanh sách shop có từ 2 shop trở lên
-            if(listHomeAdressShopUsing.Count() > 1)
-                listHomeAdressShopUsing.Add("Tất cả");
-            homeAddressIndex = listHomeAdressShopUsing.Count() - 1;
+            if(listHomeAddressShopUsing.Count() > 1)
+                listHomeAddressShopUsing.Add("Tất cả");
+            homeAddressIndex = listHomeAddressShopUsing.Count() - 1;
             isEnabledButtons = true;
             if (homeAddressIndex == -1)
                 isEnabledButtons = false;
             listOrder = new ObservableCollection<TikiOrderViewBinding>();
             currentSelecteOrder = new TikiOrderViewBinding();
+            lsOrderFullInfo = new List<Order>();
+            indexOrderInList = -1;
         }
         private CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation pcommandGetListAllOrderNeedAvailabilityConfirmation;
         public CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation commandGetListAllOrderNeedAvailabilityConfirmation
@@ -49,19 +52,19 @@ namespace QuanLyKho.ViewModel.Orders
             }
         }
 
-        private ObservableCollection<string> plistHomeAdressShopUsing;
-        public ObservableCollection<String> listHomeAdressShopUsing
+        private ObservableCollection<string> plistHomeAddressShopUsing;
+        public ObservableCollection<String> listHomeAddressShopUsing
         {
             get
             {
-                return plistHomeAdressShopUsing;
+                return plistHomeAddressShopUsing;
             }
             set
             {
-                if(plistHomeAdressShopUsing != value)
+                if(plistHomeAddressShopUsing != value)
                 {
-                    OnPropertyChanged("listHomeAdressShopUsing");
-                    plistHomeAdressShopUsing = value;
+                    OnPropertyChanged("listHomeAddressShopUsing");
+                    plistHomeAddressShopUsing = value;
                 }
             }
         }
@@ -174,6 +177,8 @@ namespace QuanLyKho.ViewModel.Orders
             }
         }
 
+        private List<Order> lsOrderFullInfo;
+
         /// <summary>
         /// Lấy danh sách tất cả đơn hàng cần xác nhận còn hàng theo 1 shop, hoặc tất cả các shop
         /// </summary>
@@ -183,10 +188,9 @@ namespace QuanLyKho.ViewModel.Orders
             if (homeAddressIndex == -1)
                 return;
 
-            List<Order> lsOrderFullInfo = null;
             // Lấy đơn hàng của tất cả các shop
-            if (listHomeAdressShopUsing.Count() > 1 &&
-               homeAddressIndex == listHomeAdressShopUsing.Count() - 1)
+            if (listHomeAddressShopUsing.Count() > 1 &&
+               homeAddressIndex == listHomeAddressShopUsing.Count() - 1)
             {
                 lsOrderFullInfo = TikiGetListOrders.GetListAllOrderNeedAvailabilityConfirmationAllShops(CommonTikiAPI.listTikiConfigAppUsing);
             }
@@ -198,19 +202,55 @@ namespace QuanLyKho.ViewModel.Orders
 
             foreach( Order e in lsOrderFullInfo)
             {
+                // Download thumbnail của sản phẩm
+                foreach (OrderItemV2 eItem in e.items)
+                {
+                    Common.DownloadImageAndSave(eItem.product.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                }
                 listOrder.Add(new TikiOrderViewBinding(e));
+            }
+        }
+
+        private int pindexOrderInList;
+        public int indexOrderInList
+        {
+            get
+            {
+                return pindexOrderInList;
+            }
+            set
+            {
+                if(pindexOrderInList  != value)
+                {
+                    pindexOrderInList = value;
+                    OnPropertyChanged("indexOrderInList");
+                }
             }
         }
 
         public void GetOrderDetail()
         {
-            MessageBox.Show(System.AppDomain.CurrentDomain.BaseDirectory);
+            if(indexOrderInList == -1)
+            {
+                MessageBox.Show("Chưa chọn đơn nào.");
+                return;
+            }
             Window wdOrderDetail = new Window
             {
                 Content = new UserControlProductInOrderTiki()
             };
-            wdOrderDetail.DataContext = new ViewModelProductInOrderTiki();
+            wdOrderDetail.DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
+            wdOrderDetail.WindowState = WindowState.Maximized;
             wdOrderDetail.ShowDialog();
+        }
+
+        public void RefreshView()
+        {
+            textOrderCodeGetDetail = string.Empty;
+            indexOrderInList = -1;
+            listOrder.Clear();
+            lsOrderFullInfo.Clear();
+
         }
     }
 }

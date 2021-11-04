@@ -10,9 +10,10 @@
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >
                 <StackPanel>
-                    <ComboBox ItemsSource="{Binding Path=listHomeAdressShopUsing, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                    <ComboBox Name="CboxHomeAddressShopUsing" ItemsSource="{Binding Path=listHomeAddressShopUsing, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                               Text="{Binding Path=homeAddressUsing, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
-                              SelectedIndex="{Binding Path=homeAddressIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                              SelectedIndex="{Binding Path=homeAddressIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                              SelectionChanged="CboxHomeAddressShopUsing_SelectionChanged">
                     </ComboBox>
                 </StackPanel>
                 <WrapPanel IsEnabled="{Binding Path=isEnabledButtons, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
@@ -32,6 +33,7 @@
                       SelectedItem="{Binding Path=currentSelecteOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                           SelectedValue="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                           SelectedValuePath="code"
+                          SelectedIndex="{Binding Path=indexOrderInList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>

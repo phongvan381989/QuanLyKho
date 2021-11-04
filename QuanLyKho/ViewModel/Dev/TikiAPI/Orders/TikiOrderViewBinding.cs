@@ -34,6 +34,11 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// </summary>
         public DateTime created_at { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> listThumbnail { get; set; }
+
         public TikiOrderViewBinding()
         {
             id = -1;
@@ -41,6 +46,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             status = string.Empty;
             listProductId = new List<int>();
             created_at = new DateTime();
+            listThumbnail = new List<string>();
         }
 
         /// <summary>
@@ -53,9 +59,11 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             code = order.code;
             status = order.status;
             listProductId = new List<int>();
+            listThumbnail = new List<string>();
             foreach (OrderItemV2 e in order.items)
             {
                 listProductId.Add(e.id);
+                listThumbnail.Add(e.product.thumbnail);
             }
             created_at = order.created_at;
         }

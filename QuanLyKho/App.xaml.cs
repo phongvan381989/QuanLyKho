@@ -23,6 +23,8 @@ namespace QuanLyKho
         private Int32 configTonKhoCanhBaoHetHangChung;
         private List<string> listImageFormats;
         private List<string> listVideoFormats;
+        public string temporaryFolderPath;
+        public string temporaryImageFolderPath;
 
         //public List<TikiConfigApp> lTikiAppUsing;
 
@@ -36,6 +38,8 @@ namespace QuanLyKho
             if (!Int32.TryParse(strTemp, out configTonKhoCanhBaoHetHangChung))
                 configTonKhoCanhBaoHetHangChung = 5;// default value
             CommonTikiAPI.GetListTikiConfigAppUsing();
+            temporaryFolderPath = System.AppDomain.CurrentDomain.BaseDirectory + @"Temporary";
+            temporaryImageFolderPath = temporaryFolderPath + @"\Image";
         }
 
         public string GetPathApp()

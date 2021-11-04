@@ -31,5 +31,11 @@ namespace QuanLyKho.View.Order
             var vm = (ViewModelOrderTiki)this.DataContext;
             vm.GetOrderDetail();
         }
+
+        private void CboxHomeAddressShopUsing_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var vm = (ViewModelOrderTiki)this.DataContext;
+            vm.RefreshView();
+        }
     }
 }

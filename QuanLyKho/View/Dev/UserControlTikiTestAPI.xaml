@@ -11,6 +11,7 @@
             <WrapPanel Orientation="Horizontal" Height="100" DockPanel.Dock = "Top" >
                 <Button Name="BtnGetTokenAuth" Style="{StaticResource ButtonStyle}" Click="BtnGetTokenAuth_Click">Get Token Author</Button>
                 <Button Name="BtnGetListOrder" Style="{StaticResource ButtonStyle}" Click="BtnGetListOrder_Click">Get List Order</Button>
+                <Button Name="TestSomething" Style="{StaticResource ButtonStyle}" Click="TestSomething_Click">Test</Button>
             </WrapPanel>
             <DockPanel LastChildFill="True" Width="300" DockPanel.Dock="Left">
                 <TextBlock Style="{StaticResource TextBlockStyle}" DockPanel.Dock="Top" HorizontalAlignment="Center">Request</TextBlock>

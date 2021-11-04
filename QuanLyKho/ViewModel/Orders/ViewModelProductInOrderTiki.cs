@@ -1,22 +1,33 @@
-﻿using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
+﻿using QuanLyKho.Model.Dev.TikiApp.Orders;
+using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace QuanLyKho.ViewModel.Orders
 {
     public class ViewModelProductInOrderTiki : ViewModelBase
     {
-        public ViewModelProductInOrderTiki()
+        //public ViewModelProductInOrderTiki()
+        //{
+        //    listProductInOrder = new ObservableCollection<ProductInOrderViewBindingTiki>();
+        //    listProductInOrder.Add(new ProductInOrderViewBindingTiki());
+        //    listProductInOrder.Add(new ProductInOrderViewBindingTiki());
+        //    listProductInOrder.Add(new ProductInOrderViewBindingTiki(true, 1, ((App)Application.Current).temporaryImageFolderPath + @"\fish.jpg", 1));
+        //    listProductInOrder.Add(new ProductInOrderViewBindingTiki(false, 11, ((App)Application.Current).temporaryImageFolderPath + @"\1.jpg", 11));
+        //}
+
+        public ViewModelProductInOrderTiki(Order order)
         {
             listProductInOrder = new ObservableCollection<ProductInOrderViewBindingTiki>();
-            listProductInOrder.Add(new ProductInOrderViewBindingTiki());
-            listProductInOrder.Add(new ProductInOrderViewBindingTiki());
-            listProductInOrder.Add(new ProductInOrderViewBindingTiki(true, 1, System.AppDomain.CurrentDomain.BaseDirectory + @"\Temporary\ImageTest\fish.jpg", 1));
-            listProductInOrder.Add(new ProductInOrderViewBindingTiki(false, 11, System.AppDomain.CurrentDomain.BaseDirectory + @"\Temporary\ImageTest\1.jpg", 11));
+            foreach(OrderItemV2 item in order.items)
+            {
+                listProductInOrder.Add(new ProductInOrderViewBindingTiki(item));
+            }
         }
 
         private ObservableCollection<ProductInOrderViewBindingTiki> plistProductInOrder;

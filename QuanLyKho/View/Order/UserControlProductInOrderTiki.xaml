@@ -16,6 +16,10 @@
         <DataTemplate x:Key="AvartarCell">
             <Image Source="{Binding Path=avartar}"  Margin="0,0,5,0" Stretch="Uniform" MaxWidth="200" MaxHeight="200"/>
         </DataTemplate>
+
+        <DataTemplate x:Key="CodeInWarehouseCell">
+            <ListBox ItemsSource="{Binding Path=listProductsInWarehouse}"/>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{Binding Path=listProductInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
@@ -42,6 +46,9 @@
 
                     <GridViewColumn CellTemplate="{StaticResource AvartarCell}"
                       Header="Ảnh Đại Diện" Width="200"/>
+
+                    <GridViewColumn CellTemplate="{StaticResource CodeInWarehouseCell}"
+                      Header="Mã Sản Phẩm Trong Kho" Width="400"/>
                 </GridView>
 
             </ListView.View>

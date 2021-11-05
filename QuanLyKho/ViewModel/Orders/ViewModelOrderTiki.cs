@@ -22,7 +22,7 @@ namespace QuanLyKho.ViewModel.Orders
 
             // Lấy danh sách cửa hàng
             listHomeAddressShopUsing = CommonTikiAPI.GetListHomeAddressUsing();
-            // Thêm tùy chọn tất cả shop nếu sanh sách shop có từ 2 shop trở lên
+            // Thêm tùy chọn tất cả shop nếu danh sách shop có từ 2 shop trở lên
             if(listHomeAddressShopUsing.Count() > 1)
                 listHomeAddressShopUsing.Add("Tất cả");
             homeAddressIndex = listHomeAddressShopUsing.Count() - 1;

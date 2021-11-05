@@ -269,10 +269,10 @@ namespace QuanLyKho.General
         public static void DownloadImageAndSave(string url, string pathFolder)
         {
             // Từ url lấy được tên ảnh
-            int lastIndex = url.LastIndexOf('/');
-            if (lastIndex == -1 || lastIndex == url.Length - 1)
+            string fileName = GetNameFromURL(url);
+            if (string.IsNullOrEmpty(fileName))
                 return;
-            string fileName = url.Substring(lastIndex + 1);
+
             // Check xem ảnh đã tồn tại hay chưa?
             if (File.Exists(Path.Combine(pathFolder, fileName)))
                 return;
@@ -286,6 +286,28 @@ namespace QuanLyKho.General
 
             var fileBytes = client.DownloadData(request);
             File.WriteAllBytes(Path.Combine(pathFolder, fileName), fileBytes);
+        }
+
+        /// <summary>
+        ///  Từ url lấy được tên file
+        /// </summary>
+        /// <param name="url"https://salt.tikicdn.com/cache/280x280/ts/product/c5/53/ad/991011e797c67d6910b87491ddeee138.pngEX: </param>
+        /// <returns></returns>
+        public static String GetNameFromURL(string url)
+        {
+            string name = string.Empty;
+            // Lấy tên file ảnh
+            // Từ url lấy được tên ảnh
+            int lastIndex = url.LastIndexOf('/');
+            if (lastIndex == -1 || lastIndex == url.Length - 1)
+            {
+            }
+            else
+            {
+                string fileName = url.Substring(lastIndex + 1);
+                name = Path.Combine(((App)Application.Current).temporaryImageFolderPath, fileName);
+            }
+            return name;
         }
     }
 }

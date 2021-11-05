@@ -22,6 +22,9 @@ using QuanLyKho.ViewModel;
 using QuanLyKho.ViewModel.Config;
 using QuanLyKho.View.Order;
 using QuanLyKho.ViewModel.Orders;
+using QuanLyKho.View.Product;
+using QuanLyKho.ViewModel.Products;
+
 namespace QuanLyKho
 {
     /// <summary>
@@ -33,8 +36,9 @@ namespace QuanLyKho
         {
             None,
             NhapXuat,
-            Config,
+            Product,
             Order,
+            Config,
             Dev
         }
 
@@ -132,6 +136,18 @@ namespace QuanLyKho
 
             mainMenuSelect = MainMenuSelectIndex.Order;
             SetMainContentContainer(new UserControlOrderTiki(), new ViewModelOrderTiki());
+        }
+
+        private void MMProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (mainMenuSelect == MainMenuSelectIndex.Product)
+                return;
+
+            SubMenuContainer.Children.Clear();
+            SubMenuContainer.Children.Add(new UserControlSMProduct());
+
+            mainMenuSelect = MainMenuSelectIndex.Product;
+            SetMainContentContainer(new UserControlProductTiki(), new ViewModelProductTiki());
         }
     }
 }

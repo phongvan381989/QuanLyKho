@@ -106,7 +106,7 @@ namespace QuanLyKho.Model.Dev.TikiApp.Products
         /// <summary>
         /// attributes of product
         /// </summary>
-        public IList<Object> attributes { get; set; }
+        public Object attributes { get; set; }
 
         /// <summary>
         /// The image gallery of product on TIKI

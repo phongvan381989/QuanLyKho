@@ -51,6 +51,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
             }
             TikiAuthorization accessToken = JsonConvert.DeserializeObject<TikiAuthorization>(response.Content);
             ttbm.Tiki_InhouseAppSaveAccessToken(appID, accessToken);
+            MyLogger.GetInstance().Info("New token: " + accessToken.access_token);
             return string.Empty;
         }
 
@@ -113,6 +114,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
             //MyLogger.GetInstance().Debug(request.Parameters[0])
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
+                MyLogger.GetInstance().Info("Expried token:" + (string.IsNullOrEmpty(configApp.tikiAu.access_token) ? string.Empty : configApp.tikiAu.access_token));
                 // Làm mới access token
                 string str;
                 try

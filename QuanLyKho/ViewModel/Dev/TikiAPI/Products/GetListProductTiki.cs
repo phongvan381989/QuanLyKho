@@ -1,91 +1,47 @@
-﻿using Newtonsoft.Json;
-using QuanLyKho.General;
-using QuanLyKho.Model.Config;
-using QuanLyKho.Model.Dev.TikiApp;
-using QuanLyKho.Model.Dev.TikiApp.Orders;
-using RestSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using QuanLyKho.General;
+using QuanLyKho.Model.Config;
+using QuanLyKho.Model.Dev.TikiApp;
+using QuanLyKho.Model.Dev.TikiApp.Products;
+using RestSharp;
 
-namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
+namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
 {
     /// <summary>
-    /// Returns a list of orders managed by signing in seller, base on a specific search query
-    /// https://open.tiki.vn/docs/docs/current/api-references/order-api-v2/#order-listing-v2
+    /// Chứa các hàm tĩnh lấy danh được danh sách sản phẩm của 1 hoặc nhiều shop trên sàn TMDT Tiki
     /// </summary>
-    class TikiGetListOrders
+    public class GetListProductTiki
     {
-        // https://open.tiki.vn/docs/docs/current/api-references/order-api-v2/#order-listing-v2
-        public enum EnumQueryParameters
+
+        public enum EnumQueryParametersProduct
         {
-                            //Name    Type    Example Description
+            //Name    Type    Example Description
             page,//    Integer	5 Default 1	Index of the page of orders to be returned
                  //Page is base 1 and must be > 0
-            limit,//   Integer	25 Default 20	Size of the page of orders to be returned
-            //            Limit must be > 0
-            code,//    String	936734420,704309977	Search orders by order codes
-            //            Format: comma, separated, order, codes
-            sku,// String	675902566253,195612014248	Search orders by product sku
-                        //Format: comma, separated, skus
-            item_confirmation_status,//    String  waiting Search orders by confirmation status
-                        //Values: See order item confirmation status
-            item_inventory_type,// Set Expression	in%7Cbackorder, preorder Search orders that contains at least 1 order item satisfy the inventory type expression
-                        //Values: backorder, instock, preorder
-            fulfillment_type,//    Set Expression  nin%7Ccross_border, dropship Search orders by fulfillment type (operation model)
-                        //Values: See order fulfillment type
-            status,// Set Expression	in%7Ccomplete,closed Search orders by order single or multiple statuses
-                       // Values: See order status
-            include,// String status_histories, item.fees Fetch additional order information
-                    //    Format: comma,separated,values
-            //Values: See include-able
-            is_rma,//  Boolean	true	Search RMA orders – The replacement order for returned products
-                        filter_date_by,// String  last7days Search orders by created_at date range
-                        //Values: today, last7days, last30days
-            created_from_date,//   Timestamp	2020-08-20 15:00:00	Search orders with created_at greater than the sepecified timestamp
-            created_to_date,// Timestamp	2020-08-20 15:00:00	Search orders with created_at less than the sepecified timestamp
-            updated_from_date,//   Timestamp	2020-08-20 15:00:00	Search orders with updated_at greater than the sepecified timestamp
-            updated_to_date,// Timestamp	2020-08-20 15:00:00	Search orders with updated_at less than the sepecified timestamp
-            order_by,       //    String created_at%7Casc
-                            //Default created_at%7Cdesc
-                            //Where %7C stands for “|“	Sort orders by a direction then perform the search
-                            //Format: column|direction Columns: created_at, updated_at
-                            //Directions: asc, desc
+            limit//   Integer	25 Default 20	Size of the page of orders to be returned
         }
-        static public string[] ArrayStringQueryParameters =
+        static public string[] ArrayStringQueryParametersProduct =
            {
             "page",
-            "limit",
-            "code",
-            "sku",
-            "item_confirmation_status",
-            "item_inventory_type",
-            "fulfillment_type",
-            "status",
-            "include",
-            "is_rma",
-            "filter_date_by",
-            "created_from_date",
-            "created_to_date",
-            "updated_from_date",
-            "updated_to_date",
-            "order_by"
+            "limit"
         };
-
         /// <summary>
-        /// Lấy được tất cả đơn hàng cần xác nhận còn hàng của 1 shop
+        /// Lấy được danh sách tất cả sản phẩm của 1 shop
         /// </summary>
-        /// <param name="configApp">shop</param>
-        /// <returns>Danh sách đơn hàng. List rỗng nếu không lấy thành công</returns>
-        static public List<Order> GetListAllOrderNeedAvailabilityConfirmationOneShop(TikiConfigApp configApp)
+        /// <param name="configApp"></param>
+        /// <returns>Danh sách sản phẩm. List rỗng nếu không lấy thành công</returns>
+        public static List<Product> GetListLatestProductsFromOneShop(TikiConfigApp configApp)
         {
-            List<Order> lsOrder = new List<Order>();
+            List<Product> lsProduct = new List<Product>();
             if (configApp == null)
-                return lsOrder;
+                return lsProduct;
 
-            //GET /integration/v2/orders?page=1&limit=20&status=queueing&item_inventory_type=backorder&item_confirmation_status=waiting&filter_date_by=last30days
+            // GET https://api.tiki.vn/integration/v2/products?page=2&limit=20
             List<DevNameValuePair> listValuePair = new List<DevNameValuePair>();
             Int32 currentPage = 1;
             while (true)
@@ -98,25 +54,12 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
 
                     // Add limit=20
                     listValuePair.Add(new DevNameValuePair("limit", TikiConstValues.cstrPerPage));
-
-                    // Add status=queueing
-                    //listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.status], OrderStatus.ArrayStringOrderStatus[(int)OrderStatus.EnumOrderStatus.queueing]));
-
-                    // Add item_inventory_type=backorder
-                    listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.item_inventory_type], OrderItemInventoryType.ArrayStringOrderItemInventoryType[(int)OrderItemInventoryType.EnumOrderItemInventoryType.backorder]));
-
-                    // Add item_confirmation_status = waiting
-                    //listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.item_confirmation_status], OrderItemConfirmationStatus.ArrayStringOrderItemConfirmationStatus[(int)OrderItemConfirmationStatus.EnumOrderItemConfirmationStatus.waiting]));
-
-                    // Add filter_date_by=last30days
-                    listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.filter_date_by], OrderItemFilterByDate.ArrayStringOrderItemFilterByDate[(Int32)OrderItemFilterByDate.EnumOrderItemFilterByDate.today]));
                 }
                 else // Các page sau chỉ cập nhật currentpage
                 {
                     listValuePair[0].value = currentPage.ToString();
                 }
-
-                string http = TikiConstValues.cstrOrdersHTTPAddess + DevNameValuePair.GetQueryString(listValuePair);
+                string http = TikiConstValues.cstrProductsHTTPAddess + DevNameValuePair.GetQueryString(listValuePair);
                 MyLogger.GetInstance().Debug(http);
 
                 RestClient client = new RestClient(http);
@@ -139,38 +82,43 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
                         NullValueHandling = NullValueHandling.Ignore,
                         MissingMemberHandling = MissingMemberHandling.Ignore
                     };
-                    PageOrders pageOrders = JsonConvert.DeserializeObject<PageOrders>(json, settings);
-                    lsOrder.AddRange(pageOrders.data);
+                    PageProducts pageOrders = JsonConvert.DeserializeObject<PageProducts>(json, settings);
+                    lsProduct.AddRange(pageOrders.data);
                     if (currentPage == pageOrders.paging.last_page)
                         break;
                     else
                         currentPage++;
+
+                    /// Temporary Test
+                    if (currentPage == 1)
+                        break;
                 }
                 catch (Exception ex)
                 {
                     MyLogger.GetInstance().Warn(ex.Message);
                     MyLogger.GetInstance().Warn(json);
-                    lsOrder.Clear();
+                    lsProduct.Clear();
                     break;
                 }
             }
-            return lsOrder;
+
+            return lsProduct;
         }
 
         /// <summary>
-        /// Lấy được tất cả đơn hàng cần xác nhận còn hàng của nhiều shop đang sử dụng
+        /// Lấy danh sách sản phẩm của nhiều shop
         /// </summary>
-        /// <param name="listConfigApp">danh sách shop</param>
-        /// <returns>Danh sách đơn hàng. Rỗng nếu không lấy thành công</returns>
-        static public List<Order> GetListAllOrderNeedAvailabilityConfirmationAllShops(List<TikiConfigApp> listConfigApp)
+        /// <param name="listConfigApp"></param>
+        /// <returns></returns>
+        public static List<Product> GetListLatestProductsFromAllShop(List<TikiConfigApp> listConfigApp)
         {
-            List<Order> lsOrder = new List<Order>();
+            List<Product> lsProduct = new List<Product>();
             int num = listConfigApp.Count();
-            for(int i = 0; i < num; i++)
+            for (int i = 0; i < num; i++)
             {
-                lsOrder.AddRange(GetListAllOrderNeedAvailabilityConfirmationOneShop(listConfigApp[i]));
+                    lsProduct.AddRange(GetListLatestProductsFromOneShop(listConfigApp[i]));
             }
-            return lsOrder;
+            return lsProduct;
         }
     }
 }

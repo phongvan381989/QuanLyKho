@@ -19,6 +19,9 @@ namespace QuanLyKho.Model.Config
         private const string eTikiApplicationName = "Application";
         private const string eTikiAuthorizationName = "Authorization";
         private const string eTikiAccesTokenName = "AccessToken";
+        private const string eTikiExpiresInName = "ExpiresIn";
+        private const string eTikiScopeName = "Scope";
+        private const string eTikiTokenTypeName = "TokenType";
         private const string eTikiIDName = "ID";
         private const string eTikiHomeName = "Home";
         private const string eTikiSecretName = "Secret";
@@ -380,7 +383,13 @@ namespace QuanLyKho.Model.Config
             TikiConfigApp tikiConfig = new TikiConfigApp(xElement.Element(eTikiIDName).Value,
                 xElement.Element(eTikiHomeName).Value,
                 xElement.Element(eTikiSecretName).Value,
-                xElement.Element(eTikiUsingAppName).Value);
+                xElement.Element(eTikiUsingAppName).Value,
+                new TikiAuthorization(
+                    xElement.Element(eTikiAuthorizationName).Element(eTikiAccesTokenName).Value,
+                    xElement.Element(eTikiAuthorizationName).Element(eTikiExpiresInName).Value,
+                    xElement.Element(eTikiAuthorizationName).Element(eTikiScopeName).Value,
+                    xElement.Element(eTikiAuthorizationName).Element(eTikiTokenTypeName).Value
+                    ));
             return tikiConfig;
         }
 

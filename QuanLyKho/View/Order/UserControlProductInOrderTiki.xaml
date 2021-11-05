@@ -13,8 +13,8 @@
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="AvartarCell">
-            <Image Source="{Binding Path=avartar}"  Margin="0,0,5,0" Stretch="Uniform" MaxWidth="200" MaxHeight="200"/>
+        <DataTemplate x:Key="AvatarCell">
+            <Image Source="{Binding Path=avatar}"  Margin="0,0,5,0" Stretch="Uniform" MaxWidth="200" MaxHeight="200"/>
         </DataTemplate>
 
         <DataTemplate x:Key="CodeInWarehouseCell">
@@ -44,7 +44,7 @@
                           "{Binding Path=amount}" 
                       Header="Số Lượng" Width="100"/>
 
-                    <GridViewColumn CellTemplate="{StaticResource AvartarCell}"
+                    <GridViewColumn CellTemplate="{StaticResource AvatarCell}"
                       Header="Ảnh Đại Diện" Width="200"/>
 
                     <GridViewColumn CellTemplate="{StaticResource CodeInWarehouseCell}"

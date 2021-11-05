@@ -1,4 +1,5 @@
-﻿using QuanLyKho.Model.Dev.TikiApp.Orders;
+﻿using QuanLyKho.General;
+using QuanLyKho.Model.Dev.TikiApp.Orders;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -54,16 +55,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             string thumbnail = orderItemV2.product.thumbnail;
             // Lấy tên file ảnh
             // Từ url lấy được tên ảnh
-            int lastIndex = thumbnail.LastIndexOf('/');
-            if (lastIndex == -1 || lastIndex == thumbnail.Length - 1)
-            {
-                avartar = string.Empty;
-            }
-            else
-            {
-                string fileName = thumbnail.Substring(lastIndex + 1);
-                avartar = Path.Combine(((App)Application.Current).temporaryImageFolderPath, fileName);
-            }
+            avatar = Common.GetNameFromURL(thumbnail);
             amount = orderItemV2.qty;
         }
 
@@ -91,7 +83,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// <summary>
         /// Đường dẫn chứa ảnh đại diện
         /// </summary>
-        public string avartar { get; set; }
+        public string avatar { get; set; }
 
         ///// <summary>
         ///// vị trí lưu sản phẩm trong kho

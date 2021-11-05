@@ -20,6 +20,7 @@ namespace QuanLyKho
         private string pathDataXMLThongTinChiTiet;
         private string pathDataXMLNhapXuatChiTiet;
         private string pathDataXMLThongTinBaoMat;
+        private string pathDataXMLMappingSanPhamTMDT_SanPhamKho;
         private Int32 configTonKhoCanhBaoHetHangChung;
         private List<string> listImageFormats;
         private List<string> listVideoFormats;
@@ -34,6 +35,7 @@ namespace QuanLyKho
             pathDataXMLThongTinChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLThongTinChiTiet"]);
             pathDataXMLNhapXuatChiTiet = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLNhapXuatChiTiet"]);
             pathDataXMLThongTinBaoMat = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLThongTinBaoMat"]);
+            pathDataXMLMappingSanPhamTMDT_SanPhamKho = Path.Combine(pathApp, ConfigurationManager.AppSettings["XMLMappingSanPhamTMDT_SanPhamKho"]);
             string strTemp = ConfigurationManager.AppSettings["TonKhoCanhBaoHetHangChung"];
             if (!Int32.TryParse(strTemp, out configTonKhoCanhBaoHetHangChung))
                 configTonKhoCanhBaoHetHangChung = 5;// default value
@@ -60,6 +62,11 @@ namespace QuanLyKho
         public string GetPathDataXMLThongTinBaoMat()
         {
             return pathDataXMLThongTinBaoMat;
+        }
+
+        public string GetPathDataXMLMappingSanPhamTMDT_SanPhamKho()
+        {
+            return pathDataXMLMappingSanPhamTMDT_SanPhamKho;
         }
 
         public Int32 GetTonKhoCanhBaoHetHangChung()

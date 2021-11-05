@@ -132,6 +132,7 @@
     <Compile Include="Model\Dev\TikiApp\Products\Image.cs" />
     <Compile Include="Model\Dev\TikiApp\Products\Product.cs" />
     <Compile Include="Model\Dev\TikiApp\Products\Seller.cs" />
+    <Compile Include="Model\InOutWarehouse\ModelMappingSanPhamTMDT_SanPhamKho.cs" />
     <Compile Include="Model\InOutWarehouse\ModelNhapXuatChiTiet.cs" />
     <Compile Include="Model\InOutWarehouse\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />
@@ -146,6 +147,8 @@
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\ProductInOrderViewBindingTiki.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiGetListOrders.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiOrderViewBinding.cs" />
+    <Compile Include="ViewModel\Dev\TikiAPI\Products\GetListProductTiki.cs" />
+    <Compile Include="ViewModel\Dev\TikiAPI\Products\ProductViewBindingTiki.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
@@ -158,6 +161,9 @@
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetOrderDetail.cs" />
     <Compile Include="ViewModel\Orders\ViewModelProductInOrderTiki.cs" />
     <Compile Include="ViewModel\Orders\ViewModelOrderTiki.cs" />
+    <Compile Include="ViewModel\Products\CommandProductTiki_GetListLatestProduct.cs" />
+    <Compile Include="ViewModel\Products\CommandProductTiki_GetProductDetail.cs" />
+    <Compile Include="ViewModel\Products\ViewModelProductTiki.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelMedia.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTiet.cs" />
@@ -190,6 +196,12 @@
     </Compile>
     <Compile Include="View\Order\UserControlSMOrder.xaml.cs">
       <DependentUpon>UserControlSMOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Product\UserControlProductTiki.xaml.cs">
+      <DependentUpon>UserControlProductTiki.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Product\UserControlSMProduct.xaml.cs">
+      <DependentUpon>UserControlSMProduct.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlCommon\UserControlChonThoiGian.xaml.cs">
       <DependentUpon>UserControlChonThoiGian.xaml</DependentUpon>
@@ -271,6 +283,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Order\UserControlSMOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Product\UserControlProductTiki.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Product\UserControlSMProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

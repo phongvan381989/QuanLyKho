@@ -35,6 +35,8 @@ namespace QuanLyKho.View.Order
         private void CboxHomeAddressShopUsing_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var vm = (ViewModelOrderTiki)this.DataContext;
+            if (vm == null)
+                return;
             vm.RefreshView();
         }
     }

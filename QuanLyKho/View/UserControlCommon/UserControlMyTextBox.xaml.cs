@@ -297,6 +297,9 @@ namespace QuanLyKho.View.UserControlCommon
 
         private void MyTextBoxName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (MyTextBoxText == null)
+                return;
+
             /// Thêm dấu , mỗi 3 ký tự VD: 100,000,000
             if (MyTextBoxType == eMyTextBoxTypes.MyMoneyVND)
             {

@@ -13,10 +13,14 @@
     <Grid DataContext="{Binding Source={StaticResource vmThongTinChiTiet}}"> -->
     <Grid>
         <StackPanel>
+            <Button Name="GetList" Content="Danh sách" Style="{StaticResource MenuButtonStyle}" Command="{Binding commandGetListInOutWarehouse}"
+                    ToolTip="Ctrl + L. Lấy danh sách sản phẩm trong kho"></Button>
             <Button Name="Save" Content="Lưu" Style="{StaticResource MenuButtonStyle}" Command="{Binding commandSave}"
-                    ToolTip="Ctrl + S. Lưu sản phẩm mới hoặc cập nhật thông tin sản phẩm cũ"/>
+                    ToolTip="Ctrl + S. Lưu sản phẩm mới hoặc cập nhật thông tin sản phẩm cũ"
+                    Visibility="{Binding Path=visibilitySaveDelete, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Name="Delete" Content="Xóa" Style="{StaticResource MenuButtonStyle}" Command="{Binding commandDelete}"
-                    ToolTip="Ctrl + D. Xóa sản phẩm"/>
+                    ToolTip="Ctrl + D. Xóa sản phẩm"
+                    Visibility="{Binding Path=visibilitySaveDelete, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
     </Grid>
 </UserControl>

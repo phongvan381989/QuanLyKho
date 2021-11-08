@@ -53,7 +53,7 @@ namespace QuanLyKho
         /// <summary>
         /// Đối tượng MainContentContainer chứa 1 usercontrol tại 1 thời điểm. Hàm này lấy type của usercontrol hiện tại
         /// </summary>
-        private Type GetTypeOfMainContentContainer()
+        public Type GetTypeOfMainContentContainer()
         {
             if(MainContentContainer.Children.Count == 1)
             {
@@ -65,7 +65,7 @@ namespace QuanLyKho
             return null;
         }
 
-        private void MMNhapXuat_Click(object sender, RoutedEventArgs e)
+        public void MMNhapXuat_Click(object sender, RoutedEventArgs e)
         {
             if (mainMenuSelect == MainMenuSelectIndex.NhapXuat)
                 return;
@@ -79,16 +79,18 @@ namespace QuanLyKho
                 vmThongTinChiTiet.UpdateSanPhamHienThi();
                 this.DataContext = vmThongTinChiTiet;
 
-                MainContentContainer.Children.Clear();
-                UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
-                MainContentContainer.Children.Add(ucThongTinChiTiet);
+                //MainContentContainer.Children.Clear();
+                //UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
+                //MainContentContainer.Children.Add(ucThongTinChiTiet);
 
                 SubMenuContainer.Children.Clear();
                 SubMenuContainer.Children.Add(new UserControlSMNhapXuat());
+
+                SetMainContentContainer(new UserControlThongTinChiTiet(), vmThongTinChiTiet);
             }
         }
 
-        private void MMDevelop_Click(object sender, RoutedEventArgs e)
+        public void MMDevelop_Click(object sender, RoutedEventArgs e)
         {
             if (mainMenuSelect == MainMenuSelectIndex.Dev)
                 return;
@@ -99,7 +101,7 @@ namespace QuanLyKho
             SubMenuContainer.Children.Add(new UserControlSMDevelop());
         }
 
-        private void MMConfig_Click(object sender, RoutedEventArgs e)
+        public void MMConfig_Click(object sender, RoutedEventArgs e)
         {
             if (mainMenuSelect == MainMenuSelectIndex.Config)
                 return;
@@ -126,7 +128,7 @@ namespace QuanLyKho
             MainContentContainer.DataContext = viewBase;
         }
 
-        private void MMOrder_Click(object sender, RoutedEventArgs e)
+        public void MMOrder_Click(object sender, RoutedEventArgs e)
         {
             if (mainMenuSelect == MainMenuSelectIndex.Order)
                 return;
@@ -138,7 +140,7 @@ namespace QuanLyKho
             SetMainContentContainer(new UserControlOrderTiki(), new ViewModelOrderTiki());
         }
 
-        private void MMProduct_Click(object sender, RoutedEventArgs e)
+        public void MMProduct_Click(object sender, RoutedEventArgs e)
         {
             if (mainMenuSelect == MainMenuSelectIndex.Product)
                 return;
@@ -148,6 +150,11 @@ namespace QuanLyKho
 
             mainMenuSelect = MainMenuSelectIndex.Product;
             SetMainContentContainer(new UserControlProductTiki(), new ViewModelProductTiki());
+        }
+
+        public void GetListInOutInWarehouse()
+        {
+            SetMainContentContainer(new UserControlListInOutWarehouse(), new ViewModelListInOutWarehouse());
         }
     }
 }

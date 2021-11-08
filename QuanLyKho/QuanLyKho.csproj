@@ -154,9 +154,11 @@
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateRight.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Delete.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_ListInOutWarehouse.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Save.cs" />
     <Compile Include="ViewModel\Dev\DevNameValuePair.cs" />
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\ViewModelListInOutWarehouse.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetOrderDetail.cs" />
     <Compile Include="ViewModel\Orders\ViewModelProductInOrderTiki.cs" />
@@ -187,6 +189,9 @@
     </Compile>
     <Compile Include="View\InOutWarehouse\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InOutWarehouse\UserControlListInOutWarehouse.xaml.cs">
+      <DependentUpon>UserControlListInOutWarehouse.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Order\UserControlProductInOrderTiki.xaml.cs">
       <DependentUpon>UserControlProductInOrderTiki.xaml</DependentUpon>
@@ -271,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InOutWarehouse\Media.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InOutWarehouse\UserControlListInOutWarehouse.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

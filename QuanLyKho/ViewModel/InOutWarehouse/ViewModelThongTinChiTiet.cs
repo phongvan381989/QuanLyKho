@@ -33,7 +33,33 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         public ModelThongTinChiTiet sanPhamHienThi { get; set; }
         public ModelNhapXuatChiTiet nhapXuatChiTiet { get; set; }
 
-        
+        private CommandThongTinChiTiet_ListInOutWarehouse _commandGetListInOutWarehouse;
+        public CommandThongTinChiTiet_ListInOutWarehouse commandGetListInOutWarehouse
+        {
+            get
+            {
+                return _commandGetListInOutWarehouse;
+            }
+        }
+
+        private Visibility pvisibilitySaveDelete;
+        public Visibility visibilitySaveDelete
+        {
+            get
+            {
+                return pvisibilitySaveDelete;
+            }
+
+            set
+            {
+                if(pvisibilitySaveDelete !=value)
+                {
+                    pvisibilitySaveDelete = value;
+                    OnPropertyChanged("visibilitySaveDelete");
+                }
+            }
+        }
+
         public ViewModelThongTinChiTiet()
         {
             vmMedia = new ViewModelMedia();
@@ -48,6 +74,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
             _commandSave = new CommandThongTinChiTiet_Save(this);
             _commandDelete = new CommandThongTinChiTiet_Delete(this);
+            _commandGetListInOutWarehouse = new CommandThongTinChiTiet_ListInOutWarehouse(this);
+            visibilitySaveDelete = Visibility.Visible;
         }
 
         #region Mã sản phẩm
@@ -786,6 +814,13 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             listTenSanPham = sanPhamHienThi.ListTenSanPham();
             listNhaPhatHanh = sanPhamHienThi.ListNhaPhatHanh();
             listNhaXuatBan = sanPhamHienThi.ListNhaXuatBan();
+        }
+
+        public void GetListInOutWarehouse()
+        {
+            visibilitySaveDelete = Visibility.Collapsed;
+            MainWindow mw = (MainWindow)App.Current.MainWindow;
+            mw.GetListInOutInWarehouse();
         }
     }
 }

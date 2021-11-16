@@ -24,5 +24,10 @@ namespace QuanLyKho.View.InOutWarehouse
         {
             InitializeComponent();
         }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

@@ -25,7 +25,7 @@
             <DockPanel LastChildFill = "True">
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                     <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged,
-                        Mode=TwoWay}" Name="tbOrderCode"></TextBox>
+                        Mode=TwoWay}" Name="tbOrderCode" Style="{StaticResource TextBoxStyleCode}"></TextBox>
                     <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandOrderTiki_GetOrderDetail}">Chi Tiết Đơn Hàng</Button>
                 </StackPanel>
                 <ListView ItemsSource="{Binding Path=listOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"

@@ -12,15 +12,10 @@ using System.Xml.Linq;
 
 namespace QuanLyKho.Model
 {
-    public class ModelThongTinChiTiet : ModelXML
+    public class ModelThongTinChiTiet
     {
-        static public XDocument xDoc = null; // Biến thao tác xml file duy nhất cho mọi đối tượng
         public ModelThongTinChiTiet()
         {
-            pathXML = ((App)Application.Current).GetPathDataXMLThongTinChiTiet();
-            InitializeXDoc(ref xDoc);
-            InitializeBuffer();
-            //ThemThanhPhanMoi("KhoiLuong", null);
         }
 
         #region list phục vụ truy xuất nhanh thành phần
@@ -28,12 +23,12 @@ namespace QuanLyKho.Model
         private ObservableCollection<string> listNhaXuatBan;
         private ObservableCollection<string> listMaSanPham;
         private ObservableCollection<string> listTenSanPham;
-        private void InitializeBuffer()
+        public void InitializeBuffer(XMLAction action)
         {
-            listMaSanPham = ListGiaTriMotThanhPhanFromXDoc("MaSanPham", false);
-            listTenSanPham = ListGiaTriMotThanhPhanFromXDoc("TenSanPham", false);
-            listNhaPhatHanh = ListGiaTriMotThanhPhanFromXDoc("NhaPhatHanh", false);
-            listNhaXuatBan = ListGiaTriMotThanhPhanFromXDoc("NhaXuatBan", false);
+            listMaSanPham = ListGiaTriMotThanhPhanFromXDoc(action, "MaSanPham", false);
+            listTenSanPham = ListGiaTriMotThanhPhanFromXDoc(action, "TenSanPham", false);
+            listNhaPhatHanh = ListGiaTriMotThanhPhanFromXDoc(action, "NhaPhatHanh", false);
+            listNhaXuatBan = ListGiaTriMotThanhPhanFromXDoc(action, "NhaXuatBan", false);
         }
 
         /// <summary>
@@ -109,7 +104,7 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Thêm 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
-        public Boolean AddAProduceToXDocAndSave()
+        public Boolean AddAProduceToXDocAndSave(XMLAction action)
         {
             Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
             XElement aProduce = new XElement("SanPham",
@@ -132,11 +127,11 @@ namespace QuanLyKho.Model
                 new XElement("ViTriLuuKho", viTriLuuKho)
                 );
 
-            xDoc.Root.Add(aProduce);
-            xDoc.Save(pathXML, SaveOptions.None);
+            action.xDoc.Root.Add(aProduce);
+            action.xDoc.Save(action.pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
             // Cập nhật vào list truy xuất nhanh
-            InitializeBuffer();
+            InitializeBuffer(action);
 
             return true;
         }
@@ -146,14 +141,14 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="maSP"></param>
         /// <returns></returns>
-        private XElement GetAXElementFromMaSanPham(string maSP)
+        private XElement GetAXElementFromMaSanPham(XMLAction action, string maSP)
         {
             XElement eExist = null;
-            if (xDoc == null)
+            if (action.xDoc == null)
                 return eExist;
 
             IEnumerable<XElement> le = null;
-            le = xDoc
+            le = action.xDoc
                 .Element("ThongTinChiTiet")
                 .Elements("SanPham")
                 .Where(e => e.Element("MaSanPham").Value == maSP);
@@ -169,14 +164,14 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="tenSP"></param>
         /// <returns></returns>
-        private XElement GetAXElementFromTenSanPham(string tenSP)
+        private XElement GetAXElementFromTenSanPham(XMLAction action, string tenSP)
         {
             XElement eExist = null;
-            if (xDoc == null)
+            if (action.xDoc == null)
                 return eExist;
 
             IEnumerable<XElement> le;
-            le = xDoc
+            le = action.xDoc
                 .Element("ThongTinChiTiet")
                 .Elements("SanPham")
                 .Where(e => e.Element("TenSanPham").Value == tenSP);
@@ -191,9 +186,9 @@ namespace QuanLyKho.Model
         /// Cập nhật 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
         /// <returns></returns>
-        public Boolean UpdateAProducToXDocAndSave()
+        public Boolean UpdateAProducToXDocAndSave(XMLAction action)
         {
-            XElement eExist = GetAXElementFromMaSanPham(maSanPham);
+            XElement eExist = GetAXElementFromMaSanPham(action, maSanPham);
             if (eExist == null)
                 return false;
 
@@ -214,7 +209,7 @@ namespace QuanLyKho.Model
             eExist.Element("ThuMucMedia").Value = string.IsNullOrEmpty(thuMucMedia) ? string.Empty : thuMucMedia;
             eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTiet) ? string.Empty : moTaChiTiet;
             eExist.Element("ViTriLuuKho").Value = string.IsNullOrEmpty(viTriLuuKho) ? string.Empty : viTriLuuKho;
-            xDoc.Save(pathXML, SaveOptions.None);
+            action.xDoc.Save(action.pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
             return true;
         }
@@ -235,12 +230,12 @@ namespace QuanLyKho.Model
         /// <param name="name"></param>
         /// <param name="isIncludeSame">False:Kết quả trả về gồm các giá trị khác nhau. True: cá giá trị có thể giống nhau</param>
         /// <returns></returns>
-        public ObservableCollection<string> ListGiaTriMotThanhPhanFromXDoc(string name, Boolean isIncludeSame)
+        public ObservableCollection<string> ListGiaTriMotThanhPhanFromXDoc(XMLAction action, string name, Boolean isIncludeSame)
         {
             ObservableCollection<string> list = new ObservableCollection<string>();
-            if (xDoc != null)
+            if (action.xDoc != null)
             {
-                foreach (XElement element in xDoc.Descendants(name))
+                foreach (XElement element in action.xDoc.Descendants(name))
                 {
                     if (!string.IsNullOrEmpty(element.Value))
                     {
@@ -284,15 +279,15 @@ namespace QuanLyKho.Model
         /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
         /// <param name="isIncludeSame">False:Kết quả trả về gồm các giá trị khác nhau. True: cá giá trị có thể giống nhau</param>
         /// <returns></returns>
-        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiATextFromXDoc(string name, string str, ParameterSearch parameterSearch, Boolean isIncludeSame)
+        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiATextFromXDoc(XMLAction action, string name, string str, ParameterSearch parameterSearch, Boolean isIncludeSame)
         {
            if (string.IsNullOrEmpty(str))
-                return ListGiaTriMotThanhPhanFromXDoc(name, isIncludeSame);
+                return ListGiaTriMotThanhPhanFromXDoc(action, name, isIncludeSame);
 
             ObservableCollection<string> list = new ObservableCollection<string>();
-            if (xDoc != null)
+            if (action.xDoc != null)
             {
-                foreach (XElement element in xDoc.Descendants(name))
+                foreach (XElement element in action.xDoc.Descendants(name))
                 {
                     if (!string.IsNullOrEmpty(element.Value))
                     {
@@ -439,15 +434,15 @@ namespace QuanLyKho.Model
             return GetListFromName("TenSanPham");
         }
 
-        public Boolean Delete()
+        public Boolean Delete(XMLAction action)
         {
-            if(xDoc!=null)
+            if(action.xDoc !=null)
             {
-                xDoc
+                action.xDoc
                     .Element("ThongTinChiTiet")
                     .Elements("SanPham")
                     .Where(e => e.Element("MaSanPham").Value == maSanPham).Remove();
-                xDoc.Save(pathXML, SaveOptions.None);
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
             }
             return true;
         }
@@ -481,12 +476,12 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Từ mã sản phẩm lấy thông tin sản phẩm
         /// </summary>
-        public void GetASanPhamFromMaSanPham(string maSP)
+        public void GetASanPhamFromMaSanPham(XMLAction action, string maSP)
         {
             if (string.IsNullOrEmpty(maSP))
                 return;
 
-            XElement eExist = GetAXElementFromMaSanPham(maSP);
+            XElement eExist = GetAXElementFromMaSanPham(action, maSP);
             if (eExist == null)
                 return;
             ConvertXElementToModel(eExist);
@@ -495,12 +490,12 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Từ tên sản phẩm lấy thông tin sản phẩm
         /// </summary>
-        public void GetASanPhamFromTenSanPham(string tenSP)
+        public void GetASanPhamFromTenSanPham(XMLAction action, string tenSP)
         {
             if (string.IsNullOrEmpty(tenSP))
                 return;
 
-            XElement eExist = GetAXElementFromTenSanPham(tenSP);
+            XElement eExist = GetAXElementFromTenSanPham(action, tenSP);
             if (eExist == null)
                 return;
             ConvertXElementToModel(eExist);
@@ -512,16 +507,16 @@ namespace QuanLyKho.Model
         /// <param name="name"> Tên thành phần mới</param>
         /// <param name="value">Giá trị thành phần mới</param>
         /// <return>Thành công trả về string trống. Ngược lại trả về thông tin lỗi</return>
-        public string ThemThanhPhanMoi(string name, string value)
+        public string ThemThanhPhanMoi(XMLAction action, string name, string value)
         {
             string mes = string.Empty;
-            if(xDoc == null)
+            if(action.xDoc == null)
             {
                 mes = "Dữ liệu thông tin chi tiết sản phẩm chưa có.";
                 return mes;
             }
             // Lấy <SanPham> đầu tiên, check xem tên mới đã tồn tại hay chưa
-            XElement eFirstProduce = xDoc
+            XElement eFirstProduce = action.xDoc
                     .Element("ThongTinChiTiet")
                     .Element("SanPham");
 
@@ -529,7 +524,7 @@ namespace QuanLyKho.Model
             {
                 eFirstProduce = new XElement("SanPham",
                     new XElement(name, value));
-                xDoc.Root.Add(eFirstProduce);
+                action.xDoc.Root.Add(eFirstProduce);
             }
 
             // Check tên thành phần mới đã tồn tại
@@ -543,11 +538,11 @@ namespace QuanLyKho.Model
             }
 
             // Thêm thành phần mới
-            foreach(var element in xDoc.Root.Elements("SanPham"))
+            foreach(var element in action.xDoc.Root.Elements("SanPham"))
             {
                 element.Add(new XElement(name, value));
             }
-            xDoc.Save(pathXML, SaveOptions.None);
+            action.xDoc.Save(action.pathXML, SaveOptions.None);
             return mes;
         }
 
@@ -559,13 +554,13 @@ namespace QuanLyKho.Model
         /// <param name="tenSP"></param>
         /// <param name="isCheckExist">true: Có check mã sản phẩm tồn tại hay không</param>
         /// <returns></returns>
-        public Boolean CanUpdateAProducde(string maSP, string tenSP, Boolean isCheckMaSPExist)
+        public Boolean CanUpdateAProducde(XMLAction action, string maSP, string tenSP, Boolean isCheckMaSPExist)
         {
             // Check maSanPham có tồn tại
             XElement eExist = null;
             if (isCheckMaSPExist)
             {
-                eExist = GetAXElementFromMaSanPham(maSP);
+                eExist = GetAXElementFromMaSanPham(action, maSP);
                 if (eExist == null)
                 {
                     errorMessage = "Mã sản phẩm không tồn tại. Không thể cập nhật thông tin sản phẩm với mã này.";
@@ -575,7 +570,7 @@ namespace QuanLyKho.Model
             }
 
             // Check tên sản phẩm là duy nhất, và thuộc mã sản phẩm trên
-            eExist = GetAXElementFromTenSanPham(tenSP);
+            eExist = GetAXElementFromTenSanPham(action, tenSP);
             if(eExist != null && string.Compare(eExist.Element("MaSanPham")?.Value, maSP) != 0)
             {
                 errorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể cập nhật thông tin sản phẩm với tên này.";
@@ -593,13 +588,13 @@ namespace QuanLyKho.Model
         /// <param name="tenSP"></param>
         /// <param name="isCheckExist">true: Có check mã sản phẩm tồn tại hay không</param>
         /// <returns></returns>
-        public Boolean CanAddAProduceWithTenSP(string maSP, string tenSP, Boolean isCheckMaSPExist)
+        public Boolean CanAddAProduceWithTenSP(XMLAction action, string maSP, string tenSP, Boolean isCheckMaSPExist)
         {
             // Check maSanPham có tồn tại
             XElement eExist = null;
             if (isCheckMaSPExist)
             {
-                eExist = GetAXElementFromMaSanPham(maSP);
+                eExist = GetAXElementFromMaSanPham(action, maSP);
                 if (eExist != null)
                 {
                     errorMessage = "Mã sản phẩm đã tồn tại. Không thể tạo mới sản phẩm với mã này.";
@@ -608,7 +603,7 @@ namespace QuanLyKho.Model
                 }
             }
             // Check tên sản phẩm là duy nhất, và thuộc mã sản phẩm trên
-            eExist = GetAXElementFromTenSanPham(tenSP);
+            eExist = GetAXElementFromTenSanPham(action, tenSP);
             if (eExist != null)
             {
                 errorMessage = "Tên sản phẩm đã tồn tại với mã sản phẩm khác. Không thể dùng tên này với sản phẩm tạo mới.";
@@ -619,8 +614,19 @@ namespace QuanLyKho.Model
             return true;
         }
 
+        /// <summary>
+        /// Lấy được danh sách sản phẩm trong kho theo mã.
+        /// Mã trống hoặc null ta lấy danh sách tất cả sản phẩm trong kho
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public List<ModelThongTinChiTiet> GetListProductFromCode(string code)
+        {
+            List<ModelThongTinChiTiet> ls = new List<ModelThongTinChiTiet>();
+            return ls;
+        }
 
-        public Boolean CreateSampleData()
+        public Boolean CreateSampleData(XMLAction action)
         {
             string mspTemp = maSanPham;
             string tspTemp = tenSanPham;
@@ -631,7 +637,7 @@ namespace QuanLyKho.Model
                     string str = "_" + i.ToString();
                     maSanPham = mspTemp + str;
                     tenSanPham = tspTemp + str;
-                    AddAProduceToXDocAndSave();
+                    AddAProduceToXDocAndSave(action);
                 }
             }
             catch(Exception)

@@ -7,6 +7,39 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Content="Test"></Button>
+        <DockPanel LastChildFill = "True">
+            <WrapPanel Orientation="Vertical" DockPanel.Dock = "Top" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Mã Sản Phẩm</TextBlock>
+                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductCode, UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}" Name="tbProductCode" Style="{StaticResource TextBoxStyleCode}"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Tên Sản Phẩm</TextBlock>
+                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductName, UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}" Name="tbProductName" Style="{StaticResource TextBoxStyleCode}"></TextBox>
+                </StackPanel>
+                <WrapPanel>
+                    <Button Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding Path=commandSearch}"
+                        ToolTip="Tìm kiếm sản phẩm trong kho">Tìm Kiếm</Button>
+                </WrapPanel>
+            </WrapPanel>
+            <DockPanel LastChildFill = "True">
+                <ListView ItemsSource="{Binding Path=listProductInOutWareHouse, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                          SelectedValue="{Binding Path=textProductCode, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                          SelectedValuePath="code"
+                          SelectedIndex="{Binding Path=indexInList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          MouseDoubleClick="ListView_MouseDoubleClick">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mã" Width="200" DisplayMemberBinding="{Binding code}" />
+                            <GridViewColumn Header="Tên" Width="300" DisplayMemberBinding="{Binding name}" />
+                            <GridViewColumn Header="Tồn Kho" Width="100" DisplayMemberBinding="{Binding quantity}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </DockPanel>
+        </DockPanel>
     </Grid>
 </UserControl>

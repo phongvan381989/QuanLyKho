@@ -36,6 +36,7 @@ namespace QuanLyKho
         {
             None,
             NhapXuat,
+            ListInOutWarehouse,
             Product,
             Order,
             Config,
@@ -154,6 +155,9 @@ namespace QuanLyKho
 
         public void GetListInOutInWarehouse()
         {
+            if (mainMenuSelect == MainMenuSelectIndex.ListInOutWarehouse)
+                return;
+            mainMenuSelect = MainMenuSelectIndex.ListInOutWarehouse;
             SetMainContentContainer(new UserControlListInOutWarehouse(), new ViewModelListInOutWarehouse());
         }
     }

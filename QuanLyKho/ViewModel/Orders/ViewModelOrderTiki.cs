@@ -232,7 +232,7 @@ namespace QuanLyKho.ViewModel.Orders
         {
             if(indexOrderInList == -1)
             {
-                MessageBox.Show("Chưa chọn đơn nào.");
+                MessageBox.Show("Chưa chọn đơn.");
                 return;
             }
             Window wdOrderDetail = new Window

@@ -150,7 +150,8 @@
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiOrderViewBinding.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Products\GetListProductTiki.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Products\ProductViewBindingTiki.cs" />
-    <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_Search.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_SearchFromCode.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_SearchFromName.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ProductInOutWarehoseViewBinding.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelListInOutWarehouse.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTietViewOnly.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetOrderDetail.cs" />
     <Compile Include="ViewModel\Orders\ViewModelProductInOrderTiki.cs" />
@@ -195,6 +197,9 @@
     </Compile>
     <Compile Include="View\InOutWarehouse\UserControlListInOutWarehouse.xaml.cs">
       <DependentUpon>UserControlListInOutWarehouse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InOutWarehouse\UserControlThongTinChiTietViewOnly.xaml.cs">
+      <DependentUpon>UserControlThongTinChiTietViewOnly.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Order\UserControlProductInOrderTiki.xaml.cs">
       <DependentUpon>UserControlProductInOrderTiki.xaml</DependentUpon>
@@ -283,6 +288,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InOutWarehouse\UserControlListInOutWarehouse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InOutWarehouse\UserControlThongTinChiTietViewOnly.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,22 +13,26 @@
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Mã Sản Phẩm</TextBlock>
                     <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductCode, UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}" Name="tbProductCode" Style="{StaticResource TextBoxStyleCode}"></TextBox>
+                    <TextBlock Width="20"/>
+                    <Button Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding Path=commandSearchFromCode}"
+                        ToolTip="Tìm kiếm sản phẩm trong kho theo mã.">Tìm Kiếm</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="10">
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                        <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Tên Sản Phẩm</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Tên Sản Phẩm</TextBlock>
                     <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductName, UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}" Name="tbProductName" Style="{StaticResource TextBoxStyleCode}"></TextBox>
-                </StackPanel>
-                <WrapPanel>
+                    <TextBlock Width="20"/>
                     <Button Style="{StaticResource ButtonStyle}" 
-                        Command="{Binding Path=commandSearch}"
-                        ToolTip="Tìm kiếm sản phẩm trong kho">Tìm Kiếm</Button>
-                </WrapPanel>
+                        Command="{Binding Path=commandSearchFromName}"
+                        ToolTip="Tìm kiếm sản phẩm trong khotheo tên.">Tìm Kiếm</Button>
+                </StackPanel>
             </WrapPanel>
             <DockPanel LastChildFill = "True">
                 <ListView ItemsSource="{Binding Path=listProductInOutWareHouse, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                          SelectedValue="{Binding Path=textProductCode, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
-                          SelectedValuePath="code"
+                          SelectedItem="{Binding Path=itemProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                           SelectedIndex="{Binding Path=indexInList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.View>

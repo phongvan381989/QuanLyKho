@@ -1,4 +1,5 @@
 ﻿using QuanLyKho.Model;
+using QuanLyKho.View.InOutWarehouse;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,13 +18,14 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
         public ViewModelListInOutWarehouse()
         {
-            _commandSearch = new CommandListInOutWarehouse_Search(this);
+            _commandSearchFromCode = new CommandListInOutWarehouse_SearchFromCode(this);
+            _commandSearchFromName = new CommandListInOutWarehouse_SearchFromName(this);
             indexInList = -1;
             textProductCode = string.Empty;
             actionModelThongTinChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
             listProductInOutWareHouse = new ObservableCollection<ProductInOutWarehoseViewBinding>();
             lsTTCT = ModelThongTinChiTiet.GetListProductFromCode(actionModelThongTinChiTiet, "");
-            Search();
+            SearchFromCode();
         }
 
         private int pindexInList;
@@ -97,12 +99,44 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
         }
 
-        private CommandListInOutWarehouse_Search _commandSearch;
-        public CommandListInOutWarehouse_Search commandSearch
+        private ProductInOutWarehoseViewBinding pitemProduct;
+        public ProductInOutWarehoseViewBinding itemProduct
         {
             get
             {
-                return _commandSearch;
+                return pitemProduct;
+            }
+
+            set
+            {
+                if(pitemProduct != value)
+                {
+                    pitemProduct = value;
+                    OnPropertyChanged("itemProduct");
+                    if (pitemProduct != null)
+                    {
+                        textProductCode = pitemProduct.code;
+                        textProductName = pitemProduct.name;
+                    }
+                }
+            }
+        }
+
+        private CommandListInOutWarehouse_SearchFromCode _commandSearchFromCode;
+        public CommandListInOutWarehouse_SearchFromCode commandSearchFromCode
+        {
+            get
+            {
+                return _commandSearchFromCode;
+            }
+        }
+
+        private CommandListInOutWarehouse_SearchFromName _commandSearchFromName;
+        public CommandListInOutWarehouse_SearchFromName commandSearchFromName
+        {
+            get
+            {
+                return _commandSearchFromName;
             }
         }
 
@@ -112,8 +146,9 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         /// Cache lưu tất cả sản phẩm trong kho lấy cho nhanh
         /// </summary>
         List<ModelThongTinChiTiet> lsTTCT;
-        public void Search()
+        public void SearchFromCode()
         {
+            textProductName = string.Empty;
             listProductInOutWareHouse.Clear();
             if (string.IsNullOrEmpty(textProductCode)) // Lấy tất cả danh sách
             {
@@ -126,10 +161,50 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             {
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
-                    if(e.maSanPham.Equals(textProductCode))
+                    if(e.maSanPham.IndexOf(textProductCode, StringComparison.OrdinalIgnoreCase) >= 0)
                         listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(e.maSanPham, e.tenSanPham, e.tonKho));
                 }
             }
+        }
+
+        public void SearchFromName()
+        {
+            textProductCode = string.Empty;
+            listProductInOutWareHouse.Clear();
+            if (string.IsNullOrEmpty(textProductName)) // Lấy tất cả danh sách
+            {
+                foreach (ModelThongTinChiTiet e in lsTTCT)
+                {
+                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(e.maSanPham, e.tenSanPham, e.tonKho));
+                }
+            }
+            else
+            {
+                foreach (ModelThongTinChiTiet e in lsTTCT)
+                {
+                    if (e.tenSanPham.IndexOf(textProductName, StringComparison.OrdinalIgnoreCase) >= 0)
+                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(e.maSanPham, e.tenSanPham, e.tonKho));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Hiển thị cửa sổ thông tin chi tiết sản phẩm trong kho
+        /// </summary>
+        public void GetProductInOutWarehosueDetail()
+        {
+            if (indexInList == -1)
+            {
+                MessageBox.Show("Chưa chọn sản phẩm.");
+                return;
+            }
+            Window wdOrderDetail = new Window
+            {
+                Content = new UserControlThongTinChiTietViewOnly()
+            };
+            wdOrderDetail.DataContext = new ViewModelThongTinChiTietViewOnly(textProductCode);
+            wdOrderDetail.WindowState = WindowState.Maximized;
+            wdOrderDetail.ShowDialog();
         }
     }
 }

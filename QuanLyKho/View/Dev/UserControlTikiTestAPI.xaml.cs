@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QuanLyKho.Model;
 using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev;
 using QuanLyKho.Model.Dev.TikiApp;
@@ -35,10 +36,11 @@ namespace QuanLyKho.View.Dev
         public UserControlTikiTestAPI()
         {
             InitializeComponent();
+            actionModelMappingSanPhamTMDT_SanPhamKho = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
         }
         string strHTTPRequest;
         string strHTTPResponse;
-
+        XMLAction actionModelMappingSanPhamTMDT_SanPhamKho;
         private void GetTokenAuthorization_Click(object sender, RoutedEventArgs e)
         {
             //Application.Current.MainWindow.;
@@ -74,7 +76,7 @@ namespace QuanLyKho.View.Dev
             var client = new RestClient(TikiConstValues.cstrAuthenHTTPAddress);
             RestRequest request = new RestRequest(Method.POST);
             //request.AddHeader("Authorization", "Basic NjI0OTcxNjgyMDkyMjIyNjpDQXlUOUJ6Q3dTQXpFMkpzempud3huN3dxUnZlcDdFWg==");
-            request.AddHeader("Authorization", "Basic " + CommonTikiAPI.ttbm.Tiki_GetAppCredentialBase64Format(clientID));
+            request.AddHeader("Authorization", "Basic " + CommonTikiAPI.ttbm.Tiki_GetAppCredentialBase64Format(CommonTikiAPI.action, clientID));
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "client_credentials");
             request.AddParameter("client_id", clientID);
@@ -89,7 +91,7 @@ namespace QuanLyKho.View.Dev
                 ShowHTTPRequestAndResponse();
 
                 TikiAuthorization accessToken = JsonConvert.DeserializeObject<TikiAuthorization>(response.Content);
-                CommonTikiAPI.ttbm.Tiki_InhouseAppSaveAccessToken(clientID, accessToken);
+                CommonTikiAPI.ttbm.Tiki_InhouseAppSaveAccessToken(CommonTikiAPI.action, clientID, accessToken);
             }
         }
 
@@ -140,14 +142,15 @@ namespace QuanLyKho.View.Dev
             ////PagingProduct pProduct = JsonConvert.DeserializeObject<PagingProduct>(json, settings);
 
             ModelMappingSanPhamTMDT_SanPhamKho map = new ModelMappingSanPhamTMDT_SanPhamKho();
+            map.InitializeStruct(actionModelMappingSanPhamTMDT_SanPhamKho);
 
             List<string> lsID = new List<string>();
             lsID.Add("Maru001a");
             lsID.Add("Maru002b");
             lsID.Add("Maru003c");
             lsID.Add("Maru004d");
-            map.Tiki_AddOrUpdate("123456a", lsID);
-            map.Tiki_Delete("123456");
+            map.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", lsID);
+            map.Tiki_Delete(actionModelMappingSanPhamTMDT_SanPhamKho, "123456");
             int x;
             x = 5;
 

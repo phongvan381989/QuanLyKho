@@ -32,6 +32,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         }
         public XMLAction actionModelThongTinChiTiet { get; set; }
         public ModelThongTinChiTiet sanPhamHienThi { get; set; }
+
+        public XMLAction actionModelNhapXuatChiTiet { get; set; }
         public ModelNhapXuatChiTiet nhapXuatChiTiet { get; set; }
 
         private CommandThongTinChiTiet_ListInOutWarehouse _commandGetListInOutWarehouse;
@@ -65,6 +67,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         {
             vmMedia = new ViewModelMedia();
             actionModelThongTinChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
+
+            actionModelNhapXuatChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLNhapXuatChiTiet());
             try
             {
                 sanPhamHienThi = new ModelThongTinChiTiet();
@@ -180,7 +184,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 else
                 {
                     sanPhamHienThi.maSanPham = value;
-                    sanPhamHienThi.GetASanPhamFromMaSanPham(actionModelThongTinChiTiet, sanPhamHienThi.maSanPham);
+                    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(actionModelThongTinChiTiet, sanPhamHienThi.maSanPham);
                     UpdateListBufferAll();
                     OnPropertyChangedAll();
 
@@ -328,7 +332,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 else
                 {
                     sanPhamHienThi.tenSanPham = value;
-                    sanPhamHienThi.GetASanPhamFromTenSanPham(actionModelThongTinChiTiet, sanPhamHienThi.tenSanPham);
+                    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromTenSanPham(actionModelThongTinChiTiet, sanPhamHienThi.tenSanPham);
                     UpdateListBufferAll();
                     OnPropertyChangedAll();
                     bCheckSelectedItemFromListTSP = false;
@@ -737,7 +741,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                         }
                     }
                     // Lưu thông tin nhập xuất chi tiết
-                    if(!nhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(maSanPham, soLuongNhap))
+                    if(!nhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, maSanPham, soLuongNhap))
                     {
                         bResult = false;
                         break;
@@ -808,7 +812,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
 
             sanPhamHienThi.Delete(actionModelThongTinChiTiet);
-            nhapXuatChiTiet.Delete(maSanPham);
+            nhapXuatChiTiet.Delete(actionModelNhapXuatChiTiet, maSanPham);
             General.Common.ShowAutoClosingMessageBox("Xóa thành công", "Xóa");
         }
 

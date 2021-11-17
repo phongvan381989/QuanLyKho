@@ -46,26 +46,22 @@ namespace QuanLyKho.Model.InOutWarehouse
     ///   </Tiki>
     /// </MappingSanPhamTMDT_Kho>
     /// </summary>
-    public class ModelMappingSanPhamTMDT_SanPhamKho : ModelXML
+    public class ModelMappingSanPhamTMDT_SanPhamKho
     {
         private const string eTikiSanPhamTMDTName = "SanPhamTMDT";
         private const string eTikiMaSanPhamTMDTName = "MaSanPhamTMDT";
         private const string eTikiName = "ID";
 
-        static public XDocument xDoc = null; // Biến thao tác xml data duy nhất cho mọi đối tượng
         public ModelMappingSanPhamTMDT_SanPhamKho()
         {
-            pathXML = ((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho();
-            InitializeXDoc(ref xDoc);
-            InitializeStruct();
         }
         /// <summary>
         /// Khởi tạo cấu trúc node cho file
         /// </summary>
         /// <returns></returns>
-        private Boolean InitializeStruct()
+        public Boolean InitializeStruct(XMLAction action)
         {
-            Tiki_InitializeStruct();
+            Tiki_InitializeStruct(action);
             return true;
         }
 
@@ -73,25 +69,25 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// Khởi tạo cấu trúc node của TIKI
         /// </summary>
         /// <returns></returns>
-        private Boolean Tiki_InitializeStruct()
+        private Boolean Tiki_InitializeStruct(XMLAction action)
         {
             XElement eMap = null;
-            eMap = xDoc.Element("MappingSanPhamTMDT_SanPhamKho");
+            eMap = action.xDoc.Element("MappingSanPhamTMDT_SanPhamKho");
             if (eMap == null)
             {
                 // Tạo mới root
                 XElement newE = new XElement("MappingSanPhamTMDT_SanPhamKho",
                 new XElement("Tiki"));
-                xDoc.Root.Add(newE);
-                xDoc.Save(pathXML, SaveOptions.None);
+                action.xDoc.Root.Add(newE);
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
                 return true;
             }
-            XElement eTiki = xDoc.Element("MappingSanPhamTMDT_SanPhamKho").Element("Tiki");
+            XElement eTiki = action.xDoc.Element("MappingSanPhamTMDT_SanPhamKho").Element("Tiki");
             if (eTiki == null)
             {
                 XElement newE = new XElement("Tiki");
                 eMap.Add(newE);
-                xDoc.Save(pathXML, SaveOptions.None);
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
                 return true;
             }
 
@@ -102,9 +98,9 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// Lấy được Tiki Node
         /// </summary>
         /// <returns></returns>
-        private XElement TiKi_GetTikiNode()
+        private XElement TiKi_GetTikiNode(XMLAction action)
         {
-            return xDoc
+            return action.xDoc
                 .Element("MappingSanPhamTMDT_SanPhamKho")
                 .Element("Tiki");
         }
@@ -114,9 +110,9 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// </summary>
         /// <param name="appID"></param>
         /// <returns></returns>
-        public Boolean Tiki_CheckMaSanPhamTMDTExist(string ID)
+        public Boolean Tiki_CheckMaSanPhamTMDTExist(XMLAction action, string ID)
         {
-            XElement eTiki = TiKi_GetTikiNode();
+            XElement eTiki = TiKi_GetTikiNode(action);
             IEnumerable<XElement> lElement = null;
             lElement = eTiki.Elements(eTikiSanPhamTMDTName).Where(e => e.Element(eTikiMaSanPhamTMDTName).Value == ID);
             if (lElement == null || lElement.Count() == 0)
@@ -130,13 +126,13 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// <param name="idSPTMDT"></param>
         /// <param name="lsID"></param>
         /// <returns></returns>
-        public string Tiki_AddOrUpdate(string idSPTMDT, List<string> lsID)
+        public string Tiki_AddOrUpdate(XMLAction action, string idSPTMDT, List<string> lsID)
         {
             if (string.IsNullOrWhiteSpace(idSPTMDT) ||
                 lsID == null)
                 return "Mã sản phẩm TMDT hoặc trong kho không đúng.";
 
-            XElement eTiki = TiKi_GetTikiNode();
+            XElement eTiki = TiKi_GetTikiNode(action);
             IEnumerable<XElement> lElement = null;
             lElement = eTiki.Elements(eTikiSanPhamTMDTName).Where(e => e.Element(eTikiMaSanPhamTMDTName).Value == idSPTMDT);
             if (lElement == null || lElement.Count() == 0) // Thêm mới
@@ -160,16 +156,16 @@ namespace QuanLyKho.Model.InOutWarehouse
                     eOldSPTMDT.Add(new XElement(eTikiName, str));
                 }
             }
-            xDoc.Save(pathXML, SaveOptions.None);
+            action.xDoc.Save(action.pathXML, SaveOptions.None);
             return string.Empty;
         }
 
-        public string Tiki_Delete(string idSPTMDT)
+        public string Tiki_Delete(XMLAction action, string idSPTMDT)
         {
             if (string.IsNullOrWhiteSpace(idSPTMDT))
                 return "Mã sản phẩm TMDT hoặc trong kho không đúng.";
 
-            XElement eTiki = TiKi_GetTikiNode();
+            XElement eTiki = TiKi_GetTikiNode(action);
             IEnumerable<XElement> lElement = null;
             lElement = eTiki.Elements(eTikiSanPhamTMDTName).Where(e => e.Element(eTikiMaSanPhamTMDTName).Value == idSPTMDT);
             if (lElement == null || lElement.Count() == 0) // Thêm mới
@@ -180,7 +176,7 @@ namespace QuanLyKho.Model.InOutWarehouse
             {
                 lElement.Remove();
             }
-            xDoc.Save(pathXML, SaveOptions.None);
+            action.xDoc.Save(action.pathXML, SaveOptions.None);
             return string.Empty;
         }
     }

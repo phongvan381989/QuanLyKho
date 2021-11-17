@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using QuanLyKho.General;
+using QuanLyKho.Model;
 using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev.TikiApp.Config;
 using RestSharp;
@@ -10,12 +11,14 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace QuanLyKho.ViewModel.Dev.TikiAPI
 {
     public class CommonTikiAPI
     {
         static public ModelThongTinBaoMatTiki ttbm = new ModelThongTinBaoMatTiki();
+        static public XMLAction action = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinBaoMat());
 
         /// <summary>
         /// Chứa danh sách các app đang sử dụng
@@ -30,7 +33,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
         {
             var client = new RestClient("https://api.tiki.vn/sc/oauth2/token");
             RestRequest request = new RestRequest(Method.POST);
-            request.AddHeader("Authorization", "Basic " + ttbm.Tiki_GetAppCredentialBase64Format(appID));
+            request.AddHeader("Authorization", "Basic " + ttbm.Tiki_GetAppCredentialBase64Format(action, appID));
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "client_credentials");
             request.AddParameter("client_id", appID);
@@ -50,7 +53,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
                 return "Lấy quyền truy cập shop lỗi. Vui lòng thử lại.";
             }
             TikiAuthorization accessToken = JsonConvert.DeserializeObject<TikiAuthorization>(response.Content);
-            ttbm.Tiki_InhouseAppSaveAccessToken(appID, accessToken);
+            ttbm.Tiki_InhouseAppSaveAccessToken(action, appID, accessToken);
             MyLogger.GetInstance().Info("New token: " + accessToken.access_token);
             return string.Empty;
         }
@@ -61,7 +64,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
         static public void GetListTikiConfigAppUsing()
         {
             listTikiConfigAppUsing.Clear();
-            List<TikiConfigApp> l = ttbm.Tiki_InhouseAppGetListUsingApp();
+            List<TikiConfigApp> l = ttbm.Tiki_InhouseAppGetListUsingApp(action);
             if (l != null)
                 listTikiConfigAppUsing = l;
         }
@@ -132,7 +135,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
                     return response;
                 }
                 // Cập nhật configApp
-                configApp.tikiAu.access_token = CommonTikiAPI.ttbm.Tiki_InhouseGetAccessToken(configApp.appID);
+                configApp.tikiAu.access_token = CommonTikiAPI.ttbm.Tiki_InhouseGetAccessToken(action, configApp.appID);
 
                 // Thực hiện request lại
                 request.AddOrUpdateHeader("Authorization", "Bearer " + configApp.tikiAu.access_token);

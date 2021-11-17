@@ -22,8 +22,22 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         public string name { get; set; }
 
         /// <summary>
-        ///  
+        /// Số sản phẩm tồn kho
         /// </summary>
         public int quantity { get; set; }
+
+        public ProductInOutWarehoseViewBinding(string inputCode, string inputName, int inputQuantity)
+        {
+            code = inputCode;
+            name = inputName;
+            quantity = inputQuantity;
+        }
+
+        public ProductInOutWarehoseViewBinding(string inputCode, string inputName, string inputQuantity)
+        {
+            code = inputCode;
+            name = inputName;
+            quantity = Int32.Parse(inputQuantity);
+        }
     }
 }

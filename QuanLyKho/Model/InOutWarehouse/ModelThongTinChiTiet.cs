@@ -18,7 +18,7 @@ namespace QuanLyKho.Model
         {
         }
 
-        #region list phục vụ truy xuất nhanh thành phần
+        #region list phục vụ truy xuất nhanh thành phần cho màn hình nhập xuất sản phẩm vào kho
         private ObservableCollection<string> listNhaPhatHanh;
         private ObservableCollection<string> listNhaXuatBan;
         private ObservableCollection<string> listMaSanPham;
@@ -141,7 +141,7 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="maSP"></param>
         /// <returns></returns>
-        private XElement GetAXElementFromMaSanPham(XMLAction action, string maSP)
+        private static XElement GetAXElementFromMaSanPham(XMLAction action, string maSP)
         {
             XElement eExist = null;
             if (action.xDoc == null)
@@ -164,7 +164,7 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="tenSP"></param>
         /// <returns></returns>
-        private XElement GetAXElementFromTenSanPham(XMLAction action, string tenSP)
+        private static XElement GetAXElementFromTenSanPham(XMLAction action, string tenSP)
         {
             XElement eExist = null;
             if (action.xDoc == null)
@@ -444,6 +444,8 @@ namespace QuanLyKho.Model
                     .Where(e => e.Element("MaSanPham").Value == maSanPham).Remove();
                 action.xDoc.Save(action.pathXML, SaveOptions.None);
             }
+            // Cập nhật vào list truy xuất nhanh
+            InitializeBuffer(action);
             return true;
         }
 
@@ -452,53 +454,55 @@ namespace QuanLyKho.Model
         /// </summary>
         /// <param name="element">XElemnet của tag <SanPham></param>
         /// <param name="sanPham">Đối tượng model cần cập nhật thông tin</param>
-        private void ConvertXElementToModel(XElement element)
+        private static ModelThongTinChiTiet ConvertXElementToModel(XElement element)
         {
-            maSanPham = element.Element("MaSanPham")?.Value;
-            giaSanPham = element.Element("GiaSanPham")?.Value;
-            tonKho = element.Element("TonKho")?.Value;
-            tonKhoCanhBaoHetHang = element.Element("TonKhoCanhBaoHetHang")?.Value;
-            tenSanPham = element.Element("TenSanPham")?.Value;
-            tacGia = element.Element("TacGia")?.Value;
-            nguoiDich = element.Element("NguoiDich")?.Value;
-            nhaPhatHanh = element.Element("NhaPhatHanh")?.Value;
-            nhaXuatBan = element.Element("NhaXuatBan")?.Value;
-            namXuatBan = element.Element("NamXuatBan")?.Value;
-            kichThuocDai = element.Element("KichThuocDai")?.Value;
-            kichThuocRong = element.Element("KichThuocRong")?.Value;
-            kichThuocCao = element.Element("KichThuocCao")?.Value;
-            khoiLuong = element.Element("KhoiLuong")?.Value;
-            thuMucMedia = element.Element("ThuMucMedia")?.Value;
-            moTaChiTiet = element.Element("MoTaChiTiet")?.Value;
-            viTriLuuKho = element.Element("ViTriLuuKho")?.Value;
+            ModelThongTinChiTiet obj = new ModelThongTinChiTiet();
+            obj.maSanPham = element.Element("MaSanPham")?.Value;
+            obj.giaSanPham = element.Element("GiaSanPham")?.Value;
+            obj.tonKho = element.Element("TonKho")?.Value;
+            obj.tonKhoCanhBaoHetHang = element.Element("TonKhoCanhBaoHetHang")?.Value;
+            obj.tenSanPham = element.Element("TenSanPham")?.Value;
+            obj.tacGia = element.Element("TacGia")?.Value;
+            obj.nguoiDich = element.Element("NguoiDich")?.Value;
+            obj.nhaPhatHanh = element.Element("NhaPhatHanh")?.Value;
+            obj.nhaXuatBan = element.Element("NhaXuatBan")?.Value;
+            obj.namXuatBan = element.Element("NamXuatBan")?.Value;
+            obj.kichThuocDai = element.Element("KichThuocDai")?.Value;
+            obj.kichThuocRong = element.Element("KichThuocRong")?.Value;
+            obj.kichThuocCao = element.Element("KichThuocCao")?.Value;
+            obj.khoiLuong = element.Element("KhoiLuong")?.Value;
+            obj.thuMucMedia = element.Element("ThuMucMedia")?.Value;
+            obj.moTaChiTiet = element.Element("MoTaChiTiet")?.Value;
+            obj.viTriLuuKho = element.Element("ViTriLuuKho")?.Value;
+            return obj;
         }
 
         /// <summary>
         /// Từ mã sản phẩm lấy thông tin sản phẩm
         /// </summary>
-        public void GetASanPhamFromMaSanPham(XMLAction action, string maSP)
+        public static ModelThongTinChiTiet GetASanPhamFromMaSanPham(XMLAction action, string maSP)
         {
             if (string.IsNullOrEmpty(maSP))
-                return;
+                return null;
 
             XElement eExist = GetAXElementFromMaSanPham(action, maSP);
             if (eExist == null)
-                return;
-            ConvertXElementToModel(eExist);
+                return null;
+            return ConvertXElementToModel(eExist);
         }
 
         /// <summary>
         /// Từ tên sản phẩm lấy thông tin sản phẩm
         /// </summary>
-        public void GetASanPhamFromTenSanPham(XMLAction action, string tenSP)
+        public static ModelThongTinChiTiet GetASanPhamFromTenSanPham(XMLAction action, string tenSP)
         {
             if (string.IsNullOrEmpty(tenSP))
-                return;
+                return null;
 
             XElement eExist = GetAXElementFromTenSanPham(action, tenSP);
             if (eExist == null)
-                return;
-            ConvertXElementToModel(eExist);
+                return null;
+            return ConvertXElementToModel(eExist);
         }
 
         /// <summary>
@@ -618,11 +622,28 @@ namespace QuanLyKho.Model
         /// Lấy được danh sách sản phẩm trong kho theo mã.
         /// Mã trống hoặc null ta lấy danh sách tất cả sản phẩm trong kho
         /// </summary>
-        /// <param name="code"></param>
-        /// <returns></returns>
-        public List<ModelThongTinChiTiet> GetListProductFromCode(string code)
+        /// <param name="maSP"></param>
+        /// <returns>Rỗng nếu không tìm thấy</returns>
+        public static List<ModelThongTinChiTiet> GetListProductFromCode(XMLAction action, string maSP)
         {
             List<ModelThongTinChiTiet> ls = new List<ModelThongTinChiTiet>();
+            if (action.xDoc == null)
+                return ls;
+            if (string.IsNullOrEmpty(maSP)) // Lấy tất cả sản phẩm trong kho
+            {
+                IEnumerable<XElement> le;
+                le = action.xDoc
+                    .Element("ThongTinChiTiet")
+                    .Elements("SanPham");
+                foreach(XElement e in le)
+                {
+                    ls.Add(ConvertXElementToModel(e));
+                }
+            }
+            else
+            {
+                ls.Add(GetASanPhamFromMaSanPham(action, maSP));
+            }
             return ls;
         }
 

@@ -197,11 +197,13 @@ namespace QuanLyKho.ViewModel.Products
                 lsProductFullInfo = GetListProductTiki.GetListLatestProductsFromOneShop(CommonTikiAPI.GetTikiConfigAppFromHomeAddress(homeAddressUsing));
             }
 
+            int index = 0;
             foreach (Product e in lsProductFullInfo)
             {
+                index++;
                 // Download thumbnail của sản phẩm
                 Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
-                lsProduct.Add(new ProductViewBindingTiki(e));
+                lsProduct.Add(new ProductViewBindingTiki(e, index));
             }
         }
 

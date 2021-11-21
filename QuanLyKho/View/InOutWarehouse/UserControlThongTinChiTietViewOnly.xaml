@@ -118,7 +118,7 @@
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Thư mục media</TextBlock>
                     <TextBox Name="ThuMucMedia" Style="{StaticResource TextBoxStyleCode}" Width="350" IsEnabled="True"
                          Text="{Binding Path=thuMucMedia, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Name="MediaBrowse" Content="Browse" Width="50" Style="{StaticResource ButtonStyle}"/>
+                    <Button Name="MediaBrowse" Content="Browse" Width="50" Style="{StaticResource ButtonStyle}" IsEnabled="False"/>
                 </WrapPanel>
                 <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Vị trí lưu kho</TextBlock>

@@ -18,38 +18,6 @@ namespace QuanLyKho.Model
         {
         }
 
-        #region list phục vụ truy xuất nhanh thành phần cho màn hình nhập xuất sản phẩm vào kho
-        private ObservableCollection<string> listNhaPhatHanh;
-        private ObservableCollection<string> listNhaXuatBan;
-        private ObservableCollection<string> listMaSanPham;
-        private ObservableCollection<string> listTenSanPham;
-        public void InitializeBuffer(XMLAction action)
-        {
-            listMaSanPham = ListGiaTriMotThanhPhanFromXDoc(action, "MaSanPham", false);
-            listTenSanPham = ListGiaTriMotThanhPhanFromXDoc(action, "TenSanPham", false);
-            listNhaPhatHanh = ListGiaTriMotThanhPhanFromXDoc(action, "NhaPhatHanh", false);
-            listNhaXuatBan = ListGiaTriMotThanhPhanFromXDoc(action, "NhaXuatBan", false);
-        }
-
-        /// <summary>
-        /// Từ tên thành phần get list tương ứng
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private ObservableCollection<string> GetListFromName(string name)
-        {
-            if (name == "MaSanPham")
-                return listMaSanPham;
-            else if (name == "NhaPhatHanh")
-                return listNhaPhatHanh;
-            else if (name == "NhaXuatBan")
-                return listNhaXuatBan;
-            else if (name == "TenSanPham")
-                return listTenSanPham;
-            return null;
-        }
-        #endregion
-
         /// <summary>
         /// Mô tả lỗi hiện tại
         /// </summary>
@@ -130,8 +98,6 @@ namespace QuanLyKho.Model
             action.xDoc.Root.Add(aProduce);
             action.xDoc.Save(action.pathXML, SaveOptions.None);
             tonKho = iTonKho.ToString();
-            // Cập nhật vào list truy xuất nhanh
-            InitializeBuffer(action);
 
             return true;
         }
@@ -230,7 +196,7 @@ namespace QuanLyKho.Model
         /// <param name="name"></param>
         /// <param name="isIncludeSame">False:Kết quả trả về gồm các giá trị khác nhau. True: cá giá trị có thể giống nhau</param>
         /// <returns></returns>
-        public ObservableCollection<string> ListGiaTriMotThanhPhanFromXDoc(XMLAction action, string name, Boolean isIncludeSame)
+        public static ObservableCollection<string> ListGiaTriMotThanhPhanFromXDoc(XMLAction action, string name, Boolean isIncludeSame)
         {
             ObservableCollection<string> list = new ObservableCollection<string>();
             if (action.xDoc != null)
@@ -260,15 +226,6 @@ namespace QuanLyKho.Model
                 }
             }
             return list;
-        }
-
-        /// <summary>
-        /// Danh sách tất cả nhà phát hành
-        /// </summary>
-        /// <returns></returns>
-        public ObservableCollection<string> ListNhaPhatHanh()
-        {
-            return GetListFromName("NhaPhatHanh");
         }
 
         /// <summary>
@@ -327,113 +284,6 @@ namespace QuanLyKho.Model
             return list;
         }
 
-        /// <summary>
-        /// Danh sách giá trị một thành phần với 1 text được tìm từ list
-        /// </summary>
-        /// <param name="name">Tên thành phần.</param>
-        /// <param name="str">Text cần được chứa.</param>
-        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
-        /// <returns></returns>
-        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiATextFromList(string name, string str, ParameterSearch parameterSearch)
-        {
-            ObservableCollection<string> listOriginal = GetListFromName(name);
-            if (string.IsNullOrEmpty(str))
-            {
-                return listOriginal;
-            }
-
-            ObservableCollection<string> list = new ObservableCollection<string>();
-            Int32 count = listOriginal.Count();
-            for (Int32 i = 0; i < count; i++)
-            {
-                if ((parameterSearch == ParameterSearch.First
-                    && listOriginal[i].StartsWith(str, StringComparison.OrdinalIgnoreCase))
-
-                    || (parameterSearch == ParameterSearch.Last
-                    && listOriginal[i].EndsWith(str, StringComparison.OrdinalIgnoreCase))
-
-                    || (parameterSearch == ParameterSearch.All
-                    && listOriginal[i].IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0)
-
-                    || (parameterSearch == ParameterSearch.Same
-                    && listOriginal[i].Equals(str) == true))
-                {
-                    list.Add(listOriginal[i]);
-                }
-            }
-            return list;
-        }
-        /// <summary>
-        /// Tìm kiếm nhà phát hành
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
-        /// <returns></returns>
-        public ObservableCollection<string> SearchNhaPhatHanhAText(string str, ParameterSearch parameterSearch)
-        {
-            return ListGiaTriMotThanhPhanVoiATextFromList("NhaPhatHanh", str, parameterSearch);
-        }
-
-        /// <summary>
-        /// Tìm kiếm nhà xuất bản
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
-        /// <returns></returns>
-        public ObservableCollection<string> SearchNhaXuatBanAText(string str, ParameterSearch parameterSearch)
-        {
-            return ListGiaTriMotThanhPhanVoiATextFromList("NhaXuatBan", str, parameterSearch);
-        }
-
-        /// <summary>
-        /// Danh sách tất cả nhà xuất bản
-        /// </summary>
-        /// <returns></returns>
-        public ObservableCollection<string> ListNhaXuatBan()
-        {
-            return GetListFromName("NhaXuatBan");
-        }
-
-        /// <summary>
-        /// Tìm kiếm mã sản phẩm
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
-        /// <returns></returns>
-        public ObservableCollection<string> SearchMaSanPhamAText(string str, ParameterSearch parameterSearch)
-        {
-            return ListGiaTriMotThanhPhanVoiATextFromList("MaSanPham", str, parameterSearch);
-        }
-
-        /// <summary>
-        /// Tìm kiếm tên sản phẩm
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
-        /// <returns></returns>
-        public ObservableCollection<string> SearchTenSanPhamAText(string str, ParameterSearch parameterSearch)
-        {
-            return ListGiaTriMotThanhPhanVoiATextFromList("TenSanPham", str, parameterSearch);
-        }
-
-        /// <summary>
-        /// Danh sách tất cả mã sản phẩm
-        /// </summary>
-        /// <returns></returns>
-        public ObservableCollection<string> ListMaSanPham()
-        {
-            return GetListFromName("MaSanPham");
-        }
-
-        /// <summary>
-        /// Danh sách tất cả tên sản phẩm
-        /// </summary>
-        /// <returns></returns>
-        public ObservableCollection<string> ListTenSanPham()
-        {
-            return GetListFromName("TenSanPham");
-        }
-
         public Boolean Delete(XMLAction action)
         {
             if(action.xDoc !=null)
@@ -444,8 +294,6 @@ namespace QuanLyKho.Model
                     .Where(e => e.Element("MaSanPham").Value == maSanPham).Remove();
                 action.xDoc.Save(action.pathXML, SaveOptions.None);
             }
-            // Cập nhật vào list truy xuất nhanh
-            InitializeBuffer(action);
             return true;
         }
 

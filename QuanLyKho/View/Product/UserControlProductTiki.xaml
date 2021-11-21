@@ -36,6 +36,7 @@
                           MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
+                            <GridViewColumn Header="STT" Width="40" DisplayMemberBinding="{Binding index}" />
                             <GridViewColumn Header="Mã" Width="100" DisplayMemberBinding="{Binding product_id}" />
                             <GridViewColumn Header="Tên Sản Phẩm" Width="200" DisplayMemberBinding="{Binding name}" />
                             <GridViewColumn Header="Bât/Tắt" Width="100" DisplayMemberBinding="{Binding strActive}" />

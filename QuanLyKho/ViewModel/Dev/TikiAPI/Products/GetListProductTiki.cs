@@ -88,10 +88,6 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
                         break;
                     else
                         currentPage++;
-
-                    /// Temporary Test
-                    if (currentPage == 1)
-                        break;
                 }
                 catch (Exception ex)
                 {
@@ -100,6 +96,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
                     lsProduct.Clear();
                     break;
                 }
+                break;//Temporary Test
             }
 
             return lsProduct;

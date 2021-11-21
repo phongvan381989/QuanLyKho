@@ -63,6 +63,156 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
         }
 
+
+        #region list lưu toàn bộ dữ liệu xml db phục vụ truy xuất nhanh thành phần cho màn hình nhập xuất sản phẩm vào kho
+        private ObservableCollection<string> listNhaPhatHanhAllBuffer;
+        private ObservableCollection<string> listNhaXuatBanAllBuffer;
+        private ObservableCollection<string> listMaSanPhamAllBuffer;
+        private ObservableCollection<string> listTenSanPhamAllBuffer;
+        public void InitializeBuffer(XMLAction action)
+        {
+            listMaSanPhamAllBuffer = ModelThongTinChiTiet.ListGiaTriMotThanhPhanFromXDoc(action, "MaSanPham", false);
+            listTenSanPhamAllBuffer = ModelThongTinChiTiet.ListGiaTriMotThanhPhanFromXDoc(action, "TenSanPham", false);
+            listNhaPhatHanhAllBuffer = ModelThongTinChiTiet.ListGiaTriMotThanhPhanFromXDoc(action, "NhaPhatHanh", false);
+            listNhaXuatBanAllBuffer = ModelThongTinChiTiet.ListGiaTriMotThanhPhanFromXDoc(action, "NhaXuatBan", false);
+        }
+
+        /// <summary>
+        /// Từ tên thành phần get list tương ứng
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private ObservableCollection<string> GetListFromName(string name)
+        {
+            if (name == "MaSanPham")
+                return listMaSanPhamAllBuffer;
+            else if (name == "NhaPhatHanh")
+                return listNhaPhatHanhAllBuffer;
+            else if (name == "NhaXuatBan")
+                return listNhaXuatBanAllBuffer;
+            else if (name == "TenSanPham")
+                return listTenSanPhamAllBuffer;
+            return null;
+        }
+
+        /// <summary>
+        /// Danh sách tất cả nhà phát hành
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<string> ListNhaPhatHanh()
+        {
+            return GetListFromName("NhaPhatHanh");
+        }
+
+        /// <summary>
+        /// Danh sách giá trị một thành phần với 1 text được tìm từ list
+        /// </summary>
+        /// <param name="name">Tên thành phần.</param>
+        /// <param name="str">Text cần được chứa.</param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> ListGiaTriMotThanhPhanVoiATextFromList(string name, string str, ParameterSearch parameterSearch)
+        {
+            ObservableCollection<string> listOriginal = GetListFromName(name);
+            if (string.IsNullOrEmpty(str))
+            {
+                return listOriginal;
+            }
+
+            ObservableCollection<string> list = new ObservableCollection<string>();
+            Int32 count = listOriginal.Count();
+            for (Int32 i = 0; i < count; i++)
+            {
+                if ((parameterSearch == ParameterSearch.First
+                    && listOriginal[i].StartsWith(str, StringComparison.OrdinalIgnoreCase))
+
+                    || (parameterSearch == ParameterSearch.Last
+                    && listOriginal[i].EndsWith(str, StringComparison.OrdinalIgnoreCase))
+
+                    || (parameterSearch == ParameterSearch.All
+                    && listOriginal[i].IndexOf(str, StringComparison.OrdinalIgnoreCase) >= 0)
+
+                    || (parameterSearch == ParameterSearch.Same
+                    && listOriginal[i].Equals(str) == true))
+                {
+                    list.Add(listOriginal[i]);
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// Tìm kiếm nhà phát hành
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> SearchNhaPhatHanhAText(string str, ParameterSearch parameterSearch)
+        {
+            return ListGiaTriMotThanhPhanVoiATextFromList("NhaPhatHanh", str, parameterSearch);
+        }
+
+        /// <summary>
+        /// Tìm kiếm nhà xuất bản
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> SearchNhaXuatBanAText(string str, ParameterSearch parameterSearch)
+        {
+            return ListGiaTriMotThanhPhanVoiATextFromList("NhaXuatBan", str, parameterSearch);
+        }
+
+        /// <summary>
+        /// Danh sách tất cả nhà xuất bản
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<string> ListNhaXuatBan()
+        {
+            return GetListFromName("NhaXuatBan");
+        }
+
+        /// <summary>
+        /// Tìm kiếm mã sản phẩm
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> SearchMaSanPhamAText(string str, ParameterSearch parameterSearch)
+        {
+            return ListGiaTriMotThanhPhanVoiATextFromList("MaSanPham", str, parameterSearch);
+        }
+
+        /// <summary>
+        /// Tìm kiếm tên sản phẩm
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="parameterSearch">Tham số cách tìm kiếm</param>
+        /// <returns></returns>
+        public ObservableCollection<string> SearchTenSanPhamAText(string str, ParameterSearch parameterSearch)
+        {
+            return ListGiaTriMotThanhPhanVoiATextFromList("TenSanPham", str, parameterSearch);
+        }
+
+        /// <summary>
+        /// Danh sách tất cả mã sản phẩm
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<string> ListMaSanPham()
+        {
+            return GetListFromName("MaSanPham");
+        }
+
+        /// <summary>
+        /// Danh sách tất cả tên sản phẩm
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<string> ListTenSanPham()
+        {
+            return GetListFromName("TenSanPham");
+        }
+        #endregion
+
         public ViewModelThongTinChiTiet()
         {
             vmMedia = new ViewModelMedia();
@@ -72,7 +222,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             try
             {
                 sanPhamHienThi = new ModelThongTinChiTiet();
-                sanPhamHienThi.InitializeBuffer(actionModelThongTinChiTiet);
+                InitializeBuffer(actionModelThongTinChiTiet);
 
                 nhapXuatChiTiet = new ModelNhapXuatChiTiet();
             }
@@ -157,10 +307,10 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
         private void UpdateListBufferAll()
         {
-            listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
-            listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
-            listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
-            listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
+            listMaSanPham = SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
+            listTenSanPham = SearchTenSanPhamAText(tenSanPham, ParameterSearch.Same);
+            listNhaPhatHanh = SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.Same);
+            listNhaXuatBan = SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.Same);
         }
         public string maSanPham
         {
@@ -177,7 +327,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                     {
                         sanPhamHienThi.maSanPham = value;
                         OnPropertyChanged("maSanPham");
-                        listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(value, ParameterSearch.Last);
+                        listMaSanPham = SearchMaSanPhamAText(value, ParameterSearch.Last);
                         blistBoxSearchPopupIsOpenMSP = true;
                     }
                 }
@@ -325,7 +475,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                     {
                         sanPhamHienThi.tenSanPham = value;
                         OnPropertyChanged("tenSanPham");
-                        listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(value, ParameterSearch.All);
+                        listTenSanPham = SearchTenSanPhamAText(value, ParameterSearch.All);
                         blistBoxSearchPopupIsOpenTSP = true;
                     }
                 }
@@ -435,7 +585,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 {
                     sanPhamHienThi.nhaPhatHanh = value;
                     OnPropertyChanged("nhaPhatHanh");
-                    listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(value, ParameterSearch.First);
+                    listNhaPhatHanh = SearchNhaPhatHanhAText(value, ParameterSearch.First);
 
                     if (listNhaPhatHanh.Count != 0)
                     {
@@ -519,7 +669,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 {
                     sanPhamHienThi.nhaXuatBan = value;
                     OnPropertyChanged("nhaXuatBan");
-                    listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(value, ParameterSearch.First);
+                    listNhaXuatBan = SearchNhaXuatBanAText(value, ParameterSearch.First);
                     if (listNhaXuatBan.Count != 0)
                     {
                         if (bCheckSelectedItemFromListNXB)
@@ -723,6 +873,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                         }
                         if (!sanPhamHienThi.AddAProduceToXDocAndSave(actionModelThongTinChiTiet))
                         {
+                            // Cập nhật vào list truy xuất nhanh
+                            InitializeBuffer(actionModelThongTinChiTiet);
                             bResult = false;
                             break;
                         }
@@ -769,10 +921,10 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 OnPropertyChanged("tonKho");
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Lưu");
                 // Cập nhật source của combobox
-                listMaSanPham = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);
-                listTenSanPham = sanPhamHienThi.SearchTenSanPhamAText(tenSanPham, ParameterSearch.First);
-                listNhaXuatBan = sanPhamHienThi.SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.First);
-                listNhaPhatHanh = sanPhamHienThi.SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.First);
+                listMaSanPham = SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);
+                listTenSanPham = SearchTenSanPhamAText(tenSanPham, ParameterSearch.First);
+                listNhaXuatBan = SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.First);
+                listNhaPhatHanh = SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.First);
 
                 //if (sanPhamHienThi.CreateSampleData())
                 //{
@@ -804,7 +956,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
 
             // Check sản phẩm có tồn tại
-            ObservableCollection<string> lTemp = sanPhamHienThi.SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
+            ObservableCollection<string> lTemp = SearchMaSanPhamAText(maSanPham, ParameterSearch.Same);
             if(lTemp.Count() == 0)
             {
                 MessageBox.Show("Sản phẩm không tồn tại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -813,15 +965,17 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
             sanPhamHienThi.Delete(actionModelThongTinChiTiet);
             nhapXuatChiTiet.Delete(actionModelNhapXuatChiTiet, maSanPham);
+            // Cập nhật vào list truy xuất nhanh
+            InitializeBuffer(actionModelThongTinChiTiet);
             General.Common.ShowAutoClosingMessageBox("Xóa thành công", "Xóa");
         }
 
         public void UpdateSanPhamHienThi()
         {
-            listMaSanPham = sanPhamHienThi.ListMaSanPham();
-            listTenSanPham = sanPhamHienThi.ListTenSanPham();
-            listNhaPhatHanh = sanPhamHienThi.ListNhaPhatHanh();
-            listNhaXuatBan = sanPhamHienThi.ListNhaXuatBan();
+            listMaSanPham = ListMaSanPham();
+            listTenSanPham = ListTenSanPham();
+            listNhaPhatHanh = ListNhaPhatHanh();
+            listNhaXuatBan = ListNhaXuatBan();
         }
 
         public void GetListInOutWarehouse()

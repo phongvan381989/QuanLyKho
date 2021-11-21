@@ -14,8 +14,9 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
     /// </summary>
     public class ProductViewBindingTiki
     {
-        public ProductViewBindingTiki(Product product)
+        public ProductViewBindingTiki(Product product, int inputIndex)
         {
+            index = inputIndex;
             product_id = product.product_id;
             sku = product.sku;
             name = product.name;
@@ -27,6 +28,11 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
             price = product.price;
             market_price = product.market_price;
         }
+
+        /// <summary>
+        /// Số thứ tự
+        /// </summary>
+        public int index { get; set; }
 
         /// <summary>
         /// Unique product ID

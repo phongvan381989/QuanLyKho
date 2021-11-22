@@ -21,7 +21,7 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Mô tả lỗi hiện tại
         /// </summary>
-        private string errorMessage;
+        private static string errorMessage;
 
         public string GetErrorMessage()
         {
@@ -69,36 +69,57 @@ namespace QuanLyKho.Model
 
         public string viTriLuuKho { get; set; }
 
+        public void Refresh()
+        {
+            maSanPham = string.Empty;
+            giaSanPham = string.Empty;
+            tonKho = string.Empty;
+            tonKhoCanhBaoHetHang = string.Empty;
+            tenSanPham = string.Empty;
+            tacGia = string.Empty;
+            nguoiDich = string.Empty;
+            nhaPhatHanh = string.Empty;
+            nhaXuatBan = string.Empty;
+            namXuatBan = string.Empty;
+            kichThuocDai = string.Empty;
+            kichThuocRong = string.Empty;
+            kichThuocCao = string.Empty;
+            khoiLuong = string.Empty;
+            thuMucMedia = string.Empty;
+            moTaChiTiet = string.Empty;
+            viTriLuuKho = string.Empty;
+        }
+
         /// <summary>
         /// Thêm 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
-        public Boolean AddAProduceToXDocAndSave(XMLAction action)
+        public static Boolean AddAProduceToXDocAndSave(XMLAction action, ModelThongTinChiTiet ttct)
         {
-            Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
+            Int32 iTonKho = Common.ConvertStringToInt32(ttct.tonKho) + Common.ConvertStringToInt32(ttct.soLuongNhap);
             XElement aProduce = new XElement("SanPham",
-                new XElement("MaSanPham", maSanPham),
-                new XElement("GiaSanPham", giaSanPham),
+                new XElement("MaSanPham", ttct.maSanPham),
+                new XElement("GiaSanPham", ttct.giaSanPham),
                 new XElement("TonKho", iTonKho.ToString()),
-                new XElement("TonKhoCanhBaoHetHang", tonKhoCanhBaoHetHang),
-                new XElement("TenSanPham", tenSanPham),
-                new XElement("TacGia", tacGia),
-                new XElement("NguoiDich", nguoiDich),
-                new XElement("NhaPhatHanh", nhaPhatHanh),
-                new XElement("NhaXuatBan", nhaXuatBan),
-                new XElement("NamXuatBan", namXuatBan),
-                new XElement("KichThuocDai", kichThuocDai),
-                new XElement("KichThuocRong", kichThuocRong),
-                new XElement("KichThuocCao", kichThuocCao),
-                new XElement("KhoiLuong", khoiLuong),
-                new XElement("ThuMucMedia", thuMucMedia),
-                new XElement("MoTaChiTiet", moTaChiTiet),
-                new XElement("ViTriLuuKho", viTriLuuKho)
+                new XElement("TonKhoCanhBaoHetHang", ttct.tonKhoCanhBaoHetHang),
+                new XElement("TenSanPham", ttct.tenSanPham),
+                new XElement("TacGia", ttct.tacGia),
+                new XElement("NguoiDich", ttct.nguoiDich),
+                new XElement("NhaPhatHanh", ttct.nhaPhatHanh),
+                new XElement("NhaXuatBan", ttct.nhaXuatBan),
+                new XElement("NamXuatBan", ttct.namXuatBan),
+                new XElement("KichThuocDai", ttct.kichThuocDai),
+                new XElement("KichThuocRong", ttct.kichThuocRong),
+                new XElement("KichThuocCao", ttct.kichThuocCao),
+                new XElement("KhoiLuong", ttct.khoiLuong),
+                new XElement("ThuMucMedia", ttct.thuMucMedia),
+                new XElement("MoTaChiTiet", ttct.moTaChiTiet),
+                new XElement("ViTriLuuKho", ttct.viTriLuuKho)
                 );
 
             action.xDoc.Root.Add(aProduce);
             action.xDoc.Save(action.pathXML, SaveOptions.None);
-            tonKho = iTonKho.ToString();
-
+            ttct.tonKho = iTonKho.ToString();
+            ttct.soLuongNhap = string.Empty;
             return true;
         }
 
@@ -152,31 +173,32 @@ namespace QuanLyKho.Model
         /// Cập nhật 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
         /// <returns></returns>
-        public Boolean UpdateAProducToXDocAndSave(XMLAction action)
+        public static Boolean UpdateAProducToXDocAndSave(XMLAction action, ModelThongTinChiTiet ttct)
         {
-            XElement eExist = GetAXElementFromMaSanPham(action, maSanPham);
+            XElement eExist = GetAXElementFromMaSanPham(action, ttct.maSanPham);
             if (eExist == null)
                 return false;
 
-            eExist.Element("GiaSanPham").Value = string.IsNullOrEmpty(giaSanPham) ? string.Empty : giaSanPham;
-            Int32 iTonKho = Common.ConvertStringToInt32(tonKho) + Common.ConvertStringToInt32(soLuongNhap);
+            eExist.Element("GiaSanPham").Value = string.IsNullOrEmpty(ttct.giaSanPham) ? string.Empty : ttct.giaSanPham;
+            Int32 iTonKho = Common.ConvertStringToInt32(ttct.tonKho) + Common.ConvertStringToInt32(ttct.soLuongNhap);
             eExist.Element("TonKho").Value = iTonKho.ToString();
-            eExist.Element("TonKhoCanhBaoHetHang").Value = string.IsNullOrEmpty(tonKhoCanhBaoHetHang) ? string.Empty : tonKhoCanhBaoHetHang;
-            eExist.Element("TenSanPham").Value = string.IsNullOrEmpty(tenSanPham) ? string.Empty : tenSanPham;
-            eExist.Element("TacGia").Value = string.IsNullOrEmpty(tacGia) ? string.Empty : tacGia;
-            eExist.Element("NguoiDich").Value = string.IsNullOrEmpty(nguoiDich) ? string.Empty : nguoiDich;
-            eExist.Element("NhaPhatHanh").Value = string.IsNullOrEmpty(nhaPhatHanh) ? string.Empty : nhaPhatHanh;
-            eExist.Element("NhaXuatBan").Value = string.IsNullOrEmpty(nhaPhatHanh) ? string.Empty : nhaXuatBan;
-            eExist.Element("NamXuatBan").Value = string.IsNullOrEmpty(namXuatBan) ? string.Empty : namXuatBan;
-            eExist.Element("KichThuocDai").Value = string.IsNullOrEmpty(kichThuocDai) ? string.Empty : kichThuocDai;
-            eExist.Element("KichThuocRong").Value = string.IsNullOrEmpty(kichThuocRong) ? string.Empty : kichThuocRong;
-            eExist.Element("KichThuocCao").Value = string.IsNullOrEmpty(kichThuocCao) ? string.Empty : kichThuocCao;
-            eExist.Element("KhoiLuong").Value = string.IsNullOrEmpty(khoiLuong) ? string.Empty : khoiLuong;
-            eExist.Element("ThuMucMedia").Value = string.IsNullOrEmpty(thuMucMedia) ? string.Empty : thuMucMedia;
-            eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(moTaChiTiet) ? string.Empty : moTaChiTiet;
-            eExist.Element("ViTriLuuKho").Value = string.IsNullOrEmpty(viTriLuuKho) ? string.Empty : viTriLuuKho;
+            eExist.Element("TonKhoCanhBaoHetHang").Value = string.IsNullOrEmpty(ttct.tonKhoCanhBaoHetHang) ? string.Empty : ttct.tonKhoCanhBaoHetHang;
+            eExist.Element("TenSanPham").Value = string.IsNullOrEmpty(ttct.tenSanPham) ? string.Empty : ttct.tenSanPham;
+            eExist.Element("TacGia").Value = string.IsNullOrEmpty(ttct.tacGia) ? string.Empty : ttct.tacGia;
+            eExist.Element("NguoiDich").Value = string.IsNullOrEmpty(ttct.nguoiDich) ? string.Empty : ttct.nguoiDich;
+            eExist.Element("NhaPhatHanh").Value = string.IsNullOrEmpty(ttct.nhaPhatHanh) ? string.Empty : ttct.nhaPhatHanh;
+            eExist.Element("NhaXuatBan").Value = string.IsNullOrEmpty(ttct.nhaPhatHanh) ? string.Empty : ttct.nhaXuatBan;
+            eExist.Element("NamXuatBan").Value = string.IsNullOrEmpty(ttct.namXuatBan) ? string.Empty : ttct.namXuatBan;
+            eExist.Element("KichThuocDai").Value = string.IsNullOrEmpty(ttct.kichThuocDai) ? string.Empty : ttct.kichThuocDai;
+            eExist.Element("KichThuocRong").Value = string.IsNullOrEmpty(ttct.kichThuocRong) ? string.Empty : ttct.kichThuocRong;
+            eExist.Element("KichThuocCao").Value = string.IsNullOrEmpty(ttct.kichThuocCao) ? string.Empty : ttct.kichThuocCao;
+            eExist.Element("KhoiLuong").Value = string.IsNullOrEmpty(ttct.khoiLuong) ? string.Empty : ttct.khoiLuong;
+            eExist.Element("ThuMucMedia").Value = string.IsNullOrEmpty(ttct.thuMucMedia) ? string.Empty : ttct.thuMucMedia;
+            eExist.Element("MoTaChiTiet").Value = string.IsNullOrEmpty(ttct.moTaChiTiet) ? string.Empty : ttct.moTaChiTiet;
+            eExist.Element("ViTriLuuKho").Value = string.IsNullOrEmpty(ttct.viTriLuuKho) ? string.Empty : ttct.viTriLuuKho;
             action.xDoc.Save(action.pathXML, SaveOptions.None);
-            tonKho = iTonKho.ToString();
+            ttct.tonKho = iTonKho.ToString();
+            ttct.soLuongNhap = string.Empty;
             return true;
         }
 
@@ -284,14 +306,14 @@ namespace QuanLyKho.Model
             return list;
         }
 
-        public Boolean Delete(XMLAction action)
+        public static Boolean Delete(XMLAction action, string maSP)
         {
             if(action.xDoc !=null)
             {
                 action.xDoc
                     .Element("ThongTinChiTiet")
                     .Elements("SanPham")
-                    .Where(e => e.Element("MaSanPham").Value == maSanPham).Remove();
+                    .Where(e => e.Element("MaSanPham").Value == maSP).Remove();
                 action.xDoc.Save(action.pathXML, SaveOptions.None);
             }
             return true;
@@ -406,7 +428,7 @@ namespace QuanLyKho.Model
         /// <param name="tenSP"></param>
         /// <param name="isCheckExist">true: Có check mã sản phẩm tồn tại hay không</param>
         /// <returns></returns>
-        public Boolean CanUpdateAProducde(XMLAction action, string maSP, string tenSP, Boolean isCheckMaSPExist)
+        public static Boolean CanUpdateAProducde(XMLAction action, string maSP, string tenSP, Boolean isCheckMaSPExist)
         {
             // Check maSanPham có tồn tại
             XElement eExist = null;
@@ -440,7 +462,7 @@ namespace QuanLyKho.Model
         /// <param name="tenSP"></param>
         /// <param name="isCheckExist">true: Có check mã sản phẩm tồn tại hay không</param>
         /// <returns></returns>
-        public Boolean CanAddAProduceWithTenSP(XMLAction action, string maSP, string tenSP, Boolean isCheckMaSPExist)
+        public static Boolean CanAddAProduceWithTenSP(XMLAction action, string maSP, string tenSP, Boolean isCheckMaSPExist)
         {
             // Check maSanPham có tồn tại
             XElement eExist = null;
@@ -497,16 +519,17 @@ namespace QuanLyKho.Model
 
         public Boolean CreateSampleData(XMLAction action)
         {
-            string mspTemp = maSanPham;
-            string tspTemp = tenSanPham;
+            ModelThongTinChiTiet ttct = new ModelThongTinChiTiet();
+            string mspTemp = "1234";
+            string tspTemp = "Sau maru";
             try
             {
                 for (int i = 0; i < 500; i++)
                 {
                     string str = "_" + i.ToString();
-                    maSanPham = mspTemp + str;
-                    tenSanPham = tspTemp + str;
-                    AddAProduceToXDocAndSave(action);
+                    ttct.maSanPham = mspTemp + str;
+                    ttct.tenSanPham = tspTemp + str;
+                    AddAProduceToXDocAndSave(action, ttct);
                 }
             }
             catch(Exception)

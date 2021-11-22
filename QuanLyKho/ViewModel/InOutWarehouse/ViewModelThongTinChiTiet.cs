@@ -222,6 +222,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             try
             {
                 sanPhamHienThi = new ModelThongTinChiTiet();
+                //sanPhamHienThi.ThemThanhPhanMoi(actionModelThongTinChiTiet, "KhoiLuong", "0.1");
                 InitializeBuffer(actionModelThongTinChiTiet);
 
                 nhapXuatChiTiet = new ModelNhapXuatChiTiet();
@@ -866,12 +867,12 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                     // Nếu mã sản phẩm chưa tồn tại, tạo mới
                     if (listMaSanPham.Count() == 0)
                     {
-                        if(!sanPhamHienThi.CanAddAProduceWithTenSP(actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
+                        if(!ModelThongTinChiTiet.CanAddAProduceWithTenSP(actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
                         {
                             MessageBox.Show(sanPhamHienThi.GetErrorMessage());
                             return;
                         }
-                        if (!sanPhamHienThi.AddAProduceToXDocAndSave(actionModelThongTinChiTiet))
+                        if (!ModelThongTinChiTiet.AddAProduceToXDocAndSave(actionModelThongTinChiTiet, sanPhamHienThi))
                         {
                             // Cập nhật vào list truy xuất nhanh
                             InitializeBuffer(actionModelThongTinChiTiet);
@@ -881,19 +882,19 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                     }
                     else // Cập nhật
                     {
-                        if (!sanPhamHienThi.CanUpdateAProducde(actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
+                        if (!ModelThongTinChiTiet.CanUpdateAProducde(actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
                         {
                             MessageBox.Show(sanPhamHienThi.GetErrorMessage());
                             return;
                         }
-                        if (!sanPhamHienThi.UpdateAProducToXDocAndSave(actionModelThongTinChiTiet))
+                        if (!ModelThongTinChiTiet.UpdateAProducToXDocAndSave(actionModelThongTinChiTiet, sanPhamHienThi))
                         {
                             bResult = false;
                             break;
                         }
                     }
                     // Lưu thông tin nhập xuất chi tiết
-                    if(!nhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, maSanPham, soLuongNhap))
+                    if(!ModelNhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, maSanPham, soLuongNhap))
                     {
                         bResult = false;
                         break;
@@ -920,6 +921,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             {
                 OnPropertyChanged("tonKho");
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Lưu");
+                // Cập nhật lại buffer
+                InitializeBuffer(actionModelThongTinChiTiet);
                 // Cập nhật source của combobox
                 listMaSanPham = SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);
                 listTenSanPham = SearchTenSanPhamAText(tenSanPham, ParameterSearch.First);
@@ -963,14 +966,20 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 return;
             }
 
-            sanPhamHienThi.Delete(actionModelThongTinChiTiet);
-            nhapXuatChiTiet.Delete(actionModelNhapXuatChiTiet, maSanPham);
             // Cập nhật vào list truy xuất nhanh
             InitializeBuffer(actionModelThongTinChiTiet);
+            ModelThongTinChiTiet.Delete(actionModelThongTinChiTiet, maSanPham);
+            ModelNhapXuatChiTiet.Delete(actionModelNhapXuatChiTiet, maSanPham);
             General.Common.ShowAutoClosingMessageBox("Xóa thành công", "Xóa");
+            // Cập nhật lại buffer
+            InitializeBuffer(actionModelThongTinChiTiet);
+            UpdateListsViewBinding();
+
+            sanPhamHienThi.Refresh();
+            OnPropertyChangedAll();
         }
 
-        public void UpdateSanPhamHienThi()
+        public void UpdateListsViewBinding()
         {
             listMaSanPham = ListMaSanPham();
             listTenSanPham = ListTenSanPham();

@@ -161,8 +161,10 @@
     <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_Save.cs" />
     <Compile Include="ViewModel\Dev\DevNameValuePair.cs" />
     <Compile Include="ViewModel\Dev\ViewModelDev.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\MappingSanPhamTMDT_SanPhamKhoViewBinding.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ProductInOutWarehoseViewBinding.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelListInOutWarehouse.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\ViewModelMappingSanPhamTMDT_SanPhamKho.cs" />
     <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTietViewOnly.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
     <Compile Include="ViewModel\Orders\CommandOrderTiki_GetOrderDetail.cs" />
@@ -197,6 +199,9 @@
     </Compile>
     <Compile Include="View\InOutWarehouse\UserControlListInOutWarehouse.xaml.cs">
       <DependentUpon>UserControlListInOutWarehouse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InOutWarehouse\UserControlMappingSanPhamTMDT_SanPhamKho.xaml.cs">
+      <DependentUpon>UserControlMappingSanPhamTMDT_SanPhamKho.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InOutWarehouse\UserControlThongTinChiTietViewOnly.xaml.cs">
       <DependentUpon>UserControlThongTinChiTietViewOnly.xaml</DependentUpon>
@@ -288,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InOutWarehouse\UserControlListInOutWarehouse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InOutWarehouse\UserControlMappingSanPhamTMDT_SanPhamKho.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

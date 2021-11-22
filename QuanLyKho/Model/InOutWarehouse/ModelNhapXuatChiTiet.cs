@@ -19,7 +19,7 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Thêm mới hoặc cập nhật 1 sản phẩm vào xDoc và lưu ra file
         /// </summary>
-        public Boolean AddOrUpdateAProduceToXDocAndSave(XMLAction action, string maSanPham, string soLuongNhap)
+        public static Boolean AddOrUpdateAProduceToXDocAndSave(XMLAction action, string maSanPham, string soLuongNhap)
         {
             // Tìm mã sản phẩm đã tồn tại
             IEnumerable<XElement> le;
@@ -57,7 +57,7 @@ namespace QuanLyKho.Model
             return true;
         }
 
-        public Boolean Delete(XMLAction action, string maSanPham)
+        public static Boolean Delete(XMLAction action, string maSanPham)
         {
             if (action.xDoc != null)
             {

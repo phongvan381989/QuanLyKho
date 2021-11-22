@@ -77,7 +77,7 @@ namespace QuanLyKho
             // Phải đọc được file db
             if (vmThongTinChiTiet.sanPhamHienThi != null && vmThongTinChiTiet.nhapXuatChiTiet != null)
             {
-                vmThongTinChiTiet.UpdateSanPhamHienThi();
+                vmThongTinChiTiet.UpdateListsViewBinding();
                 this.DataContext = vmThongTinChiTiet;
 
                 //MainContentContainer.Children.Clear();

@@ -98,7 +98,7 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// Lấy được Tiki Node
         /// </summary>
         /// <returns></returns>
-        private XElement TiKi_GetTikiNode(XMLAction action)
+        private static XElement TiKi_GetTikiNode(XMLAction action)
         {
             return action.xDoc
                 .Element("MappingSanPhamTMDT_SanPhamKho")
@@ -110,7 +110,7 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// </summary>
         /// <param name="appID"></param>
         /// <returns></returns>
-        public Boolean Tiki_CheckMaSanPhamTMDTExist(XMLAction action, string ID)
+        public static Boolean Tiki_CheckMaSanPhamTMDTExist(XMLAction action, string ID)
         {
             XElement eTiki = TiKi_GetTikiNode(action);
             IEnumerable<XElement> lElement = null;
@@ -123,44 +123,45 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// <summary>
         /// Thêm mới hoặc cập nhật mapping id sản phẩm với sản phẩm trong kho
         /// </summary>
+        /// <param name="action"></param>
         /// <param name="idSPTMDT"></param>
-        /// <param name="lsID"></param>
+        /// <param name="ID">id sản phẩm trong kho</param>
+        /// <param name="quantity"></param>
         /// <returns></returns>
-        public string Tiki_AddOrUpdate(XMLAction action, string idSPTMDT, List<string> lsID)
+        public static string Tiki_AddOrUpdate(XMLAction action, string idSPTMDT, string ID, int quantity)
         {
             if (string.IsNullOrWhiteSpace(idSPTMDT) ||
-                lsID == null)
+                string.IsNullOrEmpty(ID))
                 return "Mã sản phẩm TMDT hoặc trong kho không đúng.";
 
             XElement eTiki = TiKi_GetTikiNode(action);
             IEnumerable<XElement> lElement = null;
             lElement = eTiki.Elements(eTikiSanPhamTMDTName).Where(e => e.Element(eTikiMaSanPhamTMDTName).Value == idSPTMDT);
-            if (lElement == null || lElement.Count() == 0) // Thêm mới
+            if (lElement == null || lElement.Count() == 0) // Thêm mới sản phẩm trên sàn TMDT
             {
                 XElement newE = new XElement(eTikiSanPhamTMDTName);
                 newE.Add(new XElement(eTikiMaSanPhamTMDTName, idSPTMDT));
-                foreach(string str in lsID)
-                {
-                    newE.Add(new XElement(eTikiName, str));
-                }
+                newE.Add(new XElement(eTikiName, ID, new XAttribute("SoLuong", quantity.ToString())));
                 eTiki.Add(newE);
             }
-            else// Cập nhật
+            else// Cập nhật sản phẩm trên sàn TMDT
             {
                 XElement eOldSPTMDT = lElement.ElementAt(0);
-                // Xóa bỏ element bên trong
-                eOldSPTMDT.RemoveAll();
-                eOldSPTMDT.Add(new XElement(eTikiMaSanPhamTMDTName, idSPTMDT));
-                foreach (string str in lsID)
+                IEnumerable<XElement> leID = eOldSPTMDT.Elements(eTikiName).Where(e => e.Value == ID);
+                if (leID == null || leID.Count() == 0)// Thêm mới sản phẩm trong kho
                 {
-                    eOldSPTMDT.Add(new XElement(eTikiName, str));
+                    eOldSPTMDT.Add(new XElement(eTikiName, ID, new XAttribute("SoLuong", quantity.ToString())));
+                }
+                else // Cập nhật số lượng
+                {
+                    leID.ElementAt(0).Attribute("SoLuong").Value = quantity.ToString();
                 }
             }
             action.xDoc.Save(action.pathXML, SaveOptions.None);
             return string.Empty;
         }
 
-        public string Tiki_Delete(XMLAction action, string idSPTMDT)
+        public static string Tiki_Delete(XMLAction action, string idSPTMDT)
         {
             if (string.IsNullOrWhiteSpace(idSPTMDT))
                 return "Mã sản phẩm TMDT hoặc trong kho không đúng.";

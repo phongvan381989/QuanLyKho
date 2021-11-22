@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
     public class ProductInOutWarehoseViewBinding
     {
         /// <summary>
+        /// Số thứ tự
+        /// </summary>
+        public int index { get; set; }
+
+        /// <summary>
         /// Mã sản phẩm
         /// </summary>
         public string code { get; set; }
@@ -24,20 +30,29 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         /// <summary>
         /// Số sản phẩm tồn kho
         /// </summary>
-        public int quantity { get; set; }
+        public string quantity { get; set; }
 
-        public ProductInOutWarehoseViewBinding(string inputCode, string inputName, int inputQuantity)
+        public ProductInOutWarehoseViewBinding(int inputIndex, string inputCode, string inputName, string inputQuantity)
         {
+            index = inputIndex;
             code = inputCode;
             name = inputName;
             quantity = inputQuantity;
         }
-
-        public ProductInOutWarehoseViewBinding(string inputCode, string inputName, string inputQuantity)
+        public ProductInOutWarehoseViewBinding(ProductInOutWarehoseViewBinding obj)
         {
-            code = inputCode;
-            name = inputName;
-            quantity = Int32.Parse(inputQuantity);
+            index = obj.index;
+            code = obj.code;
+            name = obj.name;
+            quantity = obj.quantity;
+        }
+
+        public ProductInOutWarehoseViewBinding(int inputIndex, ModelThongTinChiTiet ttct)
+        {
+            index = inputIndex;
+            code = ttct.maSanPham;
+            name = ttct.tenSanPham;
+            quantity = ttct.tonKho;
         }
     }
 }

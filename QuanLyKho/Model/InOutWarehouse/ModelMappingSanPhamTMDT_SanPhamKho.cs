@@ -13,44 +13,33 @@ namespace QuanLyKho.Model.InOutWarehouse
     /// VD: 1 commbo sách 6 cuốn trên sàn TMDT map với 6 cuốn lẻ trong kho
     /// <?xml version="1.0" encoding="utf-8" standalone="yes"?>
     /// File XML có format như sau:
-    /// <MappingSanPhamTMDT_SanPhamKho>
-    ///   <Tiki>
-    ///     <SanPhamTMDT>
-	///       <MaSanPhamTMDT>12346</MaSanPhamTMDT>
-    ///       <ID>11</ID>
-    ///       <ID>12</ID>
-    ///       <ID>13</ID>
-    ///       <ID>14</ID>
-    ///     </SanPhamTMDT>
-	///     <SanPhamTMDT>
-	///       <MaSanPhamTMDT>abcdef</MaSanPhamTMDT>
-    ///       <ID>11</ID>
-    ///       <ID>12</ID>
-    ///       <ID>13</ID>
-    ///       <ID>14</ID>
-    ///     </SanPhamTMDT>
-    ///     <SanPhamTMDT>
-	///       <MaSanPhamTMDT>123abc</MaSanPhamTMDT>
-    ///       <ID>11</ID>
-    ///       <ID>12</ID>
-    ///       <ID>13</ID>
-    ///       <ID>14</ID>
-    ///     </SanPhamTMDT>
-	///     <SanPhamTMDT>
-	///       <MaSanPhamTMDT>def456</MaSanPhamTMDT>
-    ///       <ID>11</ID>
-    ///       <ID>12</ID>
-    ///       <ID>13</ID>
-    ///       <ID>14</ID>
-    ///     </SanPhamTMDT>
-    ///   </Tiki>
-    /// </MappingSanPhamTMDT_Kho>
+    //<? xml version="1.0" encoding="utf-8" standalone="yes"?>
+    //<MappingSanPhamTMDT_SanPhamKho>
+    //  <Tiki>
+    //    <SanPhamTMDT>
+    //      <MaSanPhamTMDT>135614783</MaSanPhamTMDT>
+    //      <ID Name = "Maru" Quantity="1">12346</ID>
+    //      <ID Name = "Miu miu" Quantity="2">12347</ID>
+    //      <ID Name = "Miu bé nhỏ" Quantity="3">12348</ID>
+    //    </SanPhamTMDT>
+    //    <SanPhamTMDT>
+    //      <MaSanPhamTMDT>135613016</MaSanPhamTMDT>
+    //      <ID Name = "Taku cậu bé mộng mơ quá" Quantity="2">1234567</ID>
+    //      <ID Name = "Taku cậu bé mộng mơ quá_0" Quantity="2">1234567_0</ID>
+    //      <ID Name = "Taku cậu bé mộng mơ quá_1" Quantity="22">1234567_1</ID>
+    //    </SanPhamTMDT>
+    //  </Tiki>
+    //</MappingSanPhamTMDT_SanPhamKho>
     /// </summary>
     public class ModelMappingSanPhamTMDT_SanPhamKho
     {
         private const string eTikiSanPhamTMDTName = "SanPhamTMDT";
         private const string eTikiMaSanPhamTMDTName = "MaSanPhamTMDT";
         private const string eTikiName = "ID";
+
+        public string code { get; set; }
+        public string quantity { get; set; }
+        public string name { get; set; }
 
         public ModelMappingSanPhamTMDT_SanPhamKho()
         {
@@ -125,13 +114,14 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// </summary>
         /// <param name="action"></param>
         /// <param name="idSPTMDT"></param>
-        /// <param name="ID">id sản phẩm trong kho</param>
+        /// <param name="id">id sản phẩm trong kho</param>
+        /// <param name="name">tên sản phẩm trong kho</param>
         /// <param name="quantity"></param>
         /// <returns></returns>
-        public static string Tiki_AddOrUpdate(XMLAction action, string idSPTMDT, string ID, int quantity)
+        public static string Tiki_AddOrUpdate(XMLAction action, string idSPTMDT, string id, string name, string quantity)
         {
             if (string.IsNullOrWhiteSpace(idSPTMDT) ||
-                string.IsNullOrEmpty(ID))
+                string.IsNullOrEmpty(id))
                 return "Mã sản phẩm TMDT hoặc trong kho không đúng.";
 
             XElement eTiki = TiKi_GetTikiNode(action);
@@ -141,20 +131,20 @@ namespace QuanLyKho.Model.InOutWarehouse
             {
                 XElement newE = new XElement(eTikiSanPhamTMDTName);
                 newE.Add(new XElement(eTikiMaSanPhamTMDTName, idSPTMDT));
-                newE.Add(new XElement(eTikiName, ID, new XAttribute("SoLuong", quantity.ToString())));
+                newE.Add(new XElement(eTikiName, id, new XAttribute("Name", name),new XAttribute("Quantity", quantity.ToString())));
                 eTiki.Add(newE);
             }
             else// Cập nhật sản phẩm trên sàn TMDT
             {
                 XElement eOldSPTMDT = lElement.ElementAt(0);
-                IEnumerable<XElement> leID = eOldSPTMDT.Elements(eTikiName).Where(e => e.Value == ID);
+                IEnumerable<XElement> leID = eOldSPTMDT.Elements(eTikiName).Where(e => e.Value == id);
                 if (leID == null || leID.Count() == 0)// Thêm mới sản phẩm trong kho
                 {
-                    eOldSPTMDT.Add(new XElement(eTikiName, ID, new XAttribute("SoLuong", quantity.ToString())));
+                    eOldSPTMDT.Add(new XElement(eTikiName, id, new XAttribute("Name", name), new XAttribute("Quantity", quantity.ToString())));
                 }
                 else // Cập nhật số lượng
                 {
-                    leID.ElementAt(0).Attribute("SoLuong").Value = quantity.ToString();
+                    leID.ElementAt(0).Attribute("Quantity").Value = quantity.ToString();
                 }
             }
             action.xDoc.Save(action.pathXML, SaveOptions.None);
@@ -179,6 +169,34 @@ namespace QuanLyKho.Model.InOutWarehouse
             }
             action.xDoc.Save(action.pathXML, SaveOptions.None);
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Lấy danh sách đối tượng từ ID sản phẩm trên shop TMDT
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static List<ModelMappingSanPhamTMDT_SanPhamKho> GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(XMLAction action, string idSPTMDT)
+        {
+            List<ModelMappingSanPhamTMDT_SanPhamKho> ls = new List<ModelMappingSanPhamTMDT_SanPhamKho>();
+            if (string.IsNullOrEmpty(idSPTMDT))
+                return ls;
+            XElement eTiki = TiKi_GetTikiNode(action);
+            IEnumerable<XElement> lElement = null;
+            lElement = eTiki.Elements(eTikiSanPhamTMDTName).Where(e => e.Element(eTikiMaSanPhamTMDTName).Value == idSPTMDT);
+            if(lElement != null && lElement.Count() == 1)
+            {
+                foreach(XElement e in lElement.Elements(eTikiName))
+                {
+
+                    ModelMappingSanPhamTMDT_SanPhamKho obj = new ModelMappingSanPhamTMDT_SanPhamKho();
+                    obj.code = e.Value;
+                    obj.quantity = e.Attribute("Quantity").Value;
+                    obj.name = e.Attribute("Name").Value;
+                    ls.Add(obj);
+                }
+            }
+            return ls;
         }
     }
 }

@@ -29,7 +29,7 @@
                     <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandProductTiki_GetProductDetail}">Chi Tiết Sản Phẩm</Button>
                 </StackPanel>
                 <ListView ItemsSource="{Binding Path=lsProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                      SelectedItem="{Binding Path=currentSelecteOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                      SelectedItem="{Binding Path=itemProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                           SelectedValue="{Binding Path=textProductCodeGetDetail, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
                           SelectedValuePath="product_id"
                           SelectedIndex="{Binding Path=indexProductInList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"

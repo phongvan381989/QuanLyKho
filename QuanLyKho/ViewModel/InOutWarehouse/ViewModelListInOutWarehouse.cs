@@ -152,17 +152,23 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             listProductInOutWareHouse.Clear();
             if (string.IsNullOrEmpty(textProductCode)) // Lấy tất cả danh sách
             {
+                int index = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
-                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(e.maSanPham, e.tenSanPham, e.tonKho));
+                    index++;
+                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
                 }
             }
             else
             {
+                int index = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
-                    if(e.maSanPham.IndexOf(textProductCode, StringComparison.OrdinalIgnoreCase) >= 0)
-                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(e.maSanPham, e.tenSanPham, e.tonKho));
+                    if (e.maSanPham.IndexOf(textProductCode, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        index++;
+                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
+                    }
                 }
             }
         }
@@ -173,17 +179,23 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             listProductInOutWareHouse.Clear();
             if (string.IsNullOrEmpty(textProductName)) // Lấy tất cả danh sách
             {
+                int index = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
-                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(e.maSanPham, e.tenSanPham, e.tonKho));
+                    index++;
+                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
                 }
             }
             else
             {
+                int index = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
                     if (e.tenSanPham.IndexOf(textProductName, StringComparison.OrdinalIgnoreCase) >= 0)
-                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(e.maSanPham, e.tenSanPham, e.tonKho));
+                    {
+                        index++;
+                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
+                    }
                 }
             }
         }

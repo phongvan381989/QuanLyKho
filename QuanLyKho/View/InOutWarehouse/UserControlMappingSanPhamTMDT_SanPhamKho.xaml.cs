@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.ViewModel.InOutWarehouse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,8 @@ namespace QuanLyKho.View.InOutWarehouse
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            var vm = (ViewModelMappingSanPhamTMDT_SanPhamKho)this.DataContext;
+            vm.GetProductInOutWarehosueDetail();
         }
     }
 }

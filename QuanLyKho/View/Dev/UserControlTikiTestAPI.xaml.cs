@@ -149,11 +149,11 @@ namespace QuanLyKho.View.Dev
             lsID.Add("Maru002b");
             lsID.Add("Maru003c");
             lsID.Add("Maru004d");
-            ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0001",1);
-            ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0002", 2);
-            ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0003", 3);
-            ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0004", 4);
-            ModelMappingSanPhamTMDT_SanPhamKho.Tiki_Delete(actionModelMappingSanPhamTMDT_SanPhamKho, "123456");
+            //ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0001",1);
+            //ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0002", 2);
+            //ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0003", 3);
+            //ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMappingSanPhamTMDT_SanPhamKho, "123456a", "0004", 4);
+            //ModelMappingSanPhamTMDT_SanPhamKho.Tiki_Delete(actionModelMappingSanPhamTMDT_SanPhamKho, "123456");
             //int x;
             //x = 5;
 

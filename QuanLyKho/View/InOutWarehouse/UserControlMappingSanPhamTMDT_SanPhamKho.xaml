@@ -4,46 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View.InOutWarehouse"
+             xmlns:localInOutWarehouse="clr-namespace:QuanLyKho.View.InOutWarehouse"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1200">
     <Grid>
-        <DockPanel LastChildFill = "True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0" LastChildFill = "True">
             <WrapPanel Orientation="Vertical" DockPanel.Dock = "Top" >
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Mã Sản Phẩm</TextBlock>
-                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductCode, UpdateSourceTrigger=PropertyChanged,
-                        Mode=TwoWay}" Name="tbProductCode" Style="{StaticResource TextBoxStyleCode}"></TextBox>
-                    <TextBlock Width="20"/>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="150"> Mã Sản Phẩm</TextBlock>
+                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductCodeOnTMDT, UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}"
+                             ToolTip="Mã sản phẩm trên shop TMDT"></TextBox>
+                    <TextBlock Width="20"></TextBlock>
+                    <TextBlock Width="100"  Style="{StaticResource TextBlockStyle}"> Số Lượng</TextBlock>
+                    <TextBox Width="100"  Text="{Binding Path=textQuantity, UpdateSourceTrigger=PropertyChanged,
+                        Mode=OneWayToSource}" Style="{StaticResource TextBoxStyleCode}"
+                             ToolTip="Số lượng sản phẩm trong kho trong 1 sản phẩm trên TMDT"></TextBox>
                     <Button Style="{StaticResource ButtonStyle}" 
-                        Command="{Binding Path=commandSearchFromCode}"
-                        ToolTip="Tìm kiếm sản phẩm trong kho theo mã.">Tìm Kiếm</Button>
+                        Command="{Binding Path=commandSave}"
+                        ToolTip="Lưu">Lưu</Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Height="10">
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Tên Sản Phẩm</TextBlock>
-                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductName, UpdateSourceTrigger=PropertyChanged,
-                        Mode=TwoWay}" Name="tbProductName" Style="{StaticResource TextBoxStyleCode}"></TextBox>
-                    <TextBlock Width="20"/>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="150"> Tên Sản Phẩm</TextBlock>
+                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductNameOnTMDT, UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}"
+                             ToolTip="Tên sản phẩm trên shop TMDT"></TextBox>
+                    <TextBlock Width="220"/>
                     <Button Style="{StaticResource ButtonStyle}" 
-                        Command="{Binding Path=commandSearchFromName}"
-                        ToolTip="Tìm kiếm sản phẩm trong khotheo tên.">Tìm Kiếm</Button>
+                        Command="{Binding Path=commandDelete}"
+                        ToolTip="Xóa">Xóa</Button>
                 </StackPanel>
             </WrapPanel>
             <DockPanel LastChildFill = "True">
-                <ListView ItemsSource="{Binding Path=listProductInOutWareHouse, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                          SelectedItem="{Binding Path=itemProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
-                          SelectedIndex="{Binding Path=indexInList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                <ListView ItemsSource="{Binding Path=listProductOfProductOnTMDT, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                          SelectedItem="{Binding Path=itemProductOfProductOnTMDT, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                          SelectedIndex="{Binding Path=indexInListOfProductOnTMDT, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Mã" Width="200" DisplayMemberBinding="{Binding code}" />
+                            <GridViewColumn Header="STT" Width="50" DisplayMemberBinding="{Binding index}" />
+                            <GridViewColumn Header="Mã" Width="100" DisplayMemberBinding="{Binding code}" />
                             <GridViewColumn Header="Tên" Width="300" DisplayMemberBinding="{Binding name}" />
-                            <GridViewColumn Header="Tồn Kho" Width="100" DisplayMemberBinding="{Binding quantity}" />
+                            <GridViewColumn Header="Số Lượng" Width="100" DisplayMemberBinding="{Binding quantity}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
             </DockPanel>
+        </DockPanel>
+        <DockPanel Grid.Column="1" LastChildFill = "True">
+            <localInOutWarehouse:UserControlListInOutWarehouse x:Name="UCListInOutWarehouse" DataContext="{Binding Path=vmListInOutWarehouse}">
+            </localInOutWarehouse:UserControlListInOutWarehouse>
         </DockPanel>
     </Grid>
 </UserControl>

@@ -1,7 +1,9 @@
 ﻿using QuanLyKho.General;
 using QuanLyKho.Model.Dev.TikiApp.Products;
+using QuanLyKho.View.InOutWarehouse;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Products;
+using QuanLyKho.ViewModel.InOutWarehouse;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -214,8 +216,33 @@ namespace QuanLyKho.ViewModel.Products
                 MessageBox.Show("Chưa chọn sản phẩm nào.");
                 return;
             }
+
+            Window wdMappingSanPhamTMDT_SanPhamKho = new Window
+            {
+                Content = new UserControlMappingSanPhamTMDT_SanPhamKho()
+            };
+            wdMappingSanPhamTMDT_SanPhamKho.DataContext = new ViewModelMappingSanPhamTMDT_SanPhamKho(itemProduct.product_id, itemProduct.name);
+            wdMappingSanPhamTMDT_SanPhamKho.WindowState = WindowState.Maximized;
+            wdMappingSanPhamTMDT_SanPhamKho.ShowDialog();
         }
 
+        private ProductViewBindingTiki pitemProduct;
+        public ProductViewBindingTiki itemProduct
+        {
+            get
+            {
+                return pitemProduct;
+            }
+
+            set
+            {
+                if(pitemProduct != value)
+                {
+                    pitemProduct = value;
+                    OnPropertyChanged("itemProduct");
+                }
+            }
+        }
         public void RefreshView()
         {
             textProductCodeGetDetail = string.Empty;

@@ -17,7 +17,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
         public ProductViewBindingTiki(Product product, int inputIndex)
         {
             index = inputIndex;
-            product_id = product.product_id;
+            product_id = product.product_id.ToString();
             sku = product.sku;
             name = product.name;
             // Lấy tên file ảnh
@@ -37,7 +37,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
         /// <summary>
         /// Unique product ID
         /// </summary>
-        public Int32 product_id { get; set; }
+        public string product_id { get; set; }
 
         /// <summary>
         /// SKU of product

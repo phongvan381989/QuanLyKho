@@ -12,6 +12,11 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
     class MappingSanPhamTMDT_SanPhamKhoViewBinding
     {
         /// <summary>
+        /// Số thứ tự
+        /// </summary>
+        public int index { get; set; }
+
+        /// <summary>
         /// Mã sản phẩm
         /// </summary>
         public string code { get; set; }

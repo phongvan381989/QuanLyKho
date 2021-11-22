@@ -152,6 +152,8 @@
     <Compile Include="ViewModel\Dev\TikiAPI\Products\ProductViewBindingTiki.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_SearchFromCode.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_SearchFromName.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandMappingSanPhamTMDT_SanPhamKho_Delete.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandMappingSanPhamTMDT_SanPhamKho_Save.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Left.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_Right.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMedia_RotateLeft.cs" />

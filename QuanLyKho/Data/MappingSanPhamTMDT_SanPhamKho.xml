@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<MappingSanPhamTMDT_SanPhamKho>
+  <Tiki>
+    <SanPhamTMDT>
+      <MaSanPhamTMDT>135614783</MaSanPhamTMDT>
+      <ID Name="Maru" Quantity="1">12346</ID>
+      <ID Name="Miu miu" Quantity="2">12347</ID>
+      <ID Name="Miu bé nhỏ" Quantity="3">12348</ID>
+    </SanPhamTMDT>
+    <SanPhamTMDT>
+      <MaSanPhamTMDT>135613016</MaSanPhamTMDT>
+      <ID Name="Taku cậu bé mộng mơ quá" Quantity="2">1234567</ID>
+      <ID Name="Taku cậu bé mộng mơ quá_0" Quantity="2">1234567_0</ID>
+      <ID Name="Taku cậu bé mộng mơ quá_1" Quantity="22">1234567_1</ID>
+    </SanPhamTMDT>
+  </Tiki>
+</MappingSanPhamTMDT_SanPhamKho>

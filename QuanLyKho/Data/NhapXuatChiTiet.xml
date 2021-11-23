@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<NhapXuatChiTiet>
+  <SanPham>
+    <MaSanPham>12346</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>5</SoLuong>
+      <ThoiGian>05-08-2021 08:05:31</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>-95</SoLuong>
+      <ThoiGian>05-08-2021 08:05:44</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>05-08-2021 08:59:34</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>18-11-2021 15:45:01</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>12347</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>05-08-2021 08:59:45</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>12348</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>05-08-2021 08:59:55</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123456</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>10-08-2021 17:54:20</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>1234567</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>13-08-2021 16:52:50</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>13-08-2021 16:59:39</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>13-08-2021 17:02:48</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123456789</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>13-08-2021 16:54:35</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>12345ttt</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>08-11-2021 16:35:20</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>12aaaa</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>16-11-2021 17:34:24</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>12346test</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>22-11-2021 08:37:04</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+</NhapXuatChiTiet>

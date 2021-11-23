@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View.Order"
+             xmlns:localInOutWarehouse="clr-namespace:QuanLyKho.View.InOutWarehouse"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -22,18 +23,15 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Path=listProductInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
-
+        <ListView ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
             <ListView.View>
-
                 <GridView >
-
                     <GridViewColumn CellTemplate="{StaticResource CheckStatusCell}" 
-                Width="30" Header="Trạng Thái"/>
+                Width="40" Header="Trạng Thái"/>
                     
                     <GridViewColumn DisplayMemberBinding=
                           "{Binding Path=idInShop}" 
-                      Header="Mã Sản Phẩm Trên TMDT" Width="100"/>
+                      Header="Mã Sản Phẩm Trên TMDT" Width="150"/>
 
                     <GridViewColumn DisplayMemberBinding=
                           "{Binding Path=name}" Header="Tên"
@@ -47,8 +45,14 @@
                     <GridViewColumn CellTemplate="{StaticResource AvatarCell}"
                       Header="Ảnh Đại Diện" Width="200"/>
 
-                    <GridViewColumn CellTemplate="{StaticResource CodeInWarehouseCell}"
-                      Header="Mã Sản Phẩm Trong Kho" Width="400"/>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <localInOutWarehouse:Media DataContext="{Binding Path=vmOrderCheck}">
+                                </localInOutWarehouse:Media>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
 
             </ListView.View>

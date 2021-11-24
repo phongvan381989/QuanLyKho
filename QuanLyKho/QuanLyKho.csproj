@@ -145,7 +145,8 @@
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\CommonTikiAPI.cs" />
-    <Compile Include="ViewModel\Orders\Tiki\ProductInOrderViewBindingTiki.cs" />
+    <Compile Include="ViewModel\Orders\Tiki\OrderCheckProductInWarehouseViewBindingTiki.cs" />
+    <Compile Include="ViewModel\Orders\Tiki\ViewModelProductInOrderViewBindingTiki.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiGetListOrders.cs" />
     <Compile Include="ViewModel\Orders\Tiki\TikiOrderViewBinding.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Products\GetListProductTiki.cs" />

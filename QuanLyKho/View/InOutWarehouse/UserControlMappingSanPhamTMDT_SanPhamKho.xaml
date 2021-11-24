@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyKho.View.InOutWarehouse"
              xmlns:localInOutWarehouse="clr-namespace:QuanLyKho.View.InOutWarehouse"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1200">
+             d:DesignHeight="450" d:DesignWidth="1400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -20,13 +20,15 @@
                         Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}"
                              ToolTip="Mã sản phẩm trên shop TMDT"></TextBox>
                     <TextBlock Width="20"></TextBlock>
-                    <TextBlock Width="100"  Style="{StaticResource TextBlockStyle}"> Số Lượng</TextBlock>
+                    <TextBlock Width="100"  Style="{StaticResource TextBlockStyle}" Visibility="{Binding Path=optionVisibility}"> Số Lượng</TextBlock>
                     <TextBox Width="100"  Text="{Binding Path=textQuantity, UpdateSourceTrigger=PropertyChanged,
-                        Mode=OneWayToSource}" Style="{StaticResource TextBoxStyleCode}"
-                             ToolTip="Số lượng sản phẩm trong kho trong 1 sản phẩm trên TMDT"></TextBox>
-                    <Button Style="{StaticResource ButtonStyle}" 
+                        Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}"
+                             ToolTip="Số lượng sản phẩm trong kho trong 1 sản phẩm trên TMDT"
+                             Visibility="{Binding Path=optionVisibility}"></TextBox>
+                    <Button Style="{StaticResource ButtonStyle}" Width="40"
                         Command="{Binding Path=commandSave}"
-                        ToolTip="Lưu">Lưu</Button>
+                        ToolTip="Lưu"
+                            Visibility="{Binding Path=optionVisibility}">Lưu</Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Height="10">
                 </StackPanel>
@@ -36,9 +38,10 @@
                         Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}"
                              ToolTip="Tên sản phẩm trên shop TMDT"></TextBox>
                     <TextBlock Width="220"/>
-                    <Button Style="{StaticResource ButtonStyle}" 
+                    <Button Style="{StaticResource ButtonStyle}" Width="40"
                         Command="{Binding Path=commandDelete}"
-                        ToolTip="Xóa">Xóa</Button>
+                        ToolTip="Xóa"
+                            Visibility="{Binding Path=optionVisibility}">Xóa</Button>
                 </StackPanel>
             </WrapPanel>
             <DockPanel LastChildFill = "True">
@@ -50,14 +53,20 @@
                         <GridView>
                             <GridViewColumn Header="STT" Width="50" DisplayMemberBinding="{Binding index}" />
                             <GridViewColumn Header="Mã" Width="100" DisplayMemberBinding="{Binding code}" />
-                            <GridViewColumn Header="Tên" Width="300" DisplayMemberBinding="{Binding name}" />
+                            <GridViewColumn Header="Tên" Width="300">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Số Lượng" Width="100" DisplayMemberBinding="{Binding quantity}" />
                         </GridView>
                     </ListView.View>
                 </ListView>
             </DockPanel>
         </DockPanel>
-        <DockPanel Grid.Column="1" LastChildFill = "True">
+        <DockPanel Grid.Column="1" LastChildFill = "True" Visibility="{Binding Path=optionVisibility}">
             <localInOutWarehouse:UserControlListInOutWarehouse x:Name="UCListInOutWarehouse" DataContext="{Binding Path=vmListInOutWarehouse}">
             </localInOutWarehouse:UserControlListInOutWarehouse>
         </DockPanel>

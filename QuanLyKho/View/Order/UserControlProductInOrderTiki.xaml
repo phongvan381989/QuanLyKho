@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View.Order"
-             xmlns:localInOutWarehouse="clr-namespace:QuanLyKho.View.InOutWarehouse"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -23,7 +22,9 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+        <ListView ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                  MouseDoubleClick="ListView_MouseDoubleClick"
+                  SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
             <ListView.View>
                 <GridView >
                     <GridViewColumn CellTemplate="{StaticResource CheckStatusCell}" 
@@ -33,9 +34,12 @@
                           "{Binding Path=idInShop}" 
                       Header="Mã Sản Phẩm Trên TMDT" Width="150"/>
 
-                    <GridViewColumn DisplayMemberBinding=
-                          "{Binding Path=name}" Header="Tên"
-                      Width="100">
+                    <GridViewColumn Header="Tên" Width="300">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <GridViewColumn DisplayMemberBinding=
@@ -45,11 +49,11 @@
                     <GridViewColumn CellTemplate="{StaticResource AvatarCell}"
                       Header="Ảnh Đại Diện" Width="200"/>
 
-                    <GridViewColumn>
+                    <GridViewColumn Header="Sản Phẩm Trong Kho">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <localInOutWarehouse:Media DataContext="{Binding Path=vmOrderCheck}">
-                                </localInOutWarehouse:Media>
+                                <local:UserControlOrderCheckProductInWarehouse DataContext="{Binding Path=vmOrderCheck}">
+                                </local:UserControlOrderCheckProductInWarehouse>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

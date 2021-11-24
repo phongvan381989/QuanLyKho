@@ -32,6 +32,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
             commandSave = new CommandMappingSanPhamTMDT_SanPhamKho_Save(this);
             commandDelete = new CommandMappingSanPhamTMDT_SanPhamKho_Delete(this);
+            optionVisibility = Visibility.Visible;
         }
 
         public ViewModelListInOutWarehouse vmListInOutWarehouse { get; set; }
@@ -51,7 +52,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(actionModelMapping, textProductCodeOnTMDT);
             foreach(ModelMappingSanPhamTMDT_SanPhamKho obj in ls)
             {
-                listProductOfProductOnTMDT.Add(new ProductInOutWarehoseViewBinding(0, obj.code, obj.name, obj.quantity));
+                listProductOfProductOnTMDT.Add(new ProductInOutWarehoseViewBinding(0, obj.code, obj.name, obj.quantity, obj.position));
             }
 
             UpdateIndex();
@@ -165,8 +166,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 return;
             }
 
-            int result;
-            if (!Int32.TryParse(textQuantity, out result))
+            int result = -1;
+            if (!Int32.TryParse(textQuantity, out result) || result == 0)
             {
                 MessageBox.Show("Chưa chọn số lượng sản phẩm.");
                 return;
@@ -182,14 +183,14 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 }
             }
             listProductOfProductOnTMDT.Add(new ProductInOutWarehoseViewBinding(0, vmListInOutWarehouse.itemProduct.code,
-                vmListInOutWarehouse.itemProduct.name, textQuantity));
+                vmListInOutWarehouse.itemProduct.name, textQuantity, vmListInOutWarehouse.itemProduct.position));
 
             UpdateIndex();
 
             // Lưu vào xml data
             foreach (ProductInOutWarehoseViewBinding e in listProductOfProductOnTMDT)
             {
-                string str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMapping, textProductCodeOnTMDT, e.code, e.name, e.quantity);
+                string str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMapping, textProductCodeOnTMDT, e.code, e.name, e.quantity, e.position);
                 if (!string.IsNullOrEmpty(str))
                 {
                     MyLogger.GetInstance().Warn(str);
@@ -205,6 +206,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                     return;
                 }
             }
+            textQuantity = string.Empty;
         }
 
         public void Delete()
@@ -216,6 +218,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 MessageBox.Show("Xóa thất bại. Vui lòng thử lại. Lỗi: " + str);
             }
             listProductOfProductOnTMDT.Clear();
+            textQuantity = string.Empty;
             return;
         }
 
@@ -234,5 +237,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             wdOrderDetail.WindowState = WindowState.Maximized;
             wdOrderDetail.ShowDialog();
         }
+
+        public Visibility optionVisibility { get; set; }
     }
 }

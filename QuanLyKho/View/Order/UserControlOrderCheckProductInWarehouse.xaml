@@ -30,7 +30,13 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn Header="Mã" Width="100" DisplayMemberBinding="{Binding code}" />
-                            <GridViewColumn Header="Tên" Width="100" DisplayMemberBinding="{Binding name}" />
+                            <GridViewColumn Header="Tên" Width="300">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Vị Trí" Width="100" DisplayMemberBinding="{Binding positionInWarehouse}" />
                             <GridViewColumn Header="Số Lượng" Width="100" DisplayMemberBinding="{Binding statusOfQuantity}" />
                         </GridView>

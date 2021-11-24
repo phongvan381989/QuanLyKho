@@ -1,8 +1,13 @@
-﻿using System;
+﻿using QuanLyKho.Model;
+using QuanLyKho.Model.InOutWarehouse;
+using QuanLyKho.ViewModel.Orders.Tiki;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace QuanLyKho.ViewModel.Orders
 {
@@ -19,40 +24,70 @@ namespace QuanLyKho.ViewModel.Orders
         /// <param name="quantity">Số lượng</param>
         public ViewModelOrderCheckProductInWarehouseTiki(string productTMDTCode, int quantity)
         {
-
+            // Từ mã sản phẩm vào bảng map lấy được danh sách sản phẩm trong kho tương ứng
+            XMLAction actionModelMapping = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
+            listCheckProduct = new ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki>();
+            List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(actionModelMapping, productTMDTCode);
+            ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki> list = new ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki>();
+            foreach (ModelMappingSanPhamTMDT_SanPhamKho e in ls)
+            {
+                list.Add(new OrderCheckProductInWarehouseViewBindingTiki(e, quantity));
+            }
+            listCheckProduct = list;
         }
 
-        private Boolean pisChecked;
-        public Boolean isChecked
+        private ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki> plistCheckProduct;
+        public ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki> listCheckProduct
         {
             get
             {
-                return pisChecked;
+                return plistCheckProduct;
             }
 
             set
             {
-                if(pisChecked != value)
+                if(plistCheckProduct != value)
                 {
-                    pisChecked = value;
-                    OnPropertyChanged("isChecked");
+                    plistCheckProduct = value;
+                    OnPropertyChanged("listCheckProduct");
                 }
             }
         }
 
-        public string code { get; set; }
+        private OrderCheckProductInWarehouseViewBindingTiki pitemSelected;
+        public OrderCheckProductInWarehouseViewBindingTiki itemSelected
+        {
+            get
+            {
+                return pitemSelected;
+            }
 
-        public string name { get; set; }
+            set
+            {
+                if(pitemSelected != value)
+                {
+                    pitemSelected = value;
+                    OnPropertyChanged("itemSelected");
+                }
+            }
+        }
 
-        public string positionInWarehouse { set; get; }
-
-        /// <summary>
-        /// VD: 1/3 tức cần 3 sản phẩm xuất kho cho đơn hàng nhưng đã check được 1 sản phẩm
-        /// </summary>
-        public string statusOfQuantity { set; get; }
-
-        private int needQuantity;
-
-        private int checkedQuantity;
+        private int pindexInList;
+        public int indexInList
+        {
+            get
+            {
+                return pindexInList;
+            }
+            
+            set
+            {
+                if(pindexInList != value)
+                {
+                    pindexInList = value;
+                    OnPropertyChanged("indexInList");
+                }
+            }
+        }
     }
 }

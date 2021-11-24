@@ -32,12 +32,15 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         /// </summary>
         public string quantity { get; set; }
 
-        public ProductInOutWarehoseViewBinding(int inputIndex, string inputCode, string inputName, string inputQuantity)
+        public string position { get; set; }
+
+        public ProductInOutWarehoseViewBinding(int inputIndex, string inputCode, string inputName, string inputQuantity, string inputPosition)
         {
             index = inputIndex;
             code = inputCode;
             name = inputName;
             quantity = inputQuantity;
+            position = inputPosition;
         }
         public ProductInOutWarehoseViewBinding(ProductInOutWarehoseViewBinding obj)
         {
@@ -45,6 +48,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             code = obj.code;
             name = obj.name;
             quantity = obj.quantity;
+            position = obj.position;
         }
 
         public ProductInOutWarehoseViewBinding(int inputIndex, ModelThongTinChiTiet ttct)
@@ -53,6 +57,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             code = ttct.maSanPham;
             name = ttct.tenSanPham;
             quantity = ttct.tonKho;
+            position = ttct.viTriLuuKho;
         }
     }
 }

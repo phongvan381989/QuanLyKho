@@ -38,7 +38,13 @@
                         <GridView>
                             <GridViewColumn Header="STT" Width="40" DisplayMemberBinding="{Binding index}" />
                             <GridViewColumn Header="Mã" Width="100" DisplayMemberBinding="{Binding product_id}" />
-                            <GridViewColumn Header="Tên Sản Phẩm" Width="200" DisplayMemberBinding="{Binding name}" />
+                            <GridViewColumn Header="Tên" Width="300">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Bât/Tắt" Width="100" DisplayMemberBinding="{Binding strActive}" />
                             <GridViewColumn Header="Giá Niêm Yết" Width="100" DisplayMemberBinding="{Binding price}" />
                             <GridViewColumn Header="Giá Bán" Width="100" DisplayMemberBinding="{Binding market_price}" />

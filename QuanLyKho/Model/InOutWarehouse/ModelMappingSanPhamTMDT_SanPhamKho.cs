@@ -40,6 +40,7 @@ namespace QuanLyKho.Model.InOutWarehouse
         public string code { get; set; }
         public string quantity { get; set; }
         public string name { get; set; }
+        public string position { get; set; }
 
         public ModelMappingSanPhamTMDT_SanPhamKho()
         {
@@ -117,8 +118,9 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// <param name="id">id sản phẩm trong kho</param>
         /// <param name="name">tên sản phẩm trong kho</param>
         /// <param name="quantity"></param>
+        /// <param name="position"></param>
         /// <returns></returns>
-        public static string Tiki_AddOrUpdate(XMLAction action, string idSPTMDT, string id, string name, string quantity)
+        public static string Tiki_AddOrUpdate(XMLAction action, string idSPTMDT, string id, string name, string quantity, string position)
         {
             if (string.IsNullOrWhiteSpace(idSPTMDT) ||
                 string.IsNullOrEmpty(id))
@@ -131,7 +133,10 @@ namespace QuanLyKho.Model.InOutWarehouse
             {
                 XElement newE = new XElement(eTikiSanPhamTMDTName);
                 newE.Add(new XElement(eTikiMaSanPhamTMDTName, idSPTMDT));
-                newE.Add(new XElement(eTikiName, id, new XAttribute("Name", name),new XAttribute("Quantity", quantity.ToString())));
+                newE.Add(new XElement(eTikiName, id,
+                         new XAttribute("Name", name),
+                         new XAttribute("Quantity", quantity.ToString()),
+                         new XAttribute("Position", position)));
                 eTiki.Add(newE);
             }
             else// Cập nhật sản phẩm trên sàn TMDT
@@ -140,11 +145,16 @@ namespace QuanLyKho.Model.InOutWarehouse
                 IEnumerable<XElement> leID = eOldSPTMDT.Elements(eTikiName).Where(e => e.Value == id);
                 if (leID == null || leID.Count() == 0)// Thêm mới sản phẩm trong kho
                 {
-                    eOldSPTMDT.Add(new XElement(eTikiName, id, new XAttribute("Name", name), new XAttribute("Quantity", quantity.ToString())));
+                    eOldSPTMDT.Add(
+                        new XElement(eTikiName, id, new XAttribute("Name", name),
+                         new XAttribute("Quantity", quantity.ToString()),
+                         new XAttribute("Position", position)));
                 }
-                else // Cập nhật số lượng
+                else // Cập nhật
                 {
+                    leID.ElementAt(0).Attribute("Name").Value = name;
                     leID.ElementAt(0).Attribute("Quantity").Value = quantity.ToString();
+                    leID.ElementAt(0).Attribute("Position").Value = position;
                 }
             }
             action.xDoc.Save(action.pathXML, SaveOptions.None);
@@ -193,6 +203,7 @@ namespace QuanLyKho.Model.InOutWarehouse
                     obj.code = e.Value;
                     obj.quantity = e.Attribute("Quantity").Value;
                     obj.name = e.Attribute("Name").Value;
+                    obj.position = e.Attribute("Position").Value;
                     ls.Add(obj);
                 }
             }

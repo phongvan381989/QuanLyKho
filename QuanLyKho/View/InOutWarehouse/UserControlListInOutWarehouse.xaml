@@ -37,8 +37,15 @@
                           MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
+                            <GridViewColumn Header="STT" Width="50" DisplayMemberBinding="{Binding index}" />
                             <GridViewColumn Header="Mã" Width="200" DisplayMemberBinding="{Binding code}" />
-                            <GridViewColumn Header="Tên" Width="300" DisplayMemberBinding="{Binding name}" />
+                            <GridViewColumn Header="Tên" Width="300">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Tồn Kho" Width="100" DisplayMemberBinding="{Binding quantity}" />
                         </GridView>
                     </ListView.View>

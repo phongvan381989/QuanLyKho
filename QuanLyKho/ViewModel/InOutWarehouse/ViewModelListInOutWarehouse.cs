@@ -152,22 +152,22 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             listProductInOutWareHouse.Clear();
             if (string.IsNullOrEmpty(textProductCode)) // Lấy tất cả danh sách
             {
-                int index = 0;
+                int indexTemp = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
-                    index++;
-                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
+                    indexTemp++;
+                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(indexTemp, e));
                 }
             }
             else
             {
-                int index = 0;
+                int indexTemp = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
                     if (e.maSanPham.IndexOf(textProductCode, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        index++;
-                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
+                        indexTemp++;
+                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(indexTemp, e));
                     }
                 }
             }
@@ -179,22 +179,22 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             listProductInOutWareHouse.Clear();
             if (string.IsNullOrEmpty(textProductName)) // Lấy tất cả danh sách
             {
-                int index = 0;
+                int indexTemp = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
-                    index++;
-                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
+                    indexTemp++;
+                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(indexTemp, e));
                 }
             }
             else
             {
-                int index = 0;
+                int indexTemp = 0;
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
                     if (e.tenSanPham.IndexOf(textProductName, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
-                        index++;
-                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(index, e));
+                        indexTemp++;
+                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(indexTemp, e));
                     }
                 }
             }

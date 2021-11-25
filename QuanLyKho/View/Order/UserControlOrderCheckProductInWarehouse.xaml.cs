@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.ViewModel.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,18 @@ namespace QuanLyKho.View.Order
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ViewModelOrderCheckProductInWarehouseTiki vm = (ViewModelOrderCheckProductInWarehouseTiki)this.DataContext;
+            vm.Check();
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ViewModelOrderCheckProductInWarehouseTiki vm = (ViewModelOrderCheckProductInWarehouseTiki)this.DataContext;
+            vm.Check();
         }
     }
 }

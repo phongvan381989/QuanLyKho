@@ -24,7 +24,8 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <CheckBox IsChecked="{Binding Path=isChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                            <CheckBox IsChecked="{Binding Path=isChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                      Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

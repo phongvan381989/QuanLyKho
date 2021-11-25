@@ -89,5 +89,19 @@ namespace QuanLyKho.ViewModel.Orders
                 }
             }
         }
+
+        public void Check()
+        {
+            if(itemSelected.isChecked)
+            {
+                itemSelected.checkedQuantity = itemSelected.needQuantity;
+            }
+            else
+            {
+                itemSelected.checkedQuantity = 0;
+            }
+            itemSelected.UpdateStatusOfQuantity();
+            OnPropertyChanged("itemSelected");
+        }
     }
 }

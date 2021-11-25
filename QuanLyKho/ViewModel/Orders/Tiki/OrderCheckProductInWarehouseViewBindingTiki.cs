@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuanLyKho.ViewModel.Orders.Tiki
 {
-    public class OrderCheckProductInWarehouseViewBindingTiki
+    public class OrderCheckProductInWarehouseViewBindingTiki : ViewModelBase
     {
         public OrderCheckProductInWarehouseViewBindingTiki(ModelMappingSanPhamTMDT_SanPhamKho e, int quantity)
         {
@@ -27,7 +27,22 @@ namespace QuanLyKho.ViewModel.Orders.Tiki
         {
             statusOfQuantity = checkedQuantity.ToString() + @"/" + needQuantity.ToString();
         }
-        public Boolean isChecked { get; set; }
+        private Boolean pisChecked;
+        public Boolean isChecked
+        {
+            get
+            {
+                return pisChecked;
+            }
+            set
+            {
+                if (pisChecked != value)
+                {
+                    pisChecked = value;
+                    OnPropertyChanged("isChecked");
+                }
+            }
+        }
         public string code { get; set; }
 
         public string name { get; set; }
@@ -37,7 +52,23 @@ namespace QuanLyKho.ViewModel.Orders.Tiki
         /// <summary>
         /// VD: 1/3 tức cần 3 sản phẩm xuất kho cho đơn hàng nhưng đã check được 1 sản phẩm
         /// </summary>
-        public string statusOfQuantity { set; get; }
+        private string pstatusOfQuantity;
+        public string statusOfQuantity
+        {
+            get
+            {
+                return pstatusOfQuantity;
+            }
+
+            set
+            {
+                if(pstatusOfQuantity !=value)
+                {
+                    pstatusOfQuantity = value;
+                    OnPropertyChanged("statusOfQuantity");
+                }
+            }
+        }
 
         public int needQuantity;
 

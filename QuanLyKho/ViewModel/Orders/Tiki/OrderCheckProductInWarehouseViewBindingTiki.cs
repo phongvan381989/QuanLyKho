@@ -9,7 +9,8 @@ namespace QuanLyKho.ViewModel.Orders.Tiki
 {
     public class OrderCheckProductInWarehouseViewBindingTiki : ViewModelBase
     {
-        public OrderCheckProductInWarehouseViewBindingTiki(ModelMappingSanPhamTMDT_SanPhamKho e, int quantity)
+        public static int indexCheck = -1;
+        public OrderCheckProductInWarehouseViewBindingTiki(ModelMappingSanPhamTMDT_SanPhamKho e, int quantity, int inputIndex)
         {
             isChecked = false;
             code = e.code;
@@ -22,6 +23,7 @@ namespace QuanLyKho.ViewModel.Orders.Tiki
             else
                 needQuantity = quantity;
             UpdateStatusOfQuantity();
+            index = inputIndex;
         }
         public void UpdateStatusOfQuantity()
         {
@@ -38,6 +40,7 @@ namespace QuanLyKho.ViewModel.Orders.Tiki
             {
                 if (pisChecked != value)
                 {
+                    indexCheck = index;
                     pisChecked = value;
                     OnPropertyChanged("isChecked");
                 }
@@ -73,5 +76,6 @@ namespace QuanLyKho.ViewModel.Orders.Tiki
         public int needQuantity;
 
         public int checkedQuantity;
+        public int index;
     }
 }

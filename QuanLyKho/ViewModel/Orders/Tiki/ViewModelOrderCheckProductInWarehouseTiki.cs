@@ -29,9 +29,11 @@ namespace QuanLyKho.ViewModel.Orders
             listCheckProduct = new ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki>();
             List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(actionModelMapping, productTMDTCode);
             ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki> list = new ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki>();
+            int indexTemp = -1;
             foreach (ModelMappingSanPhamTMDT_SanPhamKho e in ls)
             {
-                list.Add(new OrderCheckProductInWarehouseViewBindingTiki(e, quantity));
+                indexTemp++;
+                list.Add(new OrderCheckProductInWarehouseViewBindingTiki(e, quantity, indexTemp));
             }
             listCheckProduct = list;
         }
@@ -92,7 +94,8 @@ namespace QuanLyKho.ViewModel.Orders
 
         public void Check()
         {
-            if(itemSelected.isChecked)
+            itemSelected = listCheckProduct[OrderCheckProductInWarehouseViewBindingTiki.indexCheck];
+            if (itemSelected.isChecked)
             {
                 itemSelected.checkedQuantity = itemSelected.needQuantity;
             }

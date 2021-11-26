@@ -15,16 +15,18 @@
                     <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandCheck}">Kiểm Tra Mã Sản Phẩm</Button>
                 </StackPanel>
                 <ListView ItemsSource="{Binding Path=listCheckProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                      SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                      SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           SelectedIndex="{Binding Path=indexInList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                          MouseDoubleClick="ListView_MouseDoubleClick">
+                          MouseDoubleClick="ListView_MouseDoubleClick"
+                          SelectionMode="Single">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Trạng Thái" Width="30">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <CheckBox IsChecked="{Binding Path=isChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            <CheckBox IsChecked="{Binding 
+                                                Path=isChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                       Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                                         </StackPanel>
                                     </DataTemplate>

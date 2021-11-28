@@ -1,4 +1,5 @@
-﻿using QuanLyKho.ViewModel.Products;
+﻿using QuanLyKho.View.Product.Tiki;
+using QuanLyKho.ViewModel.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;

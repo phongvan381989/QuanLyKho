@@ -26,20 +26,18 @@ namespace QuanLyKho.ViewModel.Orders
         {
             // Từ mã sản phẩm vào bảng map lấy được danh sách sản phẩm trong kho tương ứng
             XMLAction actionModelMapping = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
-            listCheckProduct = new ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki>();
+            listCheckProduct = new ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki>();
             List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(actionModelMapping, productTMDTCode);
-            ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki> list = new ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki>();
             int indexTemp = -1;
             foreach (ModelMappingSanPhamTMDT_SanPhamKho e in ls)
             {
                 indexTemp++;
-                list.Add(new OrderCheckProductInWarehouseViewBindingTiki(e, quantity, indexTemp));
+                listCheckProduct.Add(new ViewModelOrderCheckProductInWarehouseViewBindingTiki(e, quantity, indexTemp));
             }
-            listCheckProduct = list;
         }
 
-        private ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki> plistCheckProduct;
-        public ObservableCollection<OrderCheckProductInWarehouseViewBindingTiki> listCheckProduct
+        private ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> plistCheckProduct;
+        public ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> listCheckProduct
         {
             get
             {
@@ -56,8 +54,8 @@ namespace QuanLyKho.ViewModel.Orders
             }
         }
 
-        private OrderCheckProductInWarehouseViewBindingTiki pitemSelected;
-        public OrderCheckProductInWarehouseViewBindingTiki itemSelected
+        private ViewModelOrderCheckProductInWarehouseViewBindingTiki pitemSelected;
+        public ViewModelOrderCheckProductInWarehouseViewBindingTiki itemSelected
         {
             get
             {
@@ -94,17 +92,68 @@ namespace QuanLyKho.ViewModel.Orders
 
         public void Check()
         {
-            itemSelected = listCheckProduct[OrderCheckProductInWarehouseViewBindingTiki.indexCheck];
-            if (itemSelected.isChecked)
-            {
-                itemSelected.checkedQuantity = itemSelected.needQuantity;
-            }
-            else
-            {
-                itemSelected.checkedQuantity = 0;
-            }
-            itemSelected.UpdateStatusOfQuantity();
+            itemSelected = listCheckProduct[ViewModelOrderCheckProductInWarehouseViewBindingTiki.indexCheck];
+            itemSelected.Update();
             OnPropertyChanged("itemSelected");
+        }
+
+        /// <summary>
+        /// Update trạng thái kiểm số lượng sản phẩm trong kho trong đơn khi check/uncheck
+        /// </summary>
+        public void Update(bool isChecked)
+        {
+            foreach(ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+            {
+                e.isChecked = isChecked;
+                e.Update();
+            }
+        }
+
+
+        /// <summary>
+        /// Check khi thêm 1 sản phẩm vào đơn hàng
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns>1: sản phẩm không có trong đơn tương ứng 1 sản phẩm TMDT, 2: sản phẩm vượt số lượng, 0: thành công</returns>
+        public int AddProduct(string inputCode)
+        {
+            int result = 1;
+            foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+            {
+                if(e.code == inputCode)
+                {
+                    if(e.checkedQuantity < e.needQuantity)
+                    {
+                        e.checkedQuantity++;
+                        result = 0;
+                        break;
+                    }
+                    else
+                    {
+                        result = 2;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Kiểm tra sản phẩm đã được chọn đủ
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckFull()
+        {
+            bool isFull = true;
+            foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+            {
+                if (e.isChecked == false)
+                {
+                    isFull = false;
+                    break;
+                }
+            }
+            return isFull;
         }
     }
 }

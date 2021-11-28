@@ -17,10 +17,10 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
     /// </summary>
     public class ViewModelProductInOrderViewBindingTiki : ViewModelBase
     {
-
-        public ViewModelProductInOrderViewBindingTiki(OrderItemV2 orderItemV2)
+        public static int indexCheck = -1;
+        public ViewModelProductInOrderViewBindingTiki(OrderItemV2 orderItemV2, int inputIndex)
         {
-            isSelected = false;
+            isChecked = false;
             idInShop = orderItemV2.product.id;
             name = orderItemV2.product.name;
             // Từ id sản phẩm trên shop TMDT, lấy được danh sách sản phẩm trong kho
@@ -30,12 +30,29 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             avatar = Common.GetNameFromURL(thumbnail);
             amount = orderItemV2.qty;
             vmOrderCheck = new ViewModelOrderCheckProductInWarehouseTiki(idInShop.ToString(), amount);
+            index = inputIndex;
         }
 
         /// <summary>
         /// Sản phẩm trong đơn đã đủ chưa?
         /// </summary>
-        public bool isSelected { get; set; }
+        private bool pisChecked;
+        public bool isChecked
+        {
+            get
+            {
+                return pisChecked;
+            }
+            set
+            {
+                if(pisChecked != value)
+                {
+                    indexCheck = index;
+                    pisChecked = value;
+                    OnPropertyChanged("isChecked");
+                }
+            }
+        }
 
         /// <summary>
         /// id sản phẩm trên shop TMDT
@@ -51,7 +68,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             {
                 return pvmOrderCheck;
             }
-        set
+            set
             {
                 if(pvmOrderCheck != value)
                 {
@@ -66,14 +83,19 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// </summary>
         public string avatar { get; set; }
 
-        ///// <summary>
-        ///// vị trí lưu sản phẩm trong kho
-        ///// </summary>
-        //public string location { get; set; }
-
         /// <summary>
         /// Số lượng sản phẩm trong đơn hàng
         /// </summary>
         public int amount { get; set; }
+
+        public int index;
+
+        /// <summary>
+        /// Update trạng thái kiểm số lượng sản phẩm trong kho trong đơn khi check/uncheck
+        /// </summary>
+        public void Update()
+        {
+            pvmOrderCheck.Update(isChecked);
+        }
     }
 }

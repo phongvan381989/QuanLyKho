@@ -24,6 +24,8 @@ using QuanLyKho.View.Order;
 using QuanLyKho.ViewModel.Orders;
 using QuanLyKho.View.Product;
 using QuanLyKho.ViewModel.Products;
+using QuanLyKho.View.Order.Tiki;
+using QuanLyKho.View.Product.Tiki;
 
 namespace QuanLyKho
 {

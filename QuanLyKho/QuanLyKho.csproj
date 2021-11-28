@@ -145,7 +145,8 @@
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\CommonTikiAPI.cs" />
-    <Compile Include="ViewModel\Orders\Tiki\OrderCheckProductInWarehouseViewBindingTiki.cs" />
+    <Compile Include="ViewModel\Orders\Tiki\CommandProductInOrderTiki_AddProductToOrder.cs" />
+    <Compile Include="ViewModel\Orders\Tiki\ViewModelOrderCheckProductInWarehouseViewBindingTiki.cs" />
     <Compile Include="ViewModel\Orders\Tiki\ViewModelProductInOrderViewBindingTiki.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiGetListOrders.cs" />
     <Compile Include="ViewModel\Orders\Tiki\TikiOrderViewBinding.cs" />
@@ -213,16 +214,16 @@
     <Compile Include="View\Order\UserControlOrderCheckProductInWarehouse.xaml.cs">
       <DependentUpon>UserControlOrderCheckProductInWarehouse.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Order\UserControlProductInOrderTiki.xaml.cs">
+    <Compile Include="View\Order\Tiki\UserControlProductInOrderTiki.xaml.cs">
       <DependentUpon>UserControlProductInOrderTiki.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Order\UserControlOrderTiki.xaml.cs">
+    <Compile Include="View\Order\Tiki\UserControlOrderTiki.xaml.cs">
       <DependentUpon>UserControlOrderTiki.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Order\UserControlSMOrder.xaml.cs">
       <DependentUpon>UserControlSMOrder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Product\UserControlProductTiki.xaml.cs">
+    <Compile Include="View\Product\Tiki\UserControlProductTiki.xaml.cs">
       <DependentUpon>UserControlProductTiki.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Product\UserControlSMProduct.xaml.cs">
@@ -315,11 +316,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Order\UserControlProductInOrderTiki.xaml">
+    <Page Include="View\Order\Tiki\UserControlProductInOrderTiki.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Order\UserControlOrderTiki.xaml">
+    <Page Include="View\Order\Tiki\UserControlOrderTiki.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -327,7 +328,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Product\UserControlProductTiki.xaml">
+    <Page Include="View\Product\Tiki\UserControlProductTiki.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

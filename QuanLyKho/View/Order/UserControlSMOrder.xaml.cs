@@ -1,4 +1,5 @@
-﻿using QuanLyKho.ViewModel.Orders;
+﻿using QuanLyKho.View.Order.Tiki;
+using QuanLyKho.ViewModel.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;

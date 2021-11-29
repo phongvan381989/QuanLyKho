@@ -1,5 +1,6 @@
 ﻿using QuanLyKho.Model;
 using QuanLyKho.Model.InOutWarehouse;
+using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
 using QuanLyKho.ViewModel.Orders.Tiki;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace QuanLyKho.ViewModel.Orders
         /// </summary>
         /// <param name="productTMDTCode">mã sản phẩm trên shop TMDT</param>
         /// <param name="quantity">Số lượng</param>
-        public ViewModelOrderCheckProductInWarehouseTiki(string productTMDTCode, int quantity)
+        public ViewModelOrderCheckProductInWarehouseTiki(string productTMDTCode, int quantity, ViewModelProductInOrderViewBindingTiki inputRowParent)
         {
             // Từ mã sản phẩm vào bảng map lấy được danh sách sản phẩm trong kho tương ứng
             XMLAction actionModelMapping = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
@@ -34,7 +35,10 @@ namespace QuanLyKho.ViewModel.Orders
                 indexTemp++;
                 listCheckProduct.Add(new ViewModelOrderCheckProductInWarehouseViewBindingTiki(e, quantity, indexTemp));
             }
+            rowParent = inputRowParent;
         }
+
+        private ViewModelProductInOrderViewBindingTiki rowParent;
 
         private ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> plistCheckProduct;
         public ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> listCheckProduct
@@ -95,6 +99,7 @@ namespace QuanLyKho.ViewModel.Orders
             itemSelected = listCheckProduct[ViewModelOrderCheckProductInWarehouseViewBindingTiki.indexCheck];
             itemSelected.Update();
             OnPropertyChanged("itemSelected");
+            UpdateStatusOfRowParent();
         }
 
         /// <summary>
@@ -108,7 +113,6 @@ namespace QuanLyKho.ViewModel.Orders
                 e.Update();
             }
         }
-
 
         /// <summary>
         /// Check khi thêm 1 sản phẩm vào đơn hàng
@@ -135,15 +139,34 @@ namespace QuanLyKho.ViewModel.Orders
                     }
                 }
             }
+            UpdateStatusOfRowParent();
             return result;
         }
 
+        ///// <summary>
+        ///// Kiểm tra sản phẩm đã được chọn đủ
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool CheckFull()
+        //{
+        //    bool isFull = true;
+        //    foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+        //    {
+        //        if (e.isChecked == false)
+        //        {
+        //            isFull = false;
+        //            break;
+        //        }
+        //    }
+        //    return isFull;
+        //}
+
         /// <summary>
-        /// Kiểm tra sản phẩm đã được chọn đủ
+        /// Kiểm tra sản phẩm đã được chọn đủ và cập nhật checkbox của row cha
         /// </summary>
-        /// <returns></returns>
-        public bool CheckFull()
+        private void UpdateStatusOfRowParent()
         {
+            // Kiểm tra các sản phẩm đều đã đủ
             bool isFull = true;
             foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
             {
@@ -153,7 +176,10 @@ namespace QuanLyKho.ViewModel.Orders
                     break;
                 }
             }
-            return isFull;
+            if (isFull)
+                rowParent.isChecked = true;
+            else
+                rowParent.isChecked = false;
         }
     }
 }

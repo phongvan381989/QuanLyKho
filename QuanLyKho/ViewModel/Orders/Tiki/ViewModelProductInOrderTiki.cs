@@ -113,8 +113,8 @@ namespace QuanLyKho.ViewModel.Orders
                 {
 
                     result = 0;
-                    if (ePIO.vmOrderCheck.CheckFull())
-                        ePIO.isChecked = true;
+                    //if (ePIO.vmOrderCheck.CheckFull())
+                    //    ePIO.isChecked = true;
                     break;
                 }
                 else if (resultTemp == 1) // Sản phẩm không có trong đơn

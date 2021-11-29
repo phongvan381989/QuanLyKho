@@ -29,7 +29,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             // Từ url lấy được tên ảnh
             avatar = Common.GetNameFromURL(thumbnail);
             amount = orderItemV2.qty;
-            vmOrderCheck = new ViewModelOrderCheckProductInWarehouseTiki(idInShop.ToString(), amount);
+            vmOrderCheck = new ViewModelOrderCheckProductInWarehouseTiki(idInShop.ToString(), amount, this);
             index = inputIndex;
         }
 

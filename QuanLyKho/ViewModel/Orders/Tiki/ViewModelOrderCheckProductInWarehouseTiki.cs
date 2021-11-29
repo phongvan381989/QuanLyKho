@@ -18,12 +18,14 @@ namespace QuanLyKho.ViewModel.Orders
     /// </summary>
     public class ViewModelOrderCheckProductInWarehouseTiki : ViewModelBase
     {
+        // Không phải thay đổi bằng cách click chuột trươc tiếp vào checkbox, ta disable hàm Check
+        public bool isDisableCheckFunction;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="productTMDTCode">mã sản phẩm trên shop TMDT</param>
         /// <param name="quantity">Số lượng</param>
-        public ViewModelOrderCheckProductInWarehouseTiki(string productTMDTCode, int quantity, ViewModelProductInOrderViewBindingTiki inputRowParent)
+        public ViewModelOrderCheckProductInWarehouseTiki(string productTMDTCode, int quantity, ViewModelProductInOrderViewBindingTiki inputParent)
         {
             // Từ mã sản phẩm vào bảng map lấy được danh sách sản phẩm trong kho tương ứng
             XMLAction actionModelMapping = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
@@ -35,10 +37,11 @@ namespace QuanLyKho.ViewModel.Orders
                 indexTemp++;
                 listCheckProduct.Add(new ViewModelOrderCheckProductInWarehouseViewBindingTiki(e, quantity, indexTemp));
             }
-            rowParent = inputRowParent;
+            parent = inputParent;
+            isDisableCheckFunction = false;
         }
 
-        private ViewModelProductInOrderViewBindingTiki rowParent;
+        private ViewModelProductInOrderViewBindingTiki parent;
 
         private ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> plistCheckProduct;
         public ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> listCheckProduct
@@ -96,6 +99,11 @@ namespace QuanLyKho.ViewModel.Orders
 
         public void Check()
         {
+            if(isDisableCheckFunction)
+            {
+                isDisableCheckFunction = false;
+                return;
+            }
             itemSelected = listCheckProduct[ViewModelOrderCheckProductInWarehouseViewBindingTiki.indexCheck];
             itemSelected.Update();
             OnPropertyChanged("itemSelected");
@@ -176,10 +184,8 @@ namespace QuanLyKho.ViewModel.Orders
                     break;
                 }
             }
-            if (isFull)
-                rowParent.isChecked = true;
-            else
-                rowParent.isChecked = false;
+            parent.UpdateIsCheckFromChildren(isFull);
+
         }
     }
 }

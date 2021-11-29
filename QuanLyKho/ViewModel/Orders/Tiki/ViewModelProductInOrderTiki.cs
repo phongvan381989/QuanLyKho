@@ -17,6 +17,8 @@ namespace QuanLyKho.ViewModel.Orders
 {
     public class ViewModelProductInOrderTiki : ViewModelBase
     {
+        // Không phải thay đổi bằng cách click chuột trươc tiếp vào checkbox, ta disable hàm Check
+        public bool isDisableCheckFunction;
         public ViewModelProductInOrderTiki(Order order)
         {
             listProductTMDTInOrder = new ObservableCollection<ViewModelProductInOrderViewBindingTiki>();
@@ -24,11 +26,11 @@ namespace QuanLyKho.ViewModel.Orders
             foreach (OrderItemV2 item in order.items)
             {
                 index++;
-                listProductTMDTInOrder.Add(new ViewModelProductInOrderViewBindingTiki(item, index));
+                listProductTMDTInOrder.Add(new ViewModelProductInOrderViewBindingTiki(item, index, this));
             }
             commandAddProductToOrder = new CommandProductInOrderTiki_AddProductToOrder(this);
+            isDisableCheckFunction = false;
         }
-
         public CommandProductInOrderTiki_AddProductToOrder commandAddProductToOrder { get; set; }
         /// <summary>
         /// Từ id sản phẩm shop TMDT lấy mapping sản phẩm trong kho.
@@ -52,9 +54,18 @@ namespace QuanLyKho.ViewModel.Orders
         public void Check()
         {
             itemSelected = listProductTMDTInOrder[ViewModelProductInOrderViewBindingTiki.indexCheck];
-
-            itemSelected.Update();
             OnPropertyChanged("itemSelected");
+            if (isDisableCheckFunction)
+            {
+                isDisableCheckFunction = false;
+                return;
+            }
+
+            foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
+            {
+                e.vmOrderCheck.isDisableCheckFunction = true;
+            }
+            itemSelected.Update();
         }
 
         private string pcode;

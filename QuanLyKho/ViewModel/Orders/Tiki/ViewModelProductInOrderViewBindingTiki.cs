@@ -18,7 +18,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
     public class ViewModelProductInOrderViewBindingTiki : ViewModelBase
     {
         public static int indexCheck = -1;
-        public ViewModelProductInOrderViewBindingTiki(OrderItemV2 orderItemV2, int inputIndex)
+        public ViewModelProductInOrderViewBindingTiki(OrderItemV2 orderItemV2, int inputIndex, ViewModelProductInOrderTiki inputParent)
         {
             isChecked = false;
             idInShop = orderItemV2.product.id;
@@ -31,8 +31,10 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             amount = orderItemV2.qty;
             vmOrderCheck = new ViewModelOrderCheckProductInWarehouseTiki(idInShop.ToString(), amount, this);
             index = inputIndex;
+            parent = inputParent;
         }
 
+        ViewModelProductInOrderTiki parent;
         /// <summary>
         /// Sản phẩm trong đơn đã đủ chưa?
         /// </summary>
@@ -96,6 +98,15 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         public void Update()
         {
             pvmOrderCheck.Update(isChecked);
+        }
+
+        /// <summary>
+        /// Khi tất cả các dòng con được check thì dòng cha cũng check theo
+        /// </summary>
+        public void UpdateIsCheckFromChildren(bool inputIsChecked)
+        {
+            parent.isDisableCheckFunction = true;
+            isChecked = inputIsChecked;
         }
     }
 }

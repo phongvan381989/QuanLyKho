@@ -61,11 +61,7 @@ namespace QuanLyKho.ViewModel.Orders
                 return;
             }
 
-            foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
-            {
-                e.vmOrderCheck.isDisableCheckFunction = true;
-            }
-            itemSelected.Update();
+            itemSelected.UpdateWhenCheckedFromParent();
         }
 
         private string pcode;

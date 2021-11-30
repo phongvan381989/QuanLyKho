@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:QuanLyKho.View.Product"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding Path=commandProductTiki_GetProductDetail}" Key="Enter" />
+    </UserControl.InputBindings>
     <Grid>
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >

@@ -22,11 +22,15 @@
             <ListBox ItemsSource="{Binding Path=listProductsInWarehouse}"/>
         </DataTemplate>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding Path=commandAddProductToOrder}" Key="Enter" />
+    </UserControl.InputBindings>
     <Grid>
         <DockPanel LastChildFill = "True">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                 <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=code, UpdateSourceTrigger=PropertyChanged,
-                        Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}"></TextBox>
+                        Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}">
+                </TextBox>
                 <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandAddProductToOrder}">Thêm Sản Phẩm</Button>
             </StackPanel>
             <ListView ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"

@@ -1,0 +1,17 @@
+﻿<Window x:Class="QuanLyKho.View.UserControlCommon.SubWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyKho.View.UserControlCommon"
+        mc:Ignorable="d"
+        Title="SubWindow" Height="450" Width="800" Name="ESCSubWindow">
+    <Window.InputBindings>
+        <KeyBinding Command= "{Binding Path=commandEscapse}"
+                    CommandParameter="{Binding ElementName=ESCSubWindow}"
+              Key="Escape" />
+    </Window.InputBindings>
+    <Grid Name="ContainerContent">
+        
+    </Grid>
+</Window>

@@ -211,17 +211,38 @@ namespace QuanLyKho.ViewModel.Products
 
         public void GetProductDetail()
         {
-            if (indexProductInList == -1)
+            if (string.IsNullOrEmpty(textProductCodeGetDetail))
             {
-                MessageBox.Show("Chưa chọn sản phẩm nào.");
+                MessageBox.Show("Chưa nhập mã sản phẩm.");
                 return;
             }
+            // Check xem mã sản phẩm có tồn tại
+
+            int i = 0;
+            int count = plsProduct.Count();
+            for (i = 0; i < count; i++)
+            {
+                ProductViewBindingTiki e = plsProduct.ElementAt(i);
+                if (e.product_id == textProductCodeGetDetail)
+                {
+                    break;
+                }
+            }
+            
+            if(i == count)
+            {
+                MessageBox.Show("Mã sản phẩm không chính xác.");
+                return;
+            }
+
+            indexProductInList = i;
 
             Window wdMappingSanPhamTMDT_SanPhamKho = new Window
             {
                 Content = new UserControlMappingSanPhamTMDT_SanPhamKho()
             };
             wdMappingSanPhamTMDT_SanPhamKho.DataContext = new ViewModelMappingSanPhamTMDT_SanPhamKho(itemProduct.product_id, itemProduct.name);
+
             wdMappingSanPhamTMDT_SanPhamKho.WindowState = WindowState.Maximized;
             wdMappingSanPhamTMDT_SanPhamKho.ShowDialog();
         }

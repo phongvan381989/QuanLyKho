@@ -95,9 +95,9 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// <summary>
         /// Update trạng thái kiểm số lượng sản phẩm trong kho trong đơn khi check/uncheck
         /// </summary>
-        public void Update()
+        public void UpdateWhenCheckedFromParent()
         {
-            pvmOrderCheck.Update(isChecked);
+            pvmOrderCheck.UpdateWhenCheckedFromParent(isChecked);
         }
 
         /// <summary>
@@ -105,8 +105,11 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// </summary>
         public void UpdateIsCheckFromChildren(bool inputIsChecked)
         {
-            parent.isDisableCheckFunction = true;
-            isChecked = inputIsChecked;
+            if (isChecked != inputIsChecked)
+            {
+                parent.isDisableCheckFunction = true;
+                isChecked = inputIsChecked;
+            }
         }
     }
 }

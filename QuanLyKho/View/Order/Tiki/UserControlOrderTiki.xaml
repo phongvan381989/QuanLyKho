@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:QuanLyKho.View.Order"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding Path=commandOrderTiki_GetOrderDetail}" Key="Enter" />
+    </UserControl.InputBindings>
     <Grid>
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >
@@ -25,7 +28,8 @@
             <DockPanel LastChildFill = "True">
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                     <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged,
-                        Mode=TwoWay}" Name="tbOrderCode" Style="{StaticResource TextBoxStyleCode}"></TextBox>
+                        Mode=TwoWay}" Name="tbOrderCode" Style="{StaticResource TextBoxStyleCode}">
+                    </TextBox>
                     <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandOrderTiki_GetOrderDetail}">Chi Tiết Đơn Hàng</Button>
                 </StackPanel>
                 <ListView ItemsSource="{Binding Path=listOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"

@@ -99,11 +99,9 @@ namespace QuanLyKho.ViewModel.Orders
 
         public void Check()
         {
-            if(isDisableCheckFunction)
-            {
-                isDisableCheckFunction = false;
+            if (isDisableCheckFunction)
                 return;
-            }
+
             itemSelected = listCheckProduct[ViewModelOrderCheckProductInWarehouseViewBindingTiki.indexCheck];
             itemSelected.Update();
             OnPropertyChanged("itemSelected");
@@ -113,13 +111,15 @@ namespace QuanLyKho.ViewModel.Orders
         /// <summary>
         /// Update trạng thái kiểm số lượng sản phẩm trong kho trong đơn khi check/uncheck
         /// </summary>
-        public void Update(bool isChecked)
+        public void UpdateWhenCheckedFromParent(bool isChecked)
         {
-            foreach(ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+            isDisableCheckFunction = true;
+            foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
             {
                 e.isChecked = isChecked;
                 e.Update();
             }
+            isDisableCheckFunction = false;
         }
 
         /// <summary>
@@ -147,7 +147,8 @@ namespace QuanLyKho.ViewModel.Orders
                     }
                 }
             }
-            UpdateStatusOfRowParent();
+            if(result == 0)// Thêm sản phẩm thành công
+                UpdateStatusOfRowParent();
             return result;
         }
 

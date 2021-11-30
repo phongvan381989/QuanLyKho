@@ -140,6 +140,8 @@
     <Compile Include="UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ViewModelCommon\CommandSubWindow.cs" />
+    <Compile Include="ViewModel\ViewModelCommon\ViewModelSubWindow.cs" />
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_AddOrUpdate.cs" />
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Delete.cs" />
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_Use.cs" />
@@ -228,6 +230,9 @@
     </Compile>
     <Compile Include="View\Product\UserControlSMProduct.xaml.cs">
       <DependentUpon>UserControlSMProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControlCommon\SubWindow.xaml.cs">
+      <DependentUpon>SubWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControlCommon\UserControlChonThoiGian.xaml.cs">
       <DependentUpon>UserControlChonThoiGian.xaml</DependentUpon>
@@ -333,6 +338,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Product\UserControlSMProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlCommon\SubWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

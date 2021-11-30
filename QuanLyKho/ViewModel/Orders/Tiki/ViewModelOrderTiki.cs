@@ -2,8 +2,10 @@
 using QuanLyKho.Model.Dev.TikiApp.Orders;
 using QuanLyKho.View.Order;
 using QuanLyKho.View.Order.Tiki;
+using QuanLyKho.View.UserControlCommon;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
+using QuanLyKho.ViewModel.ViewModelCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace QuanLyKho.ViewModel.Orders
 {
@@ -236,11 +239,26 @@ namespace QuanLyKho.ViewModel.Orders
                 MessageBox.Show("Chưa chọn đơn.");
                 return;
             }
-            Window wdOrderDetail = new Window
-            {
-                Content = new UserControlProductInOrderTiki()
-            };
-            wdOrderDetail.DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
+            //Window wdOrderDetail = new Window
+            //{
+            //    Content = new UserControlProductInOrderTiki()
+            //};
+
+
+            SubWindow wdOrderDetail = new SubWindow();
+            //KeyBinding OpenCmdKeyBinding = new KeyBinding(
+            //ApplicationCommands.Open,
+            //new KeyGesture(Key.Escape));
+
+            //wdOrderDetail.InputBindings.Add(OpenCmdKeyBinding);
+
+
+            //wdOrderDetail.Content = new UserControlProductInOrderTiki();
+            //wdOrderDetail.DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
+            wdOrderDetail.DataContext = new ViewModelSubWindow();
+
+            wdOrderDetail.GetContainerContent().Children.Add(new UserControlProductInOrderTiki());
+            wdOrderDetail.GetContainerContent().DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
             wdOrderDetail.WindowState = WindowState.Maximized;
             wdOrderDetail.ShowDialog();
         }

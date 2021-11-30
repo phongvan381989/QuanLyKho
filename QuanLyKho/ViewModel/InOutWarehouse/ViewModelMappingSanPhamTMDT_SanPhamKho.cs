@@ -25,6 +25,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             vmListInOutWarehouse = new ViewModelListInOutWarehouse();
             indexInListOfProductOnTMDT = -1;
             textProductNameOnTMDT = name;
+
             textProductCodeOnTMDT = code;
 
             listProductOfProductOnTMDT = new ObservableCollection<ProductInOutWarehoseViewBinding>();

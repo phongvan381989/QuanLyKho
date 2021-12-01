@@ -26,12 +26,6 @@ namespace QuanLyKho.View.Order.Tiki
             InitializeComponent();
         }
 
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var vm = (ViewModelProductInOrderTiki)this.DataContext;
-            vm.GetMapping();
-        }
-
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             var vm = (ViewModelProductInOrderTiki)this.DataContext;

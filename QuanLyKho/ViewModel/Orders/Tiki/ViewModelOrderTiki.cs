@@ -239,28 +239,15 @@ namespace QuanLyKho.ViewModel.Orders
                 MessageBox.Show("Chưa chọn đơn.");
                 return;
             }
-            //Window wdOrderDetail = new Window
-            //{
-            //    Content = new UserControlProductInOrderTiki()
-            //};
 
+            SubWindow wd = new SubWindow();
+            wd.DataContext = new ViewModelSubWindow();
 
-            SubWindow wdOrderDetail = new SubWindow();
-            //KeyBinding OpenCmdKeyBinding = new KeyBinding(
-            //ApplicationCommands.Open,
-            //new KeyGesture(Key.Escape));
-
-            //wdOrderDetail.InputBindings.Add(OpenCmdKeyBinding);
-
-
-            //wdOrderDetail.Content = new UserControlProductInOrderTiki();
-            //wdOrderDetail.DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
-            wdOrderDetail.DataContext = new ViewModelSubWindow();
-
-            wdOrderDetail.GetContainerContent().Children.Add(new UserControlProductInOrderTiki());
-            wdOrderDetail.GetContainerContent().DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
-            wdOrderDetail.WindowState = WindowState.Maximized;
-            wdOrderDetail.ShowDialog();
+            wd.GetContainerContent().Children.Add(new UserControlProductInOrderTiki());
+            wd.GetContainerContent().DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
+            wd.WindowState = WindowState.Maximized;
+            wd.Title = "Kiểm Tra Số Lượng Sản Phẩm Trong Đơn";
+            wd.ShowDialog();
         }
 
         public void RefreshView()

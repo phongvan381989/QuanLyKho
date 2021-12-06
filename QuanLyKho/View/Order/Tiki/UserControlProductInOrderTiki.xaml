@@ -33,12 +33,23 @@
                 </TextBox>
                 <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandAddProductToOrder}">Thêm Sản Phẩm</Button>
             </StackPanel>
-            <ListView ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+            <Grid x:Name = "FormLayoutGrid" Background = "AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width = "Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height = "*" />
+                    <RowDefinition Height = "50" />
+                </Grid.RowDefinitions>
+                <ListView Grid.Row = "0" Grid.Column = "0"
+                    ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                   SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                 <ListView.View>
                     <GridView >
                         <GridViewColumn CellTemplate="{StaticResource CheckStatusCell}" 
-                Width="40" Header="Trạng Thái"/>
+                Width="100" Header="Trạng Thái"/>
 
                         <GridViewColumn DisplayMemberBinding=
                           "{Binding Path=idInShop}" 
@@ -70,7 +81,10 @@
                     </GridView>
 
                 </ListView.View>
-            </ListView>
+                </ListView>
+                <Button Grid.Row = "1" Grid.Column = "0"
+                    Style="{StaticResource ButtonStyle}" Height="40" Command="{Binding Path=commandAddProductToOrder}">Thêm Sản Phẩm</Button>
+            </Grid>
         </DockPanel>
     </Grid>
 </UserControl>

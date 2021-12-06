@@ -34,7 +34,6 @@
                 <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandAddProductToOrder}">Thêm Sản Phẩm</Button>
             </StackPanel>
             <ListView ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                  MouseDoubleClick="ListView_MouseDoubleClick"
                   SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                 <ListView.View>
                     <GridView >

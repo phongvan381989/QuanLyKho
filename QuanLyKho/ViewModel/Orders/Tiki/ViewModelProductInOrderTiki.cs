@@ -3,9 +3,11 @@ using QuanLyKho.Model;
 using QuanLyKho.Model.Dev.TikiApp.Orders;
 using QuanLyKho.View.InOutWarehouse;
 using QuanLyKho.View.Order;
+using QuanLyKho.View.UserControlCommon;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
 using QuanLyKho.ViewModel.InOutWarehouse;
 using QuanLyKho.ViewModel.Orders.Tiki;
+using QuanLyKho.ViewModel.ViewModelCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,24 +35,6 @@ namespace QuanLyKho.ViewModel.Orders
             isDisableCheckFunction = false;
         }
         public CommandProductInOrderTiki_AddProductToOrder commandAddProductToOrder { get; set; }
-        /// <summary>
-        /// Từ id sản phẩm shop TMDT lấy mapping sản phẩm trong kho.
-        /// </summary>
-        public void GetMapping()
-        {
-            if(itemSelected == null)
-                return;
-
-            Window wdOrderDetail = new Window
-            {
-                Content = new UserControlMappingSanPhamTMDT_SanPhamKho()
-            };
-            ViewModelMappingSanPhamTMDT_SanPhamKho vm = new ViewModelMappingSanPhamTMDT_SanPhamKho(itemSelected.idInShop.ToString(), itemSelected.name);
-            vm.optionVisibility = Visibility.Collapsed;
-            wdOrderDetail.DataContext = vm;
-            wdOrderDetail.WindowState = WindowState.Maximized;
-            wdOrderDetail.ShowDialog();
-        }
 
         public void Check()
         {

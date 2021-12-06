@@ -1,5 +1,7 @@
 ﻿using QuanLyKho.Model;
 using QuanLyKho.View.InOutWarehouse;
+using QuanLyKho.View.UserControlCommon;
+using QuanLyKho.ViewModel.ViewModelCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -210,13 +212,15 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 MessageBox.Show("Chưa chọn sản phẩm.");
                 return;
             }
-            Window wdOrderDetail = new Window
-            {
-                Content = new UserControlThongTinChiTietViewOnly()
-            };
-            wdOrderDetail.DataContext = new ViewModelThongTinChiTietViewOnly(textProductCode);
-            wdOrderDetail.WindowState = WindowState.Maximized;
-            wdOrderDetail.ShowDialog();
+
+            SubWindow wd = new SubWindow();
+            wd.DataContext = new ViewModelSubWindow();
+
+            wd.GetContainerContent().Children.Add(new UserControlThongTinChiTietViewOnly());
+            wd.GetContainerContent().DataContext = new ViewModelThongTinChiTietViewOnly(textProductCode);
+            wd.WindowState = WindowState.Maximized;
+            wd.Title = "Thông Tin Chi Tiết Sản Phẩm";
+            wd.ShowDialog();
         }
     }
 }

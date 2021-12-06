@@ -1,9 +1,11 @@
 ﻿using QuanLyKho.General;
 using QuanLyKho.Model.Dev.TikiApp.Products;
 using QuanLyKho.View.InOutWarehouse;
+using QuanLyKho.View.UserControlCommon;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Products;
 using QuanLyKho.ViewModel.InOutWarehouse;
+using QuanLyKho.ViewModel.ViewModelCommon;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -237,14 +239,13 @@ namespace QuanLyKho.ViewModel.Products
 
             indexProductInList = i;
 
-            Window wdMappingSanPhamTMDT_SanPhamKho = new Window
-            {
-                Content = new UserControlMappingSanPhamTMDT_SanPhamKho()
-            };
-            wdMappingSanPhamTMDT_SanPhamKho.DataContext = new ViewModelMappingSanPhamTMDT_SanPhamKho(itemProduct.product_id, itemProduct.name);
-
-            wdMappingSanPhamTMDT_SanPhamKho.WindowState = WindowState.Maximized;
-            wdMappingSanPhamTMDT_SanPhamKho.ShowDialog();
+            SubWindow wd = new SubWindow();
+            wd.DataContext = new ViewModelSubWindow();
+            wd.GetContainerContent().Children.Add(new UserControlMappingSanPhamTMDT_SanPhamKho());
+            wd.GetContainerContent().DataContext = new ViewModelMappingSanPhamTMDT_SanPhamKho(itemProduct.product_id, itemProduct.name);
+            wd.WindowState = WindowState.Maximized;
+            wd.Title = "Thông Tin Liên Kết Sản Phẩm Tiki và Kho Thực Tế";
+            wd.ShowDialog();
         }
 
         private ProductViewBindingTiki pitemProduct;

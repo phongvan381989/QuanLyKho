@@ -1,4 +1,5 @@
-﻿using QuanLyKho.Model;
+﻿using QuanLyKho.General;
+using QuanLyKho.Model;
 using QuanLyKho.Model.Dev.TikiApp.Orders;
 using QuanLyKho.View.InOutWarehouse;
 using QuanLyKho.View.Order;
@@ -58,10 +59,27 @@ namespace QuanLyKho.ViewModel.Orders
             if (isDisableCheckFunction)
             {
                 isDisableCheckFunction = false;
-                return;
+            }
+            else
+            {
+                itemSelected.UpdateWhenCheckedFromParent();
             }
 
-            itemSelected.UpdateWhenCheckedFromParent();
+            // Nếu sản phẩm đã chọn đủ. Ta hiện thông báo đã chọn đủ sản phẩm và lưu dữ liệu xuất kho
+            bool isFull = true;
+            foreach(ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
+            {
+                if (e.isChecked == false)
+                {
+                    isFull = false;
+                    break;
+                }
+            }
+            if(isFull)
+            {
+                Common.ShowAutoClosingMessageBox("Đơn hàng đã đủ sản phẩm.", "Kiểm Tra Sản Phẩm Trong Đơn");
+            }
+
         }
 
         private string pcode;

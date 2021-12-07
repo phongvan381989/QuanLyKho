@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View.Order"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1000">
     <UserControl.Resources>
         <DataTemplate x:Key="CheckStatusCell">
             <StackPanel Orientation="Horizontal">
@@ -33,10 +33,13 @@
                 </TextBox>
                 <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandAddProductToOrder}">Thêm Sản Phẩm</Button>
             </StackPanel>
-            <Grid x:Name = "FormLayoutGrid" Background = "AliceBlue">
+            <Grid>
+                <Grid.InputBindings>
+                    <KeyBinding Command="{Binding Path=commandProductFull}" Key="Space" />
+                </Grid.InputBindings>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width = "Auto" />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width = "487*" />
+                    <ColumnDefinition Width="13*" />
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -46,44 +49,44 @@
                 <ListView Grid.Row = "0" Grid.Column = "0"
                     ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                   SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
-                <ListView.View>
-                    <GridView >
-                        <GridViewColumn CellTemplate="{StaticResource CheckStatusCell}" 
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn CellTemplate="{StaticResource CheckStatusCell}" 
                 Width="100" Header="Trạng Thái"/>
 
-                        <GridViewColumn DisplayMemberBinding=
+                            <GridViewColumn DisplayMemberBinding=
                           "{Binding Path=idInShop}" 
                       Header="Mã Sản Phẩm Trên TMDT" Width="150"/>
 
-                        <GridViewColumn Header="Tên" Width="300">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                            <GridViewColumn Header="Tên" Width="300">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
 
-                        <GridViewColumn DisplayMemberBinding=
+                            <GridViewColumn DisplayMemberBinding=
                           "{Binding Path=amount}" 
                       Header="Số Lượng" Width="100"/>
 
-                        <GridViewColumn CellTemplate="{StaticResource AvatarCell}"
+                            <GridViewColumn CellTemplate="{StaticResource AvatarCell}"
                       Header="Ảnh Đại Diện" Width="200"/>
 
-                        <GridViewColumn Header="Sản Phẩm Trong Kho">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <local:UserControlOrderCheckProductInWarehouse DataContext="{Binding Path=vmOrderCheck}">
-                                    </local:UserControlOrderCheckProductInWarehouse>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
+                            <GridViewColumn Header="Sản Phẩm Trong Kho">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <local:UserControlOrderCheckProductInWarehouse DataContext="{Binding Path=vmOrderCheck}">
+                                        </local:UserControlOrderCheckProductInWarehouse>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
 
-                </ListView.View>
+                    </ListView.View>
                 </ListView>
                 <Button Grid.Row = "1" Grid.Column = "0"
-                    Style="{StaticResource ButtonStyle}" Height="40" Command="{Binding Path=commandAddProductToOrder}">Thêm Sản Phẩm</Button>
+                    Style="{StaticResource ButtonStyle}" Height="40" Command="{Binding Path=commandProductFull}">Sản Phẩm Đủ</Button>
             </Grid>
         </DockPanel>
     </Grid>

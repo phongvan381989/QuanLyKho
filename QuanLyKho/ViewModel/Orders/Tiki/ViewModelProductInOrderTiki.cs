@@ -32,9 +32,13 @@ namespace QuanLyKho.ViewModel.Orders
                 listProductTMDTInOrder.Add(new ViewModelProductInOrderViewBindingTiki(item, index, this));
             }
             commandAddProductToOrder = new CommandProductInOrderTiki_AddProductToOrder(this);
+            commandProductFull = new CommandProductInOrderTiki_ProductFull(this);
             isDisableCheckFunction = false;
+            actionModelNhapXuatChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLNhapXuatChiTiet());
         }
         public CommandProductInOrderTiki_AddProductToOrder commandAddProductToOrder { get; set; }
+        public CommandProductInOrderTiki_ProductFull commandProductFull { get; set; }
+        public XMLAction actionModelNhapXuatChiTiet { get; set; }
 
         public void Check()
         {
@@ -47,21 +51,6 @@ namespace QuanLyKho.ViewModel.Orders
             else
             {
                 itemSelected.UpdateWhenCheckedFromParent();
-            }
-
-            // Nếu sản phẩm đã chọn đủ. Ta hiện thông báo đã chọn đủ sản phẩm và lưu dữ liệu xuất kho
-            bool isFull = true;
-            foreach(ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
-            {
-                if (e.isChecked == false)
-                {
-                    isFull = false;
-                    break;
-                }
-            }
-            if(isFull)
-            {
-                Common.ShowAutoClosingMessageBox("Đơn hàng đã đủ sản phẩm.", "Kiểm Tra Sản Phẩm Trong Đơn");
             }
 
         }
@@ -143,11 +132,43 @@ namespace QuanLyKho.ViewModel.Orders
             }
             else if(result == 1)
             {
-                MessageBox.Show("Mã sản phẩm kiểm tra không có trong đơn hàng");
+                MessageBox.Show("Mã sản phẩm kiểm tra không có trong đơn hàng", "Kiểm Tra Sản Phẩm Trong Đơn");
             }
             else if(result == 2)
             {
-                MessageBox.Show("Mã sản phẩm kiểm tra đã đủ số lượng");
+                MessageBox.Show("Mã sản phẩm kiểm tra đã đủ số lượng", "Kiểm Tra Sản Phẩm Trong Đơn");
+            }
+        }
+
+        public void ProductFull()
+        {
+            // Nếu sản phẩm đã chọn đủ. Ta hiện thông báo đã chọn đủ sản phẩm và lưu dữ liệu xuất kho
+            bool isFull = true;
+            foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
+            {
+                if (e.isChecked == false)
+                {
+                    isFull = false;
+                    break;
+                }
+            }
+
+            if (isFull)
+            {
+                // Lưu thông tin nhập xuất chi tiết
+                //foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
+                //{
+                //    if (!ModelNhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, e.id, soLuongNhap))
+                //    {
+                //    }
+                //}
+
+                // Hiện thông báo
+                Common.ShowAutoClosingMessageBox("Đơn hàng đã đủ sản phẩm.", "Kiểm Tra Sản Phẩm Trong Đơn");
+            }
+            else
+            {
+                MessageBox.Show("Đơn hàng chưa đủ sản phẩm.", "Kiểm Tra Sản Phẩm Trong Đơn");
             }
         }
     }

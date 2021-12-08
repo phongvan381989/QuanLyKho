@@ -17,9 +17,9 @@ namespace QuanLyKho.Model
         }
 
         /// <summary>
-        /// Thêm mới hoặc cập nhật 1 sản phẩm vào xDoc và lưu ra file
+        /// Thêm mới hoặc cập nhật 1 sản phẩm vào xDoc và lưu ra file hoặc không theo biến isSave
         /// </summary>
-        public static Boolean AddOrUpdateAProduceToXDocAndSave(XMLAction action, string maSanPham, string soLuongNhap)
+        public static Boolean AddOrUpdateAProduceToXDocAndSave(XMLAction action, string maSanPham, string soLuongNhap, Boolean isSave)
         {
             // Tìm mã sản phẩm đã tồn tại
             IEnumerable<XElement> le;
@@ -52,6 +52,23 @@ namespace QuanLyKho.Model
                     new XElement("ThoiGian", time)
                     );
                 eExist.Add(el);
+            }
+
+            if(isSave)
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
+            return true;
+        }
+
+        /// <summary>
+        /// Thêm mới hoặc cập nhật list sản phẩm vào xDoc và lưu ra file
+        /// </summary>
+        public static Boolean AddOrUpdateListProduceToXDocAndSave(XMLAction action, List<string> lsMaSanPham, List<string> lsSoLuongNhap)
+        {
+            int count = lsMaSanPham.Count();
+            for(int i = 0; i < count; i++)
+            {
+                if (!AddOrUpdateAProduceToXDocAndSave(action, lsMaSanPham[i], lsSoLuongNhap[i], false))
+                    return false;
             }
             action.xDoc.Save(action.pathXML, SaveOptions.None);
             return true;

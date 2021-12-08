@@ -894,7 +894,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                         }
                     }
                     // Lưu thông tin nhập xuất chi tiết
-                    if(!ModelNhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, maSanPham, soLuongNhap))
+                    if(!ModelNhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, maSanPham, soLuongNhap, true))
                     {
                         bResult = false;
                         break;

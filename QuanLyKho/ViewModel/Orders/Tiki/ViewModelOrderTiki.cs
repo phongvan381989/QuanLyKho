@@ -244,7 +244,7 @@ namespace QuanLyKho.ViewModel.Orders
             wd.DataContext = new ViewModelSubWindow();
 
             wd.GetContainerContent().Children.Add(new UserControlProductInOrderTiki());
-            wd.GetContainerContent().DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList]);
+            wd.GetContainerContent().DataContext = new ViewModelProductInOrderTiki(lsOrderFullInfo[indexOrderInList], wd);
             wd.WindowState = WindowState.Maximized;
             wd.Title = "Kiểm Tra Số Lượng Sản Phẩm Trong Đơn";
             wd.ShowDialog();

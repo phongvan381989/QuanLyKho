@@ -538,5 +538,19 @@ namespace QuanLyKho.Model
             }
             return true;
         }
+
+
+        /// <summary>
+        /// Cập nhật tồn kho
+        /// </summary>
+        /// <param name="maSanPham"></param>
+        /// <param name="soLuong">Số lượng thêm vào kho</param>
+        /// <param name="isSave">true: Save vào xml file, false: Không save</param>
+        /// <returns></returns>
+        public Boolean UpdateTonKho(XMLAction action, string maSanPham, string soLuong, Boolean isSave)
+        {
+
+            return true;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using QuanLyKho.General;
 using QuanLyKho.Model;
 using QuanLyKho.Model.Dev.TikiApp.Orders;
+using QuanLyKho.Model.InOutWarehouse;
 using QuanLyKho.View.InOutWarehouse;
 using QuanLyKho.View.Order;
 using QuanLyKho.View.UserControlCommon;
@@ -22,7 +23,7 @@ namespace QuanLyKho.ViewModel.Orders
     {
         // Không phải thay đổi bằng cách click chuột trươc tiếp vào checkbox, ta disable hàm Check
         public bool isDisableCheckFunction;
-        public ViewModelProductInOrderTiki(Order order)
+        public ViewModelProductInOrderTiki(Order order, SubWindow inputParentWidow)
         {
             listProductTMDTInOrder = new ObservableCollection<ViewModelProductInOrderViewBindingTiki>();
             int index = -1;
@@ -35,11 +36,13 @@ namespace QuanLyKho.ViewModel.Orders
             commandProductFull = new CommandProductInOrderTiki_ProductFull(this);
             isDisableCheckFunction = false;
             actionModelNhapXuatChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLNhapXuatChiTiet());
+            parentWindow = inputParentWidow;
         }
         public CommandProductInOrderTiki_AddProductToOrder commandAddProductToOrder { get; set; }
         public CommandProductInOrderTiki_ProductFull commandProductFull { get; set; }
         public XMLAction actionModelNhapXuatChiTiet { get; set; }
 
+        private SubWindow parentWindow;
         public void Check()
         {
             itemSelected = listProductTMDTInOrder[ViewModelProductInOrderViewBindingTiki.indexCheck];
@@ -156,15 +159,31 @@ namespace QuanLyKho.ViewModel.Orders
             if (isFull)
             {
                 // Lưu thông tin nhập xuất chi tiết
-                //foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
-                //{
-                //    if (!ModelNhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, e.id, soLuongNhap))
-                //    {
-                //    }
-                //}
+                List<string> lsMaSanPham = new List<string>();
+                List<string> lsSoLuongNhap = new List<string>();
+                foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
+                {
+                    foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki ee in e.vmOrderCheck.listCheckProduct)
+                    {
+                        lsMaSanPham.Add(ee.code);
+                        lsSoLuongNhap.Add((ee.needQuantity * -1).ToString());
+                    }
+                }
+                if(!ModelNhapXuatChiTiet.AddOrUpdateListProduceToXDocAndSave(actionModelNhapXuatChiTiet, lsMaSanPham, lsSoLuongNhap))
+                {
+                    MessageBox.Show("Lưu thông tin nhập xuất chi tiết thất bại.", "Kiểm Tra Sản Phẩm Trong Đơn");
+                    return;
+                }
+
+                // Lưu thông tin tồn kho
+
 
                 // Hiện thông báo
                 Common.ShowAutoClosingMessageBox("Đơn hàng đã đủ sản phẩm.", "Kiểm Tra Sản Phẩm Trong Đơn");
+
+                // Đóng window hiện tại
+                if (parentWindow != null)
+                    parentWindow.Close();
             }
             else
             {

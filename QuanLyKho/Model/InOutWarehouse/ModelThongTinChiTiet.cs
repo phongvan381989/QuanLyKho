@@ -541,14 +541,76 @@ namespace QuanLyKho.Model
 
 
         /// <summary>
-        /// Cập nhật tồn kho
+        /// Cập nhật tồn kho 1 sản phẩm
         /// </summary>
         /// <param name="maSanPham"></param>
         /// <param name="soLuong">Số lượng thêm vào kho</param>
         /// <param name="isSave">true: Save vào xml file, false: Không save</param>
         /// <returns></returns>
-        public Boolean UpdateTonKho(XMLAction action, string maSanPham, string soLuong, Boolean isSave)
+        static public Boolean UpdateTonKhoAProduct(XMLAction action, string maSanPham, string soLuongNhap, Boolean isSave)
         {
+            XElement eExist = GetAXElementFromMaSanPham(action, maSanPham);
+            if (eExist == null)
+            {
+                Common.CommonErrorMessage = "Sản phẩm không tồn tại trong kho.";
+                return false;
+            }
+
+            Int32 iTonKho = Common.ConvertStringToInt32(eExist.Element("TonKho").Value) + Common.ConvertStringToInt32(soLuongNhap);
+            if(iTonKho < 0)
+            {
+                Common.CommonErrorMessage = "Vượt quá số lượng sản phẩm trong kho.";
+                return false;
+            }
+            eExist.Element("TonKho").Value = iTonKho.ToString();
+            if (isSave)
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
+            return true;
+        }
+
+        /// <summary>
+        /// Cập nhật tồn kho 1 danh sách sản phẩm
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="lsMaSanPham"></param>
+        /// <param name="lsSoLuongNhap"></param>
+        /// <returns></returns>
+        static public Boolean UpdateTonKhoListProduct(XMLAction action, List<string> lsMaSanPham, List<string> lsSoLuongNhap)
+        {
+            int count = lsMaSanPham.Count();
+            for(int i = 0; i < count; i++ )
+            {
+                if(!UpdateTonKhoAProduct(action, lsMaSanPham[i], lsSoLuongNhap[i], false))
+                {
+                    return false;
+                }
+            }
+            action.xDoc.Save(action.pathXML, SaveOptions.None);
+            return true;
+        }
+
+        /// <summary>
+        /// Kiểm tra số lượng trong kho đủ
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="maSanPham"></param>
+        /// <param name="soLuongNhap"></param>
+        /// <returns></returns>
+        static public Boolean CheckQuantityEnough(XMLAction action, string maSanPham, string soLuongNhap)
+        {
+            XElement eExist = GetAXElementFromMaSanPham(action, maSanPham);
+            if (eExist == null)
+            {
+                Common.CommonErrorMessage = "Sản phẩm không tồn tại trong kho.";
+                return false;
+            }
+
+            // Vì số lượng nhập là âm
+            if(Common.ConvertStringToInt32(eExist.Element("TonKho").Value) + Common.ConvertStringToInt32(soLuongNhap) < 0)
+            {
+                Common.CommonErrorMessage = "Vượt quá số lượng sản phẩm trong kho.";
+                return false;
+            }
 
             return true;
         }

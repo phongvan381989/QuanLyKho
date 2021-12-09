@@ -36,11 +36,13 @@ namespace QuanLyKho.ViewModel.Orders
             commandProductFull = new CommandProductInOrderTiki_ProductFull(this);
             isDisableCheckFunction = false;
             actionModelNhapXuatChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLNhapXuatChiTiet());
+            actionModelThongTinChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
             parentWindow = inputParentWidow;
         }
         public CommandProductInOrderTiki_AddProductToOrder commandAddProductToOrder { get; set; }
         public CommandProductInOrderTiki_ProductFull commandProductFull { get; set; }
         public XMLAction actionModelNhapXuatChiTiet { get; set; }
+        public XMLAction actionModelThongTinChiTiet { get; set; }
 
         private SubWindow parentWindow;
         public void Check()
@@ -161,14 +163,50 @@ namespace QuanLyKho.ViewModel.Orders
                 // Lưu thông tin nhập xuất chi tiết
                 List<string> lsMaSanPham = new List<string>();
                 List<string> lsSoLuongNhap = new List<string>();
+                int count, i;
                 foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
                 {
                     foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki ee in e.vmOrderCheck.listCheckProduct)
                     {
-                        lsMaSanPham.Add(ee.code);
-                        lsSoLuongNhap.Add((ee.needQuantity * -1).ToString());
+                        // Check mã sản phẩm đã được thêm vào danh sách chưa
+                        count = lsMaSanPham.Count();
+                        for(i = 0; i < count; i++)
+                        {
+                            if (ee.code == lsMaSanPham[i])
+                                break;
+                        }
+                        if (i == count) // Mã sản phẩm chưa được thêm vào danh sách
+                        {
+                            lsMaSanPham.Add(ee.code);
+                            lsSoLuongNhap.Add((ee.needQuantity * -1).ToString());
+                        }
+                        else
+                        {
+                            lsSoLuongNhap[i] = (Int32.Parse(lsSoLuongNhap[i]) - ee.needQuantity).ToString();
+                        }
                     }
                 }
+
+                // Check trong kho đủ số lượng sản phẩm ko?
+                count = lsMaSanPham.Count();
+
+                for (i = 0; i < count; i++)
+                {
+                    if(!ModelThongTinChiTiet.CheckQuantityEnough(actionModelThongTinChiTiet, lsMaSanPham[i], lsSoLuongNhap[i]))
+                    {
+                        if (string.IsNullOrEmpty(Common.CommonErrorMessage))
+                        {
+                            MessageBox.Show("Cập nhật tồn kho lỗi.", "Kiểm Tra Sản Phẩm Trong Đơn");
+                        }
+                        else
+                        {
+                            MessageBox.Show(Common.CommonErrorMessage, "Kiểm Tra Sản Phẩm Trong Đơn");
+                            Common.CommonErrorMessage = string.Empty;
+                        }
+                        return;
+                    }
+                }
+
                 if(!ModelNhapXuatChiTiet.AddOrUpdateListProduceToXDocAndSave(actionModelNhapXuatChiTiet, lsMaSanPham, lsSoLuongNhap))
                 {
                     MessageBox.Show("Lưu thông tin nhập xuất chi tiết thất bại.", "Kiểm Tra Sản Phẩm Trong Đơn");
@@ -176,7 +214,19 @@ namespace QuanLyKho.ViewModel.Orders
                 }
 
                 // Lưu thông tin tồn kho
-
+                if(!ModelThongTinChiTiet.UpdateTonKhoListProduct(actionModelThongTinChiTiet, lsMaSanPham, lsSoLuongNhap))
+                {
+                    if (string.IsNullOrEmpty(Common.CommonErrorMessage))
+                    {
+                        MessageBox.Show("Cập nhật tồn kho lỗi.", "Kiểm Tra Sản Phẩm Trong Đơn");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cập nhật tồn kho lỗi. " + Common.CommonErrorMessage, "Kiểm Tra Sản Phẩm Trong Đơn");
+                        Common.CommonErrorMessage = string.Empty;
+                    }
+                    return;
+                }
 
                 // Hiện thông báo
                 Common.ShowAutoClosingMessageBox("Đơn hàng đã đủ sản phẩm.", "Kiểm Tra Sản Phẩm Trong Đơn");

@@ -93,6 +93,11 @@ namespace QuanLyKho.General
             }
         }
 
+        /// <summary>
+        /// Hàm trả về fail, chi tiết lỗi sẽ được lưu trong biến này
+        /// </summary>
+        public static string CommonErrorMessage;
+
         #region Message box tự động đóng sau n giây
         [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true, CharSet = CharSet.Auto)]
         static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);

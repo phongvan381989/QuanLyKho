@@ -14,14 +14,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static QuanLyKho.Model.Dev.TikiApp.Orders.OrderItemFilterByDate;
 
 namespace QuanLyKho.ViewModel.Orders
 {
     public class ViewModelOrderTiki : ViewModelBase
     {
+
         public ViewModelOrderTiki()
         {
-            pcommandGetListAllOrderNeedAvailabilityConfirmation = new CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation(this);
+            pcommandGetListOrder = new CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation(this);
             pcommandOrderTiki_GetOrderDetail = new CommandOrderTiki_GetOrderDetail(this);
 
             // Lấy danh sách cửa hàng
@@ -37,13 +39,31 @@ namespace QuanLyKho.ViewModel.Orders
             currentSelecteOrder = new TikiOrderViewBinding();
             lsOrderFullInfo = new List<Order>();
             indexOrderInList = -1;
+            interval = (int)EnumOrderItemFilterByDate.today;
         }
-        private CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation pcommandGetListAllOrderNeedAvailabilityConfirmation;
-        public CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation commandGetListAllOrderNeedAvailabilityConfirmation
+        private CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation pcommandGetListOrder;
+        public CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation commandGetListOrder
         {
             get
             {
-                return pcommandGetListAllOrderNeedAvailabilityConfirmation;
+                return pcommandGetListOrder;
+            }
+        }
+
+        private int pinterval;
+        public int interval
+        {
+            get
+            {
+                return pinterval;
+            }
+            set
+            {
+                if (pinterval != value)
+                {
+                    pinterval = value;
+                    OnPropertyChanged("interval");
+                }
             }
         }
 
@@ -186,7 +206,7 @@ namespace QuanLyKho.ViewModel.Orders
         /// <summary>
         /// Lấy danh sách tất cả đơn hàng cần xác nhận còn hàng theo 1 shop, hoặc tất cả các shop
         /// </summary>
-        public void GetListAllOrderNeedAvailabilityConfirmation()
+        public void GetListOrder()
         {
             listOrder.Clear();
             if (homeAddressIndex == -1)
@@ -196,12 +216,12 @@ namespace QuanLyKho.ViewModel.Orders
             if (listHomeAddressShopUsing.Count() > 1 &&
                homeAddressIndex == listHomeAddressShopUsing.Count() - 1)
             {
-                lsOrderFullInfo = TikiGetListOrders.GetListAllOrderNeedAvailabilityConfirmationAllShops(CommonTikiAPI.listTikiConfigAppUsing);
+                lsOrderFullInfo = TikiGetListOrders.GetListOrderAllShops(CommonTikiAPI.listTikiConfigAppUsing, (EnumOrderItemFilterByDate)interval);
             }
             else
             {
                 // Lấy đơn hàng của 1 shop
-                lsOrderFullInfo = TikiGetListOrders.GetListAllOrderNeedAvailabilityConfirmationOneShop(CommonTikiAPI.GetTikiConfigAppFromHomeAddress(homeAddressUsing));
+                lsOrderFullInfo = TikiGetListOrders.GetListOrderAShop(CommonTikiAPI.GetTikiConfigAppFromHomeAddress(homeAddressUsing), (EnumOrderItemFilterByDate)interval);
             }
 
             foreach( Order e in lsOrderFullInfo)

@@ -21,7 +21,7 @@ namespace QuanLyKho.ViewModel.Orders
         }
         public void Execute(object parameter)
         {
-            vm.GetListAllOrderNeedAvailabilityConfirmation();
+            vm.GetListOrder();
         }
         public event EventHandler CanExecuteChanged;
     }

@@ -4,11 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View.Order"
+             xmlns:localConverter="clr-namespace:QuanLyKho.View.Order.Tiki"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding Path=commandOrderTiki_GetOrderDetail}" Key="Enter" />
     </UserControl.InputBindings>
+    <UserControl.Resources>
+        <localConverter:RadioBoolToIntConverter x:Key="radioBoolToIntConverter" />
+    </UserControl.Resources>
     <Grid>
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >
@@ -19,10 +23,15 @@
                               SelectionChanged="CboxHomeAddressShopUsing_SelectionChanged">
                     </ComboBox>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <RadioButton GroupName="Interval" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=0, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">Hôm Nay</RadioButton>
+                    <RadioButton GroupName="Interval" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">7 Ngày</RadioButton>
+                    <RadioButton GroupName="Interval" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">30 Ngày</RadioButton>
+                </StackPanel>
                 <WrapPanel IsEnabled="{Binding Path=isEnabledButtons, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
-                    <Button Name="BtnGetListAllOrderNeedAvailabilityConfirmation" Style="{StaticResource ButtonStyle}" 
-                        Command="{Binding Path=commandGetListAllOrderNeedAvailabilityConfirmation}"
-                        ToolTip="Danh sách đơn hàng cần xác nhận còn hàng">Chờ Xác Nhận</Button>
+                    <Button Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding Path=commandGetListOrder}"
+                        ToolTip="Danh sách đơn hàng">Danh Sách Đơn Hàng</Button>
                 </WrapPanel>
             </WrapPanel>
             <DockPanel LastChildFill = "True">
@@ -40,7 +49,7 @@
                           MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Mã" Width="200" DisplayMemberBinding="{Binding code}" />
+                            <GridViewColumn Header="Mã Sản Phẩm" Width="200" DisplayMemberBinding="{Binding code}" />
                             <!--<GridViewColumn Header="Trạng Thái" Width="400">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -49,7 +58,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>-->
                             <GridViewColumn Header="Trạng Thái" Width="300" DisplayMemberBinding="{Binding status}" />
-                            <GridViewColumn Header="Ngày Tạo" Width="100" DisplayMemberBinding="{Binding created_at}" />
+                            <GridViewColumn Header="Ngày Tạo" Width="300" DisplayMemberBinding="{Binding created_at}" />
                         </GridView>
                     </ListView.View>
                 </ListView>

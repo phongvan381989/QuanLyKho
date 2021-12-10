@@ -37,5 +37,11 @@ namespace QuanLyKho.View.Order.Tiki
             var vm = (ViewModelProductInOrderTiki)this.DataContext;
             vm.Check();
         }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (ViewModelProductInOrderTiki)this.DataContext;
+            vm.GetProductInShopTMDTDetail();
+        }
     }
 }

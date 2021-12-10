@@ -601,14 +601,14 @@ namespace QuanLyKho.Model
             XElement eExist = GetAXElementFromMaSanPham(action, maSanPham);
             if (eExist == null)
             {
-                Common.CommonErrorMessage = "Sản phẩm không tồn tại trong kho.";
+                Common.CommonErrorMessage = "Sản phẩm " + maSanPham + " không tồn tại trong kho.";
                 return false;
             }
 
             // Vì số lượng nhập là âm
             if(Common.ConvertStringToInt32(eExist.Element("TonKho").Value) + Common.ConvertStringToInt32(soLuongNhap) < 0)
             {
-                Common.CommonErrorMessage = "Vượt quá số lượng sản phẩm trong kho.";
+                Common.CommonErrorMessage = "Sản phẩm " + maSanPham + " trong kho còn số lượng là: " + eExist.Element("TonKho").Value + ". Đơn hàng cần số lượng vượt quá số lượng sản phẩm trong kho.";
                 return false;
             }
 

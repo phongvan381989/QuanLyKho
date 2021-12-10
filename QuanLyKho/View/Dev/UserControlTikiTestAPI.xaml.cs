@@ -25,6 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static QuanLyKho.Model.Dev.TikiApp.Orders.OrderItemFilterByDate;
 
 namespace QuanLyKho.View.Dev
 {
@@ -125,7 +126,7 @@ namespace QuanLyKho.View.Dev
             if (CommonTikiAPI.listTikiConfigAppUsing.Count() == 0)
                 return;
 
-            List<QuanLyKho.Model.Dev.TikiApp.Orders.Order> lsOrder =  TikiGetListOrders.GetListAllOrderNeedAvailabilityConfirmationOneShop(CommonTikiAPI.listTikiConfigAppUsing[0]);
+            List<QuanLyKho.Model.Dev.TikiApp.Orders.Order> lsOrder =  TikiGetListOrders.GetListOrderAShop(CommonTikiAPI.listTikiConfigAppUsing[0], EnumOrderItemFilterByDate.today);
         }
 
         private void TestSomething_Click(object sender, RoutedEventArgs e)

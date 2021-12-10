@@ -214,6 +214,7 @@
     <Compile Include="View\InOutWarehouse\UserControlThongTinChiTietViewOnly.xaml.cs">
       <DependentUpon>UserControlThongTinChiTietViewOnly.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Order\Tiki\RadioBoolToIntConverter.cs" />
     <Compile Include="View\Order\UserControlOrderCheckProductInWarehouse.xaml.cs">
       <DependentUpon>UserControlOrderCheckProductInWarehouse.xaml</DependentUpon>
     </Compile>

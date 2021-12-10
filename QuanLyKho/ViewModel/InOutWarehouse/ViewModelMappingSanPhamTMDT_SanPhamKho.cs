@@ -82,7 +82,22 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
         }
 
-        public string textQuantity { get; set; }
+        private string ptextQuantity;
+        public string textQuantity
+        {
+            get
+            {
+                return ptextQuantity;
+            }
+            set
+            {
+                if (ptextQuantity != value)
+                {
+                    ptextQuantity = value;
+                    OnPropertyChanged("textQuantity");
+                }
+            }
+        }
 
         private string ptextProductNameOnTMDT;
         public string textProductNameOnTMDT

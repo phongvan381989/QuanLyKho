@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static QuanLyKho.Model.Dev.TikiApp.Orders.OrderItemFilterByDate;
 
 namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
 {
@@ -79,7 +80,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// </summary>
         /// <param name="configApp">shop</param>
         /// <returns>Danh sách đơn hàng. List rỗng nếu không lấy thành công</returns>
-        static public List<Order> GetListAllOrderNeedAvailabilityConfirmationOneShop(TikiConfigApp configApp)
+        static public List<Order> GetListOrderAShop(TikiConfigApp configApp, EnumOrderItemFilterByDate interval)
         {
             List<Order> lsOrder = new List<Order>();
             if (configApp == null)
@@ -109,7 +110,12 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
                     //listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.item_confirmation_status], OrderItemConfirmationStatus.ArrayStringOrderItemConfirmationStatus[(int)OrderItemConfirmationStatus.EnumOrderItemConfirmationStatus.waiting]));
 
                     // Add filter_date_by=last30days
-                    listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.filter_date_by], OrderItemFilterByDate.ArrayStringOrderItemFilterByDate[(Int32)OrderItemFilterByDate.EnumOrderItemFilterByDate.today]));
+                    if(interval == EnumOrderItemFilterByDate.today)
+                        listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.filter_date_by], OrderItemFilterByDate.ArrayStringOrderItemFilterByDate[(Int32)OrderItemFilterByDate.EnumOrderItemFilterByDate.today]));
+                    else if(interval == EnumOrderItemFilterByDate.last7days)
+                        listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.filter_date_by], OrderItemFilterByDate.ArrayStringOrderItemFilterByDate[(Int32)OrderItemFilterByDate.EnumOrderItemFilterByDate.last7days]));
+                    else if(interval == EnumOrderItemFilterByDate.last30days)
+                        listValuePair.Add(new DevNameValuePair(ArrayStringQueryParameters[(Int32)EnumQueryParameters.filter_date_by], OrderItemFilterByDate.ArrayStringOrderItemFilterByDate[(Int32)OrderItemFilterByDate.EnumOrderItemFilterByDate.last30days]));
                 }
                 else // Các page sau chỉ cập nhật currentpage
                 {
@@ -162,13 +168,13 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         /// </summary>
         /// <param name="listConfigApp">danh sách shop</param>
         /// <returns>Danh sách đơn hàng. Rỗng nếu không lấy thành công</returns>
-        static public List<Order> GetListAllOrderNeedAvailabilityConfirmationAllShops(List<TikiConfigApp> listConfigApp)
+        static public List<Order> GetListOrderAllShops(List<TikiConfigApp> listConfigApp, EnumOrderItemFilterByDate interval)
         {
             List<Order> lsOrder = new List<Order>();
             int num = listConfigApp.Count();
             for(int i = 0; i < num; i++)
             {
-                lsOrder.AddRange(GetListAllOrderNeedAvailabilityConfirmationOneShop(listConfigApp[i]));
+                lsOrder.AddRange(GetListOrderAShop(listConfigApp[i], interval));
             }
             return lsOrder;
         }

@@ -166,6 +166,11 @@ namespace QuanLyKho.ViewModel.Orders
                 int count, i;
                 foreach (ViewModelProductInOrderViewBindingTiki e in listProductTMDTInOrder)
                 {
+                    if(e.vmOrderCheck.listCheckProduct.Count() == 0)
+                    {
+                            MessageBox.Show("Sản phẩm " + e.idInShop +" trên shop TMDT chưa được gắn với sản phẩm trong kho.", "Kiểm Tra Sản Phẩm Trong Đơn");
+                            return;
+                    }
                     foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki ee in e.vmOrderCheck.listCheckProduct)
                     {
                         // Check mã sản phẩm đã được thêm vào danh sách chưa
@@ -239,6 +244,22 @@ namespace QuanLyKho.ViewModel.Orders
             {
                 MessageBox.Show("Đơn hàng chưa đủ sản phẩm.", "Kiểm Tra Sản Phẩm Trong Đơn");
             }
+        }
+
+        public void GetProductInShopTMDTDetail()
+        {
+            SubWindow wd = new SubWindow();
+            wd.DataContext = new ViewModelSubWindow();
+            wd.GetContainerContent().Children.Add(new UserControlMappingSanPhamTMDT_SanPhamKho());
+            wd.GetContainerContent().DataContext = new ViewModelMappingSanPhamTMDT_SanPhamKho(itemSelected.idInShop.ToString(), itemSelected.name);
+            wd.WindowState = WindowState.Maximized;
+            wd.Title = "Thông Tin Liên Kết Sản Phẩm Tiki và Kho Thực Tế";
+            wd.ShowDialog();
+
+            // Load lại dữ liệu
+            ViewModelOrderCheckProductInWarehouseTiki obj = new ViewModelOrderCheckProductInWarehouseTiki(itemSelected.idInShop.ToString(), itemSelected.amount, itemSelected);
+            itemSelected.vmOrderCheck = obj;
+            itemSelected.isChecked = false;
         }
     }
 }

@@ -1,0 +1,13 @@
+﻿<Window x:Class="QuanLyKho.View.UserControlCommon.WaitingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyKho.View.UserControlCommon"
+        mc:Ignorable="d"
+        Title="Đợi Thực Hiện" Height="200" Width="400">
+    <Grid>
+        <TextBlock  Text = "Vui Lòng Đợi. Đang Thực Hiện Yêu Cầu Người Dùng..." Margin = "10"  
+         HorizontalAlignment = "Center" VerticalAlignment = "Center"/>
+    </Grid>
+</Window>

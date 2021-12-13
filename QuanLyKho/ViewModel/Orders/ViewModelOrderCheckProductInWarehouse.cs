@@ -16,7 +16,7 @@ namespace QuanLyKho.ViewModel.Orders
     /// Phục vụ giao diện check đã lấy đủ số lượng của 1 sản phẩm từ kho cho 1 đơn hàng
     /// VD: 1/3 tức cần 3 sản phẩm xuất kho cho đơn hàng nhưng đã check được 1 sản phẩm
     /// </summary>
-    public class ViewModelOrderCheckProductInWarehouseTiki : ViewModelBase
+    public class ViewModelOrderCheckProductInWarehouse : ViewModelBase
     {
         // Không phải thay đổi bằng cách click chuột trươc tiếp vào checkbox, ta disable hàm Check
         public bool isDisableCheckFunction;
@@ -25,17 +25,17 @@ namespace QuanLyKho.ViewModel.Orders
         /// </summary>
         /// <param name="productTMDTCode">mã sản phẩm trên shop TMDT</param>
         /// <param name="quantity">Số lượng</param>
-        public ViewModelOrderCheckProductInWarehouseTiki(string productTMDTCode, int quantity, ViewModelProductInOrderViewBindingTiki inputParent)
+        public ViewModelOrderCheckProductInWarehouse(string productTMDTCode, int quantity, ViewModelProductInOrderViewBindingTiki inputParent)
         {
             // Từ mã sản phẩm vào bảng map lấy được danh sách sản phẩm trong kho tương ứng
             XMLAction actionModelMapping = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
-            listCheckProduct = new ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki>();
+            listCheckProduct = new ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBinding>();
             List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(actionModelMapping, productTMDTCode);
             int indexTemp = -1;
             foreach (ModelMappingSanPhamTMDT_SanPhamKho e in ls)
             {
                 indexTemp++;
-                listCheckProduct.Add(new ViewModelOrderCheckProductInWarehouseViewBindingTiki(e, quantity, indexTemp));
+                listCheckProduct.Add(new ViewModelOrderCheckProductInWarehouseViewBinding(e, quantity, indexTemp));
             }
             parent = inputParent;
             isDisableCheckFunction = false;
@@ -43,8 +43,8 @@ namespace QuanLyKho.ViewModel.Orders
 
         private ViewModelProductInOrderViewBindingTiki parent;
 
-        private ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> plistCheckProduct;
-        public ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBindingTiki> listCheckProduct
+        private ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBinding> plistCheckProduct;
+        public ObservableCollection<ViewModelOrderCheckProductInWarehouseViewBinding> listCheckProduct
         {
             get
             {
@@ -61,8 +61,8 @@ namespace QuanLyKho.ViewModel.Orders
             }
         }
 
-        private ViewModelOrderCheckProductInWarehouseViewBindingTiki pitemSelected;
-        public ViewModelOrderCheckProductInWarehouseViewBindingTiki itemSelected
+        private ViewModelOrderCheckProductInWarehouseViewBinding pitemSelected;
+        public ViewModelOrderCheckProductInWarehouseViewBinding itemSelected
         {
             get
             {
@@ -102,7 +102,7 @@ namespace QuanLyKho.ViewModel.Orders
             if (isDisableCheckFunction)
                 return;
 
-            itemSelected = listCheckProduct[ViewModelOrderCheckProductInWarehouseViewBindingTiki.indexCheck];
+            itemSelected = listCheckProduct[ViewModelOrderCheckProductInWarehouseViewBinding.indexCheck];
             itemSelected.Update();
             OnPropertyChanged("itemSelected");
             UpdateStatusOfRowParent();
@@ -114,7 +114,7 @@ namespace QuanLyKho.ViewModel.Orders
         public void UpdateWhenCheckedFromParent(bool isChecked)
         {
             isDisableCheckFunction = true;
-            foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+            foreach (ViewModelOrderCheckProductInWarehouseViewBinding e in listCheckProduct)
             {
                 e.isChecked = isChecked;
                 e.Update();
@@ -130,7 +130,7 @@ namespace QuanLyKho.ViewModel.Orders
         public int AddProduct(string inputCode)
         {
             int result = 1;
-            foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+            foreach (ViewModelOrderCheckProductInWarehouseViewBinding e in listCheckProduct)
             {
                 if(e.code == inputCode)
                 {
@@ -177,7 +177,7 @@ namespace QuanLyKho.ViewModel.Orders
         {
             // Kiểm tra các sản phẩm đều đã đủ
             bool isFull = true;
-            foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki e in listCheckProduct)
+            foreach (ViewModelOrderCheckProductInWarehouseViewBinding e in listCheckProduct)
             {
                 if (e.isChecked == false)
                 {

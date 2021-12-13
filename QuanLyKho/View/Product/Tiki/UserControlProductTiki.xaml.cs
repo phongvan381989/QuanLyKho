@@ -37,7 +37,15 @@ namespace QuanLyKho.View.Product.Tiki
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var vm = (ViewModelProductTiki)this.DataContext;
-            vm.GetProductDetail();
+            if(vm != null)
+                vm.GetProductDetail();
+        }
+
+        private void ListView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var vm = (ViewModelProductTiki)this.DataContext;
+            //if (vm != null)
+                //vm.GetProductDetail();
         }
     }
 }

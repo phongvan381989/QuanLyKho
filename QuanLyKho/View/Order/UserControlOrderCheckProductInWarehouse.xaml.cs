@@ -33,13 +33,13 @@ namespace QuanLyKho.View.Order
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            ViewModelOrderCheckProductInWarehouseTiki vm = (ViewModelOrderCheckProductInWarehouseTiki)this.DataContext;
+            ViewModelOrderCheckProductInWarehouse vm = (ViewModelOrderCheckProductInWarehouse)this.DataContext;
             vm.Check();
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            ViewModelOrderCheckProductInWarehouseTiki vm = (ViewModelOrderCheckProductInWarehouseTiki)this.DataContext;
+            ViewModelOrderCheckProductInWarehouse vm = (ViewModelOrderCheckProductInWarehouse)this.DataContext;
             vm.Check();
         }
     }

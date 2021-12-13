@@ -29,7 +29,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             // Từ url lấy được tên ảnh
             avatar = Common.GetNameFromURL(thumbnail);
             amount = orderItemV2.qty;
-            vmOrderCheck = new ViewModelOrderCheckProductInWarehouseTiki(idInShop.ToString(), amount, this);
+            vmOrderCheck = new ViewModelOrderCheckProductInWarehouse(idInShop.ToString(), amount, this);
             index = inputIndex;
             parent = inputParent;
         }
@@ -63,8 +63,8 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
 
         public string name { get; set; }
 
-        private ViewModelOrderCheckProductInWarehouseTiki pvmOrderCheck;
-        public ViewModelOrderCheckProductInWarehouseTiki vmOrderCheck
+        private ViewModelOrderCheckProductInWarehouse pvmOrderCheck;
+        public ViewModelOrderCheckProductInWarehouse vmOrderCheck
         {
             get
             {

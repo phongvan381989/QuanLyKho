@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View.Product"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1200">
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding Path=commandProductTiki_GetProductDetail}" Key="Enter" />
     </UserControl.InputBindings>
@@ -20,9 +20,14 @@
                     </ComboBox>
                 </StackPanel>
                 <WrapPanel IsEnabled="{Binding Path=isEnabledButtons, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
-                    <Button Name="BtnGetListLatestProduct" Style="{StaticResource ButtonStyle}" 
+                    <Button Style="{StaticResource ButtonStyle}" 
                         Command="{Binding Path=commandProductTiki_GetListLatestProduct}"
                         ToolTip="Lấy được danh sách tất cả sản phẩm">Tất Cả Sản Phẩm</Button>
+                </WrapPanel>
+                <WrapPanel IsEnabled="{Binding Path=isEnabledButtons, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                    <Button Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding Path=commandProductTiki_GetListProductDontMapping}"
+                        ToolTip="Lấy danh sách sản phẩm chưa liên kết với sản phẩm trong kho">Sản Phẩm Chưa Liên Kết</Button>
                 </WrapPanel>
             </WrapPanel>
             <DockPanel LastChildFill = "True">
@@ -30,6 +35,7 @@
                     <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductCodeGetDetail, UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}" Name="tbProductCode"></TextBox>
                     <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandProductTiki_GetProductDetail}">Chi Tiết Sản Phẩm</Button>
+
                 </StackPanel>
                 <ListView ItemsSource="{Binding Path=lsProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                       SelectedItem="{Binding Path=itemProduct, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
@@ -40,8 +46,8 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="STT" Width="40" DisplayMemberBinding="{Binding index}" />
-                            <GridViewColumn Header="Mã" Width="100" DisplayMemberBinding="{Binding product_id}" />
-                            <GridViewColumn Header="Tên" Width="300">
+                            <GridViewColumn Header="Mã" Width="80" DisplayMemberBinding="{Binding product_id}" />
+                            <GridViewColumn Header="Tên" Width="200">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
@@ -55,6 +61,14 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Image Source="{Binding Path=avatar}"  Margin="0,0,5,0" Stretch="Uniform" MaxWidth="200" MaxHeight="200"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Sản Phẩm Trong Kho">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <local:UserControlProductMappingProductInWarehouse DataContext="{Binding Path=vmProductTikiMapping}">
+                                        </local:UserControlProductMappingProductInWarehouse>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

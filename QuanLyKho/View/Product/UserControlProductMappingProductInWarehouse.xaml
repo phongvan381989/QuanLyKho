@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="QuanLyKho.View.Product.UserControlProductMappingProductInWarehouse"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLyKho.View.Product"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <DockPanel LastChildFill = "True">
+            <ListView ItemsSource="{Binding Path=listProductMapping, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                      SelectedIndex="{Binding Path=selectedIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                      SelectionMode="Single">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Mã" Width="100" DisplayMemberBinding="{Binding code}" />
+                        <GridViewColumn Header="Tên" Width="300">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding name}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Vị Trí" Width="100" DisplayMemberBinding="{Binding positionInWarehouse}" />
+                        <GridViewColumn Header="Số Lượng" Width="100" DisplayMemberBinding="{Binding quantity}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+    </Grid>
+</UserControl>

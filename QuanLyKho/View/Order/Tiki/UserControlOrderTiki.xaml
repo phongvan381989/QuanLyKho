@@ -24,9 +24,9 @@
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10">
-                    <RadioButton GroupName="Interval" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=0, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">Hôm Nay</RadioButton>
-                    <RadioButton GroupName="Interval" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">7 Ngày</RadioButton>
-                    <RadioButton GroupName="Interval" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">30 Ngày</RadioButton>
+                    <RadioButton GroupName="IntervalGroupName" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=0, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">Hôm Nay</RadioButton>
+                    <RadioButton GroupName="IntervalGroupName" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">7 Ngày</RadioButton>
+                    <RadioButton GroupName="IntervalGroupName" Width="100" IsChecked="{Binding Path=interval, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">30 Ngày</RadioButton>
                 </StackPanel>
                 <WrapPanel IsEnabled="{Binding Path=isEnabledButtons, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
                     <Button Style="{StaticResource ButtonStyle}" 

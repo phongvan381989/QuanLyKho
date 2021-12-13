@@ -1,5 +1,6 @@
 ﻿using QuanLyKho.General;
 using QuanLyKho.Model.Dev.TikiApp.Products;
+using QuanLyKho.ViewModel.Products;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,9 +13,9 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
     /// <summary>
     /// Sản phẩm phục vụ binding
     /// </summary>
-    public class ProductViewBindingTiki
+    public class ViewModelProductViewBindingTiki : ViewModelBase
     {
-        public ProductViewBindingTiki(Product product, int inputIndex)
+        public ViewModelProductViewBindingTiki(Product product, int inputIndex, ViewModelProductTiki inputParent)
         {
             index = inputIndex;
             product_id = product.product_id.ToString();
@@ -27,8 +28,12 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
             strHidden = (product.is_hidden == false) ? "Đang Ẩn" : "Đang Hiện";
             price = product.price;
             market_price = product.market_price;
+
+            vmProductTikiMapping = new ViewModelProductMappingProductInWarehouse(product_id, this);
+            parent = inputParent;
         }
 
+        public ViewModelProductTiki parent;
         /// <summary>
         /// Số thứ tự
         /// </summary>
@@ -73,5 +78,22 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
         /// the price before discount of a product
         /// </summary>
         public Int32 market_price { get; set; }
+
+        private ViewModelProductMappingProductInWarehouse pvmProductTikiMapping;
+        public ViewModelProductMappingProductInWarehouse vmProductTikiMapping
+        {
+            get
+            {
+                return pvmProductTikiMapping;
+            }
+            set
+            {
+                if (pvmProductTikiMapping != value)
+                {
+                    pvmProductTikiMapping = value;
+                    OnPropertyChanged("vmProductTikiMapping");
+                }
+            }
+        }
     }
 }

@@ -106,7 +106,6 @@ namespace QuanLyKho.ViewModel.Orders
             //MessageBox.Show(code);
             // Duyệt danh sách sản phẩm trong đơn, gặp sản phẩm đang add thì tăng số lượng lên 1
             // và không quá số lượng đơn hàng đã đặt.
-            //ViewModelOrderCheckProductInWarehouseTiki orderCheckTemp;
             int result = 0;
             foreach (ViewModelProductInOrderViewBindingTiki ePIO in listProductTMDTInOrder)
             {
@@ -171,7 +170,7 @@ namespace QuanLyKho.ViewModel.Orders
                             MessageBox.Show("Sản phẩm " + e.idInShop +" trên shop TMDT chưa được gắn với sản phẩm trong kho.", "Kiểm Tra Sản Phẩm Trong Đơn");
                             return;
                     }
-                    foreach (ViewModelOrderCheckProductInWarehouseViewBindingTiki ee in e.vmOrderCheck.listCheckProduct)
+                    foreach (ViewModelOrderCheckProductInWarehouseViewBinding ee in e.vmOrderCheck.listCheckProduct)
                     {
                         // Check mã sản phẩm đã được thêm vào danh sách chưa
                         count = lsMaSanPham.Count();
@@ -257,7 +256,7 @@ namespace QuanLyKho.ViewModel.Orders
             wd.ShowDialog();
 
             // Load lại dữ liệu
-            ViewModelOrderCheckProductInWarehouseTiki obj = new ViewModelOrderCheckProductInWarehouseTiki(itemSelected.idInShop.ToString(), itemSelected.amount, itemSelected);
+            ViewModelOrderCheckProductInWarehouse obj = new ViewModelOrderCheckProductInWarehouse(itemSelected.idInShop.ToString(), itemSelected.amount, itemSelected);
             itemSelected.vmOrderCheck = obj;
             itemSelected.isChecked = false;
         }

@@ -5,6 +5,7 @@ using QuanLyKho.View.UserControlCommon;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Products;
 using QuanLyKho.ViewModel.InOutWarehouse;
+using QuanLyKho.ViewModel.Products.Tiki;
 using QuanLyKho.ViewModel.ViewModelCommon;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace QuanLyKho.ViewModel.Products
         {
             pcommandProductTiki_GetListLatestProduct = new CommandProductTiki_GetListLatestProduct(this);
             pcommandProductTiki_GetProductDetail = new CommandProductTiki_GetProductDetail(this);
+            pcommandProductTiki_GetListProductDontMapping = new CommandProductTiki_GetListProductDontMapping(this);
             // Lấy danh sách cửa hàng
             listHomeAddressShopUsing = CommonTikiAPI.GetListHomeAddressUsing();
             // Thêm tùy chọn tất cả shop nếu danh sách shop có từ 2 shop trở lên
@@ -32,7 +34,7 @@ namespace QuanLyKho.ViewModel.Products
             if (homeAddressIndex == -1)
                 isEnabledButtons = false;
             indexProductInList = -1;
-            lsProduct = new ObservableCollection<ProductViewBindingTiki>();
+            lsProduct = new ObservableCollection<ViewModelProductViewBindingTiki>();
             lsProductFullInfo = new List<Product>();
         }
 
@@ -51,6 +53,15 @@ namespace QuanLyKho.ViewModel.Products
             get
             {
                 return pcommandProductTiki_GetProductDetail;
+            }
+        }
+
+        private CommandProductTiki_GetListProductDontMapping pcommandProductTiki_GetListProductDontMapping;
+        public CommandProductTiki_GetListProductDontMapping commandProductTiki_GetListProductDontMapping
+        {
+            get
+            {
+                return pcommandProductTiki_GetListProductDontMapping;
             }
         }
 
@@ -142,8 +153,8 @@ namespace QuanLyKho.ViewModel.Products
             }
         }
 
-        private ObservableCollection<ProductViewBindingTiki> plsProduct;
-        public ObservableCollection<ProductViewBindingTiki> lsProduct
+        private ObservableCollection<ViewModelProductViewBindingTiki> plsProduct;
+        public ObservableCollection<ViewModelProductViewBindingTiki> lsProduct
         {
             get
             {
@@ -189,25 +200,68 @@ namespace QuanLyKho.ViewModel.Products
             if (homeAddressIndex == -1)
                 return;
 
-            // Lấy sản phẩm của tất cả các shop
-            if (listHomeAddressShopUsing.Count() > 1 &&
-               homeAddressIndex == listHomeAddressShopUsing.Count() - 1)
+            // Thực hiện hàm này lâu, ta hiện cửa sổ thông báo đợi
+            WaitingWindow waitingWindow = new WaitingWindow();
+            waitingWindow.Show();
+
+            try
             {
-                lsProductFullInfo = GetListProductTiki.GetListLatestProductsFromAllShop(CommonTikiAPI.listTikiConfigAppUsing);
+                // Lấy sản phẩm của tất cả các shop
+                if (listHomeAddressShopUsing.Count() > 1 &&
+                   homeAddressIndex == listHomeAddressShopUsing.Count() - 1)
+                {
+                    lsProductFullInfo = GetListProductTiki.GetListLatestProductsFromAllShop(CommonTikiAPI.listTikiConfigAppUsing);
+                }
+                else
+                {
+                    // Lấy sản phẩm của 1 shop
+                    lsProductFullInfo = GetListProductTiki.GetListLatestProductsFromOneShop(CommonTikiAPI.GetTikiConfigAppFromHomeAddress(homeAddressUsing));
+                }
+
+                int index = 0;
+                foreach (Product e in lsProductFullInfo)
+                {
+                    index++;
+                    // Download thumbnail của sản phẩm
+                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                    lsProduct.Add(new ViewModelProductViewBindingTiki(e, index, this));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Lấy sản phẩm của 1 shop
-                lsProductFullInfo = GetListProductTiki.GetListLatestProductsFromOneShop(CommonTikiAPI.GetTikiConfigAppFromHomeAddress(homeAddressUsing));
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
+            finally
+            {
+                waitingWindow.Close();
+            }
+        }
+
+        /// <summary>
+        /// Lấy danh sách sản phẩm chưa được liên kết với sản phẩm trong kho
+        /// </summary>
+        public void GetListProductDontMapping()
+        {
+            if(lsProductFullInfo.Count() == 0)
+            {
+                MessageBox.Show("Danh sách sản phẩm trống.");
             }
 
-            int index = 0;
-            foreach (Product e in lsProductFullInfo)
+            ObservableCollection<ViewModelProductViewBindingTiki> lsProductNoMapping = new ObservableCollection<ViewModelProductViewBindingTiki>();
+
+            foreach (ViewModelProductViewBindingTiki e in lsProduct)
             {
-                index++;
-                // Download thumbnail của sản phẩm
-                Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
-                lsProduct.Add(new ProductViewBindingTiki(e, index));
+                if (e.vmProductTikiMapping.listProductMapping.Count() == 0)
+                {
+                    lsProductNoMapping.Add(e);
+                }
+            }
+            lsProduct = lsProductNoMapping;
+
+            int count = lsProduct.Count();
+            for(int i = 1; i <= count; i++)
+            {
+                lsProduct[i - 1].index = i;
             }
         }
 
@@ -224,7 +278,7 @@ namespace QuanLyKho.ViewModel.Products
             int count = plsProduct.Count();
             for (i = 0; i < count; i++)
             {
-                ProductViewBindingTiki e = plsProduct.ElementAt(i);
+                ViewModelProductViewBindingTiki e = plsProduct.ElementAt(i);
                 if (e.product_id == textProductCodeGetDetail)
                 {
                     break;
@@ -248,8 +302,8 @@ namespace QuanLyKho.ViewModel.Products
             wd.ShowDialog();
         }
 
-        private ProductViewBindingTiki pitemProduct;
-        public ProductViewBindingTiki itemProduct
+        private ViewModelProductViewBindingTiki pitemProduct;
+        public ViewModelProductViewBindingTiki itemProduct
         {
             get
             {
@@ -271,7 +325,6 @@ namespace QuanLyKho.ViewModel.Products
             indexProductInList = -1;
             lsProduct.Clear();
             lsProductFullInfo.Clear();
-
         }
     }
 }

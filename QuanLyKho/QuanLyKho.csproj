@@ -141,6 +141,9 @@
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Orders\Tiki\CommandProductInOrderTiki_ProductFull.cs" />
+    <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_GetListProductDontMapping.cs" />
+    <Compile Include="ViewModel\Products\ViewModelProductMappingProductInWarehouse.cs" />
+    <Compile Include="ViewModel\Products\ViewModelProductMappingProductInWarehouseViewBinding.cs" />
     <Compile Include="ViewModel\ViewModelCommon\CommandSubWindow.cs" />
     <Compile Include="ViewModel\ViewModelCommon\ViewModelSubWindow.cs" />
     <Compile Include="ViewModel\Config\CommandTikiConfigApp_AddOrUpdate.cs" />
@@ -149,12 +152,12 @@
     <Compile Include="ViewModel\Config\ViewModelTikiConfigApp.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\CommonTikiAPI.cs" />
     <Compile Include="ViewModel\Orders\Tiki\CommandProductInOrderTiki_AddProductToOrder.cs" />
-    <Compile Include="ViewModel\Orders\Tiki\ViewModelOrderCheckProductInWarehouseViewBindingTiki.cs" />
+    <Compile Include="ViewModel\Orders\ViewModelOrderCheckProductInWarehouseViewBinding.cs" />
     <Compile Include="ViewModel\Orders\Tiki\ViewModelProductInOrderViewBindingTiki.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Orders\TikiGetListOrders.cs" />
     <Compile Include="ViewModel\Orders\Tiki\TikiOrderViewBinding.cs" />
     <Compile Include="ViewModel\Dev\TikiAPI\Products\GetListProductTiki.cs" />
-    <Compile Include="ViewModel\Products\Tiki\ProductViewBindingTiki.cs" />
+    <Compile Include="ViewModel\Products\Tiki\ViewModelProductViewBindingTiki.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_SearchFromCode.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_SearchFromName.cs" />
     <Compile Include="ViewModel\InOutWarehouse\CommandMappingSanPhamTMDT_SanPhamKho_Delete.cs" />
@@ -175,7 +178,7 @@
     <Compile Include="ViewModel\InOutWarehouse\ViewModelThongTinChiTietViewOnly.cs" />
     <Compile Include="ViewModel\Orders\Tiki\CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation.cs" />
     <Compile Include="ViewModel\Orders\Tiki\CommandOrderTiki_GetOrderDetail.cs" />
-    <Compile Include="ViewModel\Orders\Tiki\ViewModelOrderCheckProductInWarehouseTiki.cs" />
+    <Compile Include="ViewModel\Orders\ViewModelOrderCheckProductInWarehouse.cs" />
     <Compile Include="ViewModel\Orders\Tiki\ViewModelProductInOrderTiki.cs" />
     <Compile Include="ViewModel\Orders\Tiki\ViewModelOrderTiki.cs" />
     <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_GetListLatestProduct.cs" />
@@ -230,6 +233,9 @@
     <Compile Include="View\Product\Tiki\UserControlProductTiki.xaml.cs">
       <DependentUpon>UserControlProductTiki.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Product\UserControlProductMappingProductInWarehouse.xaml.cs">
+      <DependentUpon>UserControlProductMappingProductInWarehouse.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Product\UserControlSMProduct.xaml.cs">
       <DependentUpon>UserControlSMProduct.xaml</DependentUpon>
     </Compile>
@@ -262,6 +268,9 @@
     </Compile>
     <Compile Include="View\UserControlCommon\UserControlTienVND.xaml.cs">
       <DependentUpon>UserControlTienVND.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControlCommon\WaitingWindow.xaml.cs">
+      <DependentUpon>WaitingWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -339,6 +348,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Product\UserControlProductMappingProductInWarehouse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Product\UserControlSMProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -380,6 +393,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControlCommon\UserControlTienVND.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControlCommon\WaitingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

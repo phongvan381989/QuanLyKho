@@ -14,6 +14,11 @@ namespace QuanLyKho.Model.Dev.TikiApp.Products
         public Int32 product_id { get; set; }
 
         /// <summary>
+        /// lưu giá trị giống product_id, phục vụ json deserialize
+        /// </summary>
+        public Int32 id { get; set; }
+
+        /// <summary>
         /// SKU of product
         /// </summary>
         public string sku { get; set; }

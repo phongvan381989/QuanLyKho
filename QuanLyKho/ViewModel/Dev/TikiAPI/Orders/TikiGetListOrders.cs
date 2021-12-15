@@ -122,7 +122,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
                     listValuePair[0].value = currentPage.ToString();
                 }
 
-                string http = TikiConstValues.cstrOrdersHTTPAddess + DevNameValuePair.GetQueryString(listValuePair);
+                string http = TikiConstValues.cstrOrdersHTTPAddress + DevNameValuePair.GetQueryString(listValuePair);
                 MyLogger.GetInstance().Debug(http);
 
                 RestClient client = new RestClient(http);

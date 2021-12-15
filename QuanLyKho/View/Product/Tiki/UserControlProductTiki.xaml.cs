@@ -40,12 +40,5 @@ namespace QuanLyKho.View.Product.Tiki
             if(vm != null)
                 vm.GetProductDetail();
         }
-
-        private void ListView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var vm = (ViewModelProductTiki)this.DataContext;
-            //if (vm != null)
-                //vm.GetProductDetail();
-        }
     }
 }

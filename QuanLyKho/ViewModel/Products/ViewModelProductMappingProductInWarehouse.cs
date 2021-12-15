@@ -29,6 +29,7 @@ namespace QuanLyKho.ViewModel.Products
                 listProductMapping.Add(new ViewModelProductMappingProductInWarehouseViewBinding(e));
             }
             parent = inputParent;
+            selectedIndex = -1;
         }
         public ViewModelProductViewBindingTiki parent;
         private int pselectedIndex;

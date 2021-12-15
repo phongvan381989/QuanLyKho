@@ -142,6 +142,9 @@
     </Compile>
     <Compile Include="ViewModel\Orders\Tiki\CommandProductInOrderTiki_ProductFull.cs" />
     <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_GetListProductDontMapping.cs" />
+    <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_SearchCodeFromCache.cs" />
+    <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_SearchFromShopTMDT.cs" />
+    <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_SearchNameFromCache.cs" />
     <Compile Include="ViewModel\Products\ViewModelProductMappingProductInWarehouse.cs" />
     <Compile Include="ViewModel\Products\ViewModelProductMappingProductInWarehouseViewBinding.cs" />
     <Compile Include="ViewModel\ViewModelCommon\CommandSubWindow.cs" />

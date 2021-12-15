@@ -21,49 +21,34 @@ namespace QuanLyKho.ViewModel.Products
     {
         public ViewModelProductTiki()
         {
-            pcommandProductTiki_GetListLatestProduct = new CommandProductTiki_GetListLatestProduct(this);
-            pcommandProductTiki_GetProductDetail = new CommandProductTiki_GetProductDetail(this);
-            pcommandProductTiki_GetListProductDontMapping = new CommandProductTiki_GetListProductDontMapping(this);
+            commandProductTiki_GetListLatestProduct = new CommandProductTiki_GetListLatestProduct(this);
+            commandProductTiki_GetProductDetail = new CommandProductTiki_GetProductDetail(this);
+            commandProductTiki_GetListProductDontMapping = new CommandProductTiki_GetListProductDontMapping(this);
+            commandProductTiki_SearchFromShopTMDT = new CommandProductTiki_SearchFromShopTMDT(this);
+            commandProductTiki_SearchCodeFromCache = new CommandProductTiki_SearchCodeFromCache(this);
+            commandProductTiki_SearchNameFromCache = new CommandProductTiki_SearchNameFromCache(this);
             // Lấy danh sách cửa hàng
             listHomeAddressShopUsing = CommonTikiAPI.GetListHomeAddressUsing();
             // Thêm tùy chọn tất cả shop nếu danh sách shop có từ 2 shop trở lên
             if (listHomeAddressShopUsing.Count() > 1)
                 listHomeAddressShopUsing.Add("Tất cả");
             homeAddressIndex = listHomeAddressShopUsing.Count() - 1;
-            isEnabledButtons = true;
-            if (homeAddressIndex == -1)
-                isEnabledButtons = false;
             indexProductInList = -1;
             lsProduct = new ObservableCollection<ViewModelProductViewBindingTiki>();
             lsProductFullInfo = new List<Product>();
         }
 
-        private CommandProductTiki_GetListLatestProduct pcommandProductTiki_GetListLatestProduct;
-        public CommandProductTiki_GetListLatestProduct commandProductTiki_GetListLatestProduct
-        {
-            get
-            {
-                return pcommandProductTiki_GetListLatestProduct;
-            }
-        }
+        public CommandProductTiki_GetListLatestProduct commandProductTiki_GetListLatestProduct { get; set; }
 
-        private CommandProductTiki_GetProductDetail pcommandProductTiki_GetProductDetail;
-        public CommandProductTiki_GetProductDetail commandProductTiki_GetProductDetail
-        {
-            get
-            {
-                return pcommandProductTiki_GetProductDetail;
-            }
-        }
+        public CommandProductTiki_GetProductDetail commandProductTiki_GetProductDetail { get; set; }
 
-        private CommandProductTiki_GetListProductDontMapping pcommandProductTiki_GetListProductDontMapping;
-        public CommandProductTiki_GetListProductDontMapping commandProductTiki_GetListProductDontMapping
-        {
-            get
-            {
-                return pcommandProductTiki_GetListProductDontMapping;
-            }
-        }
+        public CommandProductTiki_GetListProductDontMapping commandProductTiki_GetListProductDontMapping { get; set; }
+
+
+        public CommandProductTiki_SearchFromShopTMDT commandProductTiki_SearchFromShopTMDT { get; set; }
+
+        public CommandProductTiki_SearchCodeFromCache commandProductTiki_SearchCodeFromCache { get; set; }
+        public CommandProductTiki_SearchNameFromCache commandProductTiki_SearchNameFromCache { get; set; }
 
         private ObservableCollection<string> plistHomeAddressShopUsing;
         public ObservableCollection<String> listHomeAddressShopUsing
@@ -100,24 +85,6 @@ namespace QuanLyKho.ViewModel.Products
             }
         }
 
-        private bool pisEnabledButtons;
-        public bool isEnabledButtons
-        {
-            get
-            {
-                return pisEnabledButtons;
-            }
-
-            set
-            {
-                if (pisEnabledButtons != value)
-                {
-                    OnPropertyChanged("isEnabledButtons");
-                    pisEnabledButtons = value;
-                }
-            }
-        }
-
         private string ptextProductCodeGetDetail;
         public string textProductCodeGetDetail
         {
@@ -132,6 +99,60 @@ namespace QuanLyKho.ViewModel.Products
                 {
                     ptextProductCodeGetDetail = value;
                     OnPropertyChanged("textProductCodeGetDetail");
+                }
+            }
+        }
+
+        private string ptextProductCodeSearchFromShopTMDT;
+        public string textProductCodeSearchFromShopTMDT
+        {
+            get
+            {
+                return ptextProductCodeSearchFromShopTMDT;
+            }
+
+            set
+            {
+                if (ptextProductCodeSearchFromShopTMDT != value)
+                {
+                    ptextProductCodeSearchFromShopTMDT = value;
+                    OnPropertyChanged("textProductCodeSearchFromShopTMDT");
+                }
+            }
+        }
+
+        private string ptextProductCodeSearchFromCache;
+        public string textProductCodeSearchFromCache
+        {
+            get
+            {
+                return ptextProductCodeSearchFromCache;
+            }
+
+            set
+            {
+                if(ptextProductCodeSearchFromCache != value)
+                {
+                    ptextProductCodeSearchFromCache = value;
+                    OnPropertyChanged("textProductCodeSearchFromCache");
+                }
+            }
+        }
+
+        private string ptextProductNameSearchFromCache;
+        public string textProductNameSearchFromCache
+        {
+            get
+            {
+                return ptextProductNameSearchFromCache;
+            }
+
+            set
+            {
+                if(ptextProductNameSearchFromCache != value)
+                {
+                    ptextProductNameSearchFromCache = value;
+                    OnPropertyChanged("textProductNameSearchFromCache");
                 }
             }
         }
@@ -197,6 +218,7 @@ namespace QuanLyKho.ViewModel.Products
         public void GetListLatestProduct()
         {
             lsProduct.Clear();
+            lsProductFullInfo.Clear();
             if (homeAddressIndex == -1)
                 return;
 
@@ -226,6 +248,7 @@ namespace QuanLyKho.ViewModel.Products
                     Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
                     lsProduct.Add(new ViewModelProductViewBindingTiki(e, index, this));
                 }
+                indexProductInList = -1;
             }
             catch (Exception ex)
             {
@@ -235,6 +258,90 @@ namespace QuanLyKho.ViewModel.Products
             {
                 waitingWindow.Close();
             }
+        }
+
+        /// <summary>
+        /// Từ mã sản phẩm, lấy được sản phẩm ở shopTMDT
+        /// </summary>
+        public void SearchFromShopTMDT()
+        {
+            if (homeAddressIndex == -1)
+                return;
+
+            if(string.IsNullOrEmpty(textProductCodeSearchFromShopTMDT))
+                return;
+
+            lsProduct.Clear();
+            lsProductFullInfo.Clear();
+
+            Product pro = null;
+            // Lấy sản phẩm của tất cả các shop
+            if (listHomeAddressShopUsing.Count() > 1 &&
+               homeAddressIndex == listHomeAddressShopUsing.Count() - 1)
+            {
+                pro = GetListProductTiki.GetProductFromAllShop(CommonTikiAPI.listTikiConfigAppUsing, textProductCodeSearchFromShopTMDT);
+            }
+            else
+            {
+                // Lấy sản phẩm của 1 shop
+                pro = GetListProductTiki.GetProductFromOneShop(CommonTikiAPI.GetTikiConfigAppFromHomeAddress(homeAddressUsing), textProductCodeSearchFromShopTMDT);
+
+            }
+            if (pro == null)
+                return;
+
+            lsProductFullInfo.Add(pro);
+            // Download thumbnail của sản phẩm
+            Common.DownloadImageAndSave(pro.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+            lsProduct.Add(new ViewModelProductViewBindingTiki(pro, 1, this));
+            indexProductInList = -1;
+        }
+
+        /// <summary>
+        /// Từ mã sản phẩm tìm kiếm từ cache
+        /// </summary>
+        public void SearchCodeFromCache()
+        {
+            lsProduct.Clear();
+
+            int index = 0;
+            foreach (Product e in lsProductFullInfo)
+            {
+                string code = e.product_id.ToString();
+                if (string.IsNullOrEmpty(textProductCodeSearchFromCache) || code.IndexOf(textProductCodeSearchFromCache, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    index++;
+                    // Download thumbnail của sản phẩm
+                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                    lsProduct.Add(new ViewModelProductViewBindingTiki(e, index, this));
+                }
+            }
+            indexProductInList = -1;
+            if (lsProduct.Count() == 0)
+                MessageBox.Show("Không tìm thấy kết quả nào.");
+        }
+
+        /// <summary>
+        /// Từ tên sản phẩm tìm kiếm từ cache
+        /// </summary>
+        public void SearchNameFromCache()
+        {
+            lsProduct.Clear();
+
+            int index = 0;
+            foreach (Product e in lsProductFullInfo)
+            {
+                if (string.IsNullOrEmpty(textProductNameSearchFromCache) || e.name.IndexOf(textProductNameSearchFromCache, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    index++;
+                    // Download thumbnail của sản phẩm
+                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                    lsProduct.Add(new ViewModelProductViewBindingTiki(e, index, this));
+                }
+            }
+            indexProductInList = -1;
+            if (lsProduct.Count() == 0)
+                MessageBox.Show("Không tìm thấy kết quả nào.");
         }
 
         /// <summary>
@@ -248,7 +355,6 @@ namespace QuanLyKho.ViewModel.Products
             }
 
             ObservableCollection<ViewModelProductViewBindingTiki> lsProductNoMapping = new ObservableCollection<ViewModelProductViewBindingTiki>();
-
             foreach (ViewModelProductViewBindingTiki e in lsProduct)
             {
                 if (e.vmProductTikiMapping.listProductMapping.Count() == 0)
@@ -256,13 +362,14 @@ namespace QuanLyKho.ViewModel.Products
                     lsProductNoMapping.Add(e);
                 }
             }
-            lsProduct = lsProductNoMapping;
-
-            int count = lsProduct.Count();
-            for(int i = 1; i <= count; i++)
+            lsProduct.Clear();
+            int count = lsProductNoMapping.Count();
+            for (int i = 1; i <= count; i++)
             {
-                lsProduct[i - 1].index = i;
+                lsProductNoMapping[i - 1].index = i;
+                lsProduct.Add(lsProductNoMapping[i - 1]);
             }
+            indexProductInList = -1;
         }
 
         public void GetProductDetail()

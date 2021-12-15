@@ -29,8 +29,8 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
             price = product.price;
             market_price = product.market_price;
 
-            vmProductTikiMapping = new ViewModelProductMappingProductInWarehouse(product_id, this);
             parent = inputParent;
+            vmProductTikiMapping = new ViewModelProductMappingProductInWarehouse(product_id, this);
         }
 
         public ViewModelProductTiki parent;

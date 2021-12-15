@@ -59,16 +59,10 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
                 {
                     listValuePair[0].value = currentPage.ToString();
                 }
-                string http = TikiConstValues.cstrProductsHTTPAddess + DevNameValuePair.GetQueryString(listValuePair);
-                MyLogger.GetInstance().Debug(http);
-
-                RestClient client = new RestClient(http);
-                client.Timeout = -1;
-                RestRequest request = new RestRequest(Method.GET);
-                IRestResponse response = CommonTikiAPI.ExcuteRequest(client, request, configApp);
+                string http = TikiConstValues.cstrProductsHTTPAddress + DevNameValuePair.GetQueryString(listValuePair);
+                IRestResponse response = CommonTikiAPI.GetExcuteRequest(configApp, http);
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    MyLogger.InfoRestLog(client, request, response);
                     break;
                 }
                 string json = response.Content;
@@ -116,6 +110,64 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Products
                     lsProduct.AddRange(GetListLatestProductsFromOneShop(listConfigApp[i]));
             }
             return lsProduct;
+        }
+
+        /// <summary>
+        /// Lấy sản phẩm từ mã sản phẩm của 1 shop
+        /// GET https://api.tiki.vn/integration/v2/products/{productId}
+        /// Parameter	Type	    Mandatory	Description
+        /// productId   Integer     Y           product_id of TIKI system
+        /// includes    String      N           Get more details fields.It can be seller, categories, inventory, attributes, images
+        /// GET https://api.tiki.vn/integration/v2/products/12345?includes=seller,categories
+        /// </summary>
+        /// <param name="configApp"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static Product GetProductFromOneShop(TikiConfigApp configApp, string code)
+        {
+            if (configApp == null)
+                return null;
+
+            // Thêm ?includes=images để lấy thumbnail
+            string http = TikiConstValues.cstrProductsHTTPAddress + "/" + code + "?includes=images";
+            IRestResponse response = CommonTikiAPI.GetExcuteRequest(configApp, http);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return null;
+            }
+            string json = response.Content;
+            Product pro = null;
+            try
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
+                pro = JsonConvert.DeserializeObject<Product>(json, settings);
+                if(pro.product_id == default(Int32))
+                    pro.product_id = pro.id;
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+                MyLogger.GetInstance().Warn(json);
+                return null;
+            }
+            return pro;
+        }
+
+        public static Product GetProductFromAllShop(List<TikiConfigApp> listConfigApp, string code)
+        {
+            Product pro = null;
+            int num = listConfigApp.Count();
+            for (int i = 0; i < num; i++)
+            {
+                pro = GetProductFromOneShop(listConfigApp[i], code);
+                if (pro != null)
+                    break;
+            }
+            return pro;
         }
     }
 }

@@ -143,5 +143,18 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
             }
             return response;
         }
+
+        static public IRestResponse GetExcuteRequest(TikiConfigApp configApp, string http)
+        {
+            MyLogger.GetInstance().Debug(http);
+
+            RestClient client = new RestClient(http);
+            client.Timeout = -1;
+            RestRequest request = new RestRequest(Method.GET);
+            IRestResponse response = ExcuteRequest(client, request, configApp);
+            if(response.StatusCode != HttpStatusCode.OK)
+                MyLogger.InfoRestLog(client, request, response);
+            return response;
+        }
     }
 }

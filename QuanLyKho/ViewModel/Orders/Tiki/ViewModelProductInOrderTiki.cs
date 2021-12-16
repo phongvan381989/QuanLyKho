@@ -35,14 +35,11 @@ namespace QuanLyKho.ViewModel.Orders
             commandAddProductToOrder = new CommandProductInOrderTiki_AddProductToOrder(this);
             commandProductFull = new CommandProductInOrderTiki_ProductFull(this);
             isDisableCheckFunction = false;
-            actionModelNhapXuatChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLNhapXuatChiTiet());
-            actionModelThongTinChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
             parentWindow = inputParentWidow;
         }
         public CommandProductInOrderTiki_AddProductToOrder commandAddProductToOrder { get; set; }
         public CommandProductInOrderTiki_ProductFull commandProductFull { get; set; }
-        public XMLAction actionModelNhapXuatChiTiet { get; set; }
-        public XMLAction actionModelThongTinChiTiet { get; set; }
+
 
         private SubWindow parentWindow;
         public void Check()
@@ -196,7 +193,7 @@ namespace QuanLyKho.ViewModel.Orders
 
                 for (i = 0; i < count; i++)
                 {
-                    if(!ModelThongTinChiTiet.CheckQuantityEnough(actionModelThongTinChiTiet, lsMaSanPham[i], lsSoLuongNhap[i]))
+                    if(!ModelThongTinChiTiet.CheckQuantityEnough(((App)Application.Current).actionModelThongTinChiTiet, lsMaSanPham[i], lsSoLuongNhap[i]))
                     {
                         if (string.IsNullOrEmpty(Common.CommonErrorMessage))
                         {
@@ -211,14 +208,14 @@ namespace QuanLyKho.ViewModel.Orders
                     }
                 }
 
-                if(!ModelNhapXuatChiTiet.AddOrUpdateListProduceToXDocAndSave(actionModelNhapXuatChiTiet, lsMaSanPham, lsSoLuongNhap))
+                if(!ModelNhapXuatChiTiet.AddOrUpdateListProduceToXDocAndSave(((App)Application.Current).actionModelNhapXuatChiTiet, lsMaSanPham, lsSoLuongNhap))
                 {
                     MessageBox.Show("Lưu thông tin nhập xuất chi tiết thất bại.", "Kiểm Tra Sản Phẩm Trong Đơn");
                     return;
                 }
 
                 // Lưu thông tin tồn kho
-                if(!ModelThongTinChiTiet.UpdateTonKhoListProduct(actionModelThongTinChiTiet, lsMaSanPham, lsSoLuongNhap))
+                if(!ModelThongTinChiTiet.UpdateTonKhoListProduct(((App)Application.Current).actionModelThongTinChiTiet, lsMaSanPham, lsSoLuongNhap))
                 {
                     if (string.IsNullOrEmpty(Common.CommonErrorMessage))
                     {

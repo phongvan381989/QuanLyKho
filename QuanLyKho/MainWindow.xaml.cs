@@ -76,21 +76,13 @@ namespace QuanLyKho
 
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
 
-            // Phải đọc được file db
-            if (vmThongTinChiTiet.sanPhamHienThi != null && vmThongTinChiTiet.nhapXuatChiTiet != null)
-            {
-                vmThongTinChiTiet.UpdateListsViewBinding();
-                this.DataContext = vmThongTinChiTiet;
+            vmThongTinChiTiet.UpdateListsViewBinding();
+            this.DataContext = vmThongTinChiTiet;
 
-                //MainContentContainer.Children.Clear();
-                //UserControlThongTinChiTiet ucThongTinChiTiet = new UserControlThongTinChiTiet();
-                //MainContentContainer.Children.Add(ucThongTinChiTiet);
+            SubMenuContainer.Children.Clear();
+            SubMenuContainer.Children.Add(new UserControlSMNhapXuat());
 
-                SubMenuContainer.Children.Clear();
-                SubMenuContainer.Children.Add(new UserControlSMNhapXuat());
-
-                SetMainContentContainer(new UserControlThongTinChiTiet(), vmThongTinChiTiet);
-            }
+            SetMainContentContainer(new UserControlThongTinChiTiet(), vmThongTinChiTiet);
         }
 
         public void MMDevelop_Click(object sender, RoutedEventArgs e)

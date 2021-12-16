@@ -30,11 +30,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 return _commandDelete;
             }
         }
-        public XMLAction actionModelThongTinChiTiet { get; set; }
         public ModelThongTinChiTiet sanPhamHienThi { get; set; }
-
-        public XMLAction actionModelNhapXuatChiTiet { get; set; }
-        public ModelNhapXuatChiTiet nhapXuatChiTiet { get; set; }
 
         private CommandThongTinChiTiet_ListInOutWarehouse _commandGetListInOutWarehouse;
         public CommandThongTinChiTiet_ListInOutWarehouse commandGetListInOutWarehouse
@@ -216,16 +212,11 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         public ViewModelThongTinChiTiet()
         {
             vmMedia = new ViewModelMedia();
-            actionModelThongTinChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
-
-            actionModelNhapXuatChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLNhapXuatChiTiet());
             try
             {
                 sanPhamHienThi = new ModelThongTinChiTiet();
                 //sanPhamHienThi.ThemThanhPhanMoi(actionModelThongTinChiTiet, "KhoiLuong", "0.1");
-                InitializeBuffer(actionModelThongTinChiTiet);
-
-                nhapXuatChiTiet = new ModelNhapXuatChiTiet();
+                InitializeBuffer(((App)Application.Current).actionModelThongTinChiTiet);
             }
             catch (Exception ex)
             {
@@ -335,7 +326,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 else
                 {
                     sanPhamHienThi.maSanPham = value;
-                    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(actionModelThongTinChiTiet, sanPhamHienThi.maSanPham);
+                    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(((App)Application.Current).actionModelThongTinChiTiet, sanPhamHienThi.maSanPham);
                     UpdateListBufferAll();
                     OnPropertyChangedAll();
 
@@ -483,7 +474,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 else
                 {
                     sanPhamHienThi.tenSanPham = value;
-                    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromTenSanPham(actionModelThongTinChiTiet, sanPhamHienThi.tenSanPham);
+                    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromTenSanPham(((App)Application.Current).actionModelThongTinChiTiet, sanPhamHienThi.tenSanPham);
                     UpdateListBufferAll();
                     OnPropertyChangedAll();
                     bCheckSelectedItemFromListTSP = false;
@@ -867,34 +858,34 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                     // Nếu mã sản phẩm chưa tồn tại, tạo mới
                     if (listMaSanPham.Count() == 0)
                     {
-                        if(!ModelThongTinChiTiet.CanAddAProduceWithTenSP(actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
+                        if(!ModelThongTinChiTiet.CanAddAProduceWithTenSP(((App)Application.Current).actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
                         {
                             MessageBox.Show(sanPhamHienThi.GetErrorMessage());
                             return;
                         }
-                        if (!ModelThongTinChiTiet.AddAProduceToXDocAndSave(actionModelThongTinChiTiet, sanPhamHienThi))
+                        if (!ModelThongTinChiTiet.AddAProduceToXDocAndSave(((App)Application.Current).actionModelThongTinChiTiet, sanPhamHienThi))
                         {
                             // Cập nhật vào list truy xuất nhanh
-                            InitializeBuffer(actionModelThongTinChiTiet);
+                            InitializeBuffer(((App)Application.Current).actionModelThongTinChiTiet);
                             bResult = false;
                             break;
                         }
                     }
                     else // Cập nhật
                     {
-                        if (!ModelThongTinChiTiet.CanUpdateAProducde(actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
+                        if (!ModelThongTinChiTiet.CanUpdateAProducde(((App)Application.Current).actionModelThongTinChiTiet, maSanPham, tenSanPham, false))
                         {
                             MessageBox.Show(sanPhamHienThi.GetErrorMessage());
                             return;
                         }
-                        if (!ModelThongTinChiTiet.UpdateAProducToXDocAndSave(actionModelThongTinChiTiet, sanPhamHienThi))
+                        if (!ModelThongTinChiTiet.UpdateAProducToXDocAndSave(((App)Application.Current).actionModelThongTinChiTiet, sanPhamHienThi))
                         {
                             bResult = false;
                             break;
                         }
                     }
                     // Lưu thông tin nhập xuất chi tiết
-                    if(!ModelNhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(actionModelNhapXuatChiTiet, maSanPham, soLuongNhap, true))
+                    if(!ModelNhapXuatChiTiet.AddOrUpdateAProduceToXDocAndSave(((App)Application.Current).actionModelNhapXuatChiTiet, maSanPham, soLuongNhap, true))
                     {
                         bResult = false;
                         break;
@@ -920,23 +911,16 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             if (bResult)
             {
                 OnPropertyChanged("tonKho");
+                soLuongNhap = "";
+                OnPropertyChanged("soLuongNhap");
                 General.Common.ShowAutoClosingMessageBox("Lưu thành công", "Lưu");
                 // Cập nhật lại buffer
-                InitializeBuffer(actionModelThongTinChiTiet);
+                InitializeBuffer(((App)Application.Current).actionModelThongTinChiTiet);
                 // Cập nhật source của combobox
                 listMaSanPham = SearchMaSanPhamAText(maSanPham, ParameterSearch.Last);
                 listTenSanPham = SearchTenSanPhamAText(tenSanPham, ParameterSearch.First);
                 listNhaXuatBan = SearchNhaXuatBanAText(nhaXuatBan, ParameterSearch.First);
                 listNhaPhatHanh = SearchNhaPhatHanhAText(nhaPhatHanh, ParameterSearch.First);
-
-                //if (sanPhamHienThi.CreateSampleData())
-                //{
-                //    General.Common.ShowAutoClosingMessageBox("CreateSampleData thành công", "Sản phẩm");
-                //}
-                //else
-                //{
-                //    General.Common.ShowAutoClosingMessageBox("CreateSampleData thất bại", "Sản phẩm");
-                //}
             }
             else
             {
@@ -967,12 +951,12 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
 
             // Cập nhật vào list truy xuất nhanh
-            InitializeBuffer(actionModelThongTinChiTiet);
-            ModelThongTinChiTiet.Delete(actionModelThongTinChiTiet, maSanPham);
-            ModelNhapXuatChiTiet.Delete(actionModelNhapXuatChiTiet, maSanPham);
+            InitializeBuffer(((App)Application.Current).actionModelThongTinChiTiet);
+            ModelThongTinChiTiet.Delete(((App)Application.Current).actionModelThongTinChiTiet, maSanPham);
+            ModelNhapXuatChiTiet.Delete(((App)Application.Current).actionModelNhapXuatChiTiet, maSanPham);
             General.Common.ShowAutoClosingMessageBox("Xóa thành công", "Xóa");
             // Cập nhật lại buffer
-            InitializeBuffer(actionModelThongTinChiTiet);
+            InitializeBuffer(((App)Application.Current).actionModelThongTinChiTiet);
             UpdateListsViewBinding();
 
             sanPhamHienThi.Refresh();

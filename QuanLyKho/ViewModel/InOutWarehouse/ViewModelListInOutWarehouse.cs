@@ -24,9 +24,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             _commandSearchFromName = new CommandListInOutWarehouse_SearchFromName(this);
             indexInList = -1;
             textProductCode = string.Empty;
-            actionModelThongTinChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
             listProductInOutWareHouse = new ObservableCollection<ProductInOutWarehoseViewBinding>();
-            lsTTCT = ModelThongTinChiTiet.GetListProductFromCode(actionModelThongTinChiTiet, "");
+            lsTTCT = ModelThongTinChiTiet.GetListProductFromCode(((App)Application.Current).actionModelThongTinChiTiet, "");
             SearchFromCode();
         }
 
@@ -141,8 +140,6 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 return _commandSearchFromName;
             }
         }
-
-        XMLAction actionModelThongTinChiTiet;
 
         /// <summary>
         /// Cache lưu tất cả sản phẩm trong kho lấy cho nhanh

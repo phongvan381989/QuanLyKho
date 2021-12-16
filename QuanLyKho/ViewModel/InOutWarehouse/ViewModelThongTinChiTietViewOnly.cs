@@ -11,14 +11,12 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
     public class ViewModelThongTinChiTietViewOnly : ViewModelBase
     {
 
-        public XMLAction actionModelThongTinChiTiet { get; set; }
         public ModelThongTinChiTiet sanPhamHienThi { get; set; }
 
         public ViewModelThongTinChiTietViewOnly(string maSP)
         {
             vmMedia = new ViewModelMedia();
-            actionModelThongTinChiTiet = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinChiTiet());
-            sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(actionModelThongTinChiTiet, maSP);
+            sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(((App)Application.Current).actionModelThongTinChiTiet, maSP);
             OnPropertyChangedAll();
         }
 

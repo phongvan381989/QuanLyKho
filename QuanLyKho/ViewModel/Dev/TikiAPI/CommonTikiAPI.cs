@@ -18,7 +18,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI
     public class CommonTikiAPI
     {
         static public ModelThongTinBaoMatTiki ttbm = new ModelThongTinBaoMatTiki();
-        static public XMLAction action = new XMLAction(((App)Application.Current).GetPathDataXMLThongTinBaoMat());
+        static private XMLAction action = ((App)Application.Current).actionModelThongTinBaoMat;
 
         /// <summary>
         /// Chứa danh sách các app đang sử dụng

@@ -27,31 +27,28 @@ namespace QuanLyKho.Model
             le = action.xDoc
                 .Element("NhapXuatChiTiet")
                 .Elements("SanPham")
-                .Where(e => e.Element("MaSanPham").Value == maSanPham);
+                .Where(e => e.Attribute("MaSanPham").Value == maSanPham);
             if(le.Count() != 0)
             {
                 eExist = le.ElementAt(0);
             }
+
             string time = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             Int32 iSoLuongNhap = Common.ConvertStringToInt32(soLuongNhap);
+
+            XElement sltg = new XElement("SoLuongThoiGian", "",
+                    new XAttribute("SoLuong", iSoLuongNhap.ToString()),
+                    new XAttribute("ThoiGian", time));
             if (eExist == null) // tạo mới mã sản phẩm
             {
-                XElement aProduce = new XElement("SanPham",
-                    new XElement("MaSanPham", maSanPham),
-                    new XElement("SoLuongThoiGian",
-                    new XElement("SoLuong", iSoLuongNhap.ToString()),
-                    new XElement("ThoiGian", time)
-                    ));
+                XElement aProduce = new XElement("SanPham", sltg,
+                    new XAttribute("MaSanPham", maSanPham));
 
                 action.xDoc.Root.Add(aProduce);
             }
             else// Cập nhật
             {
-                XElement el = new XElement("SoLuongThoiGian",
-                    new XElement("SoLuong", iSoLuongNhap.ToString()),
-                    new XElement("ThoiGian", time)
-                    );
-                eExist.Add(el);
+                eExist.Add(sltg);
             }
 
             if(isSave)
@@ -81,7 +78,7 @@ namespace QuanLyKho.Model
                 action.xDoc
                     .Element("NhapXuatChiTiet")
                     .Elements("SanPham")
-                    .Where(e => e.Element("MaSanPham").Value == maSanPham).Remove();
+                    .Where(e => e.Attribute("MaSanPham").Value == maSanPham).Remove();
                 action.xDoc.Save(action.pathXML, SaveOptions.None);
             }
             return true;

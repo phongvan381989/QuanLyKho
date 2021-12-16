@@ -37,11 +37,9 @@ namespace QuanLyKho.View.Dev
         public UserControlTikiTestAPI()
         {
             InitializeComponent();
-            actionModelMappingSanPhamTMDT_SanPhamKho = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
         }
         string strHTTPRequest;
         string strHTTPResponse;
-        XMLAction actionModelMappingSanPhamTMDT_SanPhamKho;
         private void GetTokenAuthorization_Click(object sender, RoutedEventArgs e)
         {
             //Application.Current.MainWindow.;

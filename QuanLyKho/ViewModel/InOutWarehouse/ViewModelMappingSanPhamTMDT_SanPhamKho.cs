@@ -23,7 +23,6 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         /// <param name="name">tên sản phẩm trên shop TMDT</param>
         public ViewModelMappingSanPhamTMDT_SanPhamKho(string code, string name)
         {
-            actionModelMapping = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
             vmListInOutWarehouse = new ViewModelListInOutWarehouse();
             indexInListOfProductOnTMDT = -1;
             textProductNameOnTMDT = name;
@@ -52,7 +51,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
         private void UpdateListViewBinding()
         {
-            List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(actionModelMapping, textProductCodeOnTMDT);
+            List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(((App)Application.Current).actionModelMappingSanPhamTMDT_SanPhamKho, textProductCodeOnTMDT);
             foreach(ModelMappingSanPhamTMDT_SanPhamKho obj in ls)
             {
                 listProductOfProductOnTMDT.Add(new ProductInOutWarehoseViewBinding(0, obj.code, obj.name, obj.quantity, obj.position));
@@ -62,7 +61,6 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             return;
         }
 
-        XMLAction actionModelMapping;
 
         private string ptextProductCodeOnTMDT;
         public string textProductCodeOnTMDT
@@ -208,13 +206,13 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             // Lưu vào xml data
             foreach (ProductInOutWarehoseViewBinding e in listProductOfProductOnTMDT)
             {
-                string str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(actionModelMapping, textProductCodeOnTMDT, e.code, e.name, e.quantity, e.position);
+                string str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_AddOrUpdate(((App)Application.Current).actionModelMappingSanPhamTMDT_SanPhamKho, textProductCodeOnTMDT, e.code, e.name, e.quantity, e.position);
                 if (!string.IsNullOrEmpty(str))
                 {
                     MyLogger.GetInstance().Warn(str);
                     MessageBox.Show("Lưu thất bại. Vui lòng thử lại. Lỗi: " + str);
                     // Xóa
-                    str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_Delete(actionModelMapping, textProductCodeOnTMDT);
+                    str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_Delete(((App)Application.Current).actionModelMappingSanPhamTMDT_SanPhamKho, textProductCodeOnTMDT);
                     if (!string.IsNullOrEmpty(str))
                     {
                         MyLogger.GetInstance().Warn(str);
@@ -229,7 +227,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
         public void Delete()
         {
-            string str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_Delete(actionModelMapping, textProductCodeOnTMDT);
+            string str = ModelMappingSanPhamTMDT_SanPhamKho.Tiki_Delete(((App)Application.Current).actionModelMappingSanPhamTMDT_SanPhamKho, textProductCodeOnTMDT);
             if (!string.IsNullOrEmpty(str))
             {
                 MyLogger.GetInstance().Warn(str);

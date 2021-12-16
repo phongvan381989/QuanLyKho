@@ -119,7 +119,7 @@ namespace QuanLyKho.Model
             action.xDoc.Root.Add(aProduce);
             action.xDoc.Save(action.pathXML, SaveOptions.None);
             ttct.tonKho = iTonKho.ToString();
-            ttct.soLuongNhap = string.Empty;
+            //ttct.soLuongNhap = string.Empty;
             return true;
         }
 
@@ -198,7 +198,7 @@ namespace QuanLyKho.Model
             eExist.Element("ViTriLuuKho").Value = string.IsNullOrEmpty(ttct.viTriLuuKho) ? string.Empty : ttct.viTriLuuKho;
             action.xDoc.Save(action.pathXML, SaveOptions.None);
             ttct.tonKho = iTonKho.ToString();
-            ttct.soLuongNhap = string.Empty;
+            //ttct.soLuongNhap = string.Empty;
             return true;
         }
 

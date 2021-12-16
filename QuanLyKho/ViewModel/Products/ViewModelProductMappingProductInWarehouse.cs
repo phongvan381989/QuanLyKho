@@ -21,9 +21,8 @@ namespace QuanLyKho.ViewModel.Products
         public ViewModelProductMappingProductInWarehouse(string productTMDTCode, ViewModelProductViewBindingTiki inputParent)
         {
             // Từ mã sản phẩm vào bảng map lấy được danh sách sản phẩm trong kho tương ứng
-            XMLAction actionModelMapping = new XMLAction(((App)Application.Current).GetPathDataXMLMappingSanPhamTMDT_SanPhamKho());
             listProductMapping = new ObservableCollection<ViewModelProductMappingProductInWarehouseViewBinding>();
-            List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(actionModelMapping, productTMDTCode);
+            List<ModelMappingSanPhamTMDT_SanPhamKho> ls = ModelMappingSanPhamTMDT_SanPhamKho.GetListModelMappingSanPhamTMDT_SanPhamKhoFromID(((App)Application.Current).actionModelMappingSanPhamTMDT_SanPhamKho, productTMDTCode);
             foreach (ModelMappingSanPhamTMDT_SanPhamKho e in ls)
             {
                 listProductMapping.Add(new ViewModelProductMappingProductInWarehouseViewBinding(e));

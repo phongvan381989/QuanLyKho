@@ -1,4 +1,5 @@
-﻿using QuanLyKho.Model.Config;
+﻿using QuanLyKho.Model;
+using QuanLyKho.Model.Config;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,10 @@ namespace QuanLyKho
         public string temporaryImageFolderPath;
 
         //public List<TikiConfigApp> lTikiAppUsing;
+        public XMLAction actionModelNhapXuatChiTiet { get; set; }
+        public XMLAction actionModelThongTinChiTiet { get; set; }
+        public XMLAction actionModelThongTinBaoMat { get; set; }
+        public XMLAction actionModelMappingSanPhamTMDT_SanPhamKho { get; set; }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -39,34 +44,22 @@ namespace QuanLyKho
             string strTemp = ConfigurationManager.AppSettings["TonKhoCanhBaoHetHangChung"];
             if (!Int32.TryParse(strTemp, out configTonKhoCanhBaoHetHangChung))
                 configTonKhoCanhBaoHetHangChung = 5;// default value
-            CommonTikiAPI.GetListTikiConfigAppUsing();
+
             temporaryFolderPath = System.AppDomain.CurrentDomain.BaseDirectory + @"Temporary";
             temporaryImageFolderPath = temporaryFolderPath + @"\Image";
+
+            actionModelNhapXuatChiTiet = new XMLAction(pathDataXMLNhapXuatChiTiet);
+            actionModelThongTinChiTiet = new XMLAction(pathDataXMLThongTinChiTiet);
+            actionModelThongTinBaoMat = new XMLAction(pathDataXMLThongTinBaoMat);
+            actionModelMappingSanPhamTMDT_SanPhamKho = new XMLAction(pathDataXMLMappingSanPhamTMDT_SanPhamKho);
+
+            CommonTikiAPI.GetListTikiConfigAppUsing();
+
         }
 
         public string GetPathApp()
         {
             return pathApp;
-        }
-
-        public string GetPathDataXMLThongTinChiTiet()
-        {
-            return pathDataXMLThongTinChiTiet;
-        }
-
-        public string GetPathDataXMLNhapXuatChiTiet()
-        {
-            return pathDataXMLNhapXuatChiTiet;
-        }
-
-        public string GetPathDataXMLThongTinBaoMat()
-        {
-            return pathDataXMLThongTinBaoMat;
-        }
-
-        public string GetPathDataXMLMappingSanPhamTMDT_SanPhamKho()
-        {
-            return pathDataXMLMappingSanPhamTMDT_SanPhamKho;
         }
 
         public Int32 GetTonKhoCanhBaoHetHangChung()

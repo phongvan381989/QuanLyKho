@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -313,6 +314,16 @@ namespace QuanLyKho.General
                 name = Path.Combine(((App)Application.Current).temporaryImageFolderPath, fileName);
             }
             return name;
+        }
+
+        public static string ShopeeCalToken(String redirectURL, String partnerKey)
+        {
+            String str = string.Empty;
+            String baseStr = partnerKey + redirectURL;
+            SHA256 mySHA256 = SHA256.Create();
+            byte[] hashValue = mySHA256.ComputeHash(Encoding.UTF8.GetBytes(baseStr));
+            str = BitConverter.ToString(hashValue);
+            return str.Replace("-", "").ToLower();
         }
     }
 }

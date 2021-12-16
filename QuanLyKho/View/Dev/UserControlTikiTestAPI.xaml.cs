@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QuanLyKho.General;
 using QuanLyKho.Model;
 using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev;
@@ -75,7 +76,7 @@ namespace QuanLyKho.View.Dev
             var client = new RestClient(TikiConstValues.cstrAuthenHTTPAddress);
             RestRequest request = new RestRequest(Method.POST);
             //request.AddHeader("Authorization", "Basic NjI0OTcxNjgyMDkyMjIyNjpDQXlUOUJ6Q3dTQXpFMkpzempud3huN3dxUnZlcDdFWg==");
-            request.AddHeader("Authorization", "Basic " + CommonTikiAPI.ttbm.Tiki_GetAppCredentialBase64Format(CommonTikiAPI.action, clientID));
+            request.AddHeader("Authorization", "Basic " + CommonTikiAPI.ttbm.Tiki_GetAppCredentialBase64Format(((App)Application.Current).actionModelThongTinBaoMat, clientID));
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("grant_type", "client_credentials");
             request.AddParameter("client_id", clientID);
@@ -90,7 +91,7 @@ namespace QuanLyKho.View.Dev
                 ShowHTTPRequestAndResponse();
 
                 TikiAuthorization accessToken = JsonConvert.DeserializeObject<TikiAuthorization>(response.Content);
-                CommonTikiAPI.ttbm.Tiki_InhouseAppSaveAccessToken(CommonTikiAPI.action, clientID, accessToken);
+                CommonTikiAPI.ttbm.Tiki_InhouseAppSaveAccessToken(((App)Application.Current).actionModelThongTinBaoMat, clientID, accessToken);
             }
         }
 
@@ -139,7 +140,10 @@ namespace QuanLyKho.View.Dev
             //};
             //PagingOrder pOrder = JsonConvert.DeserializeObject<PagingOrder>(json, settings);
             ////PagingProduct pProduct = JsonConvert.DeserializeObject<PagingProduct>(json, settings);
+            ///
 
+            string str = Common.ShopeeCalToken("https://emn178.github.io/online-tools/sha256.html", "45678yhnnjklkjhghjkjhhjhyyyyyyyyy");
+            MessageBox.Show(str);
         }
     }
 }

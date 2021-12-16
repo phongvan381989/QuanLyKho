@@ -16,7 +16,7 @@ namespace QuanLyKho.ViewModel.Config
     {
         public ViewModelTikiConfigApp()
         {
-            action = CommonTikiAPI.action;
+            action = ((App)Application.Current).actionModelThongTinBaoMat;
             pdataTikiConfigApp = new TikiConfigApp();
             ttbmTiki = CommonTikiAPI.ttbm;
             listTikiConfigApp = ttbmTiki.Tiki_InhouseAppGetListTikiConfigApp(action);

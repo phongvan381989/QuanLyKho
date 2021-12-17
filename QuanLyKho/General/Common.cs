@@ -316,12 +316,32 @@ namespace QuanLyKho.General
             return name;
         }
 
+        /// <summary>
+        /// Generate Authorization Token
+        /// </summary>
+        /// <param name="redirectURL"></param>
+        /// <param name="partnerKey"></param>
+        /// <returns></returns>
         public static string ShopeeCalToken(String redirectURL, String partnerKey)
         {
             String str = string.Empty;
             String baseStr = partnerKey + redirectURL;
             SHA256 mySHA256 = SHA256.Create();
-            byte[] hashValue = mySHA256.ComputeHash(Encoding.UTF8.GetBytes(baseStr));
+            byte[] hashValue = mySHA256.ComputeHash(Encoding.ASCII.GetBytes(baseStr));
+            str = BitConverter.ToString(hashValue);
+            return str.Replace("-", "").ToLower();
+        }
+
+        public static string ShopeeCalculatingTheSignature(string secretKey, string url, string httpBody )
+        {
+            string str = string.Empty;
+            // The signature base string is formed by concatenating URL, |, raw HTTP body.  There should be no space in the base string.
+            string signatureBaseString = url + "|" + httpBody;
+            // Xóa space in string
+            signatureBaseString = signatureBaseString.Replace(" ", "");
+            byte[] key = Encoding.ASCII.GetBytes(secretKey);
+            HMACSHA256 hmac = new HMACSHA256(key);
+            byte[] hashValue = hmac.ComputeHash(Encoding.ASCII.GetBytes(signatureBaseString));
             str = BitConverter.ToString(hashValue);
             return str.Replace("-", "").ToLower();
         }

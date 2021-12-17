@@ -44,7 +44,7 @@
                 <Button Content="Add me for test" Click="Button_Click"/>
                 <Button Content="Remove me for test" Click="Button_Click_1"/>-->
             </StackPanel>
-            <DockPanel  Grid.Row="0" Grid.Column="1" Name="MainContentContainer" LastChildFill = "True">
+            <DockPanel  Grid.Row="0" Grid.Column="1" Name="MainContentContainer" LastChildFill = "True" FocusManager.IsFocusScope="True">
 
             </DockPanel>
         </Grid>

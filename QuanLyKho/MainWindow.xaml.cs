@@ -115,6 +115,8 @@ namespace QuanLyKho
         /// <param name="viewBase"> Datacontext</param>
         public void SetMainContentContainer(UserControl userControl, ViewModelBase viewBase)
         {
+            //bool b = MainContentContainer.Focus();
+            //Keyboard.Focus(MainContentContainer);
             if (GetTypeOfMainContentContainer() == userControl.GetType())
                 return;
 

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyKho.View.UserControlCommon"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1200">
+             d:DesignHeight="450" d:DesignWidth="1400">
     <UserControl.Resources>
         <sys:Double x:Key="WidthTextBlock">200</sys:Double>
         <sys:Double x:Key="WidthTextBox">400</sys:Double>
@@ -69,15 +69,15 @@
                       SelectedItem="{Binding Path=dataTikiConfigApp, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="ID Ứng Dụng" Width="200" DisplayMemberBinding="{Binding appID}" />
-                        <GridViewColumn Header="Địa Chỉ Cửa Hàng" Width="400">
+                        <GridViewColumn Header="ID Ứng Dụng" Width="100" DisplayMemberBinding="{Binding appID}" />
+                        <GridViewColumn Header="Địa Chỉ Cửa Hàng" Width="300">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding homeAddress}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Mã Bí Mật" Width="300" DisplayMemberBinding="{Binding secretAppCode}" />
+                        <GridViewColumn Header="Mã Bí Mật" Width="200" DisplayMemberBinding="{Binding secretAppCode}" />
                         <GridViewColumn Header="Sử Dụng" Width="100" DisplayMemberBinding="{Binding usingApp}" />
                     </GridView>
                 </ListView.View>

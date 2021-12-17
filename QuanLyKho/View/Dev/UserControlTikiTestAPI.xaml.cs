@@ -142,7 +142,11 @@ namespace QuanLyKho.View.Dev
             ////PagingProduct pProduct = JsonConvert.DeserializeObject<PagingProduct>(json, settings);
             ///
 
-            string str = Common.ShopeeCalToken("https://emn178.github.io/online-tools/sha256.html", "45678yhnnjklkjhghjkjhhjhyyyyyyyyy");
+            //string str = Common.ShopeeCalToken("https://emn178.github.io/online-tools/sha256.html", "45678yhnnjklkjhghjkjhhjhyyyyyyyyy");
+
+            string str = Common.ShopeeCalculatingTheSignature("123456789abcdef",
+                "https://partner.shopeemobile.com/api/v1/orders/detail",
+                "{\"ordersn\":\"160726152598865\",\"shopid\":61299,\"partner_id\":1,\"timestamp\":1470198856}");
             MessageBox.Show(str);
         }
     }

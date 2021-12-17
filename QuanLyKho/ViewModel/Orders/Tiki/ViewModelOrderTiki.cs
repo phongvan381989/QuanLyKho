@@ -40,6 +40,7 @@ namespace QuanLyKho.ViewModel.Orders
             lsOrderFullInfo = new List<Order>();
             indexOrderInList = -1;
             interval = (int)EnumOrderItemFilterByDate.today;
+            istbOrderCodeFocus = true;
         }
         private CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation pcommandGetListOrder;
         public CommandOrderTiki_GetListAllOrderNeedAvailabilityConfirmation commandGetListOrder
@@ -63,6 +64,23 @@ namespace QuanLyKho.ViewModel.Orders
                 {
                     pinterval = value;
                     OnPropertyChanged("interval");
+                }
+            }
+        }
+        private bool pistbOrderCodeFocus;
+        public bool istbOrderCodeFocus
+        {
+            get
+            {
+                return pistbOrderCodeFocus;
+            }
+
+            set
+            {
+                if(pistbOrderCodeFocus != value)
+                {
+                    pistbOrderCodeFocus = value;
+                    OnPropertyChanged("istbOrderCodeFocus");
                 }
             }
         }
@@ -208,6 +226,7 @@ namespace QuanLyKho.ViewModel.Orders
         /// </summary>
         public void GetListOrder()
         {
+            istbOrderCodeFocus = false;
             listOrder.Clear();
             if (homeAddressIndex == -1)
                 return;
@@ -233,6 +252,7 @@ namespace QuanLyKho.ViewModel.Orders
                 }
                 listOrder.Add(new TikiOrderViewBinding(e));
             }
+            istbOrderCodeFocus = true;
         }
 
         private int pindexOrderInList;
@@ -254,6 +274,7 @@ namespace QuanLyKho.ViewModel.Orders
 
         public void GetOrderDetail()
         {
+            istbOrderCodeFocus = false;
             if(indexOrderInList == -1)
             {
                 MessageBox.Show("Chưa chọn đơn.");
@@ -268,6 +289,8 @@ namespace QuanLyKho.ViewModel.Orders
             wd.WindowState = WindowState.Maximized;
             wd.Title = "Kiểm Tra Số Lượng Sản Phẩm Trong Đơn";
             wd.ShowDialog();
+            textOrderCodeGetDetail = string.Empty;
+            istbOrderCodeFocus = true;
         }
 
         public void RefreshView()

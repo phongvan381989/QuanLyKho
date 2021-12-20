@@ -43,5 +43,13 @@ namespace QuanLyKho.View.Order.Tiki
             var vm = (ViewModelProductInOrderTiki)this.DataContext;
             vm.GetProductInShopTMDTDetail();
         }
+
+        private void Grid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(!tbProductCodeTMDT.IsKeyboardFocused)
+            {
+                Keyboard.Focus(tbProductCodeTMDT);
+            }
+        }
     }
 }

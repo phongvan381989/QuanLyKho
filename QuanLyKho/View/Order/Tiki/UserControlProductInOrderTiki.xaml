@@ -25,10 +25,19 @@
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding Path=commandAddProductToOrder}" Key="Enter" />
     </UserControl.InputBindings>
-    <Grid>
+    <Grid KeyDown="Grid_KeyDown">
+        <!--<Grid.Style>
+            <Style>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding istbFocus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Value="True">
+                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=tbProductCodeTMDT}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>-->
         <DockPanel LastChildFill = "True">
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=code, UpdateSourceTrigger=PropertyChanged,
+                <TextBox Name="tbProductCodeTMDT"  Width="200" HorizontalAlignment="Left" Text="{Binding Path=code, UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}">
                 </TextBox>
                 <Button Style="{StaticResource ButtonStyle}" Command="{Binding Path=commandAddProductToOrder}">Thêm Sản Phẩm</Button>
@@ -38,8 +47,11 @@
                     <KeyBinding Command="{Binding Path=commandProductFull}" Key="Space" />
                 </Grid.InputBindings>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width = "487*" />
-                    <ColumnDefinition Width="13*" />
+                    <ColumnDefinition Width = "88*" />
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="105*"/>
+                    <ColumnDefinition Width="742*"/>
+                    <ColumnDefinition Width="26*" />
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -48,8 +60,8 @@
                 </Grid.RowDefinitions>
                 <ListView Grid.Row = "0" Grid.Column = "0"
                     ItemsSource="{Binding Path=listProductTMDTInOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                  SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
-                          MouseDoubleClick="ListView_MouseDoubleClick">
+                  SelectedItem="{Binding Path=itemSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          MouseDoubleClick="ListView_MouseDoubleClick" Grid.ColumnSpan="4" Margin="0,0,0.4,49.2" Grid.RowSpan="2">
                     <ListView.View>
                         <GridView >
                             <GridViewColumn CellTemplate="{StaticResource CheckStatusCell}" 
@@ -87,7 +99,7 @@
                     </ListView.View>
                 </ListView>
                 <Button Grid.Row = "1" Grid.Column = "0"
-                    Style="{StaticResource ButtonStyle}" Height="40" Command="{Binding Path=commandProductFull}">Sản Phẩm Đủ</Button>
+                    Style="{StaticResource ButtonStyle}" Height="40" Command="{Binding Path=commandProductFull}" Grid.ColumnSpan="4" Margin="0,4.4,0.4,5.2">Sản Phẩm Đủ</Button>
             </Grid>
         </DockPanel>
     </Grid>

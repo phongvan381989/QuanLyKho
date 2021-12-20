@@ -24,7 +24,6 @@ namespace QuanLyKho.View.Order.Tiki
         public UserControlOrderTiki()
         {
             InitializeComponent();
-            //tbOrderCode.Focus();
         }
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -44,6 +43,14 @@ namespace QuanLyKho.View.Order.Tiki
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             tbOrderCode.Focus();
+        }
+
+        private void Grid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(!tbOrderCode.IsKeyboardFocused)
+            {
+                Keyboard.Focus(tbOrderCode);
+            }
         }
     }
 }

@@ -45,7 +45,7 @@ namespace QuanLyKho.ViewModel.Orders
         public void Check()
         {
             itemSelected = listProductTMDTInOrder[ViewModelProductInOrderViewBindingTiki.indexCheck];
-            OnPropertyChanged("itemSelected");
+            //OnPropertyChanged("itemSelected");
             if (isDisableCheckFunction)
             {
                 isDisableCheckFunction = false;
@@ -75,7 +75,22 @@ namespace QuanLyKho.ViewModel.Orders
             }
         }
 
-        public ViewModelProductInOrderViewBindingTiki itemSelected {get; set; }
+        private ViewModelProductInOrderViewBindingTiki pitemSelected;
+        public ViewModelProductInOrderViewBindingTiki itemSelected
+        {
+            get
+            {
+                return pitemSelected;
+            }
+            set
+            {
+                if (pitemSelected != value)
+                {
+                    pitemSelected = value;
+                    OnPropertyChanged("itemSelected");
+                }
+            }
+        }
 
         private ObservableCollection<ViewModelProductInOrderViewBindingTiki> plistProductTMDTInOrder;
         public ObservableCollection<ViewModelProductInOrderViewBindingTiki> listProductTMDTInOrder
@@ -139,6 +154,8 @@ namespace QuanLyKho.ViewModel.Orders
             {
                 MessageBox.Show("Mã sản phẩm kiểm tra đã đủ số lượng", "Kiểm Tra Sản Phẩm Trong Đơn");
             }
+
+            code = string.Empty;
         }
 
         public void ProductFull()
@@ -165,7 +182,7 @@ namespace QuanLyKho.ViewModel.Orders
                     if(e.vmOrderCheck.listCheckProduct.Count() == 0)
                     {
                             MessageBox.Show("Sản phẩm " + e.idInShop +" trên shop TMDT chưa được gắn với sản phẩm trong kho.", "Kiểm Tra Sản Phẩm Trong Đơn");
-                            return;
+                        return;
                     }
                     foreach (ViewModelOrderCheckProductInWarehouseViewBinding ee in e.vmOrderCheck.listCheckProduct)
                     {

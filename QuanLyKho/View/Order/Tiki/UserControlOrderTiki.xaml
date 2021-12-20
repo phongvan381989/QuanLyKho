@@ -14,16 +14,7 @@
     <UserControl.Resources>
         <localConverter:RadioBoolToIntConverter x:Key="radioBoolToIntConverter" />
     </UserControl.Resources>
-    <Grid>
-        <Grid.Style>
-            <Style>
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding istbOrderCodeFocus, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Value="True">
-                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=tbOrderCode}"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>
+    <Grid KeyDown="Grid_KeyDown">
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" Height="100" DockPanel.Dock = "Top" >
                 <StackPanel>

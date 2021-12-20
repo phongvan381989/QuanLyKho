@@ -34,7 +34,7 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
             parent = inputParent;
         }
 
-        ViewModelProductInOrderTiki parent;
+        public ViewModelProductInOrderTiki parent;
         /// <summary>
         /// Sản phẩm trong đơn đã đủ chưa?
         /// </summary>
@@ -101,15 +101,18 @@ namespace QuanLyKho.ViewModel.Dev.TikiAPI.Orders
         }
 
         /// <summary>
-        /// Khi tất cả các dòng con được check thì dòng cha cũng check theo
+        /// Khi tất cả các dòng con được check thì dòng cha cũng check theo,
+        /// khi có 1 dòng con bỏ check thì dòng cha cũng bỏ check theo
         /// </summary>
         public void UpdateIsCheckFromChildren(bool inputIsChecked)
         {
+            //parent.istbFocus = false;
             if (isChecked != inputIsChecked)
             {
                 parent.isDisableCheckFunction = true;
                 isChecked = inputIsChecked;
             }
+            //parent.istbFocus = true;
         }
     }
 }

@@ -332,18 +332,36 @@ namespace QuanLyKho.General
             return str.Replace("-", "").ToLower();
         }
 
-        public static string ShopeeCalculatingTheSignature(string secretKey, string url, string httpBody )
+        public static string ShopeeCalculatingTheSignature(/*string secretKey, string url, string httpBody */)
         {
-            string str = string.Empty;
-            // The signature base string is formed by concatenating URL, |, raw HTTP body.  There should be no space in the base string.
-            string signatureBaseString = url + "|" + httpBody;
-            // Xóa space in string
-            signatureBaseString = signatureBaseString.Replace(" ", "");
-            byte[] key = Encoding.ASCII.GetBytes(secretKey);
-            HMACSHA256 hmac = new HMACSHA256(key);
-            byte[] hashValue = hmac.ComputeHash(Encoding.ASCII.GetBytes(signatureBaseString));
-            str = BitConverter.ToString(hashValue);
-            return str.Replace("-", "").ToLower();
+            //string str = string.Empty;
+            //// The signature base string is formed by concatenating URL, |, raw HTTP body.  There should be no space in the base string.
+            //string signatureBaseString = url + "|" + httpBody;
+            //// Xóa space in string
+            //signatureBaseString = signatureBaseString.Replace(" ", "");
+            //byte[] key = Encoding.ASCII.GetBytes(secretKey);
+            //HMACSHA256 hmac = new HMACSHA256(key);
+            //byte[] hashValue = hmac.ComputeHash(Encoding.ASCII.GetBytes(signatureBaseString));
+            //str = BitConverter.ToString(hashValue);
+            //return str.Replace("-", "").ToLower();
+            DateTime start = DateTime.Now;
+            long timest = ((DateTimeOffset)start).ToUnixTimeSeconds();
+            //https://partner.shopeemobile.com/api/v2/shop/auth_partner
+            //https://partner.test-stable.shopeemobile.com/api/v2/shop/auth_partner (test environment)
+            string host = "https://partner.test-stable.shopeemobile.com";
+            string path = "/api/v2/shop/auth_partner";
+            string redirect = "https://vnexpress.net/";
+            long partner_id = 1005132;
+            string tmp_partner_key = "65341e40f44eff4ce0d942cce7d490ccb81d16e06c59b32b4d3e3c890690d7d3";
+            string tmp_base_string = String.Format("{0}{1}{2}", partner_id, path, timest);
+            byte[] partner_key = Encoding.UTF8.GetBytes(tmp_partner_key);
+            byte[] base_string = Encoding.UTF8.GetBytes(tmp_base_string);
+            var hash = new HMACSHA256(partner_key);
+            byte[] tmp_sign = hash.ComputeHash(base_string);
+            string sign = BitConverter.ToString(tmp_sign).Replace("-", "").ToLower();
+            string url = String.Format(host+partner_id+"?partner_id={0}&timestamp={1}$sign={2}&redirect={3}", partner_id, timest, sign, redirect); 
+            return url;
         }
+
     }
 }

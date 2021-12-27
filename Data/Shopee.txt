@@ -1,0 +1,13 @@
+---------------------------
+
+---------------------------
+https://partner.test-stable.shopeemobile.com1005132?partner_id=1005132&timestamp=1640055748$sign=940823a34d2740c51970e4fb5d53b37e8ca3746b1b281ec317bc9f0b62dc9208&redirect=https://vnexpress.net/
+---------------------------
+OK   
+---------------------------
+
+Test
+https://vnexpress.net/?code=1f1cd60c7215a819705c10175b78ca13&shop_id=35535
+
+LIVE:
+https://vnexpress.net/?code=5755576e686e426a6d644168474e6c6f&shop_id=137637267

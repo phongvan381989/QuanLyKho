@@ -279,6 +279,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         {
             OnPropertyChanged("maSanPham");
             OnPropertyChanged("giaSanPham");
+            OnPropertyChanged("soLuongNhap");
             OnPropertyChanged("tonKho");
             OnPropertyChanged("tonKhoCanhBaoHetHang");
             OnPropertyChanged("tenSanPham");
@@ -313,26 +314,48 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
 
             set
             {
-                if (!bCheckSelectedItemFromListMSP)
+                if (sanPhamHienThi.maSanPham != value)
                 {
-                    if (sanPhamHienThi.maSanPham != value)
-                    {
-                        sanPhamHienThi.maSanPham = value;
-                        OnPropertyChanged("maSanPham");
-                        listMaSanPham = SearchMaSanPhamAText(value, ParameterSearch.Last);
+                    if (!blistBoxSearchPopupIsOpenMSP && !bCheckSelectedItemFromListMSP)
                         blistBoxSearchPopupIsOpenMSP = true;
-                    }
-                }
-                else
-                {
+
+                    if (bCheckSelectedItemFromListMSP)
+                        bCheckSelectedItemFromListMSP = false;
+                    //if(bCheckSelectedItemFromListMSP)
+                    //{
+                    sanPhamHienThi.Refresh();
                     sanPhamHienThi.maSanPham = value;
-                    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(((App)Application.Current).actionModelThongTinChiTiet, sanPhamHienThi.maSanPham);
-                    UpdateListBufferAll();
+                    ModelThongTinChiTiet objTemp = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(((App)Application.Current).actionModelThongTinChiTiet, sanPhamHienThi.maSanPham);
+                    if (objTemp != null)
+                        sanPhamHienThi = objTemp;
                     OnPropertyChangedAll();
+                    UpdateListBufferAll();
 
-                    bCheckSelectedItemFromListMSP = false;
-
+                        //bCheckSelectedItemFromListMSP = false;
+                    //}
                 }
+                //if (!bCheckSelectedItemFromListMSP)
+                //{
+                //    if (sanPhamHienThi.maSanPham != value)
+                //    {
+                //        sanPhamHienThi.Refresh();
+                //        sanPhamHienThi.maSanPham = value;
+                //        //OnPropertyChanged("maSanPham");
+                //        listMaSanPham = SearchMaSanPhamAText(value, ParameterSearch.Last);
+                //        blistBoxSearchPopupIsOpenMSP = true;
+                //        OnPropertyChangedAll();
+                //    }
+                //}
+                //else
+                //{
+                //    sanPhamHienThi.maSanPham = value;
+                //    sanPhamHienThi = ModelThongTinChiTiet.GetASanPhamFromMaSanPham(((App)Application.Current).actionModelThongTinChiTiet, sanPhamHienThi.maSanPham);
+                //    OnPropertyChangedAll();
+                //    UpdateListBufferAll();
+
+                    //    bCheckSelectedItemFromListMSP = false;
+
+                    //}
             }
         }
         #endregion

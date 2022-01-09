@@ -1,5 +1,6 @@
 ﻿using QuanLyKho.Model;
 using QuanLyKho.Model.Config;
+using QuanLyKho.Model.InOutWarehouse;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,7 @@ namespace QuanLyKho
             actionModelThongTinChiTiet = new XMLAction(pathDataXMLThongTinChiTiet);
             actionModelThongTinBaoMat = new XMLAction(pathDataXMLThongTinBaoMat);
             actionModelMappingSanPhamTMDT_SanPhamKho = new XMLAction(pathDataXMLMappingSanPhamTMDT_SanPhamKho);
+            ModelMappingSanPhamTMDT_SanPhamKho.InitializeStruct(actionModelMappingSanPhamTMDT_SanPhamKho);
 
             CommonTikiAPI.GetListTikiConfigAppUsing();
 

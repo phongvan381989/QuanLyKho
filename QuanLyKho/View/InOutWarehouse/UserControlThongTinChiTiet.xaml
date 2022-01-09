@@ -7,7 +7,8 @@
              xmlns:local="clr-namespace:QuanLyKho.View.UserControlCommon"
              xmlns:localInOutWarehouse="clr-namespace:QuanLyKho.View.InOutWarehouse"
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="1200">
+             d:DesignHeight="1000" d:DesignWidth="1200"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <sys:Double x:Key="WidthTextBlock">150</sys:Double>
         <sys:Double x:Key="WidthTextBox">400</sys:Double>

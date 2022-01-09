@@ -40,5 +40,10 @@ namespace QuanLyKho.View.Product.Tiki
             if(vm != null)
                 vm.GetProductDetail();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbProductCode.Focus();
+        }
     }
 }

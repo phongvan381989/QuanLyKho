@@ -115,14 +115,14 @@ namespace QuanLyKho
         /// <param name="viewBase"> Datacontext</param>
         public void SetMainContentContainer(UserControl userControl, ViewModelBase viewBase)
         {
-            //bool b = MainContentContainer.Focus();
-            //Keyboard.Focus(MainContentContainer);
             if (GetTypeOfMainContentContainer() == userControl.GetType())
                 return;
 
             MainContentContainer.Children.Clear();
             MainContentContainer.Children.Add(userControl);
+            //userControl.Focus();
             MainContentContainer.DataContext = viewBase;
+
         }
 
         public void MMOrder_Click(object sender, RoutedEventArgs e)

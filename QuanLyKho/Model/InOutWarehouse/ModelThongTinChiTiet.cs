@@ -73,6 +73,7 @@ namespace QuanLyKho.Model
         {
             maSanPham = string.Empty;
             giaSanPham = string.Empty;
+            soLuongNhap = string.Empty;
             tonKho = string.Empty;
             tonKhoCanhBaoHetHang = string.Empty;
             tenSanPham = string.Empty;
@@ -329,6 +330,7 @@ namespace QuanLyKho.Model
             ModelThongTinChiTiet obj = new ModelThongTinChiTiet();
             obj.maSanPham = element.Element("MaSanPham")?.Value;
             obj.giaSanPham = element.Element("GiaSanPham")?.Value;
+            obj.soLuongNhap = "";
             obj.tonKho = element.Element("TonKho")?.Value;
             obj.tonKhoCanhBaoHetHang = element.Element("TonKhoCanhBaoHetHang")?.Value;
             obj.tenSanPham = element.Element("TenSanPham")?.Value;

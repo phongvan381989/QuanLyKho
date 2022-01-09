@@ -130,6 +130,10 @@ namespace QuanLyKho.View.UserControlCommon
                     }
                 }
             }
+            else if(e.Key == Key.Enter)
+            {
+                bListBoxSearchPopupIsOpen = false;
+            }
         }
     }
 }

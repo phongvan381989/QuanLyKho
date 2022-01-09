@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace QuanLyKho.View.InOutWarehouse
@@ -22,6 +23,15 @@ namespace QuanLyKho.View.InOutWarehouse
             {
                 ThuMucMedia.Text = dialog.FileName;
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            bool b = MaSanPham.Focus();
+            IInputElement focusedElement = FocusManager.GetFocusedElement(this);
+            int x = 10;
+
+            //Keyboard.Focus(MaSanPham);
         }
     }
 }

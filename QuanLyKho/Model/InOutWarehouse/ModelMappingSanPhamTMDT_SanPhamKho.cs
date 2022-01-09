@@ -49,7 +49,7 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// Khởi tạo cấu trúc node cho file
         /// </summary>
         /// <returns></returns>
-        public Boolean InitializeStruct(XMLAction action)
+        public static Boolean InitializeStruct(XMLAction action)
         {
             Tiki_InitializeStruct(action);
             return true;
@@ -59,7 +59,7 @@ namespace QuanLyKho.Model.InOutWarehouse
         /// Khởi tạo cấu trúc node của TIKI
         /// </summary>
         /// <returns></returns>
-        private Boolean Tiki_InitializeStruct(XMLAction action)
+        private static Boolean Tiki_InitializeStruct(XMLAction action)
         {
             XElement eMap = null;
             eMap = action.xDoc.Element("MappingSanPhamTMDT_SanPhamKho");
@@ -78,7 +78,6 @@ namespace QuanLyKho.Model.InOutWarehouse
                 XElement newE = new XElement("Tiki");
                 eMap.Add(newE);
                 action.xDoc.Save(action.pathXML, SaveOptions.None);
-                return true;
             }
 
             return true;

@@ -8,6 +8,7 @@ using QuanLyKho.Model.Dev.TikiApp.Config;
 using QuanLyKho.Model.Dev.TikiApp.Orders;
 using QuanLyKho.Model.Dev.TikiApp.Products;
 using QuanLyKho.Model.InOutWarehouse;
+using QuanLyKho.ViewModel.Dev.ShopeeAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI;
 using QuanLyKho.ViewModel.Dev.TikiAPI.Orders;
 using RestSharp;
@@ -147,7 +148,12 @@ namespace QuanLyKho.View.Dev
             //string str = Common.ShopeeCalculatingTheSignature("123456789abcdef",
             //    "https://partner.shopeemobile.com/api/v1/orders/detail",
             //    "{\"ordersn\":\"160726152598865\",\"shopid\":61299,\"partner_id\":1,\"timestamp\":1470198856}");
-            MessageBox.Show(Common.ShopeeCalculatingTheSignature());
+            //MessageBox.Show(CommonShopeeAPI.ShopeeCalculatingTheSignature());
+            //MessageBox.Show(CommonShopeeAPI.ShopeeGetTokenShopLevell("5755576e686e426a6d644168474e6c6f", "2002851", "19da669a5bc42ec97a43e16c041b3b364563561eabf749571cd9af0ba7821070", "137637267"));
+
+            //MyLogger.GetInstance().Debug(CommonShopeeAPI.ShopeeCalculatingTheSignature());
+            //MyLogger.GetInstance().Debug(CommonShopeeAPI.ShopeeGetTokenShopLevell("4a645772734b6e6d7a66436f50714474", "2002851", "19da669a5bc42ec97a43e16c041b3b364563561eabf749571cd9af0ba7821070", "137637267"));
+            MyLogger.GetInstance().Debug(CommonShopeeAPI.GenerateSignatureShopeeAPI());
         }
     }
 }

@@ -101,7 +101,7 @@
     <Compile Include="Model\Dev\TikiApp\Orders\ShippingDetail.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\Sibling.cs" />
     <Compile Include="Model\Dev\TikiApp\Products\PageProducts.cs" />
-    <Compile Include="Model\Dev\TikiApp\TikiConstValues.cs" />
+    <Compile Include="ViewModel\Dev\TikiAPI\TikiConstValues.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\CancelInfo.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\CustomerInfo.cs" />
     <Compile Include="Model\Dev\TikiApp\Orders\DeliveryConfirmation.cs" />
@@ -137,6 +137,7 @@
     <Compile Include="Model\InOutWarehouse\ModelThongTinChiTiet.cs" />
     <Compile Include="Model\ModelXML.cs" />
     <Compile Include="Model\XMLAction.cs" />
+    <Compile Include="ViewModel\Dev\ShopeeAPI\CommonShopeeAPI.cs" />
     <Compile Include="ViewModel\Orders\Tiki\CommandProductInOrderTiki_ProductFull.cs" />
     <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_GetListProductDontMapping.cs" />
     <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_SearchCodeFromCache.cs" />

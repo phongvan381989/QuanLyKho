@@ -34,25 +34,25 @@ namespace QuanLyKho.Model.Config
             //InitializeStruct();
         }
 
-        public Boolean SaveAccessToken()
-        {
-            var client = new RestClient(TikiConstValues.cstrAuthenHTTPAddress);//("https://api.tiki.vn/sc/oauth2/token");
-            RestRequest request = new RestRequest(Method.POST);
-            request.AddHeader("Authorization", "Basic NjI0OTcxNjgyMDkyMjIyNjpDQXlUOUJ6Q3dTQXpFMkpzempud3huN3dxUnZlcDdFWg==");
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddParameter("grant_type", "client_credentials");
-            request.AddParameter("client_id", "6249716820922226");
-            request.AddParameter("scope", "");
-            try
-            {
-                IRestResponse response = client.Execute(request);
-            }
-            catch(Exception ex)
-            {
-                MyLogger.GetInstance().Warn(ex.Message);
-            }
-            return true;
-        }
+        //public Boolean SaveAccessToken()
+        //{
+        //    var client = new RestClient(TikiConstValues.cstrAuthenHTTPAddress);//("https://api.tiki.vn/sc/oauth2/token");
+        //    RestRequest request = new RestRequest(Method.POST);
+        //    request.AddHeader("Authorization", "Basic NjI0OTcxNjgyMDkyMjIyNjpDQXlUOUJ6Q3dTQXpFMkpzempud3huN3dxUnZlcDdFWg==");
+        //    request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+        //    request.AddParameter("grant_type", "client_credentials");
+        //    request.AddParameter("client_id", "6249716820922226");
+        //    request.AddParameter("scope", "");
+        //    try
+        //    {
+        //        IRestResponse response = client.Execute(request);
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        MyLogger.GetInstance().Warn(ex.Message);
+        //    }
+        //    return true;
+        //}
 
         /// <summary>
         /// Khởi tạo cấu trúc node cho file
@@ -485,6 +485,140 @@ namespace QuanLyKho.Model.Config
                 list.Add(Tiki_InhouseAppConvertXElementToOjectTikiConfigApp(e));
             }
             return list;
+        }
+
+        /// <summary>
+        /// Lấy được Shopee Node
+        /// </summary>
+        /// <returns></returns>
+        private XElement Shopee_GetShopeeNode(XMLAction action)
+        {
+            return action.xDoc
+                .Element("ThongTinBaoMat")
+                .Element("Shopee");
+        }
+
+        public string Shopee_GetPartnerId(XMLAction action)
+        {
+            string partnerID = string.Empty;
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                partnerID = eShopee.Element("PartnerId").Value;
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
+            return partnerID;
+        }
+
+        public string Shopee_GetPartnerKey(XMLAction action)
+        {
+            string partnerKey = string.Empty;
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                partnerKey = eShopee.Element("PartnerKey").Value;
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
+            return partnerKey;
+        }
+
+        public string Shopee_GetCode(XMLAction action)
+        {
+            string code = string.Empty;
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                code = eShopee.Element("Code").Value;
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
+            return code;
+        }
+
+        public string Shopee_UpdateCode(XMLAction action, string code)
+        {
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                eShopee.Element("Code").Value = code;
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+                return ex.Message;
+            }
+            return string.Empty;
+        }
+
+        public string Shopee_GetAccessToken(XMLAction action)
+        {
+            string accessToken = string.Empty;
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                accessToken = eShopee.Element("AccessToken").Value;
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
+            return accessToken;
+        }
+
+        public string Shopee_UpdateAccessToken(XMLAction action, string accessToken)
+        {
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                eShopee.Element("AccessToken").Value = accessToken;
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+                return ex.Message;
+            }
+            return string.Empty;
+        }
+
+        public string Shopee_GetRefreshToken(XMLAction action)
+        {
+            string refreshToken = string.Empty;
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                refreshToken = eShopee.Element("RefreshToken").Value;
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
+            return refreshToken;
+        }
+
+        public string Shopee_UpdateRefreshToken(XMLAction action, string refreshToken)
+        {
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                eShopee.Element("RefreshToken").Value = refreshToken;
+                action.xDoc.Save(action.pathXML, SaveOptions.None);
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+                return ex.Message;
+            }
+            return string.Empty;
         }
     }
 }

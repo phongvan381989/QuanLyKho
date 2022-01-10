@@ -44,7 +44,7 @@
                 </StackPanel>
                 <ListView ItemsSource="{Binding Path=listOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                       SelectedItem="{Binding Path=currentSelecteOrder, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
-                          SelectedValue="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"
+                          SelectedValue="{Binding Path=textOrderCodeGetDetail, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           SelectedValuePath="code"
                           SelectedIndex="{Binding Path=indexOrderInList, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           MouseDoubleClick="ListView_MouseDoubleClick">

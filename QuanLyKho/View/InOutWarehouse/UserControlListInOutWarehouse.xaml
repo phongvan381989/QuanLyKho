@@ -5,23 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyKho.View.InOutWarehouse"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1200">
     <Grid>
         <DockPanel LastChildFill = "True">
             <WrapPanel Orientation="Vertical" DockPanel.Dock = "Top" >
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Mã Sản Phẩm</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="150"> Mã Sản Phẩm</TextBlock>
                     <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductCode, UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}" Name="tbProductCode" Style="{StaticResource TextBoxStyleCode}"></TextBox>
                     <TextBlock Width="20"/>
                     <Button Style="{StaticResource ButtonStyle}" 
                         Command="{Binding Path=commandSearchFromCode}"
                         ToolTip="Tìm kiếm sản phẩm trong kho theo mã.">Tìm Kiếm</Button>
+                    <TextBlock Width="20"/>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="150"> Nhà Xuất Bản</TextBlock>
+                    <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textPublisherName, UpdateSourceTrigger=PropertyChanged,
+                        Mode=TwoWay}" Style="{StaticResource TextBoxStyleCode}"></TextBox>
+                    <TextBlock Width="20"/>
+                    <Button Style="{StaticResource ButtonStyle}" 
+                        Command="{Binding Path=commandSearchFromPublisherName}"
+                        ToolTip="Tìm kiếm sản phẩm trong kho theo nhà xuất bản.">Tìm Kiếm</Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Height="10">
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="200"> Tên Sản Phẩm</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="150"> Tên Sản Phẩm</TextBlock>
                     <TextBox Width="200" HorizontalAlignment="Left" Text="{Binding Path=textProductName, UpdateSourceTrigger=PropertyChanged,
                         Mode=TwoWay}" Name="tbProductName" Style="{StaticResource TextBoxStyleCode}"></TextBox>
                     <TextBlock Width="20"/>

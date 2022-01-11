@@ -127,9 +127,9 @@ namespace QuanLyKho.Model
         /// <summary>
         /// Lấy được XElement với mã sản phẩm
         /// </summary>
-        /// <param name="maSP"></param>
+        /// <param name="maSP">VD: 8938532871251-8938532871237-8938532871411</param>
         /// <returns></returns>
-        private static XElement GetAXElementFromMaSanPham(XMLAction action, string maSP)
+        public static XElement GetAXElementFromMaSanPham(XMLAction action, string maSP)
         {
             XElement eExist = null;
             if (action.xDoc == null)
@@ -139,12 +139,57 @@ namespace QuanLyKho.Model
             le = action.xDoc
                 .Element("ThongTinChiTiet")
                 .Elements("SanPham")
-                .Where(e => e.Element("MaSanPham").Value == maSP);
+                .Where(e => CheckMaSPIsSame(e.Element("MaSanPham").Value, maSP));
             if (le != null && le.Count() != 0)
             {
                 eExist = le.ElementAt(0);
             }
             return eExist;
+        }
+
+        /// <summary>
+        /// Vì mã sản phẩm mẹ có dạng 8938532871251-8938532871237-8938532871411 nên 1 sản phẩm con có mã 8938532871251, hoặc 8938532871237 hoặc 8938532871251-8938532871237 đều là chỉ sản phẩm mẹ
+        /// </summary>
+        /// <param name="motherMaSP"></param>
+        /// <param name="childMaSP"></param>
+        /// <returns></returns>
+        private static bool CheckMaSPIsSame(string motherMaSP, string childMaSP)
+        {
+            if (string.IsNullOrEmpty(motherMaSP) || string.IsNullOrEmpty(childMaSP))
+                return false;
+            string[] mothers = motherMaSP.Split('-');
+            string[] children = childMaSP.Split('-');
+            if(motherMaSP.Length > 20)
+            {
+                int x = 10;
+            }
+            for(int i = 0; i < children.Length; i++)
+            {
+                for(int j = 0; j < mothers.Length; j++)
+                {
+                    if (children[i].Equals(mothers[j]))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Thêm mã sản phẩm con vào mã sản phẩm mẹ
+        /// </summary>
+        /// <param name="motherMaSP"></param>
+        /// <param name="childMaSP"></param>
+        /// <returns>Mã sản phẩm mới</returns>
+        static public string AddMoreMaSP(XMLAction action, string motherMaSP, string childMaSP)
+        {
+            XElement el = GetAXElementFromMaSanPham(action, motherMaSP);
+            if (el == null)
+                return string.Empty;
+
+            el.Element("MaSanPham").Value = el.Element("MaSanPham").Value + "-" + childMaSP;
+            action.xDoc.Save(action.pathXML, SaveOptions.None);
+            return el.Element("MaSanPham").Value;
         }
 
         /// <summary>

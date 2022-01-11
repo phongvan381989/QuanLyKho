@@ -138,6 +138,8 @@
     <Compile Include="Model\ModelXML.cs" />
     <Compile Include="Model\XMLAction.cs" />
     <Compile Include="ViewModel\Dev\ShopeeAPI\CommonShopeeAPI.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandListInOutWarehouse_SearchFromPublisherName.cs" />
+    <Compile Include="ViewModel\InOutWarehouse\CommandThongTinChiTiet_AddMoreMaSP.cs" />
     <Compile Include="ViewModel\Orders\Tiki\CommandProductInOrderTiki_ProductFull.cs" />
     <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_GetListProductDontMapping.cs" />
     <Compile Include="ViewModel\Products\Tiki\CommandProductTiki_SearchCodeFromCache.cs" />

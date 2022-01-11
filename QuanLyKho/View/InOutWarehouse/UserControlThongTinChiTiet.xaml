@@ -42,6 +42,14 @@
                                                           />
                 </WrapPanel>
                 <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tác giả</TextBlock>
+                    <local:UserControlMyTextBox  Width="300" IsEnabled="True"
+                                     MyTextBoxText="{Binding Path=maSanPhamAddMore, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            MyTextBoxType="MyNormal"/>
+                    <Button  Content="Thêm Mã" Width="100" Style="{StaticResource ButtonStyle}"
+                             Command="{Binding Path=commandAddMoreMaSP}"/>
+                </WrapPanel>
+                <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
                     <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tên</TextBlock>
                     <local:UserControlListBoxSearch x:Name="TenSanPham" Width="{StaticResource WidthTextBox}"
                                                 ListBoxSearchItemSource="{Binding listTenSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"

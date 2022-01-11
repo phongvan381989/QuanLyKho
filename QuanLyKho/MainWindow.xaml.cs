@@ -76,7 +76,7 @@ namespace QuanLyKho
 
             ViewModelThongTinChiTiet vmThongTinChiTiet = new ViewModelThongTinChiTiet();
 
-            vmThongTinChiTiet.UpdateListsViewBinding();
+            vmThongTinChiTiet.UpdateListBufferForSources();
             this.DataContext = vmThongTinChiTiet;
 
             SubMenuContainer.Children.Clear();

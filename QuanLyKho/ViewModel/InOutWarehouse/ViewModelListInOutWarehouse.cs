@@ -22,6 +22,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         {
             _commandSearchFromCode = new CommandListInOutWarehouse_SearchFromCode(this);
             _commandSearchFromName = new CommandListInOutWarehouse_SearchFromName(this);
+            _commandSearchFromPublisherName = new CommandListInOutWarehouse_SearchFromPublisherName(this);
             indexInList = -1;
             textProductCode = string.Empty;
             listProductInOutWareHouse = new ObservableCollection<ProductInOutWarehoseViewBinding>();
@@ -100,6 +101,24 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
         }
 
+        private string ptextPublisherName;
+        public string textPublisherName
+        {
+            get
+            {
+                return ptextPublisherName;
+            }
+
+            set
+            {
+                if (ptextPublisherName != value)
+                {
+                    ptextPublisherName = value;
+                    OnPropertyChanged("textPublisherName");
+                }
+            }
+        }
+
         private ProductInOutWarehoseViewBinding pitemProduct;
         public ProductInOutWarehoseViewBinding itemProduct
         {
@@ -141,6 +160,15 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             }
         }
 
+        private CommandListInOutWarehouse_SearchFromPublisherName _commandSearchFromPublisherName;
+        public CommandListInOutWarehouse_SearchFromPublisherName commandSearchFromPublisherName
+        {
+            get
+            {
+                return _commandSearchFromPublisherName;
+            }
+        }
+
         /// <summary>
         /// Cache lưu tất cả sản phẩm trong kho lấy cho nhanh
         /// </summary>
@@ -148,6 +176,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         public void SearchFromCode()
         {
             textProductName = string.Empty;
+            textPublisherName = string.Empty;
             listProductInOutWareHouse.Clear();
             if (string.IsNullOrEmpty(textProductCode)) // Lấy tất cả danh sách
             {
@@ -175,6 +204,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
         public void SearchFromName()
         {
             textProductCode = string.Empty;
+            textPublisherName = string.Empty;
             listProductInOutWareHouse.Clear();
             if (string.IsNullOrEmpty(textProductName)) // Lấy tất cả danh sách
             {
@@ -191,6 +221,34 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 foreach (ModelThongTinChiTiet e in lsTTCT)
                 {
                     if (e.tenSanPham.IndexOf(textProductName, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        indexTemp++;
+                        listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(indexTemp, e));
+                    }
+                }
+            }
+        }
+
+        public void SearchFromPublisherName()
+        {
+            textProductCode = string.Empty;
+            textProductName = string.Empty;
+            listProductInOutWareHouse.Clear();
+            if (string.IsNullOrEmpty(textPublisherName)) // Lấy tất cả danh sách
+            {
+                int indexTemp = 0;
+                foreach (ModelThongTinChiTiet e in lsTTCT)
+                {
+                    indexTemp++;
+                    listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(indexTemp, e));
+                }
+            }
+            else
+            {
+                int indexTemp = 0;
+                foreach (ModelThongTinChiTiet e in lsTTCT)
+                {
+                    if (e.nhaPhatHanh.IndexOf(textPublisherName, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
                         indexTemp++;
                         listProductInOutWareHouse.Add(new ProductInOutWarehoseViewBinding(indexTemp, e));

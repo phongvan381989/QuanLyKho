@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.General;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -42,7 +43,14 @@ namespace QuanLyKho.View.UserControlCommon
             get { return (String)GetValue(ListBoxSearchTextProperty); }
             set { SetValue(ListBoxSearchTextProperty, value); }
         }
-        
+
+        public static readonly DependencyProperty ListBoxSearchFocusTextProperty = DependencyProperty.Register("ListBoxSearchFocusText", typeof(bool), typeof(UserControlListBoxSearch), null);
+        public String ListBoxSearchFocusText
+        {
+            get { return (String)GetValue(ListBoxSearchFocusTextProperty); }
+            set { SetValue(ListBoxSearchFocusTextProperty, value); }
+        }
+
         public static readonly DependencyProperty ListBoxSearchPopupIsOpenProperty = DependencyProperty.Register("bListBoxSearchPopupIsOpen", typeof(Boolean), typeof(UserControlListBoxSearch), null);
         public Boolean bListBoxSearchPopupIsOpen
         {
@@ -67,6 +75,11 @@ namespace QuanLyKho.View.UserControlCommon
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            var obj = FocusManager.GetFocusScope(TextBoxSearchValue);
+            var obj1 = FocusManager.GetFocusScope(DockPanelInputText);
+            var obj2 = FocusManager.GetFocusScope(GridPanelInputText);
+            IInputElement focusedElement = FocusManager.GetFocusedElement(GridPanelInputText);
+            IInputElement focusedElement1 = FocusManager.GetFocusedElement(DockPanelInputText);
             bListBoxSearchPopupIsOpen = !bListBoxSearchPopupIsOpen;
         }
 
@@ -134,6 +147,72 @@ namespace QuanLyKho.View.UserControlCommon
             {
                 bListBoxSearchPopupIsOpen = false;
             }
+        }
+
+        private void TextBoxSearchValue_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            MyLogger.GetInstance().Debug("TextBoxSearchValue_GotKeyboardFocus");
+            //IInputElement focusedElement = FocusManager.GetFocusedElement(GridPanelInputText);
+            //IInputElement focusedElement1 = FocusManager.GetFocusedElement(DockPanelInputText);
+            //bListBoxSearchPopupIsOpen = bListBoxSearchPopupIsOpen;
+        }
+
+        private void GridPanelInputText_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            MyLogger.GetInstance().Debug("GridPanelInputText_GotKeyboardFocus");
+            //IInputElement focusedElement = FocusManager.GetFocusedElement(GridPanelInputText);
+            //IInputElement focusedElement1 = FocusManager.GetFocusedElement(DockPanelInputText);
+
+            //// Gets the element with keyboard focus.
+            //UIElement elementWithFocus = Keyboard.FocusedElement as UIElement;
+            //if (elementWithFocus == null)
+            //{
+            //    Keyboard.Focus(TextBoxSearchValue);
+            //}
+            //else if (((FrameworkElement)elementWithFocus).Name == "ButtonDropList")
+            //{
+
+            //}
+            //else if (((FrameworkElement)elementWithFocus).Name == "PopupResult")
+            //{
+
+            //}
+            //else if (((FrameworkElement)elementWithFocus).Name == "TextBoxSearchValue")
+            //{
+
+            //}
+            //else
+            //{
+            //    var focusedElement2 = FocusManager.GetFocusScope(elementWithFocus);
+            //    int i = 0;
+            //    while (true)
+            //    {
+            //        // Creating a FocusNavigationDirection object and setting it to a
+            //        // local field that contains the direction selected.
+            //        FocusNavigationDirection focusDirection = FocusNavigationDirection.Next;
+
+            //        // MoveFocus takes a TraveralReqest as its argument.
+            //        TraversalRequest request = new TraversalRequest(focusDirection);
+
+            //        if (((FrameworkElement)elementWithFocus).Name != "")
+            //            break;
+            //        if (((FrameworkElement)elementWithFocus).Name == "TextBoxSearchValue")
+            //            break;
+
+            //        // Change keyboard focus.
+            //        if (!elementWithFocus.MoveFocus(request))
+            //            break;
+            //        i++;
+            //    }
+            //}
+
+            //bListBoxSearchPopupIsOpen = bListBoxSearchPopupIsOpen;
+        }
+
+        public void SetTextBoxSearchValueFocus()
+        {
+            TextBoxSearchValue.Focus();
+            TextBoxSearchValue.SelectAll();
         }
     }
 }

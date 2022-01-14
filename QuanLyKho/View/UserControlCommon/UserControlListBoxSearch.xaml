@@ -7,8 +7,9 @@
              xmlns:localViewModel="clr-namespace:QuanLyKho.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" LostFocus="UserControl_LostFocus">
-    <Grid KeyUp="Grid_KeyUp">
-        <DockPanel LastChildFill = "True" Name="DockPanelInputText">
+    <Grid Name="GridPanelInputText" KeyUp="Grid_KeyUp" FocusManager.IsFocusScope="True" FocusManager.FocusedElement="{Binding ElementName=TextBoxSearchValue}"
+          GotKeyboardFocus="GridPanelInputText_GotKeyboardFocus">
+        <DockPanel Name="DockPanelInputText">
             <Button Name="ButtonDropList"  Width="50" Height="30" Click="Button_Click" DockPanel.Dock="Right">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resource/downarrow_48pixel.png"  Stretch="Fill"/>
@@ -16,9 +17,10 @@
             </Button>
             <TextBox Name="TextBoxSearchValue" Style="{StaticResource TextBoxStyleCode}"
                         Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-            Path=ListBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
-                Path=ListBoxSearchToolTip, UpdateSourceTrigger=Explicit, Mode=OneTime}">
+                        Path=ListBoxSearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, 
+                        Path=ListBoxSearchToolTip, UpdateSourceTrigger=Explicit, Mode=OneTime}"
+                        GotKeyboardFocus="TextBoxSearchValue_GotKeyboardFocus">
             </TextBox>
         </DockPanel>
         <Popup Name="PopupResult"  Width="{Binding ActualWidth, ElementName=DockPanelInputText}"

@@ -49,11 +49,18 @@ namespace QuanLyKho
             temporaryFolderPath = System.AppDomain.CurrentDomain.BaseDirectory + @"Temporary";
             temporaryImageFolderPath = temporaryFolderPath + @"\Image";
 
-            actionModelNhapXuatChiTiet = new XMLAction(pathDataXMLNhapXuatChiTiet);
-            actionModelThongTinChiTiet = new XMLAction(pathDataXMLThongTinChiTiet);
-            actionModelThongTinBaoMat = new XMLAction(pathDataXMLThongTinBaoMat);
-            actionModelMappingSanPhamTMDT_SanPhamKho = new XMLAction(pathDataXMLMappingSanPhamTMDT_SanPhamKho);
-            ModelMappingSanPhamTMDT_SanPhamKho.InitializeStruct(actionModelMappingSanPhamTMDT_SanPhamKho);
+            try
+            {
+                actionModelNhapXuatChiTiet = new XMLAction(pathDataXMLNhapXuatChiTiet);
+                actionModelThongTinChiTiet = new XMLAction(pathDataXMLThongTinChiTiet);
+                actionModelThongTinBaoMat = new XMLAction(pathDataXMLThongTinBaoMat);
+                actionModelMappingSanPhamTMDT_SanPhamKho = new XMLAction(pathDataXMLMappingSanPhamTMDT_SanPhamKho);
+                ModelMappingSanPhamTMDT_SanPhamKho.InitializeStruct(actionModelMappingSanPhamTMDT_SanPhamKho);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             CommonTikiAPI.GetListTikiConfigAppUsing();
 

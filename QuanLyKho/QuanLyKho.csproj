@@ -80,6 +80,7 @@
     </ApplicationDefinition>
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
+    <Compile Include="Model\Dev\ShopeeApp\ShopeeConfig\ShopeeToken.cs" />
     <Compile Include="Model\Dev\TikiApp\Config\TikiConfigApp.cs" />
     <Compile Include="Model\Config\ModelThongTinBaoMatTiki.cs" />
     <Compile Include="Model\Dev\TikiApp\Config\TikiAuthorization.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="View\Dev\UserControlTikiTestAPI.xaml.cs">
       <DependentUpon>UserControlTikiTestAPI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\FocusExtension.cs" />
     <Compile Include="View\InOutWarehouse\Media.xaml.cs">
       <DependentUpon>Media.xaml</DependentUpon>
     </Compile>

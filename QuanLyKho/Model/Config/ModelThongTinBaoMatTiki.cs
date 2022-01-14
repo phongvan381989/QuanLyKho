@@ -498,6 +498,21 @@ namespace QuanLyKho.Model.Config
                 .Element("Shopee");
         }
 
+        public string Shopee_GetShopId(XMLAction action)
+        {
+            string shopID = string.Empty;
+            try
+            {
+                XElement eShopee = Shopee_GetShopeeNode(action);
+                shopID = eShopee.Element("ShopId").Value;
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+            }
+            return shopID;
+        }
+
         public string Shopee_GetPartnerId(XMLAction action)
         {
             string partnerID = string.Empty;
@@ -620,5 +635,6 @@ namespace QuanLyKho.Model.Config
             }
             return string.Empty;
         }
+
     }
 }

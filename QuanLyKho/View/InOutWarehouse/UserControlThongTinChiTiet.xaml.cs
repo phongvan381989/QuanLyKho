@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Windows.Input;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using QuanLyKho.General;
 
 namespace QuanLyKho.View.InOutWarehouse
 {
@@ -32,6 +33,13 @@ namespace QuanLyKho.View.InOutWarehouse
             int x = 10;
 
             //Keyboard.Focus(MaSanPham);
+        }
+
+        private void MaSanPham_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            MyLogger.GetInstance().Debug("MaSanPham_GotKeyboardFocus");
+            IInputElement focusedElement = FocusManager.GetFocusedElement(MaSanPham);
+            var obj2 = FocusManager.GetFocusScope(MaSanPham);
         }
     }
 }

@@ -345,6 +345,24 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 }
             }
         }
+
+        private Boolean pbfocusMaSanPham;
+        public Boolean bfocusMaSanPham
+        {
+            get
+            {
+                return pbfocusMaSanPham;
+            }
+
+            set
+            {
+                if (pbfocusMaSanPham != value)
+                {
+                    pbfocusMaSanPham = value;
+                    OnPropertyChanged("bfocusMaSanPham");
+                }
+            }
+        }
         #endregion
 
         private string pmaSanPhamAddMore;
@@ -933,7 +951,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 bResult = false;
                 strError = ex.Message;
             }
-
+            bfocusMaSanPham = false;
             if (bResult)
             {
                 OnPropertyChanged("tonKho");
@@ -944,6 +962,8 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                 InitializeBuffer(((App)Application.Current).actionModelThongTinChiTiet);
                 // Cập nhật source của combobox
                 UpdateListBufferForSources();
+                bfocusMaSanPham = true;
+
             }
             else
             {

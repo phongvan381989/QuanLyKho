@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyKho.General;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -62,6 +63,7 @@ namespace QuanLyKho.Model
             catch (Exception e)
             {
                 xDoc = null;
+                MyLogger.GetInstance().Fatal("Không đọc được " + pathXML + ". " + e.Message);
                 throw new Exception("Không đọc được " + fileName + ". " + e.Message);
             }
         }

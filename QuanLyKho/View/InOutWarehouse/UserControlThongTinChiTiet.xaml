@@ -6,6 +6,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:QuanLyKho.View.UserControlCommon"
              xmlns:localInOutWarehouse="clr-namespace:QuanLyKho.View.InOutWarehouse"
+             xmlns:localFocusExtensionUserControlListBoxSearch ="clr-namespace:QuanLyKho.View"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1200"
              Loaded="UserControl_Loaded">
@@ -36,13 +37,14 @@
                     <local:UserControlListBoxSearch x:Name="MaSanPham" Width="{StaticResource WidthTextBox}"
                                                 ListBoxSearchItemSource="{Binding listMaSanPham , Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                                 ListBoxSearchText="{Binding maSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                localFocusExtensionUserControlListBoxSearch:FocusExtensionUserControlListBoxSearch.IsFocused ="{Binding bfocusMaSanPham , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 bListBoxSearchPopupIsOpen="{Binding blistBoxSearchPopupIsOpenMSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 bListBoxSearchCheckSelectedItem="{Binding bCheckSelectedItemFromListMSP, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                                 ListBoxSearchToolTip="Không để trống hoặc nhập ký tự trắng"
-                                                          />
+                                                GotKeyboardFocus="MaSanPham_GotKeyboardFocus"          />
                 </WrapPanel>
                 <WrapPanel  Height="{StaticResource HeightWrapTextLine}">
-                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Tác giả</TextBlock>
+                    <TextBlock Style="{StaticResource TextBlockStyle}" Width="{StaticResource WidthTextBlock}"> Mã thêm</TextBlock>
                     <local:UserControlMyTextBox  Width="300" IsEnabled="True"
                                      MyTextBoxText="{Binding Path=maSanPhamAddMore, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                             MyTextBoxType="MyNormal"/>
@@ -167,8 +169,7 @@
                     VerticalScrollBarVisibility="Visible"
                     Width="{StaticResource WidthLeftArea}"
                     Height="300"
-                    Text="{Binding Path=moTaChiTietSanPham, Mode=TwoWay}"
-                                >
+                    Text="{Binding Path=moTaChiTietSanPham, Mode=TwoWay}">
                         <!--This TextBox will allow the user to enter multiple lines of text.  When the RETURN key is pressed, 
                   or when typed text reaches the edge of the text box, a new line is automatically inserted.-->
                     </TextBox>

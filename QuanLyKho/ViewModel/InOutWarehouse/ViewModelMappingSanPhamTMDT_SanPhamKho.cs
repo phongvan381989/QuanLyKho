@@ -28,6 +28,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
             textProductNameOnTMDT = name;
 
             textProductCodeOnTMDT = code;
+            textQuantity = "1";
 
             listProductOfProductOnTMDT = new ObservableCollection<ProductInOutWarehoseViewBinding>();
             UpdateListViewBinding();
@@ -222,7 +223,7 @@ namespace QuanLyKho.ViewModel.InOutWarehouse
                     return;
                 }
             }
-            textQuantity = string.Empty;
+            textQuantity = "1"; // Mặc định
         }
 
         public void Delete()

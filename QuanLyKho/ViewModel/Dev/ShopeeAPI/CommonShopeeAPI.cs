@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using QuanLyKho.General;
+using QuanLyKho.Model.Dev.ShopeeApp.ShopeeConfig;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,7 +51,7 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             return url;
         }
 
-        public static string ShopeeGetTokenShopLevell(string code, string partner_id, string partner_key, string shop_id)
+        public static string ShopeeGetTokenShopLevel(string code, string partner_id, string partner_key, string shop_id)
         {
             DateTime start = DateTime.Now;
             long timest = ((DateTimeOffset)start).ToUnixTimeSeconds();
@@ -62,6 +67,62 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
 
             string url = String.Format(host + path + "?partner_id={0}&timestamp={1}&sign={2}", partner_id, timest, sign);
             return url;
+        }
+
+        public static ShopeeToken ShopeeGetRefreshTokenShopLevel(string shop_id, string partner_id, string partner_key, string refreshToken)
+        {
+            DateTime start = DateTime.Now;
+            long timest = ((DateTimeOffset)start).ToUnixTimeSeconds();
+
+            string host = "https://partner.shopeemobile.com";
+            string path = "/api/v2/auth/access_token/get";
+            string tmp_base_string = String.Format("{0}{1}{2}", partner_id, path, timest);
+            byte[] byte_partner_key = Encoding.UTF8.GetBytes(partner_key);
+            byte[] byte_base_string = Encoding.UTF8.GetBytes(tmp_base_string);
+            var hash = new HMACSHA256(byte_partner_key);
+            byte[] tmp_sign = hash.ComputeHash(byte_base_string);
+            string sign = BitConverter.ToString(tmp_sign).Replace("-", "").ToLower();
+            string url = String.Format(host + path + "?partner_id={0}&timestamp={1}&sign={2}", partner_id, timest, sign);
+            MyLogger.GetInstance().Info(url);
+
+            var client = new RestClient(url);
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            var body = @"{
+" + "\n" +
+            @"    ""shop_id"":" + shop_id.ToString() + @",
+" + "\n" +
+            @"    ""refresh_token"":""" + refreshToken + @"""
+" + "\n" +
+            @"}";
+            MyLogger.GetInstance().Info(body);
+
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                MyLogger.InfoRestLog(client, request, response);
+                return null;
+            }
+            MyLogger.GetInstance().Info(response.Content);
+            ShopeeToken token = null;
+            try
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
+                token = JsonConvert.DeserializeObject<ShopeeToken>(response.Content, settings);
+
+            }
+            catch (Exception ex)
+            {
+                MyLogger.GetInstance().Warn(ex.Message);
+                return null;
+            }
+            return token;
         }
 
         /// <summary>

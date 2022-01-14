@@ -261,6 +261,9 @@ namespace QuanLyKho.ViewModel.Orders
 
         public void GetProductInShopTMDTDetail()
         {
+            if (itemSelected == null)
+                return;
+
             SubWindow wd = new SubWindow();
             wd.DataContext = new ViewModelSubWindow();
             wd.GetContainerContent().Children.Add(new UserControlMappingSanPhamTMDT_SanPhamKho());

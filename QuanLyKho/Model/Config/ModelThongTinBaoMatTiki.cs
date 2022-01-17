@@ -560,6 +560,8 @@ namespace QuanLyKho.Model.Config
 
         public string Shopee_UpdateCode(XMLAction action, string code)
         {
+            if (string.IsNullOrEmpty(code))
+                return string.Empty;
             try
             {
                 XElement eShopee = Shopee_GetShopeeNode(action);
@@ -591,6 +593,8 @@ namespace QuanLyKho.Model.Config
 
         public string Shopee_UpdateAccessToken(XMLAction action, string accessToken)
         {
+            if (string.IsNullOrEmpty(accessToken))
+                return string.Empty;
             try
             {
                 XElement eShopee = Shopee_GetShopeeNode(action);
@@ -622,6 +626,8 @@ namespace QuanLyKho.Model.Config
 
         public string Shopee_UpdateRefreshToken(XMLAction action, string refreshToken)
         {
+            if (string.IsNullOrEmpty(refreshToken))
+                return string.Empty;
             try
             {
                 XElement eShopee = Shopee_GetShopeeNode(action);

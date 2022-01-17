@@ -8,7 +8,7 @@ namespace QuanLyKho.Model.Dev.ShopeeApp.ShopeeConfig
 {
     public class ShopeeToken
     {
-        public string refreshToken { get; set; }
-        public string accessToken { get; set; }
+        public string refresh_token { get; set; }
+        public string access_token { get; set; }
     }
 }

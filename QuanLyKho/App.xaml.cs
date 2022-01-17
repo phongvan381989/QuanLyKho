@@ -29,11 +29,12 @@ namespace QuanLyKho
         public string temporaryFolderPath;
         public string temporaryImageFolderPath;
 
-        //public List<TikiConfigApp> lTikiAppUsing;
         public XMLAction actionModelNhapXuatChiTiet { get; set; }
         public XMLAction actionModelThongTinChiTiet { get; set; }
         public XMLAction actionModelThongTinBaoMat { get; set; }
         public XMLAction actionModelMappingSanPhamTMDT_SanPhamKho { get; set; }
+
+        public ModelThongTinBaoMatTiki ttbm { get; set; }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -51,6 +52,7 @@ namespace QuanLyKho
 
             try
             {
+                ttbm = new ModelThongTinBaoMatTiki();
                 actionModelNhapXuatChiTiet = new XMLAction(pathDataXMLNhapXuatChiTiet);
                 actionModelThongTinChiTiet = new XMLAction(pathDataXMLThongTinChiTiet);
                 actionModelThongTinBaoMat = new XMLAction(pathDataXMLThongTinBaoMat);

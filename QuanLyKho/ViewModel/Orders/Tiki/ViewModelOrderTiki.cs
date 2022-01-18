@@ -229,7 +229,7 @@ namespace QuanLyKho.ViewModel.Orders
                 // Download thumbnail của sản phẩm
                 foreach (OrderItemV2 eItem in e.items)
                 {
-                    Common.DownloadImageAndSave(eItem.product.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                    Common.DownloadImageAndSave(eItem.product.thumbnail, ((App)Application.Current).temporaryTikiImageFolderPath);
                 }
                 listOrder.Add(new TikiOrderViewBinding(e));
             }

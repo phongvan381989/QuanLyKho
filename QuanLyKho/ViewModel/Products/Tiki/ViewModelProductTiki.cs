@@ -245,7 +245,7 @@ namespace QuanLyKho.ViewModel.Products
                 {
                     index++;
                     // Download thumbnail của sản phẩm
-                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryTikiImageFolderPath);
                     lsProduct.Add(new ViewModelProductViewBindingTiki(e, index, this));
                 }
                 indexProductInList = -1;
@@ -292,7 +292,7 @@ namespace QuanLyKho.ViewModel.Products
 
             lsProductFullInfo.Add(pro);
             // Download thumbnail của sản phẩm
-            Common.DownloadImageAndSave(pro.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+            Common.DownloadImageAndSave(pro.thumbnail, ((App)Application.Current).temporaryTikiImageFolderPath);
             lsProduct.Add(new ViewModelProductViewBindingTiki(pro, 1, this));
             indexProductInList = -1;
         }
@@ -312,7 +312,7 @@ namespace QuanLyKho.ViewModel.Products
                 {
                     index++;
                     // Download thumbnail của sản phẩm
-                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryTikiImageFolderPath);
                     lsProduct.Add(new ViewModelProductViewBindingTiki(e, index, this));
                 }
             }
@@ -335,7 +335,7 @@ namespace QuanLyKho.ViewModel.Products
                 {
                     index++;
                     // Download thumbnail của sản phẩm
-                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryImageFolderPath);
+                    Common.DownloadImageAndSave(e.thumbnail, ((App)Application.Current).temporaryTikiImageFolderPath);
                     lsProduct.Add(new ViewModelProductViewBindingTiki(e, index, this));
                 }
             }

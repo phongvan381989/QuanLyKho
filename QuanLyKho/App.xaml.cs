@@ -27,7 +27,8 @@ namespace QuanLyKho
         private List<string> listImageFormats;
         private List<string> listVideoFormats;
         public string temporaryFolderPath;
-        public string temporaryImageFolderPath;
+        public string temporaryTikiImageFolderPath;
+        public string temporaryShopeeImageFolderPath;
 
         public XMLAction actionModelNhapXuatChiTiet { get; set; }
         public XMLAction actionModelThongTinChiTiet { get; set; }
@@ -48,7 +49,8 @@ namespace QuanLyKho
                 configTonKhoCanhBaoHetHangChung = 5;// default value
 
             temporaryFolderPath = System.AppDomain.CurrentDomain.BaseDirectory + @"Temporary";
-            temporaryImageFolderPath = temporaryFolderPath + @"\Image";
+            temporaryTikiImageFolderPath = temporaryFolderPath + @"\Image\Tiki";
+            temporaryShopeeImageFolderPath = temporaryFolderPath + @"\Image\Shopee";
 
             try
             {

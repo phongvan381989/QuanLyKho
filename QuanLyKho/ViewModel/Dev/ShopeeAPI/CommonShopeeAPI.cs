@@ -50,7 +50,7 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             string path = "/api/v2/shop/auth_partner";
             string redirect = "https://vnexpress.net/";
             long partner_id = 2002851;
-            string tmp_partner_key = "19da669a5bc42ec97a43e16c041b3b364563561eabf749571cd9af0ba7821070";
+            string tmp_partner_key = ttbm.Shopee_GetPartnerKey(action);
             string tmp_base_string = String.Format("{0}{1}{2}", partner_id, path, timest);
             byte[] partner_key = Encoding.UTF8.GetBytes(tmp_partner_key);
             byte[] base_string = Encoding.UTF8.GetBytes(tmp_base_string);
@@ -85,8 +85,6 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
 
             string url = String.Format(cShopeeHost + path + "?partner_id={0}&timestamp={1}&sign={2}", partner_id, timest, sign);
 
-            MyLogger.GetInstance().Info(url);
-
             var client = new RestClient(url);
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
@@ -100,7 +98,6 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             @"    ""partner_id"":" + partner_id + @"
             " + "\n" +
             @"}";
-            MyLogger.GetInstance().Info(body);
 
             request.AddParameter("application/json", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
@@ -160,7 +157,7 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             byte[] tmp_sign = hash.ComputeHash(byte_base_string);
             string sign = BitConverter.ToString(tmp_sign).Replace("-", "").ToLower();
             string url = String.Format(cShopeeHost + path + "?partner_id={0}&timestamp={1}&sign={2}", partner_id, timest, sign);
-            MyLogger.GetInstance().Info(url);
+            //MyLogger.GetInstance().Info(url);
 
             var client = new RestClient(url);
             client.Timeout = -1;
@@ -175,16 +172,16 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             @"    ""partner_id"":" + partner_id + @"
 " + "\n" +
             @"}";
-            MyLogger.GetInstance().Info(body);
+            //MyLogger.GetInstance().Info(body);
 
             request.AddParameter("application/json", body, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
+            MyLogger.InfoRestLog(client, request, response);
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                MyLogger.InfoRestLog(client, request, response);
                 return null;
             }
-            MyLogger.GetInstance().Info(response.Content);
+            //MyLogger.GetInstance().Info(response.Content);
             ShopeeToken token = null;
             try
             {
@@ -201,6 +198,9 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
                 MyLogger.GetInstance().Warn(ex.Message);
                 return null;
             }
+            // Lưu giá trị cũ vào log
+            MyLogger.GetInstance().Info("old access_token: " + ttbm.Shopee_GetAccessToken(action));
+            MyLogger.GetInstance().Info("old refresh_token: " + ttbm.Shopee_GetRefreshToken(action));
             if (token != null)
             {
                 ttbm.Shopee_UpdateAccessToken(action, token.access_token);
@@ -261,12 +261,15 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
                 return null;
             }
             if (response == null)
-                return response;
+                return null;
 
 
             if (response.StatusCode == HttpStatusCode.Forbidden) // Làm mới access token
             {
-                ShopeeGetRefreshTokenShopLevel();
+                if(ShopeeGetRefreshTokenShopLevel() == null)
+                {
+                    return null;
+                }
 
                 url = GenerateURLShopeeAPI(path, ls);
                 client = new RestClient(url);
@@ -301,14 +304,16 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             return json;
         }
         #region Product
-
         /// <summary>
-        /// 
+        /// Lấy item theo các tham số
         /// </summary>
-        /// <param name="update_time_from"> -1 để bỏ qua</param>
-        /// <param name="update_time_to"> -1 để bỏ qua</param>
-        /// <returns></returns>
-        public static string ShopeeProductGetItemList(long update_time_from, long update_time_to,
+        /// <param name="update_time_from">  <= 0 để bỏ qua</param>
+        /// <param name="update_time_to"> <= 0 để bỏ qua</param>
+        /// <param name="offset"></param>
+        /// <param name="page_size"></param>
+        /// <param name="lsShopeeItemStatus"></param>
+        /// <returns>null nếu không lấy thành công</returns>
+        public static ShopeeGetItemListResponseHTTP ShopeeProductGetItemList(long update_time_from, long update_time_to,
             int offset, int page_size,
             List<ShopeeItemStatus> lsShopeeItemStatus)
         {
@@ -330,32 +335,156 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
 
             IRestResponse response = ShopeeGetMethod(path, ls);
             if (response == null)
-                return json;
+                return null;
 
+            ShopeeGetItemListResponseHTTP objResponse = null;
             if (response.StatusCode == HttpStatusCode.OK)
+            {
                 json = response.Content;
-
-            return json;
+                try
+                {
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+                    objResponse = JsonConvert.DeserializeObject<ShopeeGetItemListResponseHTTP>(response.Content, settings);
+                }
+                catch (Exception ex)
+                {
+                    MyLogger.GetInstance().Warn(ex.Message);
+                    return null;
+                }
+            }
+            return objResponse;
         }
 
-        public static string ShopeeProductGetItemBaseInfo()
+        /// <summary>
+        /// Lấy tất cả item. Item này chứa dữ liệu vô cùng base
+        /// </summary>
+        /// <returns>null nếu không lấy thành công</returns>
+        public static List<ShopeeItem> ShopeeProductGetItemListAll()
+        {
+            List<ShopeeItem> rs = new List<ShopeeItem>();
+            int offset = 0;
+            int page_size = 50;
+            List<ShopeeItemStatus> lsShopeeItemStatus = new List<ShopeeItemStatus>();
+            lsShopeeItemStatus.Add(new ShopeeItemStatus(ShopeeItemStatus.EnumShopeeItemStatus.NORMAL));
+            lsShopeeItemStatus.Add(new ShopeeItemStatus(ShopeeItemStatus.EnumShopeeItemStatus.UNLIST));
+            lsShopeeItemStatus.Add(new ShopeeItemStatus(ShopeeItemStatus.EnumShopeeItemStatus.BANNED));
+            lsShopeeItemStatus.Add(new ShopeeItemStatus(ShopeeItemStatus.EnumShopeeItemStatus.DELETED));
+            Boolean isOk = true;
+            while (true)
+            {
+                ShopeeGetItemListResponseHTTP objResponse = ShopeeProductGetItemList(0, 0, offset, page_size, lsShopeeItemStatus);
+                if(objResponse == null)
+                {
+                    isOk = false;
+                    break;
+                }
+                if(objResponse.response.item != null)
+                {
+                    rs.AddRange(objResponse.response.item);
+                    offset = offset + objResponse.response.item.Count();
+                }
+                if (!objResponse.response.has_next_page)
+                    break;
+            }
+            if (!isOk)
+                return null;
+            return rs;
+        }
+
+        /// <summary>
+        /// Lấy base info
+        /// </summary>
+        /// <param name="ls"> Chứa id item cần lấy base info</param>
+        /// <returns>null nếu không lấy thành công</returns>
+        public static ShopeeGetItemBaseInfoResponseHTTP ShopeeProductGetItemBaseInfo(List<DevNameValuePair> ls)
         {
             string json = string.Empty;
             string path = "/api/v2/product/get_item_base_info";
 
-            List<DevNameValuePair> ls = new List<DevNameValuePair>();
-            ls.Add(new DevNameValuePair("item_id_list", "11241094731,10641420129"));
-            ls.Add(new DevNameValuePair("need_tax_info", "false"));
-            ls.Add(new DevNameValuePair("need_complaint_policy", "false"));
-
             IRestResponse response = ShopeeGetMethod(path, ls);
             if (response == null)
-                return json;
-
+                return null;
+            ShopeeGetItemBaseInfoResponseHTTP objResponse = null;
             if (response.StatusCode == HttpStatusCode.OK)
+            {
                 json = response.Content;
 
-            return json;
+                try
+                {
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+                    objResponse = JsonConvert.DeserializeObject<ShopeeGetItemBaseInfoResponseHTTP>(response.Content, settings);
+                }
+                catch (Exception ex)
+                {
+                    MyLogger.GetInstance().Warn(ex.Message);
+                    return null;
+                }
+            }
+
+            return objResponse;
+        }
+
+        /// <summary>
+        /// Lấy base info của tất cả item
+        /// </summary>
+        /// <returns>null nếu không lấy thành công</returns>
+        public static List<ShopeeGetItemBaseInfoItem> ShopeeProductGetItemBaseInfoAll()
+        {
+            // Lấy danh sách id của item
+            List<ShopeeItem> shopeeItems = ShopeeProductGetItemListAll();
+            if (shopeeItems == null || shopeeItems.Count() == 0)
+                return null;
+
+            StringBuilder strListItemId = new StringBuilder();
+            List<ShopeeGetItemBaseInfoItem> rs = new List<ShopeeGetItemBaseInfoItem>();
+            Boolean isOk = true;
+            int countItemID = shopeeItems.Count();
+            int indexItemID = 0;
+            int maxSize = 40;
+            int i;
+            while (indexItemID < countItemID)
+            {
+                strListItemId.Clear();
+                for (i = indexItemID; (i < countItemID) && (i < indexItemID + maxSize) ;i++)
+                {
+                    strListItemId.Append(shopeeItems[i].item_id.ToString() + ",");
+                }
+                indexItemID = i;
+                // xóa bỏ , cuối cùng
+                strListItemId.Remove(strListItemId.Length - 1, 1);
+
+                List<DevNameValuePair> ls = new List<DevNameValuePair>();
+                // item_id_list Required item_id  limit [0,50]
+                ls.Add(new DevNameValuePair("item_id_list", strListItemId.ToString()));
+
+                // need_tax_info  If true, will return tax info in response.
+                ls.Add(new DevNameValuePair("need_tax_info", "false"));
+
+                // need_complaint_policy If true, will return complaint_policy in response.
+                ls.Add(new DevNameValuePair("need_complaint_policy", "false"));
+
+                ShopeeGetItemBaseInfoResponseHTTP objResponse = ShopeeProductGetItemBaseInfo(ls);
+
+                if (objResponse == null || objResponse.response == null || objResponse.response.item_list == null)
+                {
+                    isOk = false;
+                    break;
+                }
+
+                rs.AddRange(objResponse.response.item_list);
+            }
+            if (!isOk)
+                return null;
+
+            return rs;
         }
         #endregion
     }

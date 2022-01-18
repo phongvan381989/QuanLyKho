@@ -283,7 +283,6 @@ namespace QuanLyKho.General
             if (File.Exists(Path.Combine(pathFolder, fileName)))
                 return;
 
-
             RestClient client = new RestClient(url);
             client.Timeout = -1;
             RestRequest request = new RestRequest(Method.GET);
@@ -311,7 +310,7 @@ namespace QuanLyKho.General
             else
             {
                 string fileName = url.Substring(lastIndex + 1);
-                name = Path.Combine(((App)Application.Current).temporaryImageFolderPath, fileName);
+                name = Path.Combine(((App)Application.Current).temporaryTikiImageFolderPath, fileName);
             }
             return name;
         }

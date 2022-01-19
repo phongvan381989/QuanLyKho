@@ -40,6 +40,5 @@ namespace QuanLyKho.Model.Dev.ShopeeApp.ShopeeProducts
 
             return str;
         }
-
     }
 }

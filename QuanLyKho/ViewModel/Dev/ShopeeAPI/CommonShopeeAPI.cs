@@ -3,6 +3,7 @@ using QuanLyKho.General;
 using QuanLyKho.Model;
 using QuanLyKho.Model.Config;
 using QuanLyKho.Model.Dev.ShopeeApp.ShopeeConfig;
+using QuanLyKho.Model.Dev.ShopeeApp.ShopeeOrder;
 using QuanLyKho.Model.Dev.ShopeeApp.ShopeeProducts;
 using RestSharp;
 using System;
@@ -73,7 +74,7 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             string partner_key = ttbm.Shopee_GetPartnerKey(action);
             string code = ttbm.Shopee_GetCode(action);
 
-            long timest = GetTimestamp();
+            long timest = Common.GetTimestampNow();
 
             string path = "/api/v2/auth/token/get";
             string tmp_base_string = String.Format("{0}{1}{2}", partner_id, path, timest);
@@ -142,7 +143,7 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
         /// <returns></returns>
         public static ShopeeToken ShopeeGetRefreshTokenShopLevel()
         {
-            long timest = GetTimestamp();
+            long timest = Common.GetTimestampNow();
 
             string shop_id = ttbm.Shopee_GetShopId(action);
             string partner_id = ttbm.Shopee_GetPartnerId(action);
@@ -209,12 +210,12 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             return token;
         }
 
-        public static long GetTimestamp()
-        {
-            DateTime start = DateTime.Now;
-            long timest = ((DateTimeOffset)start).ToUnixTimeSeconds();
-            return timest;
-        }
+        //public static long GetTimestampNow()
+        //{
+        //    DateTime start = DateTime.Now;
+        //    long timest = ((DateTimeOffset)start).ToUnixTimeSeconds();
+        //    return timest;
+        //}
 
         /// <summary>
         /// 
@@ -227,7 +228,7 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
         /// <returns></returns>
         public static string GenerateURLShopeeAPI(string path, List<DevNameValuePair> ls)
         {
-            long timest = GetTimestamp();
+            long timest = Common.GetTimestampNow();
             string partner_id = ttbm.Shopee_GetPartnerId(action);
             string access_token = ttbm.Shopee_GetAccessToken(action);
             string shop_id = ttbm.Shopee_GetShopId(action);
@@ -313,11 +314,10 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
         /// <param name="page_size"></param>
         /// <param name="lsShopeeItemStatus"></param>
         /// <returns>null nếu không lấy thành công</returns>
-        public static ShopeeGetItemListResponseHTTP ShopeeProductGetItemList(long update_time_from, long update_time_to,
+        public static ShopeeGetItemListResponseHTTP ShopeeProductGetItemListOld(long update_time_from, long update_time_to,
             int offset, int page_size,
             List<ShopeeItemStatus> lsShopeeItemStatus)
         {
-            string json = string.Empty;
             string path = "/api/v2/product/get_item_list";
 
             List<DevNameValuePair> ls = new List<DevNameValuePair>();
@@ -340,7 +340,35 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             ShopeeGetItemListResponseHTTP objResponse = null;
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                json = response.Content;
+                try
+                {
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+                    objResponse = JsonConvert.DeserializeObject<ShopeeGetItemListResponseHTTP>(response.Content, settings);
+                }
+                catch (Exception ex)
+                {
+                    MyLogger.GetInstance().Warn(ex.Message);
+                    return null;
+                }
+            }
+            return objResponse;
+        }
+
+        public static ShopeeGetItemListResponseHTTP ShopeeProductGetItemList(List<DevNameValuePair> ls)
+        {
+            string path = "/api/v2/product/get_item_list";
+
+            IRestResponse response = ShopeeGetMethod(path, ls);
+            if (response == null)
+                return null;
+
+            ShopeeGetItemListResponseHTTP objResponse = null;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
                 try
                 {
                     JsonSerializerSettings settings = new JsonSerializerSettings
@@ -373,10 +401,20 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             lsShopeeItemStatus.Add(new ShopeeItemStatus(ShopeeItemStatus.EnumShopeeItemStatus.UNLIST));
             lsShopeeItemStatus.Add(new ShopeeItemStatus(ShopeeItemStatus.EnumShopeeItemStatus.BANNED));
             lsShopeeItemStatus.Add(new ShopeeItemStatus(ShopeeItemStatus.EnumShopeeItemStatus.DELETED));
+
+            List<DevNameValuePair> ls = new List<DevNameValuePair>();
+            ls.Add(new DevNameValuePair("offset", offset.ToString()));
+            ls.Add(new DevNameValuePair("page_size", page_size.ToString()));
+ 
+            foreach (ShopeeItemStatus item in lsShopeeItemStatus)
+            {
+                ls.Add(new DevNameValuePair("item_status", item.GetString()));
+            }
+
             Boolean isOk = true;
             while (true)
             {
-                ShopeeGetItemListResponseHTTP objResponse = ShopeeProductGetItemList(0, 0, offset, page_size, lsShopeeItemStatus);
+                ShopeeGetItemListResponseHTTP objResponse = ShopeeProductGetItemList(ls);
                 if(objResponse == null)
                 {
                     isOk = false;
@@ -402,7 +440,6 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
         /// <returns>null nếu không lấy thành công</returns>
         public static ShopeeGetItemBaseInfoResponseHTTP ShopeeProductGetItemBaseInfo(List<DevNameValuePair> ls)
         {
-            string json = string.Empty;
             string path = "/api/v2/product/get_item_base_info";
 
             IRestResponse response = ShopeeGetMethod(path, ls);
@@ -411,8 +448,6 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             ShopeeGetItemBaseInfoResponseHTTP objResponse = null;
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                json = response.Content;
-
                 try
                 {
                     JsonSerializerSettings settings = new JsonSerializerSettings
@@ -482,6 +517,149 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
                 rs.AddRange(objResponse.response.item_list);
             }
             if (!isOk)
+                return null;
+
+            return rs;
+        }
+        #endregion
+
+        #region Order
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ls"></param>
+        /// <returns>null nếu không lấy thành công</returns>
+        public static ShopeeGetOrderListResponseHTTP ShopeeOrderGetOrderList(List<DevNameValuePair> ls)
+        {
+            string path = "/api/v2/order/get_order_list";
+            IRestResponse response = ShopeeGetMethod(path, ls);
+            if (response == null)
+                return null;
+
+            ShopeeGetOrderListResponseHTTP objResponse = null;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                try
+                {
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    };
+                    objResponse = JsonConvert.DeserializeObject<ShopeeGetOrderListResponseHTTP>(response.Content, settings);
+                }
+                catch (Exception ex)
+                {
+                    MyLogger.GetInstance().Warn(ex.Message);
+                    return null;
+                }
+            }
+            return objResponse;
+        }
+
+        /// <summary>
+        /// Lấy đơn hàng trong khoảng thời gian nhỏ hơn 15 ngày
+        /// </summary>
+        /// <returns>null nếu không lấy thành công</returns>
+        public static List<ShopeeGetOrderListBaseInfo> ShopeeOrderGetOrderListAllWithSmallTimeRange(long time_from, long time_to, ShopeeOrderStatus status)
+        {
+            List<DevNameValuePair> ls = new List<DevNameValuePair>();
+            // Required
+            // The kind of time_from and time_to. Available value: create_time, update_time.
+            ls.Add(new DevNameValuePair("time_range_field", "create_time"));
+
+            // Required
+            // The time_from and time_to fields specify a date range for retrieving orders (based on the time_range_field).
+            // The time_from field is the starting date range.The maximum date range that may be specified with the time_from and time_to fields is 15 days.
+            ls.Add(new DevNameValuePair("time_from", time_from.ToString()));
+
+            // Required
+            // The time_from and time_to fields specify a date range for retrieving orders (based on the time_range_field).
+            // The time_from field is the starting date range. The maximum date range that may be specified with the time_from and time_to fields is 15 days.
+            ls.Add(new DevNameValuePair("time_to", time_to.ToString()));
+
+            // Required
+            // Each result set is returned as a page of entries. Use the "page_size" filters to control the maximum number of entries to retrieve per page (i.e., per call).
+            // This integer value is used to specify the maximum number of entries to return in a single "page" of data.The limit of page_size if between 1 and 100.
+            ls.Add(new DevNameValuePair("page_size", "20"));
+
+            // The order_status filter for retriveing orders and each one only every request.
+            // Available value: UNPAID/READY_TO_SHIP/PROCESSED/SHIPPED/COMPLETED/IN_CANCEL/CANCELLED/INVOICE_PENDING
+            if(status.index != ShopeeOrderStatus.EnumShopeeOrderStatus.ALL)
+                ls.Add(new DevNameValuePair("order_status", status.GetString()));
+
+            // Optional fields in response. Available value: order_status.
+            ls.Add(new DevNameValuePair("response_optional_fields", "order_status"));
+
+            // Specifies the starting entry of data to return in the current call. Default is "".
+            // If data is more than one page, the offset can be some entry to start next call.
+            ls.Add(new DevNameValuePair("cursor", "")); // Thêm vào sau cùng list để tiện cập nhật
+
+            string strCursor = "";
+            List<ShopeeGetOrderListBaseInfo> rs = new List<ShopeeGetOrderListBaseInfo>();
+            Boolean isOK = true;
+            while (true)
+            {
+                ls.RemoveAt(ls.Count() - 1);
+                ls.Add(new DevNameValuePair("cursor", strCursor));
+
+                ShopeeGetOrderListResponseHTTP orderListTemp = ShopeeOrderGetOrderList(ls);
+                if (orderListTemp == null)
+                {
+                    isOK = false;
+                    break;
+                }
+
+                if (orderListTemp.response == null ||
+                    orderListTemp.response.order_list == null ||
+                    orderListTemp.response.order_list.Count() == 0)
+                {
+                    isOK = false;
+                    break;
+                }
+                rs.AddRange(orderListTemp.response.order_list);
+                if (!orderListTemp.response.more)
+                    break;
+                strCursor = orderListTemp.response.next_cursor;
+            }
+            if (!isOK)
+                return null;
+            return rs;
+        }
+
+        /// <summary>
+        /// Lấy đơn hàng trong khoảng thời gian không giới hạn
+        /// </summary>
+        /// <param name="time_from"></param>
+        /// <param name="time_to"></param>
+        /// <param name="status"></param>
+        /// <returns>null nếu không lấy thành công</returns>
+        public static List<ShopeeGetOrderListBaseInfo> ShopeeOrderGetOrderListAll(DateTime time_from, DateTime time_to, ShopeeOrderStatus status)
+        {
+            long ltime_from = Common.GetTimestamp(time_from);
+            long ltime_to = Common.GetTimestamp(time_to);
+            long ltime_toTemp;
+            List<ShopeeGetOrderListBaseInfo> rs = new List<ShopeeGetOrderListBaseInfo>();
+            Boolean isOK = true;
+            // Ta lấy trong khoảng thời gian là 14 ngày. Khoảng max là 15 ngày
+            long rangeTime = 14 * 24 * 60 * 60;
+            while (ltime_from < ltime_to)
+            {
+
+
+                ltime_toTemp = ltime_to + rangeTime;
+                if (ltime_toTemp > ltime_to)
+                    ltime_toTemp = ltime_to;
+                List<ShopeeGetOrderListBaseInfo> rsTemp = ShopeeOrderGetOrderListAllWithSmallTimeRange(ltime_from, ltime_toTemp, status);
+                if(rsTemp == null)
+                {
+                    isOK = false;
+                    break;
+                }
+                ltime_from = ltime_from + rangeTime;
+                rs.AddRange(rsTemp);
+            }
+            if (!isOK)
                 return null;
 
             return rs;

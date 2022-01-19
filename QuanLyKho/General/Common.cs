@@ -122,7 +122,7 @@ namespace QuanLyKho.General
         }
         #endregion
 
-        #region Check thời gian hợp lệ
+        #region Thời gian
         /// <summary>
         /// Định dạng: YYYY
         /// </summary>
@@ -264,6 +264,19 @@ namespace QuanLyKho.General
                 return false;
             }
             return true;
+        }
+
+        public static long GetTimestampNow()
+        {
+            DateTime start = DateTime.Now;
+            long timest = ((DateTimeOffset)start).ToUnixTimeSeconds();
+            return timest;
+        }
+
+        public static long GetTimestamp(DateTime dt)
+        {
+            long timest = ((DateTimeOffset)dt).ToUnixTimeSeconds();
+            return timest;
         }
         #endregion
 

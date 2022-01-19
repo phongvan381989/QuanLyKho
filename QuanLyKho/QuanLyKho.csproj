@@ -81,6 +81,10 @@
     <Compile Include="General\Common.cs" />
     <Compile Include="General\MyLogger.cs" />
     <Compile Include="Model\Dev\ShopeeApp\ShopeeConfig\ShopeeToken.cs" />
+    <Compile Include="Model\Dev\ShopeeApp\ShopeeOrder\ShopeeGetOrderListBaseInfo.cs" />
+    <Compile Include="Model\Dev\ShopeeApp\ShopeeOrder\ShopeeGetOrderListResponse.cs" />
+    <Compile Include="Model\Dev\ShopeeApp\ShopeeOrder\ShopeeGetOrderListResponseHTTP.cs" />
+    <Compile Include="Model\Dev\ShopeeApp\ShopeeOrder\ShopeeOrderStatus.cs" />
     <Compile Include="Model\Dev\ShopeeApp\ShopeeProducts\ShopeeGetItemBaseInfoItemAttribute.cs" />
     <Compile Include="Model\Dev\ShopeeApp\ShopeeProducts\ShopeeGetItemBaseInfoItemBrand.cs" />
     <Compile Include="Model\Dev\ShopeeApp\ShopeeProducts\ShopeeGetItemBaseInfoItemComplaintPolicy.cs" />

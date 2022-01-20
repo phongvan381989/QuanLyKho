@@ -217,18 +217,6 @@ namespace QuanLyKho.View.Dev
             ls.Add(new DevNameValuePair("time_from", Common.GetTimestamp(time_from).ToString()));
             DateTime time_to = new DateTime(2022, 1, 19, 0, 0, 0);
             ls.Add(new DevNameValuePair("time_to", Common.GetTimestamp(time_to).ToString()));
-            ls.Add(new DevNameValuePair("page_size", "20"));
-            ls.Add(new DevNameValuePair("cursor",""));
-            //ls.Add(new DevNameValuePair("order_status", "UNPAID"));
-            //ls.Add(new DevNameValuePair("order_status", "PROCESSED"));
-            //ls.Add(new DevNameValuePair("order_status", "READY_TO_SHIP"));
-            //ls.Add(new DevNameValuePair("order_status", "SHIPPED"));
-            ls.Add(new DevNameValuePair("order_status", "COMPLETED"));
-            //ls.Add(new DevNameValuePair("order_status", "IN_CANCEL"));
-            //ls.Add(new DevNameValuePair("order_status", "CANCELLED"));
-            //ls.Add(new DevNameValuePair("order_status", "INVOICE_PENDING"));
-            ls.Add(new DevNameValuePair("response_optional_fields", "order_status"));
-            //CommonShopeeAPI.ShopeeOrderGetOrderList(ls);
             CommonShopeeAPI.ShopeeOrderGetOrderListAll(time_from, time_to, new Model.Dev.ShopeeApp.ShopeeOrder.ShopeeOrderStatus(Model.Dev.ShopeeApp.ShopeeOrder.ShopeeOrderStatus.EnumShopeeOrderStatus.ALL));
         }
     }

@@ -647,7 +647,7 @@ namespace QuanLyKho.ViewModel.Dev.ShopeeAPI
             {
 
 
-                ltime_toTemp = ltime_to + rangeTime;
+                ltime_toTemp = ltime_from + rangeTime;
                 if (ltime_toTemp > ltime_to)
                     ltime_toTemp = ltime_to;
                 List<ShopeeGetOrderListBaseInfo> rsTemp = ShopeeOrderGetOrderListAllWithSmallTimeRange(ltime_from, ltime_toTemp, status);

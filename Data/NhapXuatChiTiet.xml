@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<NhapXuatChiTiet>
+  <SanPham>
+    <MaSanPham>123456733</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:16:48</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:17:35</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123456112</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:18:44</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:19:16</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123455112</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:28:02</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123155112</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:28:27</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123115112</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:29:54</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123111112</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:30:24</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123111111</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:31:45</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>1111111111</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>14-07-2021 23:35:24</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>1234567891</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>123</SoLuong>
+      <ThoiGian>14-07-2021 23:38:06</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>-12</SoLuong>
+      <ThoiGian>16-07-2021 04:24:16</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>1234569999</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>99</SoLuong>
+      <ThoiGian>16-07-2021 04:27:57</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>1234567777</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>77</SoLuong>
+      <ThoiGian>16-07-2021 04:42:19</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+  <SanPham>
+    <MaSanPham>123456789</MaSanPham>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>21-07-2021 05:25:27</ThoiGian>
+    </SoLuongThoiGian>
+    <SoLuongThoiGian>
+      <SoLuong>0</SoLuong>
+      <ThoiGian>21-07-2021 05:30:14</ThoiGian>
+    </SoLuongThoiGian>
+  </SanPham>
+</NhapXuatChiTiet>

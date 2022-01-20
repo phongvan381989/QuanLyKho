@@ -1,0 +1,31 @@
+---------------------------
+
+---------------------------
+https://partner.test-stable.shopeemobile.com1005132?partner_id=1005132&timestamp=1640055748$sign=940823a34d2740c51970e4fb5d53b37e8ca3746b1b281ec317bc9f0b62dc9208&redirect=https://vnexpress.net/
+---------------------------
+OK   
+---------------------------
+
+Test
+https://vnexpress.net/?code=1f1cd60c7215a819705c10175b78ca13&shop_id=35535
+
+LIVE:
+https://vnexpress.net/?code=5755576e686e426a6d644168474e6c6f&shop_id=137637267
+
+Shop_ID: 137637267
+
+
+App Key
+App Status
+Online
+Test Partner_id
+1005132
+Test Key
+
+65341e40f44eff4ce0d942cce7d490ccb81d16e06c59b32b4d3e3c890690d7d3
+
+Live Partner_id
+2002851
+Live Key
+
+19da669a5bc42ec97a43e16c041b3b364563561eabf749571cd9af0ba7821070
